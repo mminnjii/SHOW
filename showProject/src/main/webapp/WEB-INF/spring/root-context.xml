@@ -11,20 +11,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
-	<!-- 
-		root-context : 서버구동과 동시에 web.xml파일을 거쳐서 읽혀지는 문서로 서버구동과 동시에 세팅해야하는
-					   준비요소들이 있다면 작성해둔다. 주로 DB연결,트랜잭션처리,모듈 연결등을 작성한다.
-	 -->
 	
-	<!--DB 연결 설정 3단계 -->
-	<!-- 1단계 :DB연결을 위한 도구 설정 -->
-	<!-- 
-			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-			dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
-			dataSource.setUsername("SPRING");
-			dataSource.setPassword("SPRING");
-	 -->
 	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
@@ -32,7 +19,7 @@
 		<property name="password" value="SHOW"/>
 	</bean>
 	
-	<!-- 2단계 : mybatis에서 제공하는 sql명령어 실행을 위한 도구 등록 -->	
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	  <!--위에서 만든 DB접속정보와 mybatis관련 설정 파일 및 매퍼 파일 경로 등록 -->
 	  <!-- configLocation : config파일 설정 위치 / classpath: classes 폴더 최상단경로 -->
@@ -43,11 +30,7 @@
 	  <property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<!-- 
-		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-		
-		sqlSessionFactory.setDataSource(dataSource);
-	 -->
+	
 		
 	<!-- 3단계 sqlSessionFactory를 이용해서 sqlSession 도구 등록 -->
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
@@ -55,13 +38,7 @@
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>	
 	
-	<!-- 
-		SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactory);
-		
-		property : setter 주입 
-		constructor-arg : 생성자 주입
-		
-	 -->
+
 	 <!-- 파일 업로드 관련 빈 등록하기 -->
 	 <!-- MultipartResolver 등록 -->
 	 <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
