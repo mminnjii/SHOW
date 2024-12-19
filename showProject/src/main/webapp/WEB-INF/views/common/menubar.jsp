@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,15 +146,14 @@
 
         }
      
-        
-       
-        
-        
-        
        
     </style>
 </head>
 <body>
+
+	<!-- contextPath 추가 -전수민 -->
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
+
     <div>
         <img src="/show/resources/images/배너.jpg" alt="헤더이미지" id="headerImg">
     </div>
@@ -169,7 +169,7 @@
                         <li id="li2"><a href="">로그인</a></li>
                         <li id="li3"><a href="">예매확인/취소</a></li>
                         <li id="li4"><a href="">회원가입</a></li>
-                        <li id="li5"><a href="">고객센터</a></li>
+                        <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
                 </td>
                 <td id="td5" align="center">
@@ -192,7 +192,7 @@
                         <li><a href="">클래식</a></li>
                         <li><a href="">전시</a></li>
                         <li id="li1">|</li>
-                        <li><a href="">고객센터</a></li>
+                        <li><a href="${contextPath}/cmain">고객센터</a></li>
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="">오픈공지</a> </li>
                         
