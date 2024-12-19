@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.show.manager.model.vo.Manager"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
+<% 
+	String msg = (String)session.getAttribute("alertMsg");
+	Manager loginManager = (Manager)session.getAttribute("loginManager");
+%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,40 +20,28 @@
     <style>
         #headerImg{
             width: 100%;
-           
         }
-
         #header{
             width: 100%;
             height: 100px;
         }
         #logo{
-            
             height: 70px;
         }
         #td1,#td2,#td4,#td6,#td7{
             width: 100px;
         }
         #td3{
-            
             font-family: "Noto Sans KR", sans-serif;
             font-size: 25px;
             font-weight: 700;
             font-style: normal;
-            
-
-            
             padding-top: 30px;
-           
-           
         }
         #td5{
             width: 300px;
             font-size: 12px;
             font-weight: 600;
-            
-            
-
         }
         #span1,#span2{
             color: red;
@@ -65,11 +57,9 @@
             height: 50px;
             border-top: 1px solid rgba(128, 128, 128, 0.4);
             border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-            
         }
         table{
             border-collapse: collapse; 
-            
         }
         
         li{
@@ -80,9 +70,6 @@
             font-weight: 400;
             font-style: normal;
             padding-right: 13px; /*메뉴바 글씨 간격*/
-            
-            
-            
         }
         #li2,#li3,#li4,#li5{
             list-style-type : none;
@@ -93,10 +80,6 @@
             font-style: normal;
             padding-right: 5px;
             padding-top: 40px;
-            
-            
-            
-            
         }
         #li1{
             color: gainsboro;
@@ -104,7 +87,6 @@
         #menu{
             padding-left: 15px; /*왼쪽 여백을 설정하여 로고와 위치 맞춤*/
         }
-
         .search-box{
             height: 10px;
             width: 200px;
@@ -143,14 +125,21 @@
         a{
             text-decoration: none;
             color: black;
-
         }
-     
-       
+        
     </style>
 </head>
 <body>
 
+	<!-- alertMsg 비어있지 않을 때만 띄워주기 -황영식 -->
+	<script>
+	    var msg = "${alertMsg}";
+	    if (msg != null && msg != "") {
+	        alert(msg);
+	        <% session.removeAttribute("alertMsg"); %>
+	    }
+	</script>
+	
 	<!-- contextPath 추가 -전수민 -->
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
 
@@ -195,6 +184,7 @@
                         <li><a href="${contextPath}/cmain">고객센터</a></li>
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="">오픈공지</a> </li>
+                        
                         
                     </ul>
                    

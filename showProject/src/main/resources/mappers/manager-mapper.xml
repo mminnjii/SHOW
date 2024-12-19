@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="managerMapper">
+
+	<resultMap type="Manager" id="managerResultSet">
+		<result column="MANAGER_ID" property="managerId" />
+		<result column="MANAGER_PW" property="managerPw" />
+	</resultMap>
+
+	<select id="loginManager" resultMap="managerResultSet">
+		SELECT MANAGER_ID, MANAGER_PW
+		FROM MANAGER
+		WHERE MANAGER_ID = #{managerId}
+		AND MANAGER_PW = #{managerPw}
+	</select>
+	
+
+
+
+</mapper>
