@@ -16,16 +16,16 @@
 		width: 100%;
 		margin: auto;
         text-align: center;
-        position: absolute;
 	}
     #path{
         text-align: right;
         font-size: 12px;
     }
 	.inner{
-		width: 50%;
+		width: 30%;
 		margin: auto;
-		padding-top: 15%;
+		padding-top: 5%;
+        padding-left: 2%;
 		text-align: left;
 	}
 
@@ -122,7 +122,7 @@
         });
 
         $(function(){
-            if($("#t1").prop("checked")==true || $("#t2").prop("checked")==true){
+            if($("#t1").checked && $("#t2").checked){
                 $("#btn1").attr("disabled",false);
             }else{
                 $("#btn1").attr("disabled",true);
@@ -606,6 +606,6 @@
             </div>
         </div>
     </div>
-	<jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
+    <jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>
 </html>
