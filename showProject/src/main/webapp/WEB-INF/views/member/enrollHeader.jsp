@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
@@ -14,10 +16,9 @@
 <style>
     #header{
         width: 100%;
-        height: 70px;
-        border-bottom: 1px solid gray;
+        height: 120px;
         margin: auto;
-        margin-top: 40px;
+        background-color: rgb(250, 250, 250);
     }
     #logo{
         margin-left: 20px;
@@ -25,6 +26,7 @@
 </style>
 </head>
 <body>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"/>
     <div id="header">
 		<div id="logo">
             <img src="src\main\webapp\resources\images\로고.jpg">

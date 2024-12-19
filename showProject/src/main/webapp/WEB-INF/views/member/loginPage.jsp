@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
-<!-- jQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 부트스트랩에서 제공하고 있는 스타일 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <style>
 	.content{
 		width: 100%;
@@ -124,6 +118,7 @@
 </style>
 </head>
 <body>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"/>
 	<jsp:include page="/WEB-INF/views/member/enrollHeader.jsp"/>
 	<div class="content">
 		<br><br>
@@ -132,7 +127,7 @@
 				<img src="....\resources\images\로고.jpg">
 			</div>
 			<br><br>
-			<form action="/login.me" method="post">
+			<form action="${contextPath}/login.me" method="post">
 				<div class="login">
 					<div class="info-area1">
 						<label for="userId">
@@ -162,7 +157,7 @@
 					</div>
 					<br>
 				</div>
-				<button id="btn1">로그인</button>
+				<button type="submit" id="btn1">로그인</button>
 			</form>
 			<br>
 			<div id="link">
@@ -178,11 +173,8 @@
 	</div>
 	<script>
 		//비밀번호 텍스트 표시
-		console.log($("#pwd"));
-		console.log("999d");
 		$(function() {
 			$('.info-area2').find("#pwd").on('click', function() {
-				console.log("999");
 				$('.info-area2').toggleClass('active');
 				if ($('.info-area2').hasClass('active')) {
 					console.log($(this));
@@ -193,6 +185,14 @@
 					$('.eye').css('fill','black');
 				}
 			});
+		});
+		$(function(){
+			var saveId = "${cookie.userId.value}";
+			
+			if(saveId != ""){
+				$("#newUserId").val(saveId);
+				$("#saveId").attr("checked",true);
+			}
 		});
 	</script>
 	

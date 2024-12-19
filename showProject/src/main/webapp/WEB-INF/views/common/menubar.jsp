@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.show.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String msg = (String)session.getAttribute("alertMsg");
+	Member loginManager = (Member)session.getAttribute("loginManager");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,10 +154,16 @@
     </style>
 </head>
 <body>
-
+	<script>
+	    var msg = "${alertMsg}";
+	    if (msg != null && msg != "") {
+	        alert(msg);
+	        <% session.removeAttribute("alertMsg"); %>
+	    }
+	</script>
 	<!-- contextPath 추가 -전수민 -->
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
-
+	
     <div>
         <img src="/show/resources/images/배너.jpg" alt="헤더이미지" id="headerImg">
     </div>
@@ -166,9 +176,20 @@
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
                     <ul>
-                        <li id="li2"><a href="">로그인</a></li>
-                        <li id="li3"><a href="">예매확인/취소</a></li>
-                        <li id="li4"><a href="">회원가입</a></li>
+		                <c:choose>
+		                   <c:when test="${empty loginUser}">
+		                   		<!-- 로그인 전 -->
+		                        <li id="li2"><a href="${contextPath }/toLogin">로그인</a></li>
+		                        <li id="li3"><a href="${contextPath}/toEnroll">회원가입</a></li>
+		                   </c:when>
+		                   <c:otherwise>
+		                   		<!-- 로그인 후 -->
+		                   		<lable>${loginUser.userName }님</lable> &nbsp;&nbsp;
+		                   		<li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
+		                        <li id="li3"><a href="${contextPath}/myPage.me">내정보</a></li>
+		                   </c:otherwise>
+		                </c:choose>
+                        <li id="li4"><a href="">예매확인/취소</a></li>
                         <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
                 </td>

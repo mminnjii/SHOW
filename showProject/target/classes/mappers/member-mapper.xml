@@ -19,6 +19,13 @@
 		<result column="SUBSCRIBE" property="subscribe"/>
 		<result column="STATUS" property="status"/>
 	</resultMap>
+	
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+		AND STATUS = 'Y'
+	</select>
 
 
 
