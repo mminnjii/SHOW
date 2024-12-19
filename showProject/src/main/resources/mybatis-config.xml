@@ -12,6 +12,7 @@
  	<typeAliases>
  		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
+ 		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  	</typeAliases>
 
  	
