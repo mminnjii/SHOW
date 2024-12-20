@@ -195,7 +195,7 @@
                         <li><a href="">고객센터</a></li>
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="">오픈공지</a> </li>
-                        
+                        <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
                     </ul>
                    
                 </td>
