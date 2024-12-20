@@ -44,7 +44,7 @@ public class CustomerServiceDao {
 		// Reservation import 다시하기 mapper도 reservation으로 이동?  
 	public ArrayList<Reservation> reSearch(SqlSessionTemplate sqlSession, int userNo) {
 		System.out.println(userNo);
-		return (ArrayList)sqlSession.selectList("customerMapper.reSearch", userNo);
+		return (ArrayList)sqlSession.selectList("reservationMapper.reSearch", userNo);
 	}
 
 }

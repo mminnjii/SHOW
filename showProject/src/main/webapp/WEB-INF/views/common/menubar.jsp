@@ -186,14 +186,14 @@
                 <td id="td6"></td> <!--홈    뮤지컬    연극    콘서트    클래식    전시   고객센터   커뮤티니   이벤트 -->
                 <td colspan="3" id="td8">
                     <ul id="menu">
-                        <li><a href="">홈</a></li>
+                        <li><a href="${contextPath}">홈</a></li>
                         <li><a href="">뮤지컬</a></li>
                         <li><a href="">연극</a></li>
                         <li><a href="">콘서트</a></li>
                         <li><a href="">클래식</a></li>
                         <li><a href="">전시</a></li>
                         <li id="li1">|</li>
-                        <li><a href="${contextPath}/cmain">고객센터</a></li>
+                        <li><a href="${contextPath}/cmain">공지사항</a></li>
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="">오픈공지</a> </li>
                         
