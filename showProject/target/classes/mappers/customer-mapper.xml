@@ -23,8 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CREATEDATE" property="createDate" />
 		<result column="STATUS" property="status" />
 		<result column="ANSWER_CONTENT" property="answerContent" />
-
-	</resultMap>
+	</resultMap>	
 
 	<select id="selectFaqList" resultMap="faqResultSet">
 		SELECT * 
@@ -56,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      ,CHANGE_NAME) 
              VALUES (Q_SEQ.NEXTVAL
                     ,1
-                    ,#{reservationId}
+                    ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
                     ,#{qcategoryNo}
                     ,#{qTitle}
                     ,#{qContent}
@@ -90,12 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
-	<!-- 예약 번호 가져오기 -->
-	<select id="reSearch" parameterType="_int" resultType="Reservation">
-		SELECT RESERVATION_ID reservationId
-		FROM RESERVATION
-		WHERE USER_NO = #{userNo}
-	</select>
+	
 	
 	
 		

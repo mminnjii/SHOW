@@ -144,17 +144,18 @@
 			                <p>${list.faqContent}</p>
 			            </div>
 	           		</c:forEach>	
+					<button>더보기 (faqList.length) </button>            
 	           	</c:if>
            </div>
-            
+
         </div>
 	</div>
         
-
         
-    <script>   
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     
     
+    <script>     
     	// 검색 faq 리스트 
     	$("#search").on("input", function(){
     		
@@ -179,8 +180,8 @@
    	                	   	    + '</div>';
                    	   	}
                    	   
-                   	  	// $(".divFilter").empty(); 
                    	  	$(".divFilter").append(str);  
+                   	  	
                 	} else{
                 		$(".divFilter").html("");
     					var str2 = "";
