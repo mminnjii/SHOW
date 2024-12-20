@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerMapper">
+
+	<resultMap type="Faq" id="faqResultSet">
+		<result column="FAQ_NO" property="faqNo" />
+		<result column="FAQ_TITLE" property="faqTitle" />
+		<result column="FAQ_CONTENT" property="faqContent" />
+		<result column="QCATEGORY_NO" property="qcategoryNo" />
+	</resultMap>
+
+	<resultMap type="Question" id="questionResultSet">
+		<result column="QUESTION_NO" property="questionNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="RESERVATION_ID" property="reservationId" />
+		<result column="QCATEGORY_NO" property="qcategoryNo" />
+		<result column="Q_TITLE" property="qTitle" />
+		<result column="Q_CONTENT" property="qContent" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="CREATEDATE" property="createDate" />
+		<result column="STATUS" property="status" />
+		<result column="ANSWER_CONTENT" property="answerContent" />
+	</resultMap>	
+
+	<select id="selectFaqList" resultMap="faqResultSet">
+		SELECT * 
+		FROM FAQ
+	</select>
+
+	<select id="faqFilterList" resultMap="faqResultSet">
+		SELECT * 
+		FROM FAQ
+		WHERE QCATEGORY_NO = #{qcategoryNo}
+	</select>
+	
+	<select id="faqSearchList" parameterType="string" resultMap="faqResultSet">
+		SELECT * 
+		FROM FAQ
+		WHERE FAQ_CONTENT LIKE '%'|| #{keyword} ||'%'
+		    OR FAQ_TITLE LIKE '%'|| #{keyword} ||'%'
+	</select>
+	
+	<!-- 1:1 문의 회원 -->
+	<insert id="questionInsert" parameterType="Question">
+		INSERT INTO QUESTION (QUESTION_NO
+                     ,USER_NO
+                     ,RESERVATION_ID
+                     ,QCATEGORY_NO
+                     ,Q_TITLE
+                     ,Q_CONTENT
+                     ,ORIGIN_NAME
+                     ,CHANGE_NAME) 
+             VALUES (Q_SEQ.NEXTVAL
+                    ,1
+                    ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
+                    ,#{qcategoryNo}
+                    ,#{qTitle}
+                    ,#{qContent}
+                    ,#{originName}
+                    ,#{changeName})
+	</insert>
+	
+	<!-- 1:1 문의 비회원 -->
+	<insert id="questionNonInsert" parameterType="Question">
+	 
+		INSERT INTO NONUSER_QUESTION (QUESTION_NO
+									 ,NAME
+		                             ,EMAIL
+		                             ,QCATEGORY_NO
+		                             ,PHONE
+				                     ,Q_TITLE
+				                     ,Q_CONTENT
+				                     ,ORIGIN_NAME
+				                     ,CHANGE_NAME
+				                     ) 
+				             VALUES (NONQ_SEQ.NEXTVAL
+				                    ,#{name}
+				                    ,#{email}
+				                    ,#{qcategoryNo}
+				                    ,#{phone}
+				                    ,#{qTitle}
+				                    ,#{qContent}
+				                    ,#{originName}
+				                    ,#{changeName}
+				                    )
+	</insert>
+	
+	
+	
+	
+	
+		
+</mapper>
