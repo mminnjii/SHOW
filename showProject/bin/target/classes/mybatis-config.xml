@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 	<settings>
+ 		<setting name="jdbcTypeForNull" value="NULL"/>
+ 	</settings>
+ 	
+ 	
+ 	
+ 	<typeAliases>
+ 		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
+ 		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
+ 		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
+ 	</typeAliases>
+
+ 	
+ 
+ 	
+</configuration>

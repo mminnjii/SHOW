@@ -6,9 +6,9 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml
-					 /WEB-INF/spring/spring-security.xml
-		</param-value>
+		<param-value>/WEB-INF/spring/root-context.xml,/WEB-INF/spring/spring-security.xml</param-value>
+					 
+		
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -57,6 +57,8 @@
 	 </filter>
 	 
 	 
+	 
+	 
 	 <!-- 필터를 어느 요청에 동작시킬것인지 등록작업 -->
 	 <filter-mapping>
 	 	<filter-name>encodingFilter</filter-name>
@@ -64,5 +66,6 @@
 	 </filter-mapping>
 
 
-
+	
+	
 </web-app>

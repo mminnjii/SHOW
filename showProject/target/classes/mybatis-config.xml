@@ -14,6 +14,7 @@
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Question" alias="Question"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Reservation" alias="Reservation"/>
+ 		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  	</typeAliases>
 
  	
