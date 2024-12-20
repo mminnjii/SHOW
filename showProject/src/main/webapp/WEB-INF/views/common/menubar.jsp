@@ -15,6 +15,7 @@
     <style>
         #headerImg{
             width: 100%;
+            
            
         }
 
