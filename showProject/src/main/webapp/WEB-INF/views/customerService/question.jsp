@@ -14,23 +14,29 @@
     <style>
         .a {
             text-align: left;
-            width: 80%;
+            width: 60%;
             margin: 0px auto;
             background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
+        
+        .outer {
+        	padding: 30px;
+		}
+        
         .a h2{
-            margin-left: 10px;
+            margin: 20px 0px 0px 40px;
         }
+        
         .sColor{
             color: red;
         }
 
         ul{
             margin: 5px 0px 5px 0px;
-            font-size: 15px;
+            font-size: 5px;
             color: gray;
         }
 
@@ -38,66 +44,69 @@
             margin: 10px;
             margin-top: 30px;
         }
+        
     </style>
 
 </head>
 <body>
 
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
-	
+	<br><br>
     <div class="a">
         <h2>1:1 문의하기</h2>
-        
-        <div class="outer">
+	
+		<!-- 회원인 경우와 아닌 경우로 조건처리 필요 -->        
+        <form class="outer" method="POST" action="${contextPath}/queInsert" enctype="multipart/form-data">  <!-- 파일 업로드 -->
+        <!-- 회원인 경우에는 회원의 정보를 보여줘야 한다. 해당 조건 처리 필요. -->
             <div class="input">
                 <p>이름 <span class="sColor">*</span></p>
-                <input type="text" name="" class="form-control"  placeholder="이름을 입력하세요" value=""> 
+                <input type="text" name="name" class="form-control"  placeholder="이름을 입력하세요" required> 
             </div>
 
             <div class="input">
                 <p>답변 받을 이메일 주소 <span class="sColor">*</span></p>
-                <input type="email" name="" class="form-control"  placeholder="이름을 입력하세요" value="">
+                <input type="email" name="email" class="form-control"  placeholder="이메일을 입력하세요" required>
             </div>
 
             <div class="input">
                 <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
-                <input type="text" name="" class="form-control"  placeholder="이름을 입력하세요" value=""> 
+                <input type="text" name="phone" class="form-control"  placeholder="휴대폰 번호를 입력하세요(-제외)" required> 
             </div>
-            
+
+			            
             <div class="input">
-                <p>문의 유형 <span class="sColor">*</span> <span style="font-size: 12px;"> (티켓 취소/환불/변경은 전화 1234-1234로 요청해 주세요)</span></p>
-                <select name="qcategoryNo"  class="form-control">
-                    <option>티켓</option>
-                    <option>회원/기타</option>
+                <p>문의 유형 <span class="sColor">*</span> <span style="font-size: 12px;" disabled> (티켓 취소/환불/변경은 전화 1234-1234로 요청해 주세요)</span></p>
+                <select name="qcategoryNo"  class="form-control" required>
+                    <option value="1">티켓</option>
+                    <option value="2">회원/기타</option>
                 </select>
             </div>
             
-            <div class="input">
-                <p>예약번호</p>
-                <div class="input-group mb-3">
-                    <select name="reservationId" class="form-control">
-                        <option>QWSD41561</option> 
-                        <option>QWSD41561</option>
-                    </select>
-                    <div class="input-group-append">
-                      <button class="form-control" type="submit">예약번호 조회</button>
-                    </div>
-                </div>
-
-                <ul>
-                    <li>문의 유형 선택 후 예약 번호를 조회할 수 있습니다.</li>
-                    <li>예약 없이도 문의할 수 있습니다.</li>
-                </ul>
-
-                
-
-            </div>
+	            <div class="input">
+	                <p>예약번호</p>  
+	                <div class="input-group mb-3" > <!-- ${empty loginUser ? 'disabled' : ''} -->
+	                    <select name="reservationId" class="form-control">
+	                        <option selected disabled>예약번호를 선택해 주세요</option> 
+	                        <option>1</option> 
+	                        <option>1</option>
+	                    </select>
+	                    <div class="input-group-append">  <!-- 예약 조회 버튼을 누르면 로그인한 회원의 예약 내역을 불러와서 보여줘야 한다 -->
+	                      <button class="form-control" type="button" onClick="reSearch();">예약번호 조회</button>
+	                    </div>
+	                </div>
+				
+			
+	                <ul>
+	                    <li>문의 유형 선택 후 예약 번호를 조회할 수 있습니다.</li>
+	                    <li>예약 없이도 문의할 수 있습니다.</li>
+	                </ul>
+	            </div>
 
             <div class="input">
                 <p>문의 내용 <span class="sColor">*</span></p>
-                <input type="text" id="qContent" name="qContent" class="form-control" placeholder="제목을 입력해 주세요"><br>
+                <input type="text" id="qTitle" name="qTitle" class="form-control" placeholder="제목을 입력해 주세요" required><br>
                 
-                <textarea type="text" name="" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요."></textarea>
+                <textarea type="text" name="qContent" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요." required></textarea>
             </div>
             
             <div class="input">
@@ -118,7 +127,8 @@
                 </ul>
             </div>
             <br>
-
+			
+			<!-- 전체동의 체크박스 기능 구현해야 함. -->
             <div class="form-check input">
                 <label class="form-check-label">
                   <input type="checkbox" class="form-check-input" value=""> 전체동의
@@ -135,11 +145,33 @@
             <br>
             <button class="form-control">문의하기</button>
 
-        </div>
+        </form>
     </div>
         
+   	<script>
+   		function reSearch(){
+   			console.log("버튼 클릭됨");
+   			$.ajax({
+   				url : '${contextPath}/reSearch',
+   				method : 'POST',
+   				data : {  <%-- 회원 번호로 입력할 수 있도록  --%>
+   					userNo : 1  
+   				},
+   				success : function(reList){
+   					console.log(reList);
+   				},
+   				error : function(){
+   					alert("예약 조회가 불가능합니다.");
+   				}
+   				
+   			});
+   		}
+   		
+   		
+   	</script>
 
-    
+ 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+ 	   
 
 </body>
 </html>
