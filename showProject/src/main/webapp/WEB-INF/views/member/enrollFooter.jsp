@@ -11,8 +11,8 @@
 		height : 150px;
 		margin:auto;
 		margin-top:80px;
-		border-top: 1px solid gray;
-		background-color: rgb(234, 234, 234);
+		background-color: rgb(250, 250, 250);
+		padding-top:4%;
 	}
 	#p1{text-align:center;}
 

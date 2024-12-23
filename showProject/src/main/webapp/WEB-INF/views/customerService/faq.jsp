@@ -44,7 +44,7 @@
         #search {
             width: 90%;
             padding: 15px;
-            margin: 15px;
+            margin: 20px 0px 0px 40px;
             border-radius: 30px;
             border: 1px solid #ddd;
             font-size: 16px;
@@ -123,36 +123,81 @@
 
 	<br><br><br><br>
     <div class="a">
+        <br>
         <h1>자주 묻는 질문</h1>
-        
-        <input type="text" id="search" placeholder="궁금한 점을 검색해 보세요."> <br>       
+        <input type="text" id="search" placeholder="궁금한 점을 검색해 보세요.">   
+        <br>
         <br>
 
         <div class="outer2 faqP">
-            <h3>자주 묻는 질문</h3>
             <span>
                 <button class="faq-filter" name="all" value="all">전체</button>
                 <button class="faq-filter" name="1" value="1">티켓</button>
                 <button class="faq-filter" name="2" value="2">회원/기타</button>
             </span>
       		
+      		<div class="divFilter">
 	           	<c:if test="${not empty faqList }">
 	           		<c:forEach var="list" items="${faqList}">
 			      		<div class="faq">
+							<input type="hidden" value="${list.faqNo}" id="faqNo">
 			                <i class="fa-solid fa-q"></i> ${list.faqTitle}
 			                <p>${list.faqContent}</p>
 			            </div>
 	           		</c:forEach>	
 	           	</c:if>
-           
-            
+           </div>
+
         </div>
 	</div>
         
-
         
-    <script>   
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     
+    
+    <script>     
+    	// 검색 faq 리스트 
+    	$("#search").on("input", function(){
+    		
+    		var keyword = $("#search").val();	
+   		
+    		$.ajax({
+    			url : "search",
+    			data : {
+    				keyword : keyword
+    			}, success : function(searchList){
+    				
+    				console.log(searchList);
+    				
+   					if(searchList != null){
+   						
+    					$(".divFilter").html("");
+                  		var str = "";
+    					for(var i = 0; i<searchList.length; i++){
+                  			str += '<div class="faq">'
+   	                	   	    + '<i class="fa-solid fa-q"></i>'+searchList[i].faqTitle
+   	                	   	    + '<p>' + searchList[i].faqContent + '</p>' 
+   	                	   	    + '</div>';
+                   	   	}
+                   	   
+                   	  	$(".divFilter").append(str);  
+                   	  	
+                	} else{
+                		$(".divFilter").html("");
+    					var str2 = "";
+    					str2 += "<h4>검색 결과가 없습니다.</h4>"
+    						 + "<p>다른 검색어를 입력해 주세요.</p>"
+    					$(".divFilter").html(str2);
+    				}
+    				
+    				
+    			}, error : function(){
+    				console.log("검색 불가능");	
+    			}
+    		})
+    	});	
+    	
+    	// 카테고리별 faq
 	    $(".faq-filter").click(function(){
 
 	    	var qcategoryNo = $(this).val();
@@ -162,22 +207,25 @@
                 data : {
                    qcategoryNo : qcategoryNo
                 },
+                
                 success : function(data){
-                   var str = "";
+                	
+                	console.log(data);
+                  	var str = "";
                   	
-                   if(data != null){
-
-                	   for(var i=0; i<data.length; i++){
-                		   str += '<div class="faq">'
-	                	   	   + '<i class="fa-solid fa-q"></i>'+data[i].faqTitle;
-	                	   	   + '<p>'+data[i].faqContent+'</p>' 
-	                	   	   + '</div>';
-                	   }
-                	   
-                	   $(".faq").empty().append(str);
-                   }
+                   	if(data != null){
+                   		for(var i = 0; i<data.length; i++){
+                   			str += '<div class="faq">'
+	                	   	    + '<i class="fa-solid fa-q"></i>'+data[i].faqTitle
+	                	   	    + '<p>' + data[i].faqContent + '</p>' 
+	                	   	    + '</div>';
+                	   	}
+                   	}
+               	  	$(".divFilter").empty(); 
+               	  	$(".divFilter").append(str);  
                    
                 }, 
+                
                 error : function(){
                    console.log("오류발생");
                 }
@@ -186,20 +234,35 @@
              
     	});
     
-	    
+	    // qa 슬라이드 
         $(function(){
-            $(".faq").click(function(){
-
+        	// 동적 요소(카테고리별 QA)는 .on()을 활용하여야 이벤트 적용이 가능하다. 
+        	$(document).on("click",".faq", function(){
                 var $faqEl = $(this).find("p");
-
+                
                 if($faqEl.css("display") == "none"){
                     $(".faq p").slideUp();
                     $faqEl.slideDown();
                 }else{
                     $faqEl.slideUp();
                 }
-
-            });
+                
+				var faqNo =  $(this).find("input[type=hidden]").val();
+                
+				console.log(faqNo);
+				
+				// 클릭 시 count 증가 
+                $.ajax({
+                	url : "faqCount",
+                	type : "POST",
+                	data : {
+                		faqNo : faqNo
+                	}, success(){
+                		console.log("count up");	
+                	}                	
+                })
+                
+        	});
         });
 
 
