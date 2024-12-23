@@ -12,6 +12,9 @@
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
 
 <style>
+
+   
+       
     #open{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 30px;

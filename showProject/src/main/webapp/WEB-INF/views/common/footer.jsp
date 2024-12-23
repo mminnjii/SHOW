@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.show.manager.model.vo.Manager"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%  
 	Manager loginManager = (Manager)session.getAttribute("loginManager");
 	boolean isLoginManager = (loginManager != null);
@@ -9,14 +10,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    
+    
     <style>
         /* div{border:1px solid red;} */
-        #footer {
-            width:80%;
+        /*#footer {
+            width:100%;
             height:200px;
             margin:auto;
             margin-top:50px;
-        }
+           
+            
+           
+        }*/
         #footer-1 {
             width:100%;
             height:20%;
@@ -61,7 +67,8 @@
         		display : block;
         	<%}	%>
         }
-        #managerLogout{
+        
+       #managerLogout{
         	color: #e9ecef;
         	float: right;
         	font-size: 10px;
@@ -71,14 +78,17 @@
         		display : none;
         	<%}	%>
         }
-        #managerPage{
+        
+       #managerPage{
         <%if(loginManager != null){%>
         	display : inline-block;
         <%} else{%>
          	display : none;
         <%} %>
         }
-        }
+        
+        
+        
         
     </style>
 </head>
