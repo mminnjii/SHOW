@@ -78,9 +78,9 @@
                     <a class="side-title">내 정보</a>
                     <ul class="side-sub-menu">
                         <li class="side-detail"><a href="${contextPath}/memberUpdate">회원정보 수정</a></li>
-                        <li class="side-detail"><a href="">배송지 관리</a></li>
-                        <li class="side-detail"><a href="">비밀번호 변경</a></li>
-                        <li class="side-detail"><a href="">회원 탈퇴</a></li>
+                        <li class="side-detail"><a href="${contextPath}/address">배송지 관리</a></li>
+                        <li class="side-detail"><a href="${contextPath}/password">비밀번호 변경</a></li>
+                        <li class="side-detail"><a href="${contextPath}/delete">회원 탈퇴</a></li>
                     </ul>
                 </li>
                 <li>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>회원 정보 수정</title>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
 <style>
 	div{
@@ -87,7 +87,7 @@
 	<div class="content">
 		<br><br>
 		<div class="inner">
-			<h3>마이페이지</h3>
+			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -131,7 +131,7 @@
                             </div>
                             <br>
                             <div id="btn-area" align="center">
-                                <button type="submit" class="btn btn-primary" disabled>수정 완료</button>
+                                <button type="submit" class="btn btn-primary" onclick="return update();">수정 완료</button>
                                 <button type="reset" class="btn btn-danger">취소</button>
                             </div>
                         </div>
@@ -143,6 +143,25 @@
 	</div>
     <script>
         //이름 형식
+        function update(){
+            var nameForm = /^[가-힣a-zA-Z]*$/;
+			var name = $("#userName").val();
+            var rrnForm = /\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])[-][1-4]\d{6}/;
+			var rrn = $("#userRrn").val();
+            var phoneForm = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+			var phone = $("#phone").val();
+            var emailForm = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			var email = $("#email").val();
+
+            if(nameForm.test(name) && rrnForm.test(rrn) && phoneForm.test(phone) && emailForm.test(email)){
+                alert("수정 성공!");
+                return true;
+            }else{
+                alert("수정 실패!");
+                return false;
+            }
+        }
+
 			$("input[name='userName']").blur(function(){
 				var nameForm = /^[가-힣a-zA-Z]*$/;
 				var name = $("#userName").val();

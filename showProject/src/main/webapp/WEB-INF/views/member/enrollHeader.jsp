@@ -9,7 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
@@ -56,6 +57,20 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"/>
+    <script>
+        var msg = "${sessionScope.alertMsg}";
+	    if (msg != null && msg != "") {
+	        alert(msg);
+	        <% session.removeAttribute("alertMsg"); %>
+	    }
+    </script>
+   
+    <!-- <c:if test="${not empty alertMsg }">
+		<script>
+			alertify.alert("서비스요청 성공","${alertMsg}");
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if> -->
     <div class="headcontent">
         <div id="header1">
             <a id="logo1" href="${contextPath}">

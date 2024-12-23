@@ -1,5 +1,7 @@
 package com.kh.show.member.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -160,6 +162,58 @@ public class MemberController {
 	public String memberUpdate() {
 		
 		return "member/memberUpdate";
+	}
+	@GetMapping("/address")
+	public String address() {
+		
+		return "member/memberAddress";
+	}
+	@GetMapping("/password")
+	public String password() {
+		
+		return "member/passUpdate";
+	}
+	@GetMapping("/delete")
+	public String delete() {
+		
+		return "member/deleteMember";
+	}
+	
+	//회원 정보 업데이트 메소드
+	@PostMapping("update.me")
+	public ModelAndView updateMember(Member m,
+									 HttpSession session,
+									 ModelAndView mv) {
+		int result = memberService.updateMember(m);
+		
+		if(result>0) {
+			Member loginUser = memberService.loginMember(m);
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("member/myPage");
+		}
+		
+		return mv;
+	}
+	
+	//회원 배송지 추가
+	@PostMapping("/address.me")
+	public String memberAddress(String userId,
+								String address,
+								Member m,
+								HttpSession session) {	
+		HashMap<String,String> map = new HashMap<>();
+		map.put("userId",userId);
+		map.put("address", address);
+		
+		int result =  memberService.memberAddress(map);
+		
+		if(result>0) {
+			Member loginUser = memberService.loginMember(m);
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("alertMsg", "변경 성공!");
+		}
+		
+		return "member/memberAddress";
 	}
 	
 								

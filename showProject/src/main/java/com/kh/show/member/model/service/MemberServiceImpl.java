@@ -1,5 +1,7 @@
 package com.kh.show.member.model.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +30,13 @@ public class MemberServiceImpl implements MemberService{
 	//회원가입
 	@Override
 	public int insertMember(Member m) {
-		
-		int result = memberDao.insertMember(sqlSession,m);
-		
-		return result;
+		return memberDao.insertMember(sqlSession,m);
 	}
 
+	//정보 수정
 	@Override
 	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateMember(sqlSession,m);
 	}
 
 	@Override
@@ -46,9 +45,15 @@ public class MemberServiceImpl implements MemberService{
 		return 0;
 	}
 
+	//아이디 중복 확인
 	@Override
 	public int idCheck(String checkId) {
 		return memberDao.idCheck(sqlSession,checkId);
+	}
+
+	@Override
+	public int memberAddress(HashMap<String, String> map) {
+		return memberDao.memberAddress(sqlSession,map);
 	}
 
 }

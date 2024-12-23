@@ -1,5 +1,7 @@
 package com.kh.show.member.model.service;
 
+import java.util.HashMap;
+
 import com.kh.show.member.model.vo.Member;
 
 public interface MemberService {
@@ -14,4 +16,6 @@ public interface MemberService {
 	int deleteMember(String userId);
 	//아이디 중복체크 서비스
 	int idCheck(String checkId);
+	//회원 배송지 서비스
+	int memberAddress(HashMap<String, String> map);
 }
