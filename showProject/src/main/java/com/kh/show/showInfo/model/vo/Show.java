@@ -21,9 +21,9 @@ public class Show {
 	private String notice;//	NOTICE	VARCHAR2(2000 BYTE)
 	private String precaution;//	PRECAUTION	VARCHAR2(2000 BYTE)
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
-	private int hallNo;//	HALL_NO	NUMBER
-	private int genreNo;//	GENRE_NO	NUMBER
-	private int regionNo;//	REGION_NO	NUMBER
+	private String hallNo;//	HALL_NO	NUMBER
+	private String genreNo;//	GENRE_NO	NUMBER
+	private String regionNo;//	REGION_NO	NUMBER
 	private Date showStart;//    "SHOW_START" DATE,
 	private Date showEnd;//    "SHOW_END" DATE
 	private int count;

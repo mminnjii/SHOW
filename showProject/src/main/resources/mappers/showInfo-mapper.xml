@@ -37,8 +37,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	       
   	<!-- 공연상세 페이지를 위한 공연정보 조회 -->
 	<select id="selectShow" resultMap="showResultSet">
-		SELECT * 
-		FROM SHOW
+		SELECT S.SHOW_NO,
+		        SHOW_NAME,
+		        SHOW_EXPLAIN,
+		        PRICE,
+		        NOTICE,
+		        HALL_NAME,
+		        GENRE_NAME,
+		        REGION_NAME,
+		        SHOW_START,
+		        SHOW_END
+		FROM SHOW S
+		JOIN HALL H  ON (S.HALL_NO = H.HALL_NO)
+		JOIN GENRE G ON (S.GENRE_NO = G.GENRE_NO)
+		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
+		WHERE S.STATUS = 'Y'
 	</select>
 	
 	
