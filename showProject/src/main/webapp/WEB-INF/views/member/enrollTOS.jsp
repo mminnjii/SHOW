@@ -72,6 +72,7 @@
 </style>
 </head>
 <body>
+    <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"/>
 	<jsp:include page="/WEB-INF/views/member/enrollHeader.jsp"/>
 	
 	<div class="content">
@@ -81,6 +82,7 @@
         </div>
 		<div class="inner">
 			<h3>약관에 동의해 주세요</h3>
+            <br>
             <table id="tos">
                 <tr>
                      <td>
@@ -105,7 +107,7 @@
             </table>
             <br><br>
             <div id="next" style="text-align: center;">
-                <button id="btn1" disabled>다음 단계</button>
+                <button id="btn1" onclick="enroll();" disabled>다음 단계</button>
             </div>
 		</div>
 	</div>
@@ -115,19 +117,36 @@
             $("#all").click(function(){
                 if($(this).prop("checked")==true){
                     $("input[name=ck]").prop("checked",true);
+                    $('#btn1').prop('disabled', false);
                 }else{
                     $("input[name=ck]").prop("checked",false);
+                    $('#btn1').prop('disabled', true); 
                 }
             });
         });
 
-        $(function(){
-            if($("#t1").checked && $("#t2").checked){
-                $("#btn1").attr("disabled",false);
-            }else{
-                $("#btn1").attr("disabled",true);
+        $(document).ready(function() {
+            // 체크박스 상태에 따라 버튼 활성화/비활성화 함수
+            function state() {
+                if ($('#t1').prop('checked') && $('#t2').prop('checked')) {
+                    $('#btn1').prop('disabled', false);  // 두 체크박스가 모두 선택되면 버튼 활성화
+                } else {
+                    $('#btn1').prop('disabled', true);   // 하나라도 선택되지 않으면 버튼 비활성화
+                }
             }
+
+            // 체크박스 상태가 변경될 때마다 버튼 상태를 업데이트
+            $('#t1, #t2').change(function() {
+                state();
+            });
+
+            // 초기 상태 확인
+            state();
         });
+
+        function enroll(){
+            location.href = "${contextPath}/memberEnrollPage";
+        }
     </script>
 
     <!--약관1-->
@@ -606,6 +625,7 @@
             </div>
         </div>
     </div>
+    <br><br><br><br>
     <jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>
 </html>

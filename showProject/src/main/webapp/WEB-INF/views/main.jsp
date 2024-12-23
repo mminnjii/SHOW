@@ -172,16 +172,16 @@
             	
                
                             <div class="slider__inner">
-                               <div class="slider"><img src="/show/resources/images/BigBanner_PC_르스페이스(1).jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_GFRIEND10thAnniversary.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_글루미선데이(1).jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_김연우(1).jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_링크어택이벤트.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_베르테르.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_비엔나1900.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_틱틱붐로고만.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_BigBanner_퍼스트맨.jpg" alt=""></div>
-                                <div class="slider"><img src="/show/resources/images/PC_빅배너_클로버_수정01.jpg" alt=""></div>
+                               <div class="slider"><img src="${contextPath }/resources/images/BigBanner_PC_르스페이스(1).jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_GFRIEND10thAnniversary.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_글루미선데이(1).jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_김연우(1).jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_링크어택이벤트.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_베르테르.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_비엔나1900.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_틱틱붐로고만.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_BigBanner_퍼스트맨.jpg" alt=""></div>
+                                <div class="slider"><img src="${contextPath }/resources/images/PC_빅배너_클로버_수정01.jpg" alt=""></div>
                             </div>
                       
                 
@@ -243,7 +243,7 @@
                 <td id="rr" ></td>
                 <td>
                 <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
-                <img src="/show/resources/images/암표거래.jpg" alt="" id="ticket2"> </a>
+                <img src="${contextPath }/resources/images/암표거래.jpg" alt="" id="ticket2"> </a>
                 </td>
                 <td id="dd"></td>
                 <td id="and">
@@ -255,7 +255,7 @@
                 </td>
                 <td id="rr"></td>
                 <td><a href="">
-                <img src="/show/resources/images/소모임.jpg" alt="" id="ticket"> </a>
+                <img src="${contextPath }/resources/images/소모임.jpg" alt="" id="ticket"> </a>
                 </td>
                 <td id="rr"></td>
                 <td id="rr"></td>

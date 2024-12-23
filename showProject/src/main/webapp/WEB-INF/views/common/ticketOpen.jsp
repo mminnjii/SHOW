@@ -62,35 +62,35 @@
             <tr>
                 <td>
                     <a href="">
-                    <img src="/show/resources/images/강홍석.jpg" alt="" id="s1"></a><br><br>
+                    <img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="s1"></a><br><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
                     <a href="">
-                    <img src="/show/resources/images/sll.jpg" alt="" id="s2"></a><br><br>
+                    <img src="${contextPath }/resources/images/sll.jpg" alt="" id="s2"></a><br><br>
                     <span id="j1">[단독판매] KB리브모바일</span><br>
                     <span id="j2">12.19(목) 17:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
                     <a href="">
-                    <img src="/show/resources/images/꽃의비밀.jpg" alt="" id="s3"></a><br><br>
+                    <img src="${contextPath }/resources/images/꽃의비밀.jpg" alt="" id="s3"></a><br><br>
                     <span id="j1">[연극] 꽃의 비밀</span><br>
                     <span id="j2">12.20(금) 11:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
                     <a href="">
-                    <img src="/show/resources/images/시라노.jpg" alt="" id="s4"></a><br><br>
+                    <img src="${contextPath }/resources/images/시라노.jpg" alt="" id="s4"></a><br><br>
                     <span id="j1">[뮤지컬] 시라노</span><br>
                     <span id="j2">12.19(목) 14:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
                     <a href="">
-                    <img src="/show/resources/images/해적.jpg" alt="" id="s5"></a><br><br>
+                    <img src="${contextPath }/resources/images/해적.jpg" alt="" id="s5"></a><br><br>
                     <span id="j1">[단독판매] 해적</span><br>
                     <span id="j2">12.20(금) 15:00</span>
                 </td>

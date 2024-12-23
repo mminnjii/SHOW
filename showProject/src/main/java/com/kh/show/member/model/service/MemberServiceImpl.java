@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	//로그인
 	@Override
 	public Member loginMember(Member m) {
 
@@ -24,10 +25,13 @@ public class MemberServiceImpl implements MemberService{
 		return loginUser;
 	}
 
+	//회원가입
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = memberDao.insertMember(sqlSession,m);
+		
+		return result;
 	}
 
 	@Override
@@ -44,8 +48,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int idCheck(String checkId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.idCheck(sqlSession,checkId);
 	}
 
 }

@@ -26,7 +26,30 @@
 		WHERE USER_ID = #{userId}
 		AND STATUS = 'Y'
 	</select>
-
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER(USER_NO,
+						   USER_ID,
+						   USER_PWD,
+						   USER_NAME,
+						   USER_RRN,
+						   PHONE,
+						   EMAIL)
+					VALUES(SEQ_MNO.NEXTVAL,
+						   #{userId},
+						   #{userPwd},
+						   #{userName},
+						   #{userRrn},
+						   #{phone},
+						   #{email})
+	</insert>
+	
+	<select id="idCheck" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+		AND STATUS = 'Y'
+	</select>
 
 
 

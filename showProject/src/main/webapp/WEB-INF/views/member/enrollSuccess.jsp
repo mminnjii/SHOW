@@ -7,13 +7,13 @@
 <title>가입성공</title>
 <style>
 	.content{
-		width: 100%;
+		width: 80%;
 		margin: auto;
 	}
 	.inner{
 		width: 100%;
 		margin: auto;
-		padding-top: 15%;
+		padding-top: 5%;
 		text-align: center;
 	}
 
@@ -55,9 +55,14 @@
 			<p id="text1">TicketPal 회원 가입에 성공했습니다</p>
 			<p id="text2">더 많은 서비스를 이용해 보세요</p>
 			<br>
-			<button id="btn1">홈페이지로 이동</button>
+			<button id="btn1" onclick="toHome();">홈페이지로 이동</button>
 		</div>
 	</div>
+	<script>
+		function toHome(){
+			location.href="${contextPath}";
+		}
+	</script>
 	
 	<jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>

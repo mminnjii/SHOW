@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.show.member.model.service.MemberService;
@@ -99,8 +101,68 @@ public class MemberController {
 		
 		return "member/enrollTOS";
 	}
+	@GetMapping("/memberEnrollPage")
+	public String memberEnrollPage() {
+		
+		log.info("회원 정보 입력");
+		
+		return "member/memberEnrollPage";
+	}
+
 	
+	//회원가입 메소드
+	@PostMapping("insert.me")
+	public String insertMember(Member m,
+							   HttpSession session) {
+		
+		String encPwd = bcrtptPasswordEncoder.encode(m.getUserPwd());
+		
+		m.setUserPwd(encPwd);
+		
+		int result = memberService.insertMember(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "회원가입 성공!");
+			return "member/enrollSuccess";
+		}else{
+			session.setAttribute("alertMsg", "회원가입 실패! 홈페이지로 이동합니다");
+			return "redirect:/";
+		}
+	}
 	
+	//아이디 중복 확인
+	@ResponseBody
+	@RequestMapping(value="/idCheck", produces="text/html;charset=UTF-8")
+	public String idCheck(String checkId) {
+		
+		int result = memberService.idCheck(checkId);
+		
+		String val = "";
+		
+		if(result>0) {
+			val = "NNN";
+		}else {
+			val = "YYY";
+		}
+		
+		return val;
+	}
+	
+	//마이페이지로 이동
+	@GetMapping("/myPage")
+	public String myPage() {
+		
+		log.info("마이페이지");
+		
+		return "member/myPage";
+	}
+	@GetMapping("/memberUpdate")
+	public String memberUpdate() {
+		
+		return "member/memberUpdate";
+	}
+	
+								
 	
 	
 	
