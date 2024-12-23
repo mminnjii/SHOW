@@ -1,16 +1,16 @@
 package com.kh.show.manager.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
@@ -20,8 +20,9 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService service;
+//	private Notice notice;
 	
-	@GetMapping("/mLogin")
+	@GetMapping("/managerLogin")
 	public String moveLoginManager() {
 		return "manager/managerLogin";
 	}
@@ -55,4 +56,45 @@ public class ManagerController {
 	public String managerInfo() {
 		return "manager/managerPage";
 	}
+	
+	@GetMapping("/noticeInsert")
+	public String moveNoticeInsert() {
+		return "manager/noticeInsert";
+	}
+	
+	/*
+	@PostMapping("/noticeInsert")
+	public int noticeInsert(@ModelAttribute notice n,
+											HttpSession session) {
+		notice n = service.insertNotice(n);
+		
+		return n;
+	}
+	*/						// 공지사항 등록
+	
+	/*
+	@RequestMapping("/noticeList")
+	public String noticeList(@ModelAttribute notice notice) {
+		
+		List<notice> notice = service.selectNotice();
+		
+		return null;
+	}
+	*/						// 공지사항 리스트 가져오기
+	
+	/*
+	@RequestMapping("/noticeUpdate")
+	public String noticeList(@ModelAttribute notice n)
+		notice n = service.updateNotice(n);
+		
+		return n;
+	*/
+	
+	/*
+	@RequestMapping("/noticeDelete")
+	public String noticeDelete(@ModelAttribute notice n)
+		notice n = service.deleteNotice(n);
+		
+		return n;
+	 */
 }
