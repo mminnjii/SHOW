@@ -42,10 +42,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        SHOW_EXPLAIN,
 		        PRICE,
 		        NOTICE,
-		        HALL_NAME,
-		        GENRE_NAME,
-		        REGION_NAME,
-		        SHOW_START,
+		        HALL_NAME HALL_NO,
+		        GENRE_NAME GENRE_NO,
+		        REGION_NAME REGION_NO,
+		        SHOW_START ,
 		        SHOW_END
 		FROM SHOW S
 		JOIN HALL H  ON (S.HALL_NO = H.HALL_NO)

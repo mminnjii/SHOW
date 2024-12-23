@@ -26,15 +26,37 @@ public class ShowInfoController {
 	
 	//공연상세이동
 	@GetMapping("/detail")
-	public String detail(Model model) {
+	public String detail(HttpSession session) {
 		
-		ArrayList<Show> list = showInfoService.selectShow();
-		model.addAttribute("s", list);
+		Show s = showInfoService.selectShow();
+		session.setAttribute("s", s);
 		
-		System.out.println(list);
+		// System.out.println(s);
 		
 		return "show/showInfo/detailInfo";
 	}
+	
+	
+	// 리뷰이동
+	@GetMapping("/review")
+	public String review(HttpSession session, Model model) {
+		
+			Show s = (Show)session.getAttribute("s");
+
+		    // 세션에 데이터가 없으면 DB에서 다시 조회
+		    if (s == null) {
+		        s = showInfoService.selectShow();
+		        session.setAttribute("s", s); // 다시 세션에 저장
+		    }
+
+		    model.addAttribute("s", s);
+		
+		double reviewRank  = 4.5;
+		model.addAttribute("reviewRank", reviewRank);
+		
+		return "show/showInfo/review";
+	}
+	
 	
 	
 	// 좌석이동
@@ -56,15 +78,7 @@ public class ShowInfoController {
 		return num;
 	}
 	
-	// 리뷰이동
-	@GetMapping("/review")
-	public String review(HttpSession session) {
-		
-		double reviewRank  = 4.5;
-		session.setAttribute("reviewRank", reviewRank);
-		
-		return "show/showInfo/review";
-	}
+
 	
 
 	// 상세정보 이동

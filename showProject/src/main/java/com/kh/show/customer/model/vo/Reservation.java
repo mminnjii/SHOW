@@ -2,7 +2,7 @@ package com.kh.show.customer.model.vo;
 import java.sql.Date;
 import java.util.List;
 
-import com.kh.show.mainview.vo.show;
+import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +26,6 @@ public class Reservation {
 	private String precaution;	//	PRECAUTION
 
 	// mapper에서 collection 이용하기 위해 사용.
-	private List<show> showList;
+	private List<Show> showList;
 	
 }

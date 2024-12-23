@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +20,12 @@
 			position: fixed;
 			bottom: 30px;
 			right: 0;
-			width: 300px;
+			width: 350px;
 			height: 90%;
 			background-color: #f4f4f4;
 			padding: 20px;
 			box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+			 z-index: 10; /* 다른 요소보다 위에 표시 */
 		}
 		
 		td {
@@ -144,18 +146,18 @@
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
-					      	<h2>${s.showName }</h2> <br>
-			                <p>장소 : ${s.regionNo }</p> 
+					      	 <h2>${s.showName }</h2> <br>
+			                <p>장르 : ${s.genreNo }</p> 
+			                <p>소개 : ${s.showExplain }</p> 
+			                <p>장소 : ${s.hallNo }</p> 
 			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
 			                <p>공연시간 : 120분</p>
 			                <p>가격 : ${s.price }</p>
-			                <p>유의사항 : ${s. notice}</p>
 						</c:when>                
 		                <c:otherwise>
 		                	<h2>상세정보를 불러올 수 없습니다.</h2>
 		                </c:otherwise>
 	                </c:choose>
-	          
 	            </div>
 	        </div>
 	        <br>

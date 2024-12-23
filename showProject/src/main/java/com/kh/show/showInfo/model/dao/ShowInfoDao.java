@@ -13,11 +13,10 @@ public class ShowInfoDao {
 	
 	
 	// 공연상세정보조회
-	public ArrayList<Show> selectShow(SqlSession session) {
+	public Show selectShow(SqlSession session) {
 	
-		ArrayList<Show> list = (ArrayList)session.selectList("showInfoMapper.selectShow");
-		
-		return list;
+		Show s = session.selectOne("showInfoMapper.selectShow");
+		return s;
 	}
 	
 	

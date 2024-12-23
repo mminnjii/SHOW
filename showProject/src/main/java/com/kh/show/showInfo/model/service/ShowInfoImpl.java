@@ -19,11 +19,11 @@ public class ShowInfoImpl implements ShowInfoService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Show> selectShow() {
+	public Show selectShow() {
 		
-		ArrayList<Show> list = showInfoDao.selectShow(sqlSession);
+		Show s = showInfoDao.selectShow(sqlSession);
 		
-		return list;
+		return s;
 	}
 
 }
