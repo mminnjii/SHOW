@@ -193,9 +193,9 @@
                         <li><a href="">클래식</a></li>
                         <li><a href="">전시</a></li>
                         <li id="li1">|</li>
-                        <li><a href="${contextPath}/cmain">공지사항</a></li>
-                        <li><a href="">커뮤니티</a></li>
-                        <li><a href="">오픈공지</a> </li>
+                        <li><a href="${contextPath}/notice/list">공지사항</a></li>
+                        <li><a href="${contextPath}">커뮤니티</a></li>
+                        <li><a href="${contextPath}">오픈공지</a> </li>
                         <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
 
                     </ul>

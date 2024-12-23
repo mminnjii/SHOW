@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.show.customer.model.dao.CustomerServiceDao;
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Reservation;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -62,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public int faqCount(int faqNo) {
+	public int faqCount(String faqNo) {
 		return cServiceDao.faqCount(sqlSession, faqNo);
 	}
 

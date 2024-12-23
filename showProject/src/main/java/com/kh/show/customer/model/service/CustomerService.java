@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Reservation;
 
 public interface CustomerService {
 
@@ -26,7 +26,7 @@ public interface CustomerService {
 	// 회원 예약 번호 출력 
 	ArrayList<Reservation> reSearch(int userNo);
 
-	int faqCount(int faqNo);
+	int faqCount(String faqNo);
 	
 
 }
