@@ -25,6 +25,8 @@ public interface CustomerService {
 
 	// 회원 예약 번호 출력 
 	ArrayList<Reservation> reSearch(int userNo);
+
+	int faqCount(int faqNo);
 	
 
 }

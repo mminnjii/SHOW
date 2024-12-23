@@ -61,4 +61,9 @@ public class CustomerServiceImpl implements CustomerService{
 		return cServiceDao.reSearch(sqlSession, userNo);
 	}
 
+	@Override
+	public int faqCount(int faqNo) {
+		return cServiceDao.faqCount(sqlSession, faqNo);
+	}
+
 }

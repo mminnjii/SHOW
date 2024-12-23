@@ -140,21 +140,22 @@
 	           	<c:if test="${not empty faqList }">
 	           		<c:forEach var="list" items="${faqList}">
 			      		<div class="faq">
+							<input type="hidden" value="${list.faqNo}" id="faqNo">
 			                <i class="fa-solid fa-q"></i> ${list.faqTitle}
 			                <p>${list.faqContent}</p>
 			            </div>
 	           		</c:forEach>	
 	           	</c:if>
            </div>
-            
+
         </div>
 	</div>
         
-
         
-    <script>   
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     
     
+    <script>     
     	// 검색 faq 리스트 
     	$("#search").on("input", function(){
     		
@@ -179,8 +180,8 @@
    	                	   	    + '</div>';
                    	   	}
                    	   
-                   	  	// $(".divFilter").empty(); 
                    	  	$(".divFilter").append(str);  
+                   	  	
                 	} else{
                 		$(".divFilter").html("");
     					var str2 = "";
@@ -206,6 +207,7 @@
                 data : {
                    qcategoryNo : qcategoryNo
                 },
+                
                 success : function(data){
                 	
                 	console.log(data);
@@ -223,9 +225,11 @@
                	  	$(".divFilter").append(str);  
                    
                 }, 
+                
                 error : function(){
                    console.log("오류발생");
                 }
+                
              });
              
     	});
@@ -233,15 +237,31 @@
 	    // qa 슬라이드 
         $(function(){
         	// 동적 요소(카테고리별 QA)는 .on()을 활용하여야 이벤트 적용이 가능하다. 
-        	$(document).on("click",".faq",function(){
+        	$(document).on("click",".faq", function(){
                 var $faqEl = $(this).find("p");
-
+                
                 if($faqEl.css("display") == "none"){
                     $(".faq p").slideUp();
                     $faqEl.slideDown();
                 }else{
                     $faqEl.slideUp();
                 }
+                
+				var faqNo =  $(this).find("input[type=hidden]").val();
+                
+				console.log(faqNo);
+				
+				// 클릭 시 count 증가 
+                $.ajax({
+                	url : "faqCount",
+                	type : "POST",
+                	data : {
+                		faqNo : faqNo
+                	}, success(){
+                		console.log("count up");	
+                	}                	
+                })
+                
         	});
         });
 

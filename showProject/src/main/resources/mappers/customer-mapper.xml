@@ -23,18 +23,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CREATEDATE" property="createDate" />
 		<result column="STATUS" property="status" />
 		<result column="ANSWER_CONTENT" property="answerContent" />
-
-	</resultMap>
-
+	</resultMap>	
+	
+	<!-- 전체리스트 -->
 	<select id="selectFaqList" resultMap="faqResultSet">
-		SELECT * 
+		SELECT *
 		FROM FAQ
+		ORDER BY COUNT DESC
 	</select>
 
+	<!-- 카테고리별 리스트 -->
 	<select id="faqFilterList" resultMap="faqResultSet">
 		SELECT * 
 		FROM FAQ
 		WHERE QCATEGORY_NO = #{qcategoryNo}
+		ORDER BY COUNT DESC
 	</select>
 	
 	<select id="faqSearchList" parameterType="string" resultMap="faqResultSet">
@@ -56,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      ,CHANGE_NAME) 
              VALUES (Q_SEQ.NEXTVAL
                     ,1
-                    ,#{reservationId}
+                    ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
                     ,#{qcategoryNo}
                     ,#{qTitle}
                     ,#{qContent}
@@ -89,13 +92,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				                    )
 	</insert>
 	
-	
-	<!-- 예약 번호 가져오기 -->
-	<select id="reSearch" parameterType="_int" resultType="Reservation">
-		SELECT RESERVATION_ID reservationId
-		FROM RESERVATION
-		WHERE USER_NO = #{userNo}
-	</select>
+	<!-- faq count up  -->
+	<update id="faqCount" parameterType="_int">
+		UPDATE FAQ
+		SET COUNT = COUNT+1
+		WHERE FAQ_NO = #{faqNo}
+	</update>
 	
 	
 		

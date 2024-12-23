@@ -56,7 +56,7 @@
         <h2>1:1 문의하기</h2>
 	
 		<!-- 회원인 경우와 아닌 경우로 조건처리 필요 -->        
-        <form class="outer" method="POST" action="${contextPath}/queInsert" enctype="multipart/form-data">  <!-- 파일 업로드 -->
+        <form class="outer" method="POST" action="${contextPath}/queInsert" enctype="multipart/form-data" >  <!-- 파일 업로드 -->
         <!-- 회원인 경우에는 회원의 정보를 보여줘야 한다. 해당 조건 처리 필요. -->
             <div class="input">
                 <p>이름 <span class="sColor">*</span></p>
@@ -70,7 +70,7 @@
 
             <div class="input">
                 <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
-                <input type="text" name="phone" class="form-control"  placeholder="휴대폰 번호를 입력하세요(-제외)" required> 
+                <input type="text" id="phone" name="phone" class="form-control"  placeholder="휴대폰 번호를 입력하세요(-제외)" required> 
             </div>
 
 			            
@@ -85,16 +85,14 @@
 	            <div class="input">
 	                <p>예약번호</p>  
 	                <div class="input-group mb-3" > <!-- ${empty loginUser ? 'disabled' : ''} -->
-	                    <select name="reservationId" class="form-control">
+	                    <select id="reservationId" name="reservationId" class="form-control">
 	                        <option selected disabled>예약번호를 선택해 주세요</option> 
-	                        <option>1</option> 
-	                        <option>1</option>
+	                    
 	                    </select>
 	                    <div class="input-group-append">  <!-- 예약 조회 버튼을 누르면 로그인한 회원의 예약 내역을 불러와서 보여줘야 한다 -->
 	                      <button class="form-control" type="button" onClick="reSearch();">예약번호 조회</button>
 	                    </div>
 	                </div>
-				
 			
 	                <ul>
 	                    <li>문의 유형 선택 후 예약 번호를 조회할 수 있습니다.</li>
@@ -131,34 +129,97 @@
 			<!-- 전체동의 체크박스 기능 구현해야 함. -->
             <div class="form-check input">
                 <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" value=""> 전체동의
+                  <input id="all" type="checkbox" class="form-check-input check"  onclick="checkAll();" required> 전체동의
                 </label>
                 <div class="form-check input">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" value=""> (필수) 개인정보 수집.이용 동의 >
+                      <input name="aggrement" type="checkbox" class="form-check-input check" onclick="updateALl();"> (필수) 개인정보 수집.이용 동의 >
                     </label><br>
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value=""> (필수) 개인정보 제 3자 제공 동의 >
+                        <input name="aggrement" type="checkbox" class="form-check-input check" onclick="updateALl();"> (필수) 개인정보 제 3자 제공 동의 >
                       </label>
                 </div>
             </div>
             <br>
-            <button class="form-control">문의하기</button>
+            <button class="form-control" onclick="return checkPhone();">문의하기</button>
 
         </form>
     </div>
         
    	<script>
+   	
+   		// 핸드폰 번호 체크 정규식 
+   		function checkPhone(){
+   			var regExp = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
+			var phone = $("#phone").val();
+   			
+   			if(!regExp.test(phone)){
+   				alert("휴대폰 번호를 다시 입력해 주세요.");
+   				$("#phone").focus();	
+   				
+   				return false;
+   			}
+   			return true;
+   		}
+   	
+   		// 전체동의 체크박스 
+		function checkAll(){
+   			
+   			var all = $("#all");
+   			var sub = $("input[name='aggrement']");
+   			
+   			if(all.prop("checked")){
+   				sub.prop("checked", true);
+   			}else{
+   				sub.prop("checked", false);   				
+   			}
+   			
+   		}
+   		
+   		// 체크박스 하나라도 해제되면 전체동의 체크 해제 
+   		function updateALl(){
+   			var all = $("#all");
+   			var sub = $("input[name='aggrement']");
+   			var allChecked = true;
+   			
+   			for(var i=0; i<sub.length; i++){
+   				if(!$(sub[i]).prop("checked")){   //sub jQuery 객체로 생성됨. dom 요소를 jquery 객체로 변환해서 사용해야 한다. 
+   					allChecked = false;
+   					break;
+   				}
+   			}
+   			
+   			all.prop("checked", allChecked);
+   	
+   			if(!sub.prop("checked")){
+   				alert("서비스 동의를 해주시기 바랍니다.");
+   			}
+   		}
+   	
+   		// 예약 내역 불러오기 
    		function reSearch(){
    			console.log("버튼 클릭됨");
    			$.ajax({
    				url : '${contextPath}/reSearch',
    				method : 'POST',
-   				data : {  <%-- 회원 번호로 입력할 수 있도록  --%>
+   				data : {  <%-- 회원 번호를 전달할 수 있도록 수정 --%>
    					userNo : 1  
    				},
    				success : function(reList){
+   					
    					console.log(reList);
+   					
+   					var str = "";
+					
+   					for(var i=0;i<reList.length;i++){
+						str += "<option>"
+							+ reList[i].reservationId
+							+ " / "
+							+ reList[i].showList[0].showName
+							+ "</option>";
+					}   					
+					
+   					$("#reservationId").html(str);
    				},
    				error : function(){
    					alert("예약 조회가 불가능합니다.");

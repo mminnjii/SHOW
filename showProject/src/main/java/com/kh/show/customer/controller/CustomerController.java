@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -93,9 +94,9 @@ public class CustomerController {
 		
 		ArrayList<Faq> searchList = customerService.faqSearchList(keyword);
 		
-		for(Faq q : searchList) {
-			System.out.println(q);
-		}
+//		for(Faq q : searchList) {
+//			System.out.println(q);
+//		}
 		
 		return searchList;
 	}
@@ -126,12 +127,20 @@ public class CustomerController {
 		
 		System.out.println(q);
 		
+		int result = 0;
+		
 		if(m.getUserNo() != 0) {  // 회원인 경우
-			int result = customerService.questionInsert(q);
+			result = customerService.questionInsert(q);
 		}else {  // 회원이 아닌 경우 
-			int result = customerService.questionNonInsert(q);			
+			result = customerService.questionNonInsert(q);			
 		}
-				
+		
+		if(result>0) {
+			String alertMsg = (m.getUserNo() != 0) 
+									? "1:1 문의가 등록되었습니다. 마이페이지에서 내역을 확인하실 수 있습니다." 
+									: "1:1 문의가 등록되었습니다.";
+		}
+
 		return "redirect:/cmain";
 	}
 	
@@ -171,22 +180,30 @@ public class CustomerController {
 	
 	// 회원 예약번호 조회 
 				// Reservation VO 파일 reservation 폴더에 있는 걸로 다시 import 해야 한다. 
-	 @ResponseBody
-	   @PostMapping(value="/reSearch", produces = "application/json; charset=UTF-8")
-	   public ArrayList<Reservation> reSearch(int userNo){
-	      
-	      System.out.println(userNo);
-	      
-	      ArrayList<Reservation> reList = customerService.reSearch(userNo);
-	      
-	      for(Reservation r : reList) {
-	         System.out.println(r);
-	      }
-	      
-	      return reList;
-	   }
-	   
+
+	@ResponseBody
+	@PostMapping(value="/reSearch", produces = "application/json; charset=UTF-8")
+	public ArrayList<Reservation> reSearch(int userNo){
+		
+		// 진짜 회원번호를 넘겨받도록 기능 구현해야 한다.
+//		System.out.println(userNo);
+		
+		ArrayList<Reservation> reList = customerService.reSearch(userNo);
+		
+		return reList;
+	}
+
 	
-	  
+	@PostMapping("/faqCount")
+	public void faqCount(int faqNo) {
+		
+		System.out.println(faqNo);
+		
+		int result = customerService.faqCount(faqNo);
+					
+		System.out.println(result);
+	}
+	
+
 	
 }
