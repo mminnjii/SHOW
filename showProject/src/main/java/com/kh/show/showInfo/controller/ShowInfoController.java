@@ -1,22 +1,35 @@
 package com.kh.show.showInfo.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.showInfo.model.service.ShowInfoService;
+import com.kh.show.showInfo.model.vo.Show;
+
 @Controller
 @RequestMapping("/showInfo") 
 public class ShowInfoController {
 	
 	
+	@Autowired
+	private ShowInfoService showInfoService;
+	
+	
 	//공연상세이동
 	@GetMapping("/detail")
 	public String detail() {
-	
+		
+		ArrayList<Show> list = showInfoService.selectShow();
+		
+		
 		return "show/showInfo/detailInfo";
 	}
 	
@@ -27,6 +40,7 @@ public class ShowInfoController {
 		
 		return "reservation/seats";
 	}
+	
 	
 	@ResponseBody
 	@PostMapping("/selectedSeats")
@@ -55,13 +69,6 @@ public class ShowInfoController {
 	public String info() {
 	
 		return "info";
-	}
-	
-	// 캘린더 이동
-	@GetMapping("/calendar")
-	public String calendar() {
-	
-		return "calendar";
 	}
 	
 	
