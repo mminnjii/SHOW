@@ -1,22 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.show.manager.model.vo.Manager"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%  
 	Manager loginManager = (Manager)session.getAttribute("loginManager");
 	boolean isLoginManager = (loginManager != null);
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    
+    
     <style>
         /* div{border:1px solid red;} */
-        #footer {
-            width:80%;
+        /*#footer {
+            width:100%;
             height:200px;
             margin:auto;
             margin-top:50px;
-        }
+           
+            
+           
+        }*/
         #footer-1 {
             width:100%;
             height:20%;
@@ -55,31 +63,28 @@
         	color: #e9ecef;
         	float: right;
         	font-size: 10px;
-        	<%if(isLoginManager==true){ %>
-        		display : none;
-        	<%} else {%>
-        		display : block;
-        	<%}	%>
+        	display: ${sessionScope.loginManager == null ? 'inline-block' : 'none'}
         }
-        #managerLogout{
+        
+       #managerLogout{
         	color: #e9ecef;
         	float: right;
         	font-size: 10px;
-        	<%if(isLoginManager==true){ %>
-        		display : block;
-        	<%} else {%>
-        		display : none;
-        	<%}	%>
+        	display: ${sessionScope.loginManager != null ? 'inline-block' : 'none'}
         }
-        #managerPage{
+
+        
+       #managerPage{
         <%if(loginManager != null){%>
         	display : inline-block;
         <%} else{%>
          	display : none;
         <%} %>
-        }
-        }
+
         
+        
+        
+
     </style>
 </head>
 <body>
@@ -91,8 +96,8 @@
             <a href="#">이용약관</a> | 
             <a href="#">고객센터</a> | 
             <a href="#">티켓판매안내</a> | 
-            <a href="#">광고안내</a> | 
-            <a href="${contextPath}/managerInfo" id="managerPage">관리자 페이지</a>
+            <a href="#">광고안내</a>
+            <a href="${contextPath}/managerPage" id="managerPage"> |  관리자 페이지</a>
              
         </div>
 
@@ -112,7 +117,7 @@
             <p id="p2">Copyright © 1998-2024 TicketPal Institute All Right Reserved</p>
             </table>
             <a href="${contextPath}/mLogin" ><p id="managerLogin">관리자 로그인</p></a>
-            <a href="${contextPath}/managerLogout" ><p id="managerLogout">관리자 로그아웃</p></a>
+            <a href="${contextPath}/managerLogout"><p id="managerLogout">관리자 로그아웃</p></a>
         </div>
     </div>
 </body>
