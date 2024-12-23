@@ -1,18 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.show.member.model.vo.Member " %>
-<%@import="com.kh.show.mamagner.model.vo.Manager" %>
+    pageEncoding="UTF-8" import="com.kh.show.member.model.vo.Member" import="com.kh.show.manager.model.vo.Manager" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <% 
 	String msg = (String)session.getAttribute("alertMsg");
-	Manager loginManager = (Manager)session.getAttribute("loginManager");
-	Member loginManager = (Member)session.getAttribute("loginManager");
 %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>menuber</title>
+    <title>menubar</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

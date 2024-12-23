@@ -4,30 +4,15 @@ import lombok.Data;
 
 @Data
 public class PageInfo {
-    private int totalRecords;
-    private int pageSize = 10;
-    private int currentPage;
-    private int totalPages;
-    private int pageBlock = 10;
-
-    // 시작 페이지 계산
-    public int getStartPage() {
-        return ((currentPage - 1) / pageBlock) * pageBlock + 1;
-    }
-
-    // 끝 페이지 계산
-    public int getEndPage() {
-        int endPage = getStartPage() + pageBlock - 1;
-        return Math.min(endPage, totalPages); // endPage가 totalPages를 초과하지 않도록
-    }
-
-    // 이전 페이지 블록으로 이동
-    public int getPrevBlockPage() {
-        return getStartPage() - 1;
-    }
-
-    // 다음 페이지 블록으로 이동
-    public int getNextBlockPage() {
-        return getEndPage() + 1;
-    }
+	private int totalCount;		// 전체 데이터 수
+	private int pageSize;		// 한 페이지당 표시할 데이터 수
+	private int currentPage;	// 현재 사용자가 보고있는 페이지
+	private int totalPage;		// 전체 페이지 수
+	
+	public PageInfo(int totalCount, int pageSize, int currentPage){
+		this.totalCount = totalCount;
+		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+		this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
+	}
 }

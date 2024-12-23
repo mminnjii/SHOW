@@ -19,12 +19,12 @@ public class ManagerInterceptor implements HandlerInterceptor {
         Manager manager = (Manager)request.getSession().getAttribute("loginManager");
 
         // 관리자 권한이 아니면 접근을 막고, 다른 페이지로 리디렉션
-        if (manager.getManagerId() == "admin") {
+        if (manager == null || !manager.getManagerId().equals("admin")) {
         	session.setAttribute("alertMsg", "관리자만 이용 가능한 페이지입니다.");
             response.sendRedirect(request.getContextPath());
-            return true;
+            return false;
         }
-        	return false;
+        	return true;
     }
 
     @Override
