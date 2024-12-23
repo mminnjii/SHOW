@@ -73,17 +73,20 @@
     }
     #j2{
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 15px;
+        font-size: 10px;
         font-weight: 400;
         font-style: normal;
         color: red;
+    }
+    #j3{
+     width:10px;
     }
     #list{
         height: 70px;
     }
     .musicalRanking{
       background-color:rgba(216, 212, 212, 0.192);
-      width:100%;
+      
       height: 80%;
     }
    
@@ -108,60 +111,55 @@
             </tr>
             
             
-            <tr>
+            <tr id="rankArea">
+            
+           
                 
-                <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id="f1"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id="f2"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id="f3"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id="f4"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id="f5"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
             </tr>
         </table>
 
     </div>
 
-    <script>
+   <script>
+  
+                    $("#b1").click(function(){
+                        $.ajax({
+                            url: "musicalShow",
+                            success: function(result){
+                                
+                            	
+                                var str = "";
+                                for(var i = 0; i < result.length; i++){
+                                    // 각 뮤지컬 정보를 하나의 tr로 묶어주기
+                                    
+                                    //if(i === 0){
+                                    	//break; //한번만 반복하고 싶어서 i===0일때 break하도록 설정해줌
+                                    //}
+                                    var date  = result[i].showStart+"-"+result[i].showEnd
+                                    
+                                    str += "<td>"
+                                          + "<a href=''><img src='/show/resources/images/강홍석.jpg' alt='' id='f1'></a><br><br>"
+                                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                                          + "<span id='j2'>" + date + "</span>"
+                                          + "</td>"
+                                          + "<td id='j3'></td>"
 
-        $("#b1").click(function(){
+                                }
+                                  
+                                $("#rankArea").append(str);
+                                    
+                               
+                            },
+                            error: function(){
+                                console.log("통신 오류");
+                               
+                            }
+                        });
+                    });
+                
 
-            $.ajax({
-                url : "musicalShow",
-                success : function(result){
-                    
-                    var resultStr = "";
+</script>
 
-                },
-                error : function(){
-                    console.log("통신 오류");
-                }
-            });
 
-        });
-    </script>
-    
 </body>
 </html>

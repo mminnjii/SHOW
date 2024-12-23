@@ -7,15 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-<!-- slick carousel css 파일 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
-<!-- jQuery 파일 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<!-- slick carousel js 파일 -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Jersey+25+Charted&family=Jua&family=Libre+Barcode+128+Text&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -297,12 +292,42 @@
                         <span id="oho16">2024.12.22 - 2024.12.31</span>
                     </div>
                 </div>
+                
+                <div class="autoplay-progress">
+          		<svg viewBox="0 0 48 48">
+            	<circle cx="24" cy="24" r="20"></circle>
+          		</svg>
+          		<span></span>
+        </div>
                
             </div>
 
             </tr>
         </table>
     </div>
+    
+     <!-- Swiper JS -->
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+      <!-- Initialize Swiper -->
+      <script>
+        const progressCircle = document.querySelector(".autoplay-progress svg");
+        const progressContent = document.querySelector(".autoplay-progress span");
+        var swiper = new Swiper(".mySwiper", {
+          spaceBetween: 30,
+          centeredSlides: true,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+          },
+          on: {
+            autoplayTimeLeft(s, time, progress) {
+              progressCircle.style.setProperty("--progress", 0 - progress);
+              progressContent.textContent = `${Math.ceil(time / 5000)}s`;
+            }
+          }
+        });
+      </script>
 
     
       
@@ -311,20 +336,7 @@
                     
           
 
-    <script>
-        $(document).ready(function(){
-            $('.todayInfo').slick({
-            	arrows : false,   
-                autoplay: true,   // 자동 슬라이드
-                autoplaySpeed: 3000  // 3초마다 자동으로 슬라이드
-    
-            });
-        });
-    </script>
-    
-    <script type="text/javascript">
-      $.noConflict(); //계속 충돌이 일어나서 충돌 방지 코드를 넣어줌
-	</script>
+   
     
 </body>
 </html>
