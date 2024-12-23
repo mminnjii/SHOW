@@ -47,4 +47,8 @@ public class CustomerServiceDao {
 		return (ArrayList)sqlSession.selectList("reservationMapper.reSearch", userNo);
 	}
 
+	public int faqCount(SqlSessionTemplate sqlSession, int faqNo) {
+		return sqlSession.update("customerMapper.faqCount", faqNo);
+	}
+
 }

@@ -169,7 +169,7 @@ a {
 		<div class="outer2 faqP">
 			<h3>자주 묻는 질문</h3>
 			<span>
-				<button class="faq-filter" name="all" value="all">전체</button>
+				<button class="faq-filter" name="all" value="all">TOP5</button>
                 <button class="faq-filter" name="1" value="1">티켓</button>
                 <button class="faq-filter" name="2" value="2">회원/기타</button>
 			</span>
