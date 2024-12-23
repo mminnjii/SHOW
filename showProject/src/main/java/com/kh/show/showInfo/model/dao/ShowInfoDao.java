@@ -17,8 +17,6 @@ public class ShowInfoDao {
 	
 		ArrayList<Show> list = (ArrayList)session.selectList("showInfoMapper.selectShow");
 		
-		System.out.println(list);
-		
 		return list;
 	}
 	

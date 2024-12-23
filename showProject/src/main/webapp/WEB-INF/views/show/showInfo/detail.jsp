@@ -142,13 +142,20 @@
 						height="380px"> --%>
 	            <img src="https://ticketimage.interpark.com/Play/image/large/24/24014511_p.gif" alt="예제 이미지">
 	            <div class="details">
-	                <h2>공연 이름</h2> <br>
-	                <p>장소 : 잠실실내체육관</p> 
-	                <p>공연기간 : 2024.12.21~2024.12.22</p>
-	                <p>공연시간 : 100분</p>
-	                <p>가격 : 100분</p>
-	                <p>유의사항 : 2024년 12월 10일 00시 00분~2024년 12월 22일 23시 59분까지 <br>
-	                    무통장입금 결제가 불가능합니다.</p>
+	                <c:choose>
+						<c:when test="${not empty s }">
+					      	<h2>${s.showName }</h2> <br>
+			                <p>장소 : ${s.regionNo }</p> 
+			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
+			                <p>공연시간 : 120분</p>
+			                <p>가격 : ${s.price }</p>
+			                <p>유의사항 : ${s. notice}</p>
+						</c:when>                
+		                <c:otherwise>
+		                	<h2>상세정보를 불러올 수 없습니다.</h2>
+		                </c:otherwise>
+	                </c:choose>
+	          
 	            </div>
 	        </div>
 	        <br>

@@ -1,14 +1,11 @@
 package com.kh.show.reservation.model.vo;
-
 import java.sql.Date;
-
-import com.kh.show.payments.model.vo.Payments;
-
+import java.util.List;
+import com.kh.show.showInfo.model.vo.Show;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +19,12 @@ public class Reservation {
 	private String status;//	STATUS
 	private Date createDate;//	CREATEDATE
 	private String precaution;//	PRECAUTION
+	
+	// mapper에서 collection 사용하기 위해 추가
+	private List<Show> showList;
 }
+
+
+
+
+
