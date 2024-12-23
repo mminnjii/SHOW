@@ -244,6 +244,8 @@
                 <td>
                 <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
                 <img src="${contextPath }/resources/images/암표거래.jpg" alt="" id="ticket2"> </a>
+                <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
+                <img src="/show/resources/images/암표거래.jpg" alt="" id="ticket2"> </a>
                 </td>
                 <td id="dd"></td>
                 <td id="and">

@@ -3,11 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<% 
-	String msg = (String)session.getAttribute("alertMsg");
-	Manager loginManager = (Manager)session.getAttribute("loginManager");
-	Member loginMember = (Member)session.getAttribute("loginManager");
-%>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -153,6 +149,7 @@
             <tr id="tr1">
                 <td id="td1"></td>
                 <td id="td4"><a href=""><img src="${contextPath }/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
+                <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
                     <ul>
@@ -176,6 +173,8 @@
                 <td id="td5" align="center">
                     <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
                     <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
+                    <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
+                    <img src="/show/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
                     
                 </td>
@@ -186,18 +185,18 @@
                 <td id="td6"></td> <!--홈    뮤지컬    연극    콘서트    클래식    전시   고객센터   커뮤티니   이벤트 -->
                 <td colspan="3" id="td8">
                     <ul id="menu">
-                        <li><a href="">홈</a></li>
+                        <li><a href="${contextPath}">홈</a></li>
                         <li><a href="">뮤지컬</a></li>
                         <li><a href="">연극</a></li>
                         <li><a href="">콘서트</a></li>
                         <li><a href="">클래식</a></li>
                         <li><a href="">전시</a></li>
                         <li id="li1">|</li>
-                        <li><a href="${contextPath}/cmain">고객센터</a></li>
+                        <li><a href="${contextPath}/cmain">공지사항</a></li>
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="">오픈공지</a> </li>
-                        
-                        
+                        <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
+
                     </ul>
                    
                 </td>
