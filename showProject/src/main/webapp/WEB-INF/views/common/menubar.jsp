@@ -186,7 +186,7 @@
                 <td colspan="3" id="td8">
                     <ul id="menu">
 
-                        <li><a href="$">홈</a></li>
+                        <li><a href="${contextPath}">홈</a></li>
                         <li><a href="${contextPath}/musicalList">뮤지컬</a></li>
                         <li><a href="">연극</a></li>
                         <li><a href="">콘서트</a></li>

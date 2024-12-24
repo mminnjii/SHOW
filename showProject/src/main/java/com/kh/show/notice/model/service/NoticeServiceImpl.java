@@ -1,13 +1,13 @@
 package com.kh.show.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.show.common.model.vo.PageInfo;
+import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.dao.NoticeDao;
 import com.kh.show.notice.model.vo.Notice;
 
@@ -33,5 +33,25 @@ public class NoticeServiceImpl implements NoticeService{
 
 		return noticeDao.selectList(sqlSession, pi);
 	}
+
+	// 검색 목록 개수 
+	@Override
+	public int searchCount(HashMap<String, String> map) {
+
+		return noticeDao.searchCount(sqlSession, map);
+	}
+	
+	// 검색 목록 정보 메소드 
+	@Override
+	public ArrayList<Notice> searchNotice(HashMap<String, String> map, PageInfo pi) {
+	
+		return noticeDao.searchNotice(sqlSession, map, pi);
+	}
+
+	// 공지사항 상세보기 
+//	@Override
+//	public Notice noticeDetail(int nno) {
+//		return noticeDao.noticeDetail(sqlSession, nno);
+//	}
 
 }
