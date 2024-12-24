@@ -86,21 +86,21 @@
                 <li>
                     <a class="side-title">My 서비스</a>
                     <ul class="side-sub-menu">
-                        <li class="side-detail"><a href="">내 소모임</a></li>
-                        <li class="side-detail"><a href="">내 채팅방</a></li>
-                        <li class="side-detail"><a href="">구독 서비스</a></li>
+                        <li class="side-detail"><a href="${contextPath}/group">내 소모임</a></li>
+                        <li class="side-detail"><a href="${contextPath}/chat">내 채팅방</a></li>
+                        <li class="side-detail"><a href="${contextPath}/subscribe">구독 서비스</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a class="side-title" href="">회원 등급</a>
+                    <a class="side-title" href="${contextPath}/rank">회원 등급</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <a class="side-title" href="">문의 내역</a>
+                    <a class="side-title" href="${contextPath}/qna">문의 내역</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <a class="side-title" href="">결제 목록</a>
+                    <a class="side-title" href="${contextPath}/payment">결제 목록</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
             </ul>
