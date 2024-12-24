@@ -73,7 +73,7 @@
 			<button id="btn1" onclick="toEnroll();">개인 회원가입</button>
 			<br><br><br>
 			<button id="btn2">N <lo>네이버로 회원가입</lo></button>
-			<br>
+			<br><br>
 			<p id="text2">SNS계정 회원가입(만 14세 이상 가능)</p>
 		</div>
 	</div>
@@ -82,7 +82,7 @@
 			location.href = '${contextPath}/toTOS';
 		};
 	</script>
-	
+	<br><br><br><br>
 	<jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>
 </html>
