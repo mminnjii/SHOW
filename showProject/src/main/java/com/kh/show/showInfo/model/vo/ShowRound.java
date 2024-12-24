@@ -18,6 +18,4 @@ public class ShowRound {
 	private int showRound;	//	SHOW_ROUND
 	private String showTime;	//	SHOW_TIME
 	private Date showDate;	//	SHOW_DATE
-	private Date showStart;	//	SHOW_START
-	private Date showEnd;	//	SHOW_END
 }

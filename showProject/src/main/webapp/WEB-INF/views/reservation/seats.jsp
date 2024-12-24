@@ -14,7 +14,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 80px;
  
         .stage {
             padding: 10px 20px;
@@ -42,11 +42,34 @@
         
         .info {
 		  float: left;
+		  width: 20%; /* 필요에 따라 조정 */
+		  text-align: left;
+		  margin-right: 100px; /* 오른쪽 간격 추가 */
+		}
+
+		#current tbody td:first-child {
+		    width: 30px; /* 첫 번째 셀의 너비를 줄임 */
+		}
+		
+	   .info #selected {
+		  float: left;
 		  width: 40%; /* 필요에 따라 조정 */
 		  text-align: left;
 		}
 		
-
+		.vip,.r,.e{
+		    width: 20px;
+            height: 20px;
+		}
+		
+		button {
+		    padding: 12px 24px; /* 버튼 크기 조정 */
+		    font-size: 16px; /* 글꼴 크기 */
+		    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 */
+		    border: none; /* 테두리 제거 */
+		    border-radius: 5px; 
+		    cursor: pointer; 
+		}
 		
     </style>
 </head>
@@ -99,33 +122,35 @@
 	</table>
 	
 	<br><br><br><br>
-		<table class="info">
+		<table class="info" id="current">
 			<thead>
 				<tr>
-					<th><h3> 좌석등급 / 잔여석 </h3></th>
+					<th style="width: 200px;" colspan="2"><h3> 좌석등급 / 잔여석 </h3></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td> A-B : VIP석</td>
+					<td><div class="vip" style="background: #f8d7da;"></div></td>
+					<td>VIP석&nbsp;(A-B)</td>
 					<td>0개</td>
 				</tr>
 				<tr>
-					<td> C-F :R석</td>
+					<td><div class="r" style="background-color: #d4edda;"></div></td>
+					<td>R석&nbsp;(C-F)</td>
 					<td>0개</td>
 				</tr>
 				<tr>
-					<td>F-H :E석</td>
+					<td><div class="e" style="background-color:#d1ecf1;"></div></td>
+					<td>E석&nbsp;(F-H)</td>
 					<td>0개</td>
 				</tr>
 			</tbody>
 		</table>
-		
 		<table class="info" id="select">
 			<thead>
 				<tr>
 					<td><h3>선택좌석</h3></td>
-					<td class="num">총 0석이 선택되었습니다</td>
+					<td class="num">총 0석이 선택되었습니다.</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -133,12 +158,14 @@
 					<th><h3>좌석등급</h3></th>
 					<th><h3>좌석번호</h3></th>
 				</tr>
-				
 			</tbody>
 		</table>
 		<br><br>
 		<button class="reset">다시선택하기</button> <br><br>
 		<button class="submit">선택완료</button>
+		
+		<p style="margin-top: 800px;"></p>
+		
     <script>
 	     $('.seat').on('click', function() {
 	    	 

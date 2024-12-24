@@ -14,6 +14,9 @@
 
 <style>
 
+   
+       
+
 #tt{
         
         position:relative;
@@ -122,31 +125,31 @@
             <tr>
                 
                 <td>
-                    <a href=""><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f1"></a><br>
+                    <a href="/show/showInfo/detail"><img src="/show/resources/images/강홍석.jpg" alt="" id="f1"></a><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
-                    <a href=""><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f2"></a><br>
+                    <a href="/show/showInfo/detail"><img src="/show/resources/images/강홍석.jpg" alt="" id="f2"></a><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
-                    <a href=""><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f3"></a><br>
+                    <a href="/show/showInfo/detail"><img src="/show/resources/images/강홍석.jpg" alt="" id="f3"></a><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
-                    <a href=""><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f4"></a><br>
+                    <a href="/show/showInfo/detail"><img src="/show/resources/images/강홍석.jpg" alt="" id="f4"></a><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
                 <td id="oo"></td>
                 <td>
-                    <a href=""><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f5"></a><br>
+                    <a href="/show/showInfo/detail"><img src="/show/resources/images/강홍석.jpg" alt="" id="f5"></a><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
                     <span id="j2">12.23(월) 18:00</span>
                 </td>
