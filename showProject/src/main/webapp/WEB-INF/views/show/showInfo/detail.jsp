@@ -16,7 +16,7 @@
 		}
 		
 		.fixed-section {
-			margin-right: 300px;
+			margin-right: 200px;
 			position: fixed;
 			bottom: 30px;
 			right: 0;
@@ -108,21 +108,21 @@
 	        <div class="fixed-section">
 	        <h2>예약하기</h2>
 	        <br>
-	        <p>날짜 :</p>	
-	        <select>
-	        	<option>2025.01.01</option>
-	        </select>
-	        <p>회차 :</p>
-	        <select>
-	        	<option>N회차</option>
-	        </select>
-	        <p>공연시간 :</p>
-	        <select>
-	        	<option>17:00</option>
-	        </select>
+	        <c:if test="${not empty date }">
+	        	<p>날짜 :</p>	
+	        	<select onchange="selectDate()">
+	        		<c:forEach items="${date }" var="d">
+			        	<option>${d.showDate }</option>
+		        	</c:forEach>
+		        </select>
+		        <p>회차 및 공연시간 :</p>
+ 		        <select>
+		        	<option>1회차 : 20:00~23:00</option>
+		        </select>
+	        </c:if>
 	        <p>공연일정 : </p>
 	        <select>
-	        	<option>2024-10-11 ~ 2024-11-11</option>
+	        	<option>${s.showStart }~${s.showEnd }</option>
 	        </select>
 	        <p>좌석 : </p>
 	        <select>
@@ -130,6 +130,12 @@
 	        </select>
 	        <br><br><br>
 	        <p>회원등급</p>
+	        
+<!-- 	        <p>날짜: 2025-01-02</p>
+			<select name="show_2025-01-02">
+			    <option value="3:14:00">3회차 (14:00)</option>
+			    <option value="4:16:00">4회차 (16:00)</option>
+			</select> -->
 	        
 	        <br>
 			<button onclick="location.href='/show/showInfo/seats'">예약하기</button>
@@ -142,7 +148,7 @@
 	       		<%-- 		<img class="photo" class="bookC"
 						src="/library/resources/img/${bno}.gif" width="280px"
 						height="380px"> --%>
-	            <img src="https://ticketimage.interpark.com/Play/image/large/24/24014511_p.gif" alt="예제 이미지">
+	            <img src="/show/resources/images/꽃의비밀.jpg">
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
@@ -169,11 +175,35 @@
 						<td><a href="/show/showInfo/detail">공연정보</a></td>
 						<td><a href="/show/showInfo/review">관람후기</a></td>
 						<td><a href="/show/showInfo/expectation">기대평</a></td>
-						<td><a href="/show/">오시는길</a></td>
+						<td><a href="/show/">공연장정보</a></td>
 					</tr>
 				</table>
 	         <hr>
 	    </div>
     </div>
+    
+    <script>
+    	
+    	function selectDate(){
+    		
+/*     		$.ajax({
+    			url : "replyList",
+    			data: {
+    				boardNo : ${b.boardNo}
+    			},
+    			success : function(result){
+    				console.log(result);
+    			},	
+    			error : function(error){
+    				console.log("통신오류");
+    			}
+    		}); */
+    		
+    		
+    	}
+    
+    </script>
+    
+    
 </body>
 </html>

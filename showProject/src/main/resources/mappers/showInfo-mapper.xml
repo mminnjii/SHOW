@@ -18,9 +18,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_START" property="showStart" />
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
-		
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultSet">
+		<result column="REVIEW_ID" property="reviewId" />
+		<result column="SHOW_NO" property="showNo" />
+		<result column="USER_NO" property="userId" />
+		<result column="REVIEW_SCORE" property="reviewScore" />
+		<result column="REVIEW_TITLE" property="reviewTitle" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="CREATE_DATE" property="createDate" />
 	</resultMap>	
-
+	
+	
+	<resultMap type="ShowRound" id="roundResultSet">
+		<result column="ROUND_ID" property="roundId" />
+		<result column="SHOW_NO" property="showNo" />
+		<result column="SHOW_ROUND" property="showRound" />
+		<result column="SHOW_TIME" property="showTime" />
+		<result column="SHOW_DATE" property="showDate" />
+	</resultMap>
+	
+	
  <!-- 뮤지컬 랭킹(1~5위) count 순으로 리스트 -->
   <select id="musicalShowList" resultMap="showResultSet">
   	SELECT *
@@ -52,8 +71,73 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN GENRE G ON (S.GENRE_NO = G.GENRE_NO)
 		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
 		WHERE S.STATUS = 'Y'
+		AND S.SHOW_NO = 1
+	</select>
+	
+	<!-- 공연날짜 조회 -->
+	<select id="selectRound" resultMap="roundResultSet">
+		SELECT SHOW_DATE
+		FROM SHOWROUND
+		WHERE SHOW_NO = 1
+		AND STATUS = 'Y'
+		GROUP BY SHOW_DATE
+		ORDER BY SHOW_DATE
 	</select>
 	
 	
+	<!-- 리뷰 수 조회 -->
+	<select id="selectRcount" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE STATUS = 'Y'
+		AND SHOW_NO = 1
+	</select>
+	
+	
+	<!-- 리뷰 조회 -->
+	<select id="selectReview" resultMap="reviewResultSet">
+		SELECT REVIEW_ID,
+		       USER_ID USER_NO,
+		       REVIEW_SCORE,
+		       REVIEW_TITLE,
+		       REVIEW_CONTENT,
+		       CREATE_DATE
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND SHOW_NO = 1
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<!-- 리뷰 검색 -->
+	<select id="reviewSearch" parameterType="String" resultMap="reviewResultSet">
+		 SELECT REVIEW_ID,
+		       USER_ID,
+		       REVIEW_SCORE,
+		       REVIEW_TITLE,
+		       REVIEW_CONTENT,
+		       CREATE_DATE
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND (REVIEW_TITLE LIKE '%'||#{keyword}||'%'
+ 			 OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
+		ORDER BY CREATE_DATE DESC	
+	</select>
+	
+	<!-- 검색된 리뷰 갯수 -->
+	<select id="searchRcount" parameterType="String" resultType="int">
+		 SELECT COUNT(*)
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND (REVIEW_TITLE LIKE '%'||#{keyword}||'%'
+ 			 OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<!-- 리뷰 수정 -->
+	<!-- 리뷰 삭제 -->
 		
 </mapper>

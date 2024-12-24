@@ -16,7 +16,8 @@
  		<typeAlias type="com.kh.show.reservation.model.vo.Reservation" alias="Reservation"/>
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
- 		
+ 		<typeAlias type="com.kh.show.showInfo.model.vo.Review" alias="Review"/>
+ 		<typeAlias type="com.kh.show.showInfo.model.vo.ShowRound" alias="ShowRound"/>
  	</typeAliases>
 
  	

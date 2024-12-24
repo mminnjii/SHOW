@@ -30,8 +30,14 @@
 	        <h3>공지사항</h3> <br>
 	        <p> ${s.notice }</p>
 	        <br><br><br>  
-	        <h2>공연상세 / 정보</h2> <br>
-	        <img src="https://ticketimage.interpark.com/240145112024/10/08/dcf9f4a0.jpg" alt="예제 이미지">
+	        <h3>공연상세 / 정보</h3> <br>
+	        <img src="/show/resources/images/011.jpg">
+	        <br><br> 
+	        <img src="/show/resources/images/012.jpg">
+         	<br><br> 
+	        <img src="/show/resources/images/013.jpg">
+	        <br><br> 
+	        <img src="/show/resources/images/014.jpg">
 	        <p style="margin-top: 1000px;"></p>
         </div>
         
