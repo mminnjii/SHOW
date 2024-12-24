@@ -2,7 +2,10 @@
 *.class
 META-INF/
 classes/
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
 # Log file
 *.log
 
