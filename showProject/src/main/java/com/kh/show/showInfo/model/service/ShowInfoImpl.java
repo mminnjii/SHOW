@@ -2,6 +2,7 @@ package com.kh.show.showInfo.model.service;
 
 import java.util.ArrayList;
 
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,15 @@ public ArrayList<Show> musicalShow() {
 	
 	return musicalShowList;
 }
+
+	
+	@Override
+	public ArrayList<Show> selectShow() {
+		
+		ArrayList<Show> list = showInfoDao.selectShow(sqlSession);
+		
+		return list;
+	}
+
+
 }
