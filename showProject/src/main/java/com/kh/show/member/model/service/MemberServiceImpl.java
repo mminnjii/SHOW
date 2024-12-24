@@ -1,5 +1,7 @@
 package com.kh.show.member.model.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	//로그인
 	@Override
 	public Member loginMember(Member m) {
 
@@ -24,28 +27,44 @@ public class MemberServiceImpl implements MemberService{
 		return loginUser;
 	}
 
+	//회원가입
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.insertMember(sqlSession,m);
 	}
 
+	//정보 수정
 	@Override
 	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateMember(sqlSession,m);
 	}
 
 	@Override
 	public int deleteMember(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.deleteMember(sqlSession,userId);
+	}
+
+	//아이디 중복 확인
+	@Override
+	public int idCheck(String checkId) {
+		return memberDao.idCheck(sqlSession,checkId);
 	}
 
 	@Override
-	public int idCheck(String checkId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int memberAddress(HashMap<String, String> map) {
+		return memberDao.memberAddress(sqlSession,map);
 	}
+
+	@Override
+	public String memberPwd(String userId) {
+		return memberDao.memberPwd(sqlSession,userId);
+	}
+
+	@Override
+	public int updatePassword(Member m) {
+		return memberDao.updatePassword(sqlSession,m);
+	}
+
+	
 
 }

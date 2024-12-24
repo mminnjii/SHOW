@@ -51,6 +51,10 @@
 		display: inline-block;
 	}
 
+	.info-area > #idCheck{
+		display: inline-block;
+	}
+
 	.bi1, .bi2{
 		cursor: pointer;
 	}
@@ -94,8 +98,8 @@
 					<br>
 					<div class="info-area">
 						<label for="userId">아이디 </label>
-						<input type="text" class="form-info" id="newUserId" name="userId" placeholder="6~12자 영문,숫자(영문으로 시작)" required>
-						<div id="idCheck" style="font-size: 0.8em; display: none;"></div>
+						<input type="text" class="form-info" id="newUserId" name="userId" style="width: 270px;" placeholder="6~12자 영문,숫자(영문으로 시작)" required>
+						<div id="idCheck" style="font-size: 0.8em; display: none; width: 50px;"></div>
 					</div>
 					<div class="mention" id="idCorrect" style="font-size: 0.8em; color: chocolate;"></div>
 					<br>
@@ -142,7 +146,7 @@
 						<input type="text" class="form-info" id="email" name="email">
 					</div>
 					<div class="mention" id="emailCorrect" style="font-size: 0.8em; color: chocolate;"></div>
-					<br>
+					<br><br>
 					<div align="center" style="width: 400px;">
 						<button type="submit" id="btn1" disabled>회원가입</button>
 					</div>
@@ -164,6 +168,7 @@
 					}
 				});
 			});
+
 			//비밀번호 확인 텍스트 표시
 			$(function() {
 				$('.bi2').on('click', function() {
@@ -177,11 +182,14 @@
 					}
 				});
 			});
-			//아이디 중복 체크
+			
+			//아이디 중복 체크+아이디 확인 
 			$(function(){
+				
 				var checkId = $("#newUserId");
 
-				id.keyup(function(){
+				$("#newUserId").keyup(function(){
+
 					if(checkId.val().length>5){
 						$.ajax({
 							url : "idCheck",
@@ -189,12 +197,26 @@
 								checkId : checkId.val()
 							},
 							success : function(val){
-								if(val=="NNN"){
-									$("#idCheck").show().css("color","red").text("사용 불가");
-									$("button[type=submit]").attr("disabled",true);
+
+								var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{4,12}$/;
+
+								if(val=="YYY"){
+									if(!idForm.test($("#newUserId").val())){
+										$("#idCorrect").text("올바른 아이디 형식을 입력해주세요");
+										$("#idCheck").show().css("color","red").text("사용 불가");
+									}else{
+										$("#idCheck").show().css("color","blue").text("사용 가능");
+										$("#idCorrect").text("");
+										$("button[type=submit]").attr("disabled",false);
+									}
 								}else{
-									$("#idCheck").show().css("color","blue").text("사용 가능");
-									$("button[type=submit]").attr("disabled",false);
+									if(!idForm.test($("#newUserId").val())){
+										$("#idCorrect").text("올바른 아이디 형식을 입력해주세요");
+										$("#idCheck").show().css("color","red").text("사용 불가");
+									}else{
+										$("#idCheck").show().css("color","red").text("사용 불가");
+										$("button[type=submit]").attr("disabled",true);
+									}
 								}
 							},
 							error : function(){
@@ -202,45 +224,42 @@
 							}
 						});
 					}else{
-						$("#idForm").show().text("");
+						$("#idCheck").show().text("");
 						$("button[type=submit]").attr("disabled",true);
 					}
 				});
 			});
-			console.log($("input[name='userId']"));
-			//아이디 형식
-			$("input[name='userId']").blur(function(){
-				var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{4,12}$/;
-				var id = $("#newUserId").val();
-
-				if(!idForm.test(id)){
-					$("#idCorrect").text("올바른 아이디 형식을 입력해주세요");
-				}else{
-					$("#idCorrect").text("");
-				}
-			});
+			
 			//비밀번호 형식
 			$("input[name='userPwd']").blur(function(){
 				var pwdForm = /.*(?=.{6,20})(?=.*[~!@#$%^&*])(?=.*[0-9])(?=.*[a-zA-Z]).*/;
 				var pwd = $("#newUserPwd").val();
-
+				
 				if(!pwdForm.test(pwd)){
 					$("#pwdCorrect").text("올바른 비밀번호 형식을 입력해주세요");
 				}else{
 					$("#pwdCorrect").text("");
 				}
 			});
-			//비밀번호 확인 형식
+			
+			//비밀번호 확인 형식+일치 확인
 			$("input[name='userPwdCheck']").blur(function(){
 				var pwdckForm = /.*(?=.{6,20})(?=.*[~!@#$%^&*])(?=.*[0-9])(?=.*[a-zA-Z]).*/;
 				var pwdck = $("#checkPwd").val();
+				var pwd = $("#newUserPwd").val();
 
 				if(!pwdckForm.test(pwdck)){
 					$("#pwd2Correct").text("올바른 비밀번호 형식을 입력해주세요");
-				}else{
+					$("button[type=submit]").attr("disabled",true);
+				}else if(pwdckForm.test(pwdck) && pwdck == pwd  && $("#idCheck").text("사용 가능")){
 					$("#pwd2Correct").text("");
+					$("button[type=submit]").attr("disabled",false);
+				}else{
+					$("#pwd2Correct").text("비밀번호가 일치하지 않습니다");
+					$("button[type=submit]").attr("disabled",true);
 				}
 			});
+
 			//이름 형식
 			$("input[name='userName']").blur(function(){
 				var nameForm = /^[가-힣a-zA-Z]*$/;
@@ -252,6 +271,7 @@
 					$("#nameCorrect").text("");
 				}
 			});
+
 			//주민등록번호 형식
 			$("input[name='userRrn']").blur(function(){
 				var rrnForm = /\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])[-][1-4]\d{6}/;
@@ -263,6 +283,7 @@
 					$("#rrnCorrect").text("");
 				}
 			});
+
 			//휴대폰 형식
 			$("input[name='phone']").blur(function(){
 				var phoneForm = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
@@ -274,6 +295,7 @@
 					$("#phoneCorrect").text("");
 				}
 			});
+
 			//이메일 형식
 			$("input[name='email']").blur(function(){
 				var emailForm = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;

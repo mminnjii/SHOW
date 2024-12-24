@@ -14,7 +14,6 @@
 	.inner{
 		width: 100%;
 		margin: auto;
-		padding-top: 10%;
 		text-align: center;
 	}
 	#save{
@@ -115,6 +114,11 @@
 
 		padding-top: 10px;
 	}
+
+	#headLogo{
+		width: 160px;
+		height: 100px;
+	}
 </style>
 </head>
 <body>
@@ -123,10 +127,10 @@
 	<div class="content">
 		<br><br>
 		<div class="inner">
-			<div id="title">
-				<img src="....\resources\images\로고.jpg">
-			</div>
-			<br><br>
+			<a id="title" href="${contextPath}">
+				<img src="${contextPath}\resources\images\로고.jpg" id="headLogo">
+			</a>
+			<br><br><br>
 			<form action="${contextPath}/login.me" method="post">
 				<div class="login">
 					<div class="info-area1">
@@ -163,7 +167,7 @@
 			<div id="link">
 				<a href="">아이디 찾기</a> |
 				<a href="">비밀번호 찾기</a> |
-				<a href="">회원가입</a> 
+				<a href="${contextPath}/toEnroll">회원가입</a> 
 			</div>
 			<br>
 			<div id="naver">
@@ -195,7 +199,7 @@
 			}
 		});
 	</script>
-	
+	<br><br><br>
 	<jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>
 </html>
