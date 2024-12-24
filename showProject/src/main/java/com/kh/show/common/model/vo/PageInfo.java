@@ -5,19 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+	
+import lombok.Data;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class PageInfo {
+	private int totalCount;		// 전체 데이터 수
+	private int pageSize;		// 한 페이지당 표시할 데이터 수
+	private int currentPage;	// 현재 사용자가 보고있는 페이지
+	private int totalPage;		// 전체 페이지 수
 	
-	private int listCount;  	// 총 게시글 개수 
-	private int currentPage;	// 현재 페이지 
-	private int pageLimit; 		// 페이지 하단에 보여질 페이징바 최대 개수 
-	private int boardLimit;		// 한 페이지에 보여질 게시글 개수 
-	
-	private int maxPage;		// 가장 마지막 페이지 (총 페이지 개수)
-	private int startPage;		// 페이지 하단에 보여질 페이징바 시작 수
-	private int endPage; 		// 페이지 하단에 보여질 페이징바 끝 수
-	
+	public PageInfo(int totalCount, int pageSize, int currentPage){
+		this.totalCount = totalCount;
+		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+		this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
+	}
 }

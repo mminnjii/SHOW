@@ -1,10 +1,7 @@
 package com.kh.show.reservation.model.vo;
-
 import java.sql.Date;
 import java.util.List;
-
-import com.kh.show.mainview.vo.show;
-import com.kh.show.payments.model.vo.Payments;
+import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +22,12 @@ public class Reservation {
 	private Date createDate;//	CREATEDATE
 	private String precaution;//	PRECAUTION
 	
-	// mapper에서 collection 사용하기 위해 추가 - 전수민 (삭제하지마세요) || VO [SHOW] 위치 변경됨. 깃 합칠 때, showInfo에 있는 Show VO로 다시 import 해야 함. 
-	private List<show> showList;
 	
+	// mapper에서 collection 사용하기 위해 추가
+	private List<Show> showList;
 }
+
+
+
+
+

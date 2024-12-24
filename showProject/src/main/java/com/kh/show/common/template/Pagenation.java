@@ -1,6 +1,8 @@
 package com.kh.show.common.template;
 
-import com.kh.show.common.model.vo.PageInfo;
+
+import com.kh.show.common.template.PageInfo;
+
 
 public class Pagenation {
 	
