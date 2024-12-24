@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Reservation;
 
 @Repository
 public class CustomerServiceDao {
@@ -47,7 +47,8 @@ public class CustomerServiceDao {
 		return (ArrayList)sqlSession.selectList("reservationMapper.reSearch", userNo);
 	}
 
-	public int faqCount(SqlSessionTemplate sqlSession, int faqNo) {
+	// count up 
+	public int faqCount(SqlSessionTemplate sqlSession, String faqNo) {
 		return sqlSession.update("customerMapper.faqCount", faqNo);
 	}
 

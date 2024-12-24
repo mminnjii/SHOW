@@ -28,6 +28,7 @@
         
         .a h2{
             margin: 20px 0px 0px 40px;
+            text-align: center;
         }
         
         .sColor{
@@ -53,6 +54,7 @@
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	<br><br>
     <div class="a">
+    	&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
         <h2>1:1 문의하기</h2>
 	
 		<!-- 회원인 경우와 아닌 경우로 조건처리 필요 -->        
@@ -76,29 +78,31 @@
 			            
             <div class="input">
                 <p>문의 유형 <span class="sColor">*</span> <span style="font-size: 12px;" disabled> (티켓 취소/환불/변경은 전화 1234-1234로 요청해 주세요)</span></p>
-                <select name="qcategoryNo"  class="form-control" required>
+                <select id="qcategoryNo" name="qcategoryNo"  class="form-control" required>
                     <option value="1">티켓</option>
                     <option value="2">회원/기타</option>
                 </select>
             </div>
             
-	            <div class="input">
-	                <p>예약번호</p>  
-	                <div class="input-group mb-3" > <!-- ${empty loginUser ? 'disabled' : ''} -->
-	                    <select id="reservationId" name="reservationId" class="form-control">
-	                        <option selected disabled>예약번호를 선택해 주세요</option> 
-	                    
-	                    </select>
-	                    <div class="input-group-append">  <!-- 예약 조회 버튼을 누르면 로그인한 회원의 예약 내역을 불러와서 보여줘야 한다 -->
-	                      <button class="form-control" type="button" onClick="reSearch();">예약번호 조회</button>
-	                    </div>
-	                </div>
+            <!-- 문의 유형이 티켓인 경우에만 조회 가능하도록 -->
 			
-	                <ul>
-	                    <li>문의 유형 선택 후 예약 번호를 조회할 수 있습니다.</li>
-	                    <li>예약 없이도 문의할 수 있습니다.</li>
-	                </ul>
-	            </div>
+            <div class="input">
+                <p>예약번호</p>  
+                <div class="input-group mb-3"  > <!-- ${empty loginUser ? 'disabled' : ''} -->
+                    <select id="reservationId" name="reservationId" class="form-control">
+                        <option selected disabled>예약번호를 선택해 주세요</option> 
+                    
+                    </select>
+                    <div class="input-group-append">  <!-- 예약 조회 버튼을 누르면 로그인한 회원의 예약 내역을 불러와서 보여줘야 한다  -->
+       	            	<button id="reSearchBtn" class="form-control" type="button" onClick="reSearch();"  ${empty loginUser ? 'disabled' : ''}>예약번호 조회</button>
+                    </div>
+                </div>
+					
+                <ul>
+                    <li>문의 유형 선택 후 예약 번호를 조회할 수 있습니다.</li>
+                    <li>예약 없이도 문의할 수 있습니다.</li>
+                </ul>
+            </div>
 
             <div class="input">
                 <p>문의 내용 <span class="sColor">*</span></p>
@@ -147,7 +151,7 @@
     </div>
         
    	<script>
-   	
+   		
    		// 핸드폰 번호 체크 정규식 
    		function checkPhone(){
    			var regExp = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
