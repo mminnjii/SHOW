@@ -22,4 +22,10 @@ public interface MemberService {
 	String memberPwd(String userId);
 	//비밀번호 업데이트
 	int updatePassword(Member m);
+	//아이디 찾기 서비스
+	String findId(HashMap<String, String> map);
+	//비밀번호 찾고 변경
+	int findPwd(HashMap<String, String> map);
+	//비밀번호 찾고 변경2
+	int updateNewPassword(HashMap<String, String> map);
 }

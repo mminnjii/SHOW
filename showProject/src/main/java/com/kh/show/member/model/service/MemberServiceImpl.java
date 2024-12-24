@@ -65,6 +65,21 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.updatePassword(sqlSession,m);
 	}
 
+	@Override
+	public String findId(HashMap<String, String> map) {
+		return memberDao.findId(sqlSession,map);
+	}
+
+	@Override
+	public int findPwd(HashMap<String, String> map) {
+		return memberDao.findPwd(sqlSession,map);
+	}
+
+	@Override
+	public int updateNewPassword(HashMap<String, String> map) {
+		return memberDao.updateNewPassword(sqlSession,map);
+	}
+
 	
 
 }

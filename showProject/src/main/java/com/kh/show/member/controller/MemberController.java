@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,6 +86,69 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
+	
+	//아이디 찾기
+	@PostMapping("findId")
+	public String findId(String userName,
+						 String email,
+						 HttpSession session) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("userName",userName);
+		map.put("email", email);
+		
+		String userId = memberService.findId(map);
+		
+		session.setAttribute("alertMsg", userName+"님의 아이디는 '"+ userId+"'입니다");
+		
+		return "member/loginPage";
+	}
+	
+	//비밀번호 찾기
+	@PostMapping("findPwd")
+	public String findPwd(String id,
+						  String name,
+						  HttpSession session,
+						  Model model) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id",id);
+		map.put("name", name);
+			
+		int result = memberService.findPwd(map);
+		
+		if(result>0) {
+			model.addAttribute("map",map);
+			return "member/newPwd";
+		}else {
+			session.setAttribute("alertMsg", "아이디 혹은 이름이 일치하지 않습니다.");
+			return "member/loginPage";
+		}
+	}
+	
+	//비밀번호 업데이트 메소드
+	@PostMapping("newPwd")
+	public ModelAndView newPwd(String userPwd,
+							   HttpSession session,
+							   String userId,
+							   ModelAndView mv) {
+			String encPwd = bcrtptPasswordEncoder.encode(userPwd);
+			
+			HashMap<String, String> map = new HashMap<>();
+			map.put("userId",userId);
+			map.put("encPwd", encPwd);
+			
+			int result = memberService.updateNewPassword(map);
+			
+			if(result>0) {
+				session.setAttribute("alertMsg", "비밀번호 변경 성공!");
+				mv.setViewName("member/loginPage");
+			}else {
+				session.setAttribute("alertMsg", "비밀번호 변경 실패!");
+				mv.setViewName("member/loginPage");
+			}
+			
+			return mv;
+		}
 	
 	//회원가입 페이지로
 	@GetMapping("/toEnroll")
@@ -278,6 +342,12 @@ public class MemberController {
 		}
 	}
 								
+	//회원 등급 페이지로
+	@GetMapping("/rank")
+	public String rank() {
+		
+		return "member/memberRank";
+	}
 	
 	
 	

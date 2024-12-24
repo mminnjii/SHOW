@@ -46,4 +46,16 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.deleteMember",userId);
 	}
 
+	public String findId(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("memberMapper.findId",map);
+	}
+
+	public int findPwd(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("memberMapper.findPwd",map);
+	}
+
+	public int updateNewPassword(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("memberMapper.updateNewPassword",map);
+	}
+
 }

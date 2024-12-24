@@ -165,8 +165,8 @@
 			</form>
 			<br>
 			<div id="link">
-				<a href="">아이디 찾기</a> |
-				<a href="">비밀번호 찾기</a> |
+				<a data-toggle="modal" data-target="#findId">아이디 찾기</a> |
+				<a data-toggle="modal" data-target="#findPwd">비밀번호 찾기</a> |
 				<a href="${contextPath}/toEnroll">회원가입</a> 
 			</div>
 			<br>
@@ -175,6 +175,59 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="findId">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">아이디 찾기</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="${contextPath }/findId" method="post">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <label for="userName" class="mr-sm-2">이름 : </label>
+                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Name" id="userName" name="userName">
+                        <label for="userPwd" class="mr-sm-2">Email : </label>
+                        <input type="email" class="form-control mb-2 mr-sm-2" placeholder="Enter email" id="email" name="email">
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="findPwd">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">비밀번호 찾기</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="${contextPath }/findPwd" method="post">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+						<p>*비밀번호의 경우 암호화 저장되어 분실 시 찾아드릴 수 없는 정보입니다.</p>
+						<p>*본인 확인을 통해 비밀번호를 재설정 하실 수 있습니다.</p>
+                        <label for="userName" class="mr-sm-2">아이디 : </label>
+                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter id" id="id" name="id">
+						<label for="userName" class="mr-sm-2">이름 : </label>
+                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter name" id="name" name="name">
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+	
+	
 	<script>
 		//비밀번호 텍스트 표시
 		$(function() {
