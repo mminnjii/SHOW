@@ -3,12 +3,75 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="noticeMapper">
-
+	
+	<resultMap type="Notice" id="noticeResultSet">
+		<result column="NOTICE_NO" property="noticeNo"/>
+		<result column="NOTICE_TITLE" property="noticeTitle"/>
+		<result column="NOTICE_CONTENT" property="noticeContent"/>
+		<result column="CREATEDATE" property="createDate"/>
+		<result column="COUNT" property="count"/>
+		<result column="STATUS" property="status"/>
+	</resultMap>
+	
 	<select id="listCount" resultType="_int">
-		SELECT *
+		SELECT COUNT(*)
 		FROM NOTICE
 		WHERE STATUS ='Y'
 	</select>
+	
+	<select id="selectList" resultMap="noticeResultSet">
+		SELECT * 
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+		ORDER BY CREATEDATE DESC
+	</select>
 
+	<!-- 검색 목록 개수  -->
+	<select id="searchCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE STATUS ='Y'
+		<choose>
+			<when test="condition == 'title'">
+				AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%' 
+			</when>
+			<otherwise>
+				AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+				AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%'
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 검색 목록 정보 | 동적 sql문 사용하여 쿼리문 작성 -->
+	<select id="searchNotice" resultMap="noticeResultSet">
+		SELECT *
+		FROM NOTICE
+		WHERE STATUS ='Y'
+		<choose>
+			<when test="condition == 'title'">
+				AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'all'">
+				AND (NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+				OR NOTICE_CONTENT LIKE '%' || #{keyword} || '%')
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 
+	<select id="noticeDetail" parameterType="_int" resultMap="noticeResultSet">
+		SELECT *
+		FROM NOTICE
+		WHERE STATUS ='Y'
+			AND NOTICE_NO = #{nno}
+	</select>
+	 -->
+	
 
 </mapper>
