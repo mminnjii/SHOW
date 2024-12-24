@@ -42,7 +42,7 @@
 
 .a {
 	text-align: left;
-	width: 80%;
+	width: 60%;
 	margin: 0px auto;
 	background-color: white;
 	padding: 20px;
@@ -222,8 +222,9 @@ a {
 	
 		// 카테고리별 faq
 	    $(".faq-filter").click(function(){
-	
+			
 	    	var qcategoryNo = $(this).val();
+			console.log(qcategoryNo);
 			
 			$.ajax({
 	            url : "faqFilter",
