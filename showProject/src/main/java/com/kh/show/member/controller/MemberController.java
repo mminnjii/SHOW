@@ -61,8 +61,6 @@ public class MemberController {
 		
 		Member loginUser = memberService.loginMember(m);
 		
-		System.out.println(loginUser);
-		
 		//System.out.println(bcrtptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd()));
 		
 		if(loginUser != null && bcrtptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
@@ -73,7 +71,7 @@ public class MemberController {
 		}else {
 			//System.out.println("N");
 			session.setAttribute("alertMsg", "로그인 실패!");
-			mv.setViewName("redirect:/");
+			mv.setViewName("member/loginPage");
 		}
 		
 		return mv;
@@ -216,6 +214,69 @@ public class MemberController {
 		return "member/memberAddress";
 	}
 	
+	//비밀번호 확인 메소드
+	@ResponseBody
+	@RequestMapping(value="/pwdCheck", produces="text/html;charset=UTF-8")
+	public String pwdCheck(String checkPwd,
+						   String userId) {
+		
+		String pwd = memberService.memberPwd(userId);
+		
+		String val = "";
+		
+		if(bcrtptPasswordEncoder.matches(checkPwd, pwd)) {
+			val = "YYY";
+		}else {
+			val = "NNN";
+		}
+		
+		return val;
+	}
+	
+	//비밀번호 업데이트 메소드
+	@PostMapping("password.me")
+	public ModelAndView updatePassword(Member m,
+									   HttpSession session,
+									   ModelAndView mv) {
+		String encPwd = bcrtptPasswordEncoder.encode(m.getUserPwd());
+		
+		m.setUserPwd(encPwd);
+		
+		int result = memberService.updatePassword(m);
+		
+		if(result>0) {
+			Member loginUser = memberService.loginMember(m);
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("alertMsg", "비밀번호 변경 성공!");
+			mv.setViewName("member/myPage");
+		}else {
+			session.setAttribute("alertMsg", "비밀번호 변경 실패!");
+			mv.setViewName("member/myPage");
+		}
+		
+		return mv;
+	}
+	
+	//회원 탈퇴 메소드
+	@PostMapping("delete.me")
+	public String deleteMember(String userPwd,
+							   HttpSession session) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		if(bcrtptPasswordEncoder.matches(userPwd, loginUser.getUserPwd())) {
+			int result = memberService.deleteMember(loginUser.getUserId());
+			if(result>0) {
+				session.removeAttribute("loginUser");
+				return "member/deletePage";
+			}else {
+				session.setAttribute("alertMsg", "회원 탈퇴 실패!");
+				return "member/deleteMember";
+			}
+		}else {
+			return "member/deleteMember";
+		}
+	}
 								
 	
 	

@@ -41,8 +41,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int deleteMember(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.deleteMember(sqlSession,userId);
 	}
 
 	//아이디 중복 확인
@@ -55,5 +54,17 @@ public class MemberServiceImpl implements MemberService{
 	public int memberAddress(HashMap<String, String> map) {
 		return memberDao.memberAddress(sqlSession,map);
 	}
+
+	@Override
+	public String memberPwd(String userId) {
+		return memberDao.memberPwd(sqlSession,userId);
+	}
+
+	@Override
+	public int updatePassword(Member m) {
+		return memberDao.updatePassword(sqlSession,m);
+	}
+
+	
 
 }

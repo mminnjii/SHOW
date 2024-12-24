@@ -18,4 +18,8 @@ public interface MemberService {
 	int idCheck(String checkId);
 	//회원 배송지 서비스
 	int memberAddress(HashMap<String, String> map);
+	//아이디로 기존 비밀번호 불러오기 
+	String memberPwd(String userId);
+	//비밀번호 업데이트
+	int updatePassword(Member m);
 }

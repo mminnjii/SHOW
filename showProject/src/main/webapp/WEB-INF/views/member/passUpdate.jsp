@@ -41,6 +41,8 @@
 		width: 70%;
 		height: 100%;
 		background-color: rgb(246, 246, 246);
+		text-align: center;
+		margin: auto;
 	}
 
 	.form-info{
@@ -74,6 +76,16 @@
 		cursor: pointer;
 	}
 
+	#pass-body{
+		text-align: left;
+		margin-top: 50px;
+		margin-left: 230px;
+	}
+
+	p{
+		font-size: 15px;
+	}
+
 	
 	
 </style>
@@ -93,44 +105,51 @@
 				<div id="mypage-body">
 					<br>
                     <h5>비밀번호 변경</h5>
+					<br>
+					<p>계정 보호를 위해 비밀번호를 주기적으로 변경해주세요</p>
                     <br>
+					<form action="password.me" method="post">
 					<div id="pass-body">
-						<div class="info-area">
-							<label for="userPwd">기존 비밀번호 </label>
-							<input type="password" class="form-info" id="originUserPwd" name="originUserPwd" style="width: 270px;" placeholder="6~20자 영문,숫자,특수문자" required>
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi1 bi-eye-fill" viewBox="0 0 16 16" id="e1">
-								<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-							</svg>
+							<input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
+							<div class="info-area">
+								<label for="userPwd">기존 비밀번호 </label>
+								<input type="password" class="form-info" id="originUserPwd" name="originUserPwd" style="width: 283px;" placeholder="기존 비밀번호 입력" required>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi1 bi-eye-fill" viewBox="0 0 16 16" id="e1">
+									<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+									<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+								</svg>
+							</div>
+							<div class="mention" id="originPwd" style="font-size: 0.8em; color: chocolate;"></div>
+							<br>
+							<div class="info-area">
+								<label for="userPwd">신규 비밀번호 </label>
+								<input type="password" class="form-info" id="newUserPwd" name="userPwd" style="width: 283px;" placeholder="6~20자 영문,숫자,특수문자" required>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi2 bi-eye-fill" viewBox="0 0 16 16" id="e2">
+									<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+									<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+								</svg>
+							</div>
+							<div class="mention" id="pwdCorrect" style="font-size: 0.8em; color: chocolate;"></div>
+							<br>
+							<div class="info-area">
+								<label for="checkPwd">신규 비밀번호 확인 </label>
+								<input type="password" class="form-info" id="checkPwd" name="userPwdCheck" style="width: 250px;" placeholder="6~20자 영문,숫자,특수문자" required>
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi3 bi-eye-fill" viewBox="0 0 16 16" id="e3">
+									<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+									<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+								</svg>
+							</div>
+							<div class="mention" id="pwd2Correct" style="font-size: 0.8em; color: chocolate;"></div>
+							<br><br>
 						</div>
-						<div class="mention" id="originPwd" style="font-size: 0.8em; color: chocolate;"></div>
-						<br>
-						<div class="info-area">
-							<label for="userPwd">신규 비밀번호 </label>
-							<input type="password" class="form-info" id="newUserPwd" name="userPwd" style="width: 270px;" placeholder="6~20자 영문,숫자,특수문자" required>
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi2 bi-eye-fill" viewBox="0 0 16 16" id="e2">
-								<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-							</svg>
-						</div>
-						<div class="mention" id="pwdCorrect" style="font-size: 0.8em; color: chocolate;"></div>
-						<br>
-						<div class="info-area">
-							<label for="checkPwd">신규 비밀번호 확인 </label>
-							<input type="password" class="form-info" id="checkPwd" name="userPwdCheck" style="width: 250px;" placeholder="6~20자 영문,숫자,특수문자" required>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi3 bi-eye-fill" viewBox="0 0 16 16" id="e3">
-								<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-							</svg>
-						</div>
-						<div class="mention" id="pwd2Correct" style="font-size: 0.8em; color: chocolate;"></div>
-					</div>
+						<button type="submit" class="btn btn-primary" disabled>입력 완료</button>
+					</form>
 				</div>
             </div>
 		</div>
 	</div>
 	<script>
-		//비밀번호 텍스트 표시
+		//기존 비밀번호 텍스트 표시
 		$(function() {
 				$('.bi1').on('click', function() {
 					$('.info-area').toggleClass('active');
@@ -145,7 +164,7 @@
 				});
 			});
 
-			//비밀번호 확인 텍스트 표시
+			//신규 비밀번호 텍스트 표시
 			$(function() {
 				$('.bi2').on('click', function() {
 					$('.info-area').toggleClass('active');
@@ -159,6 +178,7 @@
 				});
 			});
 
+			//신규 비밀번호 확인 텍스트 표시
 			$(function() {
 				$('.bi3').on('click', function() {
 					$('.info-area').toggleClass('active');
@@ -172,7 +192,7 @@
 				});
 			});
 
-			//비밀번호 형식
+			//신규 비밀번호 형식
 			$("input[name='userPwd']").blur(function(){
 				var pwdForm = /.*(?=.{6,20})(?=.*[~!@#$%^&*])(?=.*[0-9])(?=.*[a-zA-Z]).*/;
 				var pwd = $("#newUserPwd").val();
@@ -184,7 +204,7 @@
 				}
 			});
 			
-			//비밀번호 확인 형식+일치 확인
+			//신규 비밀번호 확인 형식+일치 확인
 			$("input[name='userPwdCheck']").blur(function(){
 				var pwdckForm = /.*(?=.{6,20})(?=.*[~!@#$%^&*])(?=.*[0-9])(?=.*[a-zA-Z]).*/;
 				var pwdck = $("#checkPwd").val();
@@ -200,6 +220,35 @@
 					$("#pwd2Correct").text("비밀번호가 일치하지 않습니다");
 					$("button[type=submit]").attr("disabled",true);
 				}
+			});
+
+			//기존 비밀번호 일치 여부
+			$(function(){
+				var origin = $("#originUserPwd");
+				var userId = $("#userId")
+
+				$("#originUserPwd").keyup(function(){
+
+					$.ajax({
+						url : "pwdCheck",
+						data: {
+							checkPwd : origin.val(),
+							userId : userId.val()
+						},
+						success : function(val){
+							if(val == "NNN"){
+								$("#originPwd").text("기존 비밀번호와 일치하지 않습니다");
+								$("button[type=submit]").attr("disabled",true);
+							}else{
+								$("#originPwd").text("");
+								$("button[type=submit]").attr("disabled",false);
+							}
+						},
+						error : function(){
+							console.log("error");
+						}
+					})
+				});
 			});
 	</script>
 	
