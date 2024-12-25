@@ -25,12 +25,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="ANSWER_CONTENT" property="answerContent" />
 	</resultMap>	
 	
-	<!-- 전체리스트 -->
+	<!-- TOP 10 리스트 -->
 	<select id="selectFaqList" resultMap="faqResultSet">
-		SELECT *
-		FROM FAQ
-		ORDER BY COUNT DESC
-	</select>
+		SELECT * 
+		FROM (SELECT *
+		        FROM FAQ
+		        ORDER BY COUNT DESC)
+		<![CDATA[WHERE ROWNUM <= 10]]>
+ 	</select>
 
 	<!-- 카테고리별 리스트 -->
 	<select id="faqFilterList" resultMap="faqResultSet">
@@ -40,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY COUNT DESC
 	</select>
 	
+	<!-- FAQ 검색 리스트 -->
 	<select id="faqSearchList" parameterType="string" resultMap="faqResultSet">
 		SELECT * 
 		FROM FAQ
@@ -93,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- faq count up  -->
-	<update id="faqCount" parameterType="_int">
+	<update id="faqCount">
 		UPDATE FAQ
 		SET COUNT = COUNT+1
 		WHERE FAQ_NO = #{faqNo}

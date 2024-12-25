@@ -141,13 +141,14 @@
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
 	
     <div>
-        <img src="/show/resources/images/배너.jpg" alt="헤더이미지" id="headerImg">
+        <img src="${contextPath }/resources/images/배너.jpg" alt="헤더이미지" id="headerImg">
     </div>
 
     <div id="div">
         <table  id="header">
             <tr id="tr1">
                 <td id="td1"></td>
+                <td id="td4"><a href=""><img src="${contextPath }/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
                 <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
@@ -162,7 +163,7 @@
 		                   		<!-- 로그인 후 -->
 		                   		<lable>${loginUser.userName }님</lable> &nbsp;&nbsp;
 		                   		<li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
-		                        <li id="li3"><a href="${contextPath}/myPage.me">내정보</a></li>
+		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
 		                   </c:otherwise>
 		                </c:choose>
                         <li id="li4"><a href="">예매확인/취소</a></li>
@@ -170,6 +171,8 @@
                     </ul>
                 </td>
                 <td id="td5" align="center">
+                    <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
+                    <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
                     <img src="/show/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
@@ -183,8 +186,9 @@
                 <td colspan="3" id="td8">
                     <ul id="menu">
 
-                        <li><a href="$">홈</a></li>
+                        <li><a href="${contextPath}">홈</a></li>
                         <li><a href="${contextPath}/musicalList">뮤지컬</a></li>
+
                         <li><a href="${contextPath}/playList">연극</a></li>
                         <li><a href="${contextPath}/concertList">콘서트</a></li>
                         <li><a href="${contextPath}/classicList">클래식</a></li>
@@ -195,6 +199,11 @@
 
 
                         <li><a href="">오픈공지</a> </li>
+
+
+                        <li><a href="${contextPath}/notice/list">공지사항</a></li>
+                        
+
                         <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
 
 
