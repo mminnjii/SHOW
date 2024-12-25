@@ -192,7 +192,7 @@
                     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
                     	
                         $.ajax({
-                            url: "musicalShow",
+                            url: "concertShow",
                             success: function(result){
                             	 
                                 var str = "";
