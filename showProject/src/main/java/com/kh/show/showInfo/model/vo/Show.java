@@ -26,8 +26,8 @@ public class Show {
 	private String genreNo;//	GENRE_NO	NUMBER
 	private String regionNo;//	REGION_NO	NUMBER
 
-	private Date showStart;//    "SHOW_START" DATE,
-	private Date showEnd;//    "SHOW_END" DATE
+	private String showStart;//    "SHOW_START" DATE,
+	private String showEnd;//    "SHOW_END" DATE
 	private int count;
 
 }
