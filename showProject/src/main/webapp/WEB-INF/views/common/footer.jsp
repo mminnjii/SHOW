@@ -89,8 +89,8 @@
             <a href="#">이용약관</a> | 
             <a href="#">고객센터</a> | 
             <a href="#">티켓판매안내</a> | 
-            <a href="#">광고안내</a>
-            <a href="${contextPath}/managerPage" id="managerPage"> |  관리자 페이지</a>
+            <a href="#">광고안내</a> | 
+            <a href="${contextPath}/managerPage" id="managerPage">관리자 페이지</a>
              
         </div>
 
