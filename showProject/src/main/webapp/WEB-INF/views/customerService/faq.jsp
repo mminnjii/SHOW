@@ -143,7 +143,8 @@
 
         <div class="outer2 faqP">
             <span>
-                <button class="faq-filter" name="all" value="all">TOP Q&A</button>
+                <button class="faq-filter" name="all" value="all">전체</button>
+                <button class="faq-filter" name="top" value="top">TOP Q&A</button>
                 <button class="faq-filter" name="1" value="1">티켓</button>
                 <button class="faq-filter" name="2" value="2">회원/기타</button>
             </span>
