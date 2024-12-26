@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.show.customer.model.service.CustomerService;
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.reservation.model.vo.Reservation;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +40,7 @@ public class CustomerController {
 		
 		log.info("고객센터 페이지");
 		
+		// faq TOP 5 LIST
 		ArrayList<Faq> faqList = customerService.selectFaqList();
 		
 					// 전달할 값 			/	값을 보낼 view 
@@ -55,10 +55,6 @@ public class CustomerController {
 
 		ArrayList<Faq> faqList = customerService.selectFaqList();
 
-//		for(Faq f : faqList) {
-//			System.out.println(f);
-//		}
-		
 		m.addAttribute("faqList", faqList);
 		
 		return "customerService/faq";
@@ -94,10 +90,6 @@ public class CustomerController {
 		
 		ArrayList<Faq> searchList = customerService.faqSearchList(keyword);
 		
-//		for(Faq q : searchList) {
-//			System.out.println(q);
-//		}
-		
 		return searchList;
 	}
 	
@@ -116,33 +108,42 @@ public class CustomerController {
 		
 		System.out.println(upfile);
 		System.out.println(m);
+		
 		// 파일이 있는 경우 
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일명 수정 작업 
 			String changeName = saveFile(upfile, session);
 			
 			q.setOriginName(upfile.getOriginalFilename());
-			q.setChangeName(changeName);
+			q.setChangeName("/resources/questionUpFile/" + changeName);
 		}
 		
-		System.out.println(q);
+		System.out.println("Question (파일명 변경포함): "+q);
 		
 		int result = 0;
 		
+		// 회원 비회원에 따라 저장되는 DB가 다르다. 
 		if(m.getUserNo() != 0) {  // 회원인 경우
 			result = customerService.questionInsert(q);
 		}else {  // 회원이 아닌 경우 
 			result = customerService.questionNonInsert(q);			
 		}
 		
+		String alertMsg = "";
+		
 		if(result>0) {
-			String alertMsg = (m.getUserNo() != 0) 
+			alertMsg = (m.getUserNo() != 0) 
 									? "1:1 문의가 등록되었습니다. 마이페이지에서 내역을 확인하실 수 있습니다." 
 									: "1:1 문의가 등록되었습니다.";
+		}else {
+			alertMsg = "1:1 문의등록이 실패되었습니다." ;
 		}
+
+		session.setAttribute("alertMsg", alertMsg);
 
 		return "redirect:/cmain";
 	}
+	
 	
 	
 	// 파일 업로드 처리 메소드 
@@ -157,23 +158,28 @@ public class CustomerController {
 		// 3. 확장자 추출 
 		String ext = originName.substring(originName.lastIndexOf("."));
 		
-		// 랜텀 값 추출 
+		// 4. 랜텀 값 추출 
 		int ranNum = (int) ((Math.random()*90000)+1);
 		
-		// 합치기 
+		// 5. 합치기 
 		String changeName = currentTime + ranNum + ext ;
 		
-		// 업로드 서버의 경로 
+		// 6. 업로드 서버의 경로 
 		String savePath = session.getServletContext().getRealPath("/resources/questionUpFile/");
 		
-		// transferTo : 업로드 메소드 사용하여 파일 업로드 처리 
+		System.out.println(savePath);
+
+		// 7. transferTo : 업로드 메소드 사용하여 파일 업로드 처리 
 		try {
-			System.out.println(savePath+changeName);
+			System.out.println("저장경로+변경된파일명 : " + savePath+changeName);
 			upfile.transferTo(new File(savePath+changeName));
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("originName : "+originName);
+		System.out.println("changeName : "+changeName);
 		
 		return changeName;
 	}
@@ -194,8 +200,9 @@ public class CustomerController {
 	}
 
 	
+	// faq 클릭시 count
 	@PostMapping("/faqCount")
-	public void faqCount(int faqNo) {
+	public void faqCount(String faqNo) {
 		
 		System.out.println(faqNo);
 		

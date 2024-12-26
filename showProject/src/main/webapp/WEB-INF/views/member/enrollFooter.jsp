@@ -8,11 +8,12 @@
 <style>
 	#footer{
 		width: 100%;
-		height : 150px;
+		height : 80px;
 		margin:auto;
-		margin-top:80px;
+		padding-top:20px; 
 		background-color: rgb(250, 250, 250);
-		padding-top:4%;
+		/* position: absolute;
+		bottom: 0px;  */
 	}
 	#p1{text-align:center;}
 

@@ -5,326 +5,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-<!-- slick carousel css 파일 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
-<!-- jQuery 파일 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<!-- slick carousel js 파일 -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <title>뮤지컬리스트</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Jersey+25+Charted&family=Jua&family=Libre+Barcode+128+Text&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
-
 <style>
-
-
-    #back1{
-        width: 100%;
-        height: 500px;
-        background-color: #597C9B;
-    }
-    #back2{
-        width: 100%;
-        height: 500px;
-        background-color: rgb(255, 208, 0);
-    }
-    #back3{
-        width: 100%;
-        height: 500px;
-        background-color: rgb(203, 4, 4);
-    }
-    #back4{
-        width: 100%;
-        height: 500px;
-        background-color: rgba(116, 1, 1, 0.818);
-    }
-    #back5{
-        width: 100%;
-        height: 500px;
-        background-color: rgb(132, 79, 11);
-    }
-
-    #today{
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 30px;
-        font-weight: 500;
-        font-style: normal;
-        color: black;
-
-    }
-
-    .todayInfo{
-        width: 100%;
-        height: 100px;
-    }
-
-  
-    #t1,#t2,#t3,#t4,#t5{
-        width: 350px;
-        height: 450px;
-        position: relative;
-        left: 200px;
-        top: 80px;
-        border-radius: 30px;
+    .musicalSlider2{
         
-    }
-    #oho1{
-        position: relative;
-        left: 900px;
-        bottom : 700px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 30px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-
+        width: 100%;
+        height: 50%;
+        display:block;
+        margin: auto; /*display:block일때 margin:auto로 하면 가운데 정렬*/
+        border-radius: 10px;
        
     }
-    #oho2{
-        position: relative;
-        left: 900px;
-        bottom: 700px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 50px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-    }
-    #oho3{
-        position: relative;
-        left: 900px;
-        bottom: 700px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 20px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-    }
-    #oho4{
-        position: relative;
-        left: 600px;
-        bottom: 270px;
+
+
+
+   
+
+    body {
       
-        width: 400px;
-        height: 335px;
-    }
-    #oho5{
-        position: relative;
-        left: 570px;
-        bottom: 296px;
-        
-        width: 450px;
-        height: 380px;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
     }
 
-    #oho6{
-        position: relative;
-        left: 900px;
-        bottom : 740px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 30px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-
-       
-    }
-    #oho7{
-        position: relative;
-        left: 900px;
-        bottom: 740px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 50px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-    }
-    #oho8{
-        position: relative;
-        left: 900px;
-        bottom: 740px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 20px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
+    .swiper {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
-    #oho9{
-        position: relative;
-        left: 620px;
-        bottom: 250px;
-        
-        width: 250px;
-        height: 300px;
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
     }
 
-    #oho10{
-        position: relative;
-        left: 900px;
-        bottom : 650px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 25px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-
-       
-    }
-    #oho11{
-        position: relative;
-        left: 900px;
-        bottom: 650px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 40px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-    }
-    #oho12{
-        position: relative;
-        left: 900px;
-        bottom: 650px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 20px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
-    }
-    #oho13{
-        position: relative;
-        left: 620px;
-        bottom: 280px;
-        
-        width: 250px;
-        height: 330px;
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      
     }
 
-    #oho14{
-        position: relative;
-        left: 900px;
-        bottom : 700px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 25px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
+    .autoplay-progress {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 10;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--swiper-theme-color);
+    }
 
-       
+    .autoplay-progress svg {
+      --progress: 0;
+      position: absolute;
+      left: 0;
+      top: 0px;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      stroke-width: 4px;
+      stroke: var(--swiper-theme-color);
+      fill: none;
+      stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+      stroke-dasharray: 125.6;
+      transform: rotate(-90deg);
     }
-    #oho15{
-        position: relative;
-        left: 900px;
-        bottom: 700px;
+
+    #musi{
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 45px;
-        font-weight: 500;
+        font-size: 35px;
+        font-weight: 600;
         font-style: normal;
-        color: white;
-    }
-    #oho16{
         position: relative;
-        left: 900px;
-        bottom: 700px;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 20px;
-        font-weight: 500;
-        font-style: normal;
-        color: white;
+        left: 220px;
+
+            
     }
-    
+
 </style>
 </head>
 <body>
 
-    <div class="ad">
-        <table>
-            <tr>
-                <div id="today">오늘의 추천</div>
-            </tr>
-            <tr>
-            <div class="todayInfo">
-                
-                <div id="back1">
-                    <div >
-                        <img src="/show/resources/images/오현우.jpg" alt="" id="t1">
-                        <img src="/show/resources/images/인물오현우최종.png" alt="" id="oho4">
-                        
-                    </div>
-                    <div>
-                    <span id="oho1" >오현우 첫번째 콘서트</span> <br>
-                    <span id="oho2">오늘, 현재 우리의 시간</span><br><br>
-                    <span id="oho3">2025.01.18</span>
-                    </div>
-                </div>
-                <div id="back2">
-                    <div >
-                        <img src="/show/resources/images/베르테르.jpg" alt="" id="t2">
-                        <img src="/show/resources/images/베르테르인물최종.png" alt="" id="oho5">
-                    </div>
-                    <div>
-                        <span id="oho6" >25주년 </span> <br>
-                        <span id="oho7"> 뮤지컬 베르테르</span><br><br>
-                        <span id="oho8">2025.01.17 - 2025.03.16</span>
-                    </div>
-                </div>
-                <div id="back3">
-                    <div >
-                        <img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id="t3">
-                        <img src="/show/resources/images/뉴욕의거장들그림.jpg" alt="" id="oho9">
-                    </div>
-                    <div>
-                        <span id="oho10" >뉴욕의 거장들 </span> <br>
-                        <span id="oho11"> 잭슨 폴록과 마크 로스코의 친구들</span><br><br>
-                        <span id="oho12">2025.01.10 - 2025.07.12</span>
-                    </div>
-                </div>
-                <div id="back4">
-                    <div>
-                        
-                        <img src="/show/resources/images/오페라.jpg" alt="" id="t4">
-                        <img src="/show/resources/images/투란도트인물.jpg" alt="" id="oho13">
-                    </div>
-                    <div>
-                        <span id="oho14" >뮤지컬 오페라 어게인</span> </span> <br>
-                        <span id="oho15"> 2024 투란도트트</span><br><br>
-                        <span id="oho16">2024.12.22 - 2024.12.31</span>
-                    </div>
-                </div>
-               
-            </div>
 
-            </tr>
-        </table>
-    </div>
 
+   <br><br>
+    <span id="musi">오늘의 추천</span>
+
+    <br><br>
+
+    <div class="musicalSlider2" >
+
+        
+   
     
-      
-                
-         
-                    
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="/show/resources/images/오현우2.png" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/images/베르테르2.png" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/images/뉴욕의 거장들2.png" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/images/투란도트2.png" alt=""></div>
           
+        </div>
+        
+        <div class="autoplay-progress">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="20"></circle>
+          </svg>
+          <span></span>
+        </div>
+      </div>
 
-    <script>
-        $(document).ready(function(){
-            $('.todayInfo').slick({
-            	arrows : false,   
-                autoplay: true,   // 자동 슬라이드
-                autoplaySpeed: 3000  // 3초마다 자동으로 슬라이드
+    </div>
     
-            });
+      <!-- Swiper JS -->
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+      <!-- Initialize Swiper -->
+      <script>
+        const progressCircle = document.querySelector(".autoplay-progress svg");
+        const progressContent = document.querySelector(".autoplay-progress span");
+        var swiper = new Swiper(".mySwiper", {
+          spaceBetween: 30,
+          centeredSlides: true,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+          },
+          on: {
+            autoplayTimeLeft(s, time, progress) {
+              progressCircle.style.setProperty("--progress", 0 - progress);
+              progressContent.textContent = `${Math.ceil(time / 5000)}s`;
+            }
+          }
         });
-    </script>
-    
-    <script type="text/javascript">
-      $.noConflict(); //계속 충돌이 일어나서 충돌 방지 코드를 넣어줌
-	</script>
-    
+      </script>
+      
+      
 </body>
 </html>
