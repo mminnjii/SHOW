@@ -85,7 +85,11 @@
 						멤버십 전용 혜택!
 					</b>
 					<br>
-					
+					<table>
+						<tr>
+							
+						</tr>
+					</table>
 				</div>
             </div>
 		</div>
