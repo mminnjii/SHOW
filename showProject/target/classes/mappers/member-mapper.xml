@@ -23,6 +23,8 @@
 		<result column="ADDRESS" property="address"/>
 		<result column="ENROLL_DATE" property="enrollDate"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="RANK" property="rank"/>
 		<result column="SUBSCRIBE" property="subscribe"/>
 		<result column="STATUS" property="status"/>
@@ -72,7 +74,9 @@
 			USER_RRN = #{userRrn},
 			PHONE = #{phone},
 			EMAIL = #{email},
-			MODIFY_DATE = SYSDATE
+			MODIFY_DATE = SYSDATE,
+			ORIGIN_NAME = #{originName},
+			CHANGE_NAME = #{changeName}
 		WHERE USER_ID = #{userId}
 	</update>
 

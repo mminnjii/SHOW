@@ -12,6 +12,7 @@
 	}
 	.inner{
 		width: 100%;
+		height: 400px;
 		margin: auto;
 		padding-top: 5%;
 		text-align: center;
@@ -63,7 +64,7 @@
 			location.href="${contextPath}";
 		}
 	</script>
-	
+	<br><br><br>
 	<jsp:include page="/WEB-INF/views/member/enrollFooter.jsp"/>
 </body>
 </html>

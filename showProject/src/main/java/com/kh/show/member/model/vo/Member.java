@@ -20,6 +20,8 @@ public class Member {
 	private String address;//	ADDRESS	VARCHAR2(100 BYTE)
 	private Date enrollDate;//	ENROLL_DATE	DATE
 	private Date modifyDate;//	MODIFY_DATE	DATE
+	private String originName;//	ORIGIN_NAME	VARCHAR2(300 BYTE)
+	private String changeName;//	CHANGE_NAME	VARCHAR2(300 BYTE)
 	private String rank;//	RANK	VARCHAR2(5 BYTE)
 	private String subscribe;//	SUBSCRIBE	VARCHAR2(1 BYTE)
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
