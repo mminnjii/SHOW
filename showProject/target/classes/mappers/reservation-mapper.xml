@@ -15,8 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="SHOW_NAME" property="showName"/>	
 			<result column="SHOW_NO" property="showNo"/>	
 		</collection>
+	
 	</resultMap>
 	
+	<resultMap type="SeatsOfRow" id="SeatsOfRowResultSet">
+		<result column="ROW_NAME" property="rowName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+	</resultMap>
 	
 	<!-- 예약 번호 가져오기 -->
 	<select id="reSearch" parameterType="_int" resultMap="reservationResult">
@@ -26,5 +31,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+	<select id="selectTakenSeats" resultType="String">
+		SELECT ROW_NAME || COL_NO  AS TAKEN
+		FROM SEATS
+		WHERE STATUS = 'N'
+	</select>
+	
+	
+	<!-- 등급별좌석 수 조회 -->
+	<select id="selectSeatsNum" resultMap="SeatsOfRowResultSet">
+		SELECT  COUNT(*) AS COUNT,
+                GRADE_NAME 
+		FROM SEATSOFROW
+		JOIN SEATS USING(ROW_NAME)
+		WHERE STATUS = 'Y'
+		GROUP BY GRADE_NAME
+	</select>
+	
+	<!-- 공연장(hall)테이블 총좌석 수 변환(-). -->
+	<update id="updateTotalNum" parameterType="_int">
+		  UPDATE HALL
+    	  SET TOTAL_SEAT = <![CDATA[TOTAL_SEAT - #{num}]]>
+	</update>
+	
+	<!-- 좌석 상태 변환 -->
+	<update id="updateSeatStatus" parameterType="String">
+		UPDATE SEATS
+		SET STATUS = 'N'
+		WHERE ROW_NAME || COL_NO = #{name}
+	</update>
 	
 </mapper>

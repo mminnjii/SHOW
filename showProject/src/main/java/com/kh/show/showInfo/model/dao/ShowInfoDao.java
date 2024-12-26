@@ -23,9 +23,26 @@ public class ShowInfoDao {
 		return s;
 	}
 
-	// 공연회차조회
+	// 공연회차조회(날짜)
 	public ArrayList<ShowRound> selectRound(SqlSession session) {
 		return (ArrayList)session.selectList("showInfoMapper.selectRound");
+	}
+	
+	
+	public int updateSysdate(SqlSession session) {
+		return session.update("showInfoMapper.updateSysdate");
+	}
+	
+	public int updateShowRound(SqlSession session) {
+		return session.update("showInfoMapper.updateShowRound");
+	}
+	
+
+	
+	// 공연회차조회 > 날짜선택 후(시간/회차)
+	public ArrayList<ShowRound> selectTime(SqlSession session,String date) {
+		ArrayList<ShowRound> list= (ArrayList)session.selectList("showInfoMapper.selectTime",date);
+		return list;
 	}
 	
 	// 리뷰조회
@@ -46,6 +63,11 @@ public class ShowInfoDao {
 	public int searchRcount(SqlSession session, String keyword) {
 		return session.selectOne("showInfoMapper.searchRcount",keyword);
 	}
+
+
+
+
+
 
 
 	

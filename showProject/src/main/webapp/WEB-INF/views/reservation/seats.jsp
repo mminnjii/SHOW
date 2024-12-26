@@ -78,14 +78,12 @@
     <div class="stage">무대(STAGE)</div>
     
 	<%
-	    // 임시 데이터 생성 (JSP 내부에서 리스트 제공)
+	    // 기본 데이터 생성 
 	    String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H"};
-		String[] grades = {"VIP", "VIP", "R", "R", "R", "E", "E", "E"};
 	    request.setAttribute("rows", rows);
-	    request.setAttribute("grades", grades);
 	    
 	%>
-	<table>
+	<table id=seats>
 	    <c:forEach var="row" items="${rows}">
 	        <tr>
 	        	<td colspan="3"> <b> ${row } </b></td>
@@ -97,22 +95,22 @@
 	                	<c:when test="${row == 'A' or row == 'B' }">
 	               		 	<td>
 		               		 	<div class="seat" style="background: #f8d7da; border: 1px solid #f5c6cb;" data-seat="${row}${col}">
-			                        ${row}${col}
-			                    </div>
+		               		 		${row}${col}
+		               		 	</div>
 		                    </td>
 	                	</c:when> 
 	                	<c:when test="${row == 'C' or row == 'D' or row == 'E' or row == 'F'}">
 	               		 	<td>
 		               		 	<div class="seat" style="background-color: #d4edda; border: 1px solid #c3e6cb" data-seat="${row}${col}">
-			                        ${row}${col}
-			                    </div>
+		               		 		${row}${col}
+	               		 		</div>
 		                    </td>
 	                	</c:when>
 	                	<c:otherwise>
 	               		 	<td>
 		               		 	<div class="seat" style="background-color:#d1ecf1; border: 1px solid #bee5eb" data-seat="${row}${col}">
-			                        ${row}${col}
-			                    </div>
+		               		 		${row}${col}
+	               		 		</div>
 		                    </td>
 	                	</c:otherwise>
 	                </c:choose>
@@ -128,23 +126,41 @@
 					<th style="width: 200px;" colspan="2"><h3> 좌석등급 / 잔여석 </h3></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td><div class="vip" style="background: #f8d7da;"></div></td>
-					<td>VIP석&nbsp;(A-B)</td>
-					<td>0개</td>
-				</tr>
-				<tr>
-					<td><div class="r" style="background-color: #d4edda;"></div></td>
-					<td>R석&nbsp;(C-F)</td>
-					<td>0개</td>
-				</tr>
-				<tr>
-					<td><div class="e" style="background-color:#d1ecf1;"></div></td>
-					<td>E석&nbsp;(F-H)</td>
-					<td>0개</td>
-				</tr>
-			</tbody>
+			<c:if test="${not empty num }">
+					<tbody>
+						<tr>
+							<td><div class="vip" style="background: #f8d7da;"></div></td>
+							<c:forEach var="num" items="${num}">
+								<c:if test="${num.gradeName eq 'VIP' }">
+									<td>VIP석&nbsp;(A-B)</td>
+									<td>${num.count }개</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+						<tr>
+							<td><div class="r" style="background-color: #d4edda;"></div></td>
+							<c:forEach var="num" items="${num}">
+								<c:if test="${num.gradeName eq 'R' }">
+									<td>R석&nbsp;(C-F)</td>
+									<td>${num.count }개</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+						<tr>
+							<td><div class="e" style="background-color:#d1ecf1;"></div></td>
+							<c:forEach var="num" items="${num}">
+								<c:if test="${num.gradeName eq 'S' }">
+									<td>S석 &nbsp;(F-H)</td>
+									<td>${num.count }개</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</tbody>
+					
+					
+					
+				
+			</c:if>
 		</table>
 		<table class="info" id="select">
 			<thead>
@@ -181,19 +197,19 @@
         			if($(this).hasClass('selected')){
         				if(seatNumber.includes("A") || seatNumber.includes("B")){
         						var vip = $("<td>").text("VIP석");
-		              			var num = $("<td>").text(seatNumber).attr("name", "selectedCount");
+		              			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
 		              			var tr = $("<tr>").append(vip).append(num);
               					$("#select>tbody").append(tr);
               			
         		       	}else if(seatNumber.includes("C") || seatNumber.includes("D") || seatNumber.includes("E")
                     			|| seatNumber.includes("F")){
         		       			var r = $("<td>").text("R석");
-                    			var num = $("<td>").text(seatNumber).attr("name", "selectedCount");
+                    			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
                     			var tr = $("<tr>").append(r).append(num);
                     			$("#select>tbody").append(tr);
                    		}else{
         	           			var e = $("<td>").text("E석");
-        	        			var num = $("<td>").text(seatNumber).attr("name", "selectedCount");
+        	        			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
         	        			var tr = $("<tr>").append(e).append(num);
         	        			$("#select>tbody").append(tr);
                    		}
@@ -220,18 +236,17 @@
 
   	     	$(".submit").on('click',function(){
   	     		
-  	     		var selectedlength = $("#select>tbody tr").find("td:nth-child(even)").text().length;
-  	     		var num = selectedlength/3;
-  	     		console.log(num);
+  	     		var num = $("#select>tbody tr").find("td:nth-child(even)").length;
+  	     		// console.log(num);
   	     		// 짝수요소만 찾아서 ,로 이어서 문자열 만들기
   	     		var selectedName = $("#select>tbody tr").find("td:nth-child(even)").map(function() {
   	     		  return $(this).text();
-  	     		}).get().join(", ");
+  	     		}).get().join(",");
 
   	     		console.log(selectedName);
   	     		
       			$.ajax({
-      				url : "/show/showInfo/selectedSeats",
+      				url : "/show/reservation/selectedSeats",
       				type : "POST",
       				data : {
       					num : num,
@@ -251,6 +266,25 @@
       			}); 
   	     	});
 	     	
+  	     	
+  	     	$(function(){
+  	     		
+  	     		var taken = ${taken}; // JSTL 데이터를 JSON으로 전달
+  	     	 
+  	     	    console.log(${taken});
+  	     		
+  	     		taken.forEach(function (seatId) {
+  	     			// console.log(seatId)
+  	     	        // 테이블 내에서 data-seat 속성을 가진 요소를 선택
+  	     	        $("#seats").find("[data-seat='" + seatId + "']")
+  	     	            .addClass("blackout") // blackout 클래스 추가
+  	     	            .css("pointer-events", "none") // 클릭 방지
+  	     	            .css("cursor", "not-allowed") // 비활성화 커서
+  	     	            .css("background-color", "#6c757d") // 비활성화 배경색
+  	     	            .css("border", "1px solid #6c757d"); // 테두리 변경
+  	     	    });
+  	     	});
+  	     
 	     	
     </script>
 </body>

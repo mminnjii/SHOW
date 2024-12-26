@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SeatsGrade {
-	private int seatId;	//	SEAT_ID
+public class SeatsOfRow {
+	private String rowName; //	ROW_NAME
 	private String gradeName;	//	GRADE_NAME
 	private String price;	//	PRICE
+	private int count;	//	db에는 없지만 좌석 수 확인용 필드 추가
 }

@@ -12,10 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ShowRound {
-		
-	public ShowRound(int showRound2, String showTime2) {
-		// TODO Auto-generated constructor stub
-	}
+
 	private int roundId;	//	ROUND_ID
 	private int showNo;	//	SHOW_NO
 	private int showRound;	//	SHOW_ROUND

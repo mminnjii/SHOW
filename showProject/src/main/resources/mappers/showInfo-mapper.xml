@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="PRECAUTION" property="precaution" />
 		<result column="STATUS" property="status" />
 		<result column="HALL_NO" property="hallNo" />
+		<result column="HALL_NAME" property="hallName" />
 		<result column="GENRE_NO" property="genreNo" />
 		<result column="REGION_NO" property="regionNo" />
 		<result column="SHOW_START" property="showStart" />
@@ -61,7 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        SHOW_EXPLAIN,
 		        PRICE,
 		        NOTICE,
-		        HALL_NAME HALL_NO,
+		        HALL_NAME,
+		        S.HALL_NO HALL_NO,
 		        GENRE_NAME GENRE_NO,
 		        REGION_NAME REGION_NO,
 		        SHOW_START ,
@@ -74,6 +76,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND S.SHOW_NO = 1
 	</select>
 	
+	<!-- 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) -->
+	<update id="updateSysdate">
+		UPDATE SHOWROUND
+		SET STATUS = 'N'
+	<![CDATA[ WHERE SHOW_DATE < SYSDATE]]>  
+	</update>
+	
+	<update id="updateShowRound">
+		UPDATE SHOWROUND
+		SET STATUS = 'N'
+		WHERE HALL_NO IN (
+		            SELECT HALL_NO
+		            FROM HALL
+		            WHERE TOTAL_SEAT = 0)
+	</update>
+	
+	
+	
 	<!-- 공연날짜 조회 -->
 	<select id="selectRound" resultMap="roundResultSet">
 		SELECT SHOW_DATE
@@ -82,6 +102,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND STATUS = 'Y'
 		GROUP BY SHOW_DATE
 		ORDER BY SHOW_DATE
+	</select>
+	
+	<!-- 날짜 선택 후 시간/회차조회 -->
+	<select id="selectTime" resultMap="roundResultSet">
+		SELECT ROUND_ID,
+			   SHOW_ROUND,
+		       SHOW_TIME
+		FROM SHOWROUND
+		WHERE SHOW_NO = 1
+		AND STATUS = 'Y'
+		AND SHOW_DATE = TO_DATE(#{date}, 'YYYY-MM-DD')
 	</select>
 	
 	

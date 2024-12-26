@@ -1,8 +1,6 @@
 package com.kh.show.showInfo.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.show.showInfo.model.service.ShowInfoService;
@@ -36,19 +35,24 @@ public class ShowInfoController {
 		Show s = showInfoService.selectShow();
 		session.setAttribute("s", s);
 		
-		// 날짜조회
+		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
+		int result1 = showInfoService.updateSysdate();  
+		int result2 = showInfoService.updateShowRound();
+		
+		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
 		
 		return "show/showInfo/detailInfo";
 	}
 	
-	
-	@GetMapping("/selectDate")
-	public String selectDate() {
-		
-		
-		return "show/showInfo/detailInfo";
+	@ResponseBody
+	@GetMapping(value = "selectDate")
+	public ArrayList<ShowRound> selectTime(@RequestParam("date") String date) {
+
+        ArrayList<ShowRound> tAndr  = showInfoService.selectTime(date); 
+        
+		return tAndr;
 	}
 	
 	
@@ -109,30 +113,7 @@ public class ShowInfoController {
 		return "show/showInfo/review";
 	}
 	
-	
-	
-	
-	// 좌석이동
-	@GetMapping("/seats")
-	public String seats() {
-		
-		return "reservation/seats";
-	}
-	
-	
-	@ResponseBody
-	@PostMapping("/selectedSeats")
-	public int selectedSeats(HttpSession session, int num, String selectedName) {
-		// System.out.println(num);
-		// System.out.println(selectedName);
-		// session.setAttribute("num", num);
-		// session.setAttribute("selectedName", selectedName);
-		
-		return num;
-	}
-	
 
-	
 
 	// 상세정보 이동
 	@GetMapping("/info")
@@ -140,6 +121,10 @@ public class ShowInfoController {
 	
 		return "info";
 	}
+	
+
+
+
 	
 	
 }

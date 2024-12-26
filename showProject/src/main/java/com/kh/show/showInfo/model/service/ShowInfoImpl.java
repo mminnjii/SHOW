@@ -36,6 +36,23 @@ public class ShowInfoImpl implements ShowInfoService {
 		return round;
 	}
 	
+	
+	@Override
+	public int updateSysdate() {
+		return showInfoDao.updateSysdate(sqlSession);
+	}
+	
+	@Override
+	public int updateShowRound() {
+		return showInfoDao.updateShowRound(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<ShowRound> selectTime(String date) {
+		return showInfoDao.selectTime(sqlSession,date);
+	}
+	
+	
 	@Override
 	public ArrayList<Review> selectReview() {
 		ArrayList<Review> list = showInfoDao.selectReview(sqlSession);
@@ -60,6 +77,14 @@ public class ShowInfoImpl implements ShowInfoService {
 	public int searchRcount(String keyword) {
 		return showInfoDao.searchRcount(sqlSession,keyword);
 	}
+
+
+
+
+
+
+
+
 
 
 	
