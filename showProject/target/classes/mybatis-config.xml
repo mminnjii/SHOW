@@ -17,6 +17,7 @@
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
 		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
+		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
  	</typeAliases>
 
  	

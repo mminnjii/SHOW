@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.dao.NoticeDao;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.notice.model.vo.OpenNotice;
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -49,9 +50,27 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	// 공지사항 상세보기 
-//	@Override
-//	public Notice noticeDetail(int nno) {
-//		return noticeDao.noticeDetail(sqlSession, nno);
-//	}
+	@Override
+	public Notice noticeDetail(int nno) {
+		return noticeDao.noticeDetail(sqlSession, nno);
+	}
+
+	// 공지사항 조회수 up 
+	@Override
+	public int noticeUpCount(int nno) {
+		return noticeDao.noticeUpCount(sqlSession, nno);
+	}
+
+	// 오픈공지 개수 
+	@Override
+	public int openlistCount() {
+		return noticeDao.openlistCount(sqlSession);
+	}
+
+	// 오픈공지 목록 
+	@Override
+	public ArrayList<OpenNotice> selectOpenList(PageInfo pi) {
+		return noticeDao.selectOpenList(sqlSession, pi);
+	}
 
 }
