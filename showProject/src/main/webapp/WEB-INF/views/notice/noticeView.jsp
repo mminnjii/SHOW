@@ -75,6 +75,41 @@
 		.btnGroup{width: 20%; margin:5px;}
 		#searchForm{width: 40%;}			
 
+		/* 상세보기 style */
+ 		.divClass{
+            border-bottom: 1px solid lightgrey;
+            padding: 15px 20px; 
+        }
+        .title{
+            border-top: 2px solid lightgrey;
+            font-weight: bold;
+        }
+        .dateCount{
+            font-size: 12px;
+            color: gray;
+            font-weight: bold;
+            padding: 5px 20px;
+        }
+
+        .noticeBtn{
+            margin: 10px;
+            background-color: white;
+            border: 1px solid lightgrey;
+            padding: 7px 12px;
+            border-radius: 5px;
+            float: right;
+        }
+        .noticeBtn:hover{
+            margin: 10px;
+            background-color: #597c9b;
+            color: white;
+            border: 1px solid #597c9b;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        
 
     </style>
 </head>
@@ -88,12 +123,14 @@
         <br><br>
         <div class="btnForm">
 	       <div class="btnGroup">
-	           <button class="noBtn" value="1">일반 공지</button>
-	           <button class="noBtn" value="2">오픈 공지</button>
+	           <button id="general" class="noBtn" value="general">일반 공지</button>
+	           <button id="open" class="noBtn" value="open">오픈 공지</button>
 	       </div>
 	       
 	       <br>
 	
+			<!-- 일반공지, 오픈공지별 검색 기능 구현되어야 한다. 
+				 일반공지, 오픈공지 검색 url 변경 필요. => function 함수로 action값 변경?? -->
 	       <form id="searchForm" action="${contextPath}/notice/search" method="get">
 	       
 	           <div class="select">
@@ -112,6 +149,7 @@
 	       </form>
         </div>
         
+        <div id="noticeDiv">
         <table id="noticeList" class="table" align="center">
             <thead>
                 <tr>
@@ -121,7 +159,7 @@
                     <th>조회수</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="noticeTbody">
             
             <c:choose>
             	<c:when test="${empty noticeList}">
@@ -141,6 +179,7 @@
 
             </tbody>
         </table>
+        
         <br>
         
         <!-- 페이지네이션 -->
@@ -200,28 +239,122 @@
         	
         </div>
        
+        </div>
         
         <script>
-	        // 글을 클릭했을 때 해당 글을 상세보기 할 수 있는 함수 작성 
-	        $(function(){
-	            $("#noticeList>tbody>tr").click(function(){
-	                var nno = $(this).children().first().text();
-					
-	                console.log(nno);
-	                
-	                location.href='detail?nno='+nno;
-	                
-	            })
+        	
+        	$("#general").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
+        
+	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
+	        $("#noticeList>tbody").on("click","tr", function(){
+        		var nno = $(this).children().first().text();
+                console.log(nno);
+                $.ajax({
+                	url: 'detail',
+                	type : "POST",
+                	data : {
+                		nno : nno
+                	}, success : function(noticeDetail){
+                		console.log(noticeDetail);
+                		
+                		var nStr = "";
+                		
+                		nStr += '<div class="divClass title">'+ noticeDetail.noticeTitle + "</div>"
+                			 + '<div class="divClass dateCount">' + noticeDetail.createDate
+                			 + " | "
+                			 + noticeDetail.count + "</div>"
+                			 + '<div class="divClass">'+noticeDetail.noticeContent + "</div>"
+                			 + '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button>';
+
+                		$(".btnForm").empty();
+                		$("#noticeDiv").html(nStr);
+                	}, error : function(){
+                		alert('공지사항을 불러오는 데 실패했습니다.');
+                	}
+        		});
 	        });
+	        
+	        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
 	        
 	        // 선택한 셀렉트 박스의 값 유지
 	        $("option[value='${map.condition}']").attr("selected", true);
-
+	        
 			// 일반공지, 오픈공지 버튼 클릭 시 css 변경 구문	        
             $(".noBtn").on('click', function(){
+            	var noticeType = $(this).val();
+            	console.log(noticeType);
+            	
                 $(".noBtn").css("background-color", "white").css("color", "black").css("border", "1px solid gray");
                 $(this).css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
+                
             });
+			
+			
+         	// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
+         	// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
+			$(".btnGroup").on("click", "#general" , function(){
+				$.ajax({
+					url: "list",
+					type: "post",
+					success : function(noticeList){
+						console.log(noticeList);
+						
+						var str = "";
+						if(noticeList != null){
+							for(var i=0; i<noticeList.length; i++){
+								str += "<tr>"
+									+ "<td>"+ noticeList[i].noticeNo +"</td>"
+									+ "<td style='text-align: left;'>"+ noticeList[i].noticeTitle +"</td>"
+									+ "<td>"+ noticeList[i].createDate +"</td>"
+									+ "<td>"+ noticeList[i].count +"</td>"
+									+ "</tr>";
+							}	
+							// 페이징 처리도 해주어야 한다? 
+						}else{
+							str += '<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>';
+						}
+						
+						$("#noticeTbody").empty();
+						$("#noticeTbody").html(str);
+						
+					}
+				});
+			});
+			
+         	
+			// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
+			// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
+			$(".btnGroup").on("click", "#open", function(){
+				$.ajax({
+					url: "openlist",
+					type: "post",
+					success : function(noticeList){
+						console.log(noticeList);
+						
+						var str = "";
+						if(noticeList != null){
+							for(var i=0; i<noticeList.length; i++){
+								str += "<tr>"
+									+ "<td>"+ noticeList[i].openNo +"</td>"
+									+ "<td style='text-align: left;'>"+ noticeList[i].openName +"</td>"
+									+ "<td>"+ noticeList[i].openExplain +"</td>"
+									+ "<td>"+ noticeList[i].genreNo +"</td>"
+									+ "</tr>";
+							}
+							
+							// 페이징 처리도 해주어야 한다? 
+									
+						}else{
+							str += '<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>';
+						}
+						
+						$("#noticeTbody").empty();
+						$("#noticeTbody").html(str);
+						
+					}
+				});
+			});
+			
         </script>
         
         

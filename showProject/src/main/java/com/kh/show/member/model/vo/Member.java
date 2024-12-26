@@ -3,12 +3,14 @@ package com.kh.show.member.model.vo;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Member {
 	private int userNo;//	USER_NO	NUMBER
 	private String userId;//	USER_ID	VARCHAR2(30 BYTE)

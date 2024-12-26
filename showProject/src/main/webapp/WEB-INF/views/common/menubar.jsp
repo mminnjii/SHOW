@@ -148,7 +148,6 @@
         <table  id="header">
             <tr id="tr1">
                 <td id="td1"></td>
-                <td id="td4"><a href=""><img src="${contextPath }/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
                 <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
@@ -173,8 +172,6 @@
                 <td id="td5" align="center">
                     <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
                     <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
-                    <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
-                    <img src="/show/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
                     
                 </td>
