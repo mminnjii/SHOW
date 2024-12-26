@@ -43,7 +43,7 @@
         }
         #footer-2>p {
             margin:0;
-            padding:10px;
+            
             font-size:13px;
             font-family: "Noto Sans KR", sans-serif;
             color:rgb(103, 99, 99);

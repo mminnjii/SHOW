@@ -15,10 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Jersey+25+Charted&family=Jua&family=Libre+Barcode+128+Text&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
 <style>
-    .musicalSlider2{
+    .musicalSlider{
         
-        width: 100%;
-        height: 50%;
+        width: 72%;
+        height: 70%;
         display:block;
         margin: auto; /*display:block일때 margin:auto로 하면 가운데 정렬*/
         border-radius: 10px;
@@ -51,7 +51,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      border-radius: 10px;
     }
 
     .swiper-slide img {
@@ -59,7 +59,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      
+      border-radius: 10px;
     }
 
     .autoplay-progress {
@@ -107,25 +107,29 @@
 </head>
 <body>
 
-
+<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 
    <br><br>
-    <span id="musi">오늘의 추천</span>
+    <span id="musi">전시</span>
 
     <br><br>
 
-    <div class="musicalSlider2" >
+    <div class="musicalSlider" >
 
         
    
     
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/show/resources/images/오현우2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/베르테르2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/뉴욕의 거장들2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/투란도트2.png" alt=""></div>
-          
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/거장들.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/구스.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/그림.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/르.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/장줄.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/축구.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/토이.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/푸른.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showDisplayList/프리다.jpg" alt=""></div>
         </div>
         
         <div class="autoplay-progress">
@@ -161,6 +165,9 @@
         });
       </script>
       
+      <%@include file="/WEB-INF/views/showList/classicRanking.jsp" %>
+      <%@include file="/WEB-INF/views/showList/classicRegion.jsp" %>
       
+      <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

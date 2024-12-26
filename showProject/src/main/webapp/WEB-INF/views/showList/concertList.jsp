@@ -15,10 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Jersey+25+Charted&family=Jua&family=Libre+Barcode+128+Text&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
 <style>
-    .musicalSlider2{
+    .musicalSlider{
         
-        width: 100%;
-        height: 50%;
+        width: 72%;
+        height: 70%;
         display:block;
         margin: auto; /*display:block일때 margin:auto로 하면 가운데 정렬*/
         border-radius: 10px;
@@ -51,7 +51,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      border-radius: 10px;
     }
 
     .swiper-slide img {
@@ -59,7 +59,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      
+      border-radius: 10px;
     }
 
     .autoplay-progress {
@@ -107,25 +107,29 @@
 </head>
 <body>
 
-
+<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 
    <br><br>
-    <span id="musi">오늘의 추천</span>
+    <span id="musi">콘서트</span>
 
     <br><br>
 
-    <div class="musicalSlider2" >
+    <div class="musicalSlider" >
 
         
    
     
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/show/resources/images/오현우2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/베르테르2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/뉴욕의 거장들2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/투란도트2.png" alt=""></div>
-          
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/러브.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/레전드.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/린.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/변진섭.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/오현우.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/유리.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/이무진.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/일본.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="/show/resources/showConcertList/조용필.jpg" alt=""></div>
         </div>
         
         <div class="autoplay-progress">
@@ -161,6 +165,9 @@
         });
       </script>
       
+      <%@include file="/WEB-INF/views/showList/concertRanking.jsp" %>
+      <%@include file="/WEB-INF/views/showList/concertRegion.jsp" %>
       
+      <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
