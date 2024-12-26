@@ -18,11 +18,17 @@
  		<typeAlias type="com.kh.show.reservation.model.vo.Reservation" alias="Reservation"/>
  		<typeAlias type="com.kh.show.reservation.model.vo.SeatsOfRow" alias="SeatsOfRow"/>
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
+<<<<<<< HEAD
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Review" alias="Review"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.ShowRound" alias="ShowRound"/>
 		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
 		
+=======
+ 		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
+		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
+		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
+>>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
  	</typeAliases>
 
  	

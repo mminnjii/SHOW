@@ -13,6 +13,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="OpenNotice" id="openNoticeResultSet">
+		<result column="OPEN_NO" property="openNo"/>
+		<result column="OPEN_NAME" property="openName"/>
+		<result column="OPEN_EXPLAIN" property="openExplain"/>
+		<result column="GENRE_NO" property="genreNo"/>
+		<result column="REGION_NO" property="regionNo"/>
+		<result column="HALL_NO" property="hallNo"/>
+		<result column="OPEN_PRICE" property="openPrice"/>
+	</resultMap>
+	
+	
 	<select id="listCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM NOTICE
@@ -64,14 +75,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 	</select>
 	
-	<!-- 
+	<!-- 공지사항 상세보기 -->
 	<select id="noticeDetail" parameterType="_int" resultMap="noticeResultSet">
 		SELECT *
 		FROM NOTICE
 		WHERE STATUS ='Y'
 			AND NOTICE_NO = #{nno}
 	</select>
-	 -->
-	
 
+ 	<!-- 공지사항 조회수 up  -->
+	<update id="noticeUpCount">
+		UPDATE NOTICE
+		SET COUNT = COUNT+1
+		WHERE NOTICE_NO = #{nno}
+	</update>
+
+	<!-- 오픈공지 개수 -->
+	<select id="openlistCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM OPEN_NOTICE
+	</select>
+	
+	<!-- 오픈공지 목록 -->
+	<select id="selectOpenList" resultMap="openNoticeResultSet">
+		SELECT * 
+		FROM OPEN_NOTICE
+	</select>
+	
+	
 </mapper>
+
+

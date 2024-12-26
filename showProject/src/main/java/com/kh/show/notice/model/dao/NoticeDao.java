@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.notice.model.vo.OpenNotice;
 
 @Repository
 public class NoticeDao {
@@ -59,8 +60,33 @@ public class NoticeDao {
 	}
 
 	// 공지사항 상세보기 
-//	public Notice noticeDetail(SqlSessionTemplate sqlSession, int nno) {
-//		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
-//	}
+	public Notice noticeDetail(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
+	}
+
+	// 공지사항 조회수 up 
+	public int noticeUpCount(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.noticeUpCount", nno);
+	}
+
+	// 오픈공지 개수 
+	public int openlistCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noticeMapper.openlistCount");
+	}
+
+	// 오픈공지 목록 
+	public ArrayList<OpenNotice> selectOpenList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		// 페이징 처리를 위한 rowbounds 준비 
+		
+		// 1. 몇 개씩 조회할 것인지 (한 페이지에 보여지는 페이징바 최대 개수)
+		int limit = pi.getBoardLimit();
+		// 2. 몇 번째 부터 조회할 것인지 (현재페이지-1)*페이징바 최대 개수
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+				   
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectOpenList", null, rowBounds);
+		
+	}
 
 }
