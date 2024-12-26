@@ -8,11 +8,13 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -101,10 +103,10 @@ public class CustomerController {
 	}
 	
 	
-	// 1:1 문의 내역 등록 
-	// 회원이 아닌 경우와 회원인 경우 나누는 조건 처리 필요
+	// 1:1 문의 등록 
+	// 회원이 아닌 경우와 회원인 경우 나누는 조건 처리 필요 : 회원 정보 전달 안됨.
 	@PostMapping("/queInsert")
-	public String questionInsert(Question q, MultipartFile upfile, HttpSession session, Member m) {
+	public String questionInsert(Question q, MultipartFile upfile, HttpSession session, @RequestParam Member m) {
 		
 		System.out.println(upfile);
 		System.out.println(m);
@@ -186,7 +188,6 @@ public class CustomerController {
 	
 	// 회원 예약번호 조회 
 				// Reservation VO 파일 reservation 폴더에 있는 걸로 다시 import 해야 한다. 
-
 	@ResponseBody
 	@PostMapping(value="/reSearch", produces = "application/json; charset=UTF-8")
 	public ArrayList<Reservation> reSearch(int userNo){
@@ -207,8 +208,7 @@ public class CustomerController {
 		System.out.println(faqNo);
 		
 		int result = customerService.faqCount(faqNo);
-					
-		System.out.println(result);
+
 	}
 	
 

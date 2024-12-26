@@ -181,7 +181,7 @@
                 </td>
                 <td id="td5" align="center">
                     <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
-                    <img src="/show/resources/images/암표.jpg" alt="" id="img2"></a> <br>
+                    <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
                     
                 </td>
