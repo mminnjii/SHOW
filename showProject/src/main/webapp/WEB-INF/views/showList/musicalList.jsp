@@ -166,6 +166,7 @@
       </script>
       
       <%@include file="/WEB-INF/views/showList/musicalRanking.jsp" %>
+      <%@include file="/WEB-INF/views/showList/musicalRegion.jsp" %>
       
       <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

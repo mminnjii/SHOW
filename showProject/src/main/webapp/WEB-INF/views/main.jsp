@@ -33,16 +33,14 @@
 	<%@include file="/WEB-INF/views/common/posterslider.jsp" %> 
     <%@include file="/WEB-INF/views/common/ticketOpen.jsp" %>      
     <%@include file="/WEB-INF/views/common/ranking.jsp" %>  
-     <br><br>
     <%@include file="/WEB-INF/views/common/today.jsp" %> 
+
+    <br><br>
+    
+
 	
 
-   
-	    
-   
-           
-   
-
+    
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 	
 		
