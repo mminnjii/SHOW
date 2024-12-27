@@ -14,13 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
-import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,6 +53,7 @@ public class ReservationController {
 			Reservation rInfo = reservationService.selectReservation();
 			model.addAttribute("rInfo",rInfo);
 			// System.out.println(rInfo);
+			// System.out.println(rInfo.getReservationId());
 		}else {
 			model.addAttribute("alert","예약이 생성되지 못했습니다. 다시 선택해주세요");
 		}
@@ -73,11 +74,12 @@ public class ReservationController {
 	
 	@ResponseBody
 	@PostMapping("/selectedSeats")
-	public int selectedSeats(HttpSession session, int num ,String selectedName) {
+	public int selectedSeats(HttpSession session, int num ,String selectedName,String reservationId) {
 		 // System.out.println(num);
 		 // System.out.println(selectedName);
 		 // session.setAttribute("num", num);
 		//  session.setAttribute("selectedName", selectedName);
+		System.out.println(reservationId); // null
 		
 		 // 공연장(hall)테이블 총좌석 수 변환(-).
 		 int result1 = reservationService.updateTotalNum(num); 

@@ -12,7 +12,8 @@ public class PaymentsController {
 	
 	@GetMapping("/pay")
 	public String paymentsController() {
-	
+		
+		
 		return "payments/payment";
 	}
 	
