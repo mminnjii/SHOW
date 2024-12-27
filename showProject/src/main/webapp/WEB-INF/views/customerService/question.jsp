@@ -64,7 +64,7 @@
         	<c:when test="${empty loginUser}">
 	            <div class="input">
 	                <p>이름 <span class="sColor">*</span></p>
-	                <input type="text" name="name" class="form-control"  placeholder="이름을 입력하세요" required> 
+	                <input type="text" name="userName" class="form-control"  placeholder="이름을 입력하세요" required> 
 	            </div>
 	
 	            <div class="input">
@@ -80,17 +80,18 @@
         	<c:otherwise>
         		<div class="input">
 	                <p>이름 <span class="sColor">*</span></p>
-	                <input type="text" name="name" class="form-control" value="${loginUser.userName}" disabled required> 
+	                <input type="text" name="userName" class="form-control" value="${loginUser.userName}" readonly required> 
+	            	<input type="hidden" name="userNo" value="${loginUser.userNo}" >
 	            </div>
 	
 	            <div class="input">
 	                <p>답변 받을 이메일 주소 <span class="sColor">*</span></p>
-	                <input type="email" name="email" class="form-control"  value="${loginUser.email}" disabled required>
+	                <input type="email" name="email" class="form-control"  value="${loginUser.email}" readonly required>
 	            </div>
 	
 	            <div class="input">
 	                <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
-	                <input type="text" id="phone" name="phone" class="form-control" value="${loginUser.phone}" disabled required> 
+	                <input type="text" id="phone" name="phone" class="form-control" value="${loginUser.phone}" readonly required> 
 	            </div>
         	</c:otherwise>
         </c:choose>
@@ -223,25 +224,33 @@
    		// 예약 내역 불러오기 
    		function reSearch(){
    			console.log("버튼 클릭됨");
+   			
+   			var userNo = ${loginUser.userNo};
+   			
+   			console.log(userNo);
    			$.ajax({
    				url : '${contextPath}/reSearch',
    				method : 'POST',
    				data : {  <%-- 회원 번호를 전달할 수 있도록 수정 --%>
-   					userNo : 1  
+   					userNo : userNo
    				},
    				success : function(reList){
    					
    					console.log(reList);
    					
    					var str = "";
-					
-   					for(var i=0;i<reList.length;i++){
-						str += "<option>"
-							+ reList[i].reservationId
-							+ " / "
-							+ reList[i].showList[0].showName
-							+ "</option>";
-					}   					
+
+   					if(reList != null){
+	   					for(var i=0;i<reList.length;i++){
+							str += "<option>"
+								+ reList[i].reservationId
+								+ " / "
+								+ reList[i].showList[0].showName
+								+ "</option>";
+						}   					
+   					}else{
+						str += "<option disabled selected>예약하신 공연이 없습니다.</option>";   						
+   					}
 					
    					$("#reservationId").html(str);
    				},

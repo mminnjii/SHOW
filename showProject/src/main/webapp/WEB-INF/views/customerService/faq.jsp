@@ -143,8 +143,7 @@
 
         <div class="outer2 faqP">
             <span>
-                <button class="faq-filter" name="all" value="all">전체</button>
-                <button class="faq-filter" name="top" value="top">TOP Q&A</button>
+                <button class="faq-filter" name="all" value="all">TOP10 FAQ</button>
                 <button class="faq-filter" name="1" value="1">티켓</button>
                 <button class="faq-filter" name="2" value="2">회원/기타</button>
             </span>
@@ -158,11 +157,8 @@
 			                <p>${list.faqContent}</p>
 			            </div>
 	           		</c:forEach>	
-	           		
 	           	</c:if>
-	           	
-           		
-           </div>
+          	</div>
 
         </div>
 	</div>
@@ -191,7 +187,7 @@
                   		var str = "";
     					for(var i = 0; i<searchList.length; i++){
                   			str += '<div class="faq">'
-                  				+ '<input type="hidden" value="'+loadData[i].faqNo+'" id="faqNo">'
+                  				+ '<input type="hidden" value="'+searchList[i].faqNo+'" id="faqNo">'
    	                	   	    + '<i class="fa-solid fa-q"></i>'+searchList[i].faqTitle
    	                	   	    + '<p>' + searchList[i].faqContent + '</p>' 
    	                	   	    + '</div>';
