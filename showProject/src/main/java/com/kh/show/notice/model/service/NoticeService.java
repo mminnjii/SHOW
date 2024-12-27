@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.notice.model.vo.OpenNotice;
 
 public interface NoticeService {
 	
@@ -21,6 +22,15 @@ public interface NoticeService {
 	ArrayList<Notice> searchNotice(HashMap<String, String> map, PageInfo pi);
 
 	// 공지 상세보기 
-//	Notice noticeDetail(int nno);
+	Notice noticeDetail(int nno);
+
+	// 공지사항 조회수 up 
+	int noticeUpCount(int nno);
+
+	// 오픈공지 리스트 개수 
+	int openlistCount();
+
+	// 오픈 공지 목록 
+	ArrayList<OpenNotice> selectOpenList(PageInfo pi);
 
 }
