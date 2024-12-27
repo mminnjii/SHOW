@@ -32,6 +32,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="DETAIL_ORIGINNAME" property="detailOriginName"></result>
 		<result column="DETAIL_CHANGENAME" property="detailChangeName"></result>
 	</resultMap>
+	<resultMap type="Faq" id="faqResultSet">
+		<result column="FAQ_NO" property="faqNo"></result>
+		<result column="FAQ_TITLE" property="faqTitle"></result>
+		<result column="FAQ_CONTENT" property="faqContent"></result>
+		<result column="QCATEGORY_NO" property="qcategoryNo"></result>
+		<result column="COUNT" property="count"></result>
+	</resultMap>
+	<resultMap type="Member" id="memberResultSet">
+		<result column="USER_NO" property="userNo"></result>
+		<result column="USER_ID" property="userId"></result>
+		<result column="USER_NAME" property="userName"></result>
+		<result column="USER_RRN" property="userRrn"></result>
+		<result column="PHONE" property="phone"></result>
+		<result column="EMAIL" property="email"></result>
+		<result column="ADDRESS" property="address"></result>
+		<result column="ENROLL_DATE" property="enrollDate"></result>
+		<result column="MODIFY_DATE" property="modifyDate"></result>
+		<result column="RANK" property="rank"></result>
+		<result column="SUBSCRIBE" property="subscribe"></result>
+		<result column="STATUS" property="status"></result>
+	</resultMap>
+	<resultMap type="ManagerReservation" id="reservResultSet">
+		<result column="RESERVATION_ID" property="reservationId"></result>
+		<result column="SHOW_NAME" property="showName"></result>
+		<result column="ROUND_ID" property="roundId"></result>
+		<result column="USER_NAME" property="userName"></result>
+		<result column="HALL_NAME" property="hallName"></result>
+		<result column="STATUS" property="status"></result>
+		<result column="CREATEDATE" property="createDate"></result>
+	</resultMap>
 
 	<select id="loginManager" resultMap="managerResultSet">
 		SELECT MANAGER_ID, MANAGER_PW
@@ -40,16 +70,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND MANAGER_PW = #{managerPw}
 	</select>
 	
-	<select id="selectNotice" resultMap="noticeResultSet">
-		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, CREATEDATE, COUNT
+	<select id="selectAllNotice" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_TITLE, COUNT, CREATEDATE
 		FROM NOTICE
+	</select>
+	
+	<select id="selectAllFaq" resultMap="faqResultSet">
+		SELECT FAQ_NO, FAQ_TITLE, COUNT
+		FROM FAQ
+	</select>
+	
+	<select id="selectAllMember" resultMap="memberResultSet">
+		SELECT USER_NO, USER_ID, USER_NAME, USER_RRN, PHONE, EMAIL, ADDRESS, ENROLL_DATE, MODIFY_DATE, RANK, SUBSCRIBE, STATUS
+		FROM MEMBER
+	</select>
+	
+	<select id="selectAllReserv" resultMap="reservResultSet">
+        SELECT RESERVATION_ID, SHOW_NAME, ROUND_ID, USER_NAME, HALL_NAME, STATUS, CREATEDATE
+        FROM RESERVATION R
+        INNER JOIN SHOW S ON R.SHOW_NO = S.SHOW_NO
+        INNER JOIN MEMBER M ON R.USER_NO = M.USER_NO
+        INNER JOIN HALL H ON R.HALL_NO = H.HALL_NO
+	</select>
+	
+	<select id="selectAllShow" resultMap="showResultSet">
+		SELECT SHOW_NO, SHOW_NAME, SHOW_EXPLAIN, STATUS, HALL_NO, GENRE_NO, REGION_NO, SHOW_START, SHOW_END, COUNT
+		FROM SHOW
 	</select>
 	
 	<insert id="showInsert" parameterType="Show">
 		INSERT INTO SHOW(SHOW_NO,
 						 SHOW_NAME,
 						 SHOW_EXPLAIN,
-						 PRICE,
+						 RPRICE,
+						 SPRICE,
+						 VPRICE,
 						 NOTICE,
 						 HALL_NO,
 						 GENRE_NO,
@@ -64,7 +119,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				VALUES(SHOW_SEQ.NEXTVAL,
 					   #{showName},
 					   #{showExplain},
-					   #{price},
+					   #{rPrice},
+					   #{sPrice},
+					   #{vPrice},
 					   #{notice},
 					   #{hallNo},
 					   #{genreNo},
