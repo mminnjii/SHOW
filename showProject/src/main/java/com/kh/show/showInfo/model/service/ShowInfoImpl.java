@@ -354,6 +354,7 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+
 	//검색 목록
 	@Override
 	public ArrayList<Show> searchBox(HashMap<String, String> hashMap) {
@@ -367,6 +368,7 @@ public ArrayList<Show> musicalShow() {
 
 		return showInfoDao.searchListCount(sqlSession,hashMap);
 	}
+
 
 
 }
