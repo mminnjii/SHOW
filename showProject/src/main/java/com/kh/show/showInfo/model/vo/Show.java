@@ -1,6 +1,7 @@
 package com.kh.show.showInfo.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class Show {
 	private int genreNo;				//	GENRE_NO		 NUMBER
 	private int regionNo;				//	REGION_NO		 NUMBER
 
+
 	private String showStart;			//  SHOW_START		 DATE
 	private String showEnd;				//  SHOW_END		 DATE
 	private String posterOriginName;	//	POTSERORIGINNAME VARCHAR2(1000 BYTE)
@@ -33,4 +35,9 @@ public class Show {
 	private String detailOriginName;	//	DETAILORIGINNAME VARCHAR2(1000 BYTE)
 	private String detailChangeName;	//	DETAILCHANGENAME VARCHAR2(1000 BYTE)
 	private int count;					//	COUNT			 NUMBER
+
+	
+	
+	//Hall VO 만들고 mapper에도 추가했음
+	private Hall hall;  // 하나의 Hall 객체만 담도록 수정
 }

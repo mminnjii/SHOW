@@ -157,6 +157,7 @@
     <div id="div">
         <table  id="header">
             <tr id="tr1">
+
                 <td id="td1"></td>
                 <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고2.png" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
@@ -179,9 +180,11 @@
                         <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
                 </td>
+
                 <td id="td5" align="center">
                     <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
                     <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
+
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
                     
                 </td>
@@ -199,15 +202,17 @@
                         <li><a href="${contextPath}/classicList">클래식</a></li>
                         <li><a href="${contextPath}/displayList">전시</a></li>
                         <li id="li1">|</li>
+
                         <li><a href="">커뮤니티</a></li>
-                        <li><a href="">오픈공지</a> </li>
                         <li><a href="${contextPath}/notice/list">공지사항</a></li>
                         <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
                     </ul>
                 </td>
+                
+             
                 <td id="td7" align="center">
-                    <form class="search-box" action="" method="get">
-                        <input type="text" class="search-text" placeholder="검색어를 입력하세요.">
+                    <form class="search-box" action="${contextPath}/showInfo/search" method="get">
+                        <input type="text" class="search-text" name="keyword" value="${hashMap.keyword}" placeholder="공연이름을 검색해보세요.">
                         <button class="search-btn" type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -222,6 +227,7 @@
 
     </div>
     
+   
     
 </body>
 </html>
