@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ShowRound {
-	
+
 	private int roundId;	//	ROUND_ID
 	private int showNo;	//	SHOW_NO
 	private int showRound;	//	SHOW_ROUND
 	private String showTime;	//	SHOW_TIME
 	private Date showDate;	//	SHOW_DATE
+	private String status;	
 }

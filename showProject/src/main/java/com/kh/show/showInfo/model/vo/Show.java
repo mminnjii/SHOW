@@ -1,8 +1,5 @@
 package com.kh.show.showInfo.model.vo;
 
-import java.sql.Date;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,14 +16,16 @@ public class Show {
 	private String rPrice;				//	RPRICE			 VARCHAR2(1000 BYTE)
 	private String sPrice;				//  SPRICE			 VARCHAR2(1000 BYTE)
 	private String vPrice;				//	VPRICE			 VARCHAR2(1000 BYTE)
+	private String Price;				//	PRICE			 VARCHAR2(1000 BYTE)
 	private String notice;				//	NOTICE			 VARCHAR2(2000 BYTE)
 	private String precaution;			//	PRECAUTION		 VARCHAR2(2000 BYTE)
 	private String status;				//	STATUS			 VARCHAR2(1 BYTE)
 
 	private int hallNo;					//	HALL_NO			 NUMBER
-	private String hallName;
+	private String hallName;			// 사용하기 위해 추가		
 	private int genreNo;				//	GENRE_NO		 NUMBER
 	private int regionNo;				//	REGION_NO		 NUMBER
+	private String regionName;			// 사용하기 위해 추가	
 
 
 	private String showStart;			//  SHOW_START		 DATE
