@@ -22,7 +22,7 @@
 		<typeAlias type="com.kh.show.showInfo.model.vo.Hall" alias="Hall"/> 
 
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
-    
+
 		<typeAlias type="com.kh.show.meeting.model.vo.Meeting" alias="Meeting"/> 		
 
 
