@@ -77,10 +77,6 @@ public class CustomerController {
 			faqList = customerService.faqFilterList(qcategoryNo);
 		}
 		
-//		for(Faq f : faqList) {
-//			System.out.println(faqList);
-//		}
-		
 		return faqList;
 	}
 	
@@ -106,10 +102,10 @@ public class CustomerController {
 	// 1:1 문의 등록 
 	// 회원이 아닌 경우와 회원인 경우 나누는 조건 처리 필요 : 회원 정보 전달 안됨.
 	@PostMapping("/queInsert")
-	public String questionInsert(Question q, MultipartFile upfile, HttpSession session, @RequestParam Member m) {
+	public String questionInsert(Question q, MultipartFile upfile, HttpSession session, Member m) {
 		
-		System.out.println(upfile);
-		System.out.println(m);
+		System.out.println(q);
+		System.out.println("문의 회원 : " + m);
 		
 		// 파일이 있는 경우 
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -119,8 +115,6 @@ public class CustomerController {
 			q.setOriginName(upfile.getOriginalFilename());
 			q.setChangeName("/resources/questionUpFile/" + changeName);
 		}
-		
-		System.out.println("Question (파일명 변경포함): "+q);
 		
 		int result = 0;
 		
@@ -169,19 +163,13 @@ public class CustomerController {
 		// 6. 업로드 서버의 경로 
 		String savePath = session.getServletContext().getRealPath("/resources/questionUpFile/");
 		
-		System.out.println(savePath);
-
 		// 7. transferTo : 업로드 메소드 사용하여 파일 업로드 처리 
 		try {
-			System.out.println("저장경로+변경된파일명 : " + savePath+changeName);
 			upfile.transferTo(new File(savePath+changeName));
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("originName : "+originName);
-		System.out.println("changeName : "+changeName);
 		
 		return changeName;
 	}
@@ -192,8 +180,7 @@ public class CustomerController {
 	@PostMapping(value="/reSearch", produces = "application/json; charset=UTF-8")
 	public ArrayList<Reservation> reSearch(int userNo){
 		
-		// 진짜 회원번호를 넘겨받도록 기능 구현해야 한다.
-//		System.out.println(userNo);
+		System.out.println("회원 번호 : "+userNo);
 		
 		ArrayList<Reservation> reList = customerService.reSearch(userNo);
 		
@@ -204,8 +191,6 @@ public class CustomerController {
 	// faq 클릭시 count
 	@PostMapping("/faqCount")
 	public void faqCount(String faqNo) {
-		
-		System.out.println(faqNo);
 		
 		int result = customerService.faqCount(faqNo);
 

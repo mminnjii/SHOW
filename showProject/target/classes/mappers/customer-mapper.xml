@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      ,ORIGIN_NAME
                      ,CHANGE_NAME) 
              VALUES (Q_SEQ.NEXTVAL
-                    ,1
+                    ,#{userNo}
                     ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
                     ,#{qcategoryNo}
                     ,#{qTitle}

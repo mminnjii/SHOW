@@ -124,8 +124,24 @@
 		SET SUBSCRIBE = 'Y'
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	<select id="listCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
 
 
+	<select id="qnaList" resultType="Question">
+		SELECT QUESTION_NO questionNo,
+			   Q_TITLE quTitle,
+			   CREATEDATE createDate,
+			   ORIGIN_NAME originName
+		FROM QUESTION
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
 
 </mapper>
 

@@ -50,8 +50,11 @@
 </style>
 </head>
 <body>
-<div class="a">
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
+
+<div class="a">
+
+
     <h1>소모임 생성</h1>
     <form action="" method="">
         <label for="groupName">소모임 명</label>
@@ -84,6 +87,8 @@
         
         <button type="submit">소모임 생성</button>
     </form>
+
+
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,15 +16,16 @@
 		}
 		
 		.fixed-section {
-			margin-right: 300px;
+			margin-right: 200px;
 			position: fixed;
 			bottom: 30px;
 			right: 0;
-			width: 300px;
+			width: 350px;
 			height: 90%;
 			background-color: #f4f4f4;
 			padding: 20px;
 			box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+			 z-index: 10; /* 다른 요소보다 위에 표시 */
 		}
 		
 		td {
@@ -105,57 +107,54 @@
 		<div class="detail">
 	        <div class="fixed-section">
 	        <h2>예약하기</h2>
-	        <br>
-	        <p>날짜 :</p>	
-	        <select>
-	        	<option>2025.01.01</option>
-	        </select>
-	        <p>회차 :</p>
-	        <select>
-	        	<option>N회차</option>
-	        </select>
-	        <p>공연시간 :</p>
-	        <select>
-	        	<option>17:00</option>
-	        </select>
+	        <br><br>
+	        <c:if test="${not empty date }">
+	        	<p>날짜 :</p>	
+	        	<select id="date" onchange="selectDate()">
+	        		<c:forEach items="${date }" var="d">
+			        	<option>${d.showDate }</option>
+		        	</c:forEach>
+		        </select>
+	       </c:if> 
+		        <br><br>
+		        <p>회차 및 공연시간 :</p>
+ 		        <select id="time">
+		        	<option>선택하세요</option>
+		        </select>
+	        <br><br>
 	        <p>공연일정 : </p>
 	        <select>
-	        	<option>2024-10-11 ~ 2024-11-11</option>
+	        	<option>${s.showStart }~${s.showEnd }</option>
 	        </select>
-	        <p>좌석 : </p>
-	        <select>
-	        	<option><P>VIP석 | 157R석 | 140S석 | 40A석 62</P></option>
-	        </select>
+	        <br><br>
 	        <br><br><br>
 	        <p>회원등급</p>
-	        
+
 	        <br>
-			<button onclick="location.href='/show/showInfo/seats'">예약하기</button>
+			<button onclick="reservation();">예약하기</button>
+			<!--  <button onclick="location.href='/show/reservation/seats'">예약하기</button> -->
 	    </div>
 	    
 	    
 	    <div class="content">
 	        <!-- 본문 상단 영역 -->
 	        <div class="top-section">
-	       		<%-- 		<img class="photo" class="bookC"
-						src="/library/resources/img/${bno}.gif" width="280px"
-						height="380px"> --%>
-	            <img src="https://ticketimage.interpark.com/Play/image/large/24/24014511_p.gif" alt="예제 이미지">
+	            <img src="/show/resources/images/꽃의비밀.jpg">
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
-					      	<h2>${s.showName }</h2> <br>
-			                <p>장소 : ${s.regionNo }</p> 
+					      	 <h2>${s.showName }</h2> <br>
+			                <p>장르 : ${s.genreNo }</p> 
+			                <p>소개 : ${s.showExplain }</p> 
+			                <p>장소 : ${s.hallNo }</p> 
 			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
 			                <p>공연시간 : 120분</p>
 			                <p>가격 : ${s.price }</p>
-			                <p>유의사항 : ${s. notice}</p>
 						</c:when>                
 		                <c:otherwise>
 		                	<h2>상세정보를 불러올 수 없습니다.</h2>
 		                </c:otherwise>
 	                </c:choose>
-	          
 	            </div>
 	        </div>
 	        <br>
@@ -166,12 +165,63 @@
 					<tr>
 						<td><a href="/show/showInfo/detail">공연정보</a></td>
 						<td><a href="/show/showInfo/review">관람후기</a></td>
-						<td><a href="/show/showInfo/expectation">기대평</a></td>
-						<td><a href="/show/">오시는길</a></td>
 					</tr>
 				</table>
 	         <hr>
 	    </div>
     </div>
+    
+    <script>
+    	
+    	function selectDate(){
+    		
+    			// console.log($("#date").val());
+    		
+     		$.ajax({
+    			url : "selectDate",
+    			data: {
+    				date : $("#date").val()
+    			},
+    			success : function(result){
+    				console.log(result);
+    				$("#time").empty();
+    				var info = "";
+
+  				    for (var i = 0; i < result.length; i++) {
+  				        info += "<option data-round-id='" + result[i].roundId + "'>" 
+  				        			+result[i].showRound + " 회차,  공연시간 :" + result[i].showTime + "\n"
+  				        		 "</option>";
+  				        		 // console.log(result[i].roundId);
+  				    }
+  				    
+  				  	$("#time").append(info);
+    			},	
+    			error : function(error){
+    				console.log("통신오류");
+    			}
+    		}); 
+    		
+    	}
+    	
+    	function reservation(){
+    		// 로그인 유저 조건걸어주기
+    		
+    		// console.log($("#time").html()); // #time의 전체 HTML을 출력
+    		
+    		// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
+    	     var selectedOption = $("#time").find(":selected");
+    	     var roundId = selectedOption.data("round-id");
+    	     console.log("Selected Round ID:", roundId);
+    		 
+    	     location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
+    		
+
+    	}
+    	
+    	
+    
+    </script>
+    
+    
 </body>
 </html>

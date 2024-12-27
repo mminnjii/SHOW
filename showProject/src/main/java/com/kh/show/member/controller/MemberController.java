@@ -3,6 +3,7 @@ package com.kh.show.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -17,10 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.show.common.template.PageInfo;
+import com.kh.show.common.template.Pagenation;
+import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
 
@@ -260,11 +265,7 @@ public class MemberController {
 		
 		return "member/myChat";
 	}
-	@GetMapping("/qna")
-	public String qna() {
-		
-		return "member/myQna";
-	}
+	
 	@GetMapping("/payment")
 	public String payment() {
 		
@@ -449,6 +450,32 @@ public class MemberController {
 		}
 		
 		return "member/subscribe";
+	}
+	
+
+	
+	//qna 리스트 메소드
+	@GetMapping("/qna")
+	public String qna(@RequestParam(value="currentPage",defaultValue="1")
+					  int currentPage,
+					  Model model,
+					  int userNo) {
+		
+		int listCount = memberService.listCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		ArrayList<Question> list = memberService.qnaList(userNo,pi);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		
+		System.out.println(list);
+		System.out.println(pi);
+		
+		return "member/myQna";
 	}
 	
 	

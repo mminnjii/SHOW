@@ -1,14 +1,16 @@
 package com.kh.show.showInfo.model.service;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.show.showInfo.model.dao.ShowInfoDao;
+import com.kh.show.showInfo.model.vo.Review;
 import com.kh.show.showInfo.model.vo.Show;
+import com.kh.show.showInfo.model.vo.ShowRound;
 
 @Service
 public class ShowInfoImpl implements ShowInfoService {
@@ -30,15 +32,60 @@ public ArrayList<Show> musicalShow() {
 
 	
 	@Override
-	public ArrayList<Show> selectShow() {
-		
-		ArrayList<Show> list = showInfoDao.selectShow(sqlSession);
-		
+	public Show selectShow() {
+		Show s = showInfoDao.selectShow(sqlSession);
+		return s;
+	}
+
+	@Override
+	public ArrayList<ShowRound> selectRound() {
+		ArrayList<ShowRound> round  = showInfoDao.selectRound(sqlSession);
+		return round;
+	}
+	
+	
+	@Override
+	public int updateSysdate() {
+		return showInfoDao.updateSysdate(sqlSession);
+	}
+	
+	@Override
+	public int updateShowRound() {
+		return showInfoDao.updateShowRound(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<ShowRound> selectTime(String date) {
+		return showInfoDao.selectTime(sqlSession,date);
+	}
+	
+	
+	@Override
+	public ArrayList<Review> selectReview() {
+		ArrayList<Review> list = showInfoDao.selectReview(sqlSession);
 		return list;
 	}
 
 
 	@Override
+	public int selectRcount() {
+		return showInfoDao.selectRcount(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Review> reviewSearch(String keyword) {
+		ArrayList<Review> list = showInfoDao.reviewSearch(sqlSession,keyword);
+		return list;
+	}
+
+
+	@Override
+	public int searchRcount(String keyword) {
+		return showInfoDao.searchRcount(sqlSession,keyword);
+	}
+
+
 	public ArrayList<Show> musicalRegion() {
 		
 		ArrayList<Show> musicalRegionList = showInfoDao.musicalRegionList(sqlSession);
@@ -199,7 +246,6 @@ public ArrayList<Show> musicalShow() {
 	@Override
 	public ArrayList<Show> concertRegion4() {
 
-
 		ArrayList<Show> concertRegionList4 = showInfoDao.concertRegionList4(sqlSession);
 		
 		return concertRegionList4;
@@ -208,7 +254,6 @@ public ArrayList<Show> musicalShow() {
 
 	@Override
 	public ArrayList<Show> concertRegion5() {
-
 
 		ArrayList<Show> concertRegionList5 = showInfoDao.concertRegionList5(sqlSession);
 		
@@ -347,11 +392,27 @@ public ArrayList<Show> musicalShow() {
 	@Override
 	public ArrayList<Show> displayRegion6() {
 
-
 		ArrayList<Show> displayRegion6 = showInfoDao.displayRegion6(sqlSession);
 		
 		return displayRegion6;
 	}
+
+
+
+	//검색 목록
+	@Override
+	public ArrayList<Show> searchBox(HashMap<String, String> hashMap) {
+		
+		return showInfoDao.searchBox(sqlSession,hashMap);
+	}
+
+	//검색 목록 개수
+	@Override
+	public int searchListCount(HashMap<String, String> hashMap) {
+
+		return showInfoDao.searchListCount(sqlSession,hashMap);
+	}
+
 
 
 }

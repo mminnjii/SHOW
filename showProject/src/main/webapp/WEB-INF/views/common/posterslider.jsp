@@ -8,7 +8,7 @@
 <style>
 
 	 #m1{
-	            width: 80%;
+	            width: 90%;
 	            
 	        }
 	#m2{
@@ -26,14 +26,14 @@
 	
 	.slider__inner {
 	    display: flex;
-	    width: 1140px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
+	    width: 1500px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
 	    transition: transform 0.7s ease-in-out;
 	    height: 600px; /* 슬라이드 높이 고정 */
 	}
 	
 	.slider__inner img {
 	    width: 100%; /* 이미지를 슬라이드 영역에 맞게 확대/축소 */
-	    height: 450px; /* 이미지의 높이를 100%로 맞춤 */
+	    height: 550px; /* 이미지의 높이를 100%로 맞춤 */
 	    /*object-fit: contain; /* 이미지 비율 유지하면서 영역에 맞춤 */
 	    z-index: 2;
 	}
@@ -84,7 +84,7 @@
         height: 80px;
     }
     #rr{
-        width: 10px;
+        width: 150px;
     }
     #and{
         font-size: 60px;
@@ -92,7 +92,7 @@
         color: gainsboro;
     }
     #dd{
-        width: 30px;
+        width: 50px;
     }
     #a1{
         font-family: "Noto Sans KR", sans-serif;
@@ -121,16 +121,20 @@
         border-radius:20px;
         background-color: white;
         position :absolute;
-        bottom: -60px;
+        bottom : 10px;
         filter: drop-shadow(2px 6px 6px #c3c3c3);
         left : 170px;
         z-index: 2;
-        
+        padding-left: 20px;
+        padding-right: 20px;
         
     }
     #ll{
     height:10px;
     	
+    }
+    #kk{
+    width:20px;
     }
     
     
@@ -203,18 +207,17 @@
         <table id="box" >
          <tr id="ll"></tr>
             <tr>
-                <td id="rr"></td>
-                <td id="rr"></td>
-                <td id="rr"></td>
+            	<td id="rr"></td>
+            	
                 <td >
                     <p><span id="c1">누구나 즐길 수 있는 행복한 공연문화를 위해</span> <br> <span id="c2">지금부터 </span>
                     <span id="c3">암표 거래</span><span id="c4">를</span> <span id="c5">멈춰주세요</span> 
                     </p>
 
                 </td>
-                <td id="rr" ></td>
+                <td id="kk" ></td>
                 <td>
-                <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
+                <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
                 <img src="/show/resources/images/암표거래.jpg" alt="" id="ticket2"> </a>
                 </td>
                 <td id="dd"></td>
@@ -223,15 +226,22 @@
                 </td>
                 <td id="dd"></td>
                 <td>
+                <a href="${contextPath}/meeting/list">
                     <p><span id="a1">함께 공연을 즐기는</span> <span id="a2">소모임</span><br><span id="a3">"같이 공연 보러 갈래?"</span></p>
+                </a>
                 </td>
+
                 <td id="rr"></td>
+                <td><a href="${contextPath}/meeting/list">
+
+                <td id="kk"></td>
                 <td><a href="">
+
                 <img src="/show/resources/images/소모임.jpg" alt="" id="ticket"> </a>
                 </td>
                 <td id="rr"></td>
-                <td id="rr"></td>
-                <td id="rr"></td>
+                <td id="kk" ></td>
+                
             </tr>
             <tr id="ll"></tr>
 

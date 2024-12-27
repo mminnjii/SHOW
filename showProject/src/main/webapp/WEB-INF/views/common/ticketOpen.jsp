@@ -17,12 +17,12 @@
        
     #open{
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 30px;
+        font-size: 35px;
         font-weight: 500;
         font-style: normal;
         color: black;
         position:relative;
-        left : 200px;
+        left : 410px;
         
        
     }
