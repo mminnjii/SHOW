@@ -17,8 +17,8 @@ public class Question {
 	private int userNo; 			//USER_NO	NUMBER
 	private String reservationId; 		//RESERVATION_ID	NUMBER
 	private int qcategoryNo; 		//QCATEGORY_NO	NUMBER
-	private String qTitle; 			//Q_TITLE	VARCHAR2(500 BYTE)
-	private String qContent; 		//Q_CONTENT	VARCHAR2(2000 BYTE)
+	private String quTitle; 			//Q_TITLE	VARCHAR2(500 BYTE)
+	private String quContent; 		//Q_CONTENT	VARCHAR2(2000 BYTE)
 	private String originName; 		//ORIGIN_NAME	VARCHAR2(100 BYTE)
 	private String changeName; 		//CHANGE_NAME	VARCHAR2(1 BYTE)
 	private Date createDate; 		//CREATEDATE	DATE
