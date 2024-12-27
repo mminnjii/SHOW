@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="HALL_NAME" property="hallName" />
 		<result column="GENRE_NO" property="genreNo" />
 		<result column="REGION_NO" property="regionNo" />
+		<result column="REGION_NAME" property="regionName" />
 		<result column="SHOW_START" property="showStart" />
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
@@ -452,9 +453,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        NOTICE,
 		        HALL_NAME,
 		        S.HALL_NO HALL_NO,
-		        GENRE_NAME GENRE_NO,
-		        REGION_NAME REGION_NO,
-		        SHOW_START ,
+		        GENRE_NAME,
+		        REGION_NAME,
+		        SHOW_START,
 		        SHOW_END
 		FROM SHOW S
 		JOIN HALL H  ON (S.HALL_NO = H.HALL_NO)

@@ -35,7 +35,7 @@ public class ReservationController {
 	
 	// 좌석이동
 	@GetMapping("/seats")
-	public String seats(Model model,int showNo, int roundId, int hallNO) {
+	public String seats(Model model,int showNo, int roundId, int hallNo) {
 		
 		// reservation 생성
 		System.out.println(roundId);

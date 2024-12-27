@@ -25,6 +25,7 @@ public class Show {
 	private String hallName;//	HALL_NO	NUMBER
 	private int genreNo;//	GENRE_NO	NUMBER
 	private int regionNo;//	REGION_NO	NUMBER
+	private String regionName;
 	private String showStart;//    "SHOW_START" DATE,
 	private String showEnd;//    "SHOW_END" DATE
 	private String posterOriginName;
