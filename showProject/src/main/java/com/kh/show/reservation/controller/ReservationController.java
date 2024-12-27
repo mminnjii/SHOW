@@ -3,6 +3,8 @@ package com.kh.show.reservation.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.show.reservation.model.service.ReservationService;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -38,7 +41,19 @@ public class ReservationController {
 	public String seats(Model model,int showNo, int roundId, int hallNo) {
 		
 		// reservation 생성
-		System.out.println(roundId);
+		// (예약번호 / 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태)
+		Map<String, Object> r = new HashMap<>();
+        r.put("showNo", showNo);
+        r.put("roundId", roundId);
+        r.put("hallNo", hallNo);
+		
+		int result = reservationService.createReservation(r);  
+		
+//		if(result>0) {
+//			
+//			ArrayList<Reservation> num  = reservationService.selectSeatsNum();
+//			
+//		}
 		
 		
 		// status "N"인 좌석 조회
@@ -50,6 +65,7 @@ public class ReservationController {
 		ArrayList<SeatsOfRow> num  = reservationService.selectSeatsNum();  
 		model.addAttribute("num", num);
 		return "reservation/seats";
+		
 	}
 	
 	

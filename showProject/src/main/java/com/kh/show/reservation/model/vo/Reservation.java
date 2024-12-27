@@ -31,6 +31,8 @@ public class Reservation {
 	
 	// mapper에서 collection 사용하기 위해 추가
 	private List<Show> showList;
+	
+	
 }
 
 

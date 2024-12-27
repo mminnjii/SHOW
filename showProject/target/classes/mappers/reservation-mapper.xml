@@ -61,4 +61,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROW_NAME || COL_NO = #{name}
 	</update>
 	
+	<!-- 예약테이블 생성 -->
+	<insert id="createReservation" parameterType="HashMap">
+		INSERT INTO RESERVATION
+		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, 1, #{hallNo},DEFAULT,DEFAULT,NULL)
+	</insert>
+	
+	<!-- 예약테이블 생성 후 확인데이터 가져오기 -->
+	<select id="selectReservation">
+		SELECT A.*
+		FROM (SELECT RESERVATION_ID,
+		               SHOW_NAME,
+		               SHOW_ROUND,
+		               SHOW_TIME,
+		               SHOW_DATE,
+		               HALL_NAME
+		        FROM RESERVATION R
+		        JOIN SHOW USING (SHOW_NO)
+		        JOIN SHOWROUND USING (ROUND_ID)
+		        JOIN HALL USING(HALL_NO)
+		        ORDER BY RESERVATION_ID DESC) A
+		WHERE ROWNUM = 1
+	</select>
+	
 </mapper>

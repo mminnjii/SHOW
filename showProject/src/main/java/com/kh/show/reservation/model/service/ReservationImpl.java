@@ -1,6 +1,7 @@
 package com.kh.show.reservation.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class ReservationImpl implements ReservationService {
 	@Override
 	public int updateSeatStatus(String name) {
 		return reservationDao.updateSeatStatus(sqlSession,name);
+	}
+
+	@Override
+	public int createReservation(Map<String, Object> r) {
+		return reservationDao.createReservation(sqlSession,r);
 	}
 
 

@@ -1,6 +1,7 @@
 package com.kh.show.reservation.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 
@@ -18,6 +19,9 @@ public interface ReservationService {
 	
 	// 좌석 상태 변환
 	int updateSeatStatus(String name);
+	
+	// reservation 생성
+	int createReservation(Map<String, Object> r);
 
 	
 	

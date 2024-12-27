@@ -1,6 +1,7 @@
 package com.kh.show.reservation.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,6 +27,10 @@ public class ReservationDao {
 
 	public int updateSeatStatus(SqlSession session, String name) {
 		return session.update("reservationMapper.updateSeatStatus",name);
+	}
+
+	public int createReservation(SqlSession session, Map<String, Object> r) {
+		return session.insert("reservationMapper.createReservation",r);
 	}
 
 
