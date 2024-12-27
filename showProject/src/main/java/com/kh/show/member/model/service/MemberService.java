@@ -1,7 +1,10 @@
 package com.kh.show.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.show.common.template.PageInfo;
+import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Member;
 
 public interface MemberService {
@@ -28,4 +31,11 @@ public interface MemberService {
 	int findPwd(HashMap<String, String> map);
 	//비밀번호 찾고 변경2
 	int updateNewPassword(HashMap<String, String> map);
+	//구독 서비스
+	int startSub(String userId);
+	
+	//목록 수 조회
+	int listCount(int userNo);
+	//회원 qna 목록 조회
+	ArrayList<Question> qnaList(int userNo, PageInfo pi);
 }

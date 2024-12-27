@@ -1,10 +1,14 @@
 package com.kh.show.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.show.common.template.PageInfo;
+import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Member;
 
 @Repository
@@ -56,6 +60,23 @@ public class MemberDao {
 
 	public int updateNewPassword(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("memberMapper.updateNewPassword",map);
+	}
+
+	public int startSub(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("memberMapper.startSub",userId);
+	}
+
+	public int listCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.listCount",userNo);
+	}
+
+	public ArrayList<Question> qnaList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.qnaList",userNo, rowbounds);
 	}
 
 }

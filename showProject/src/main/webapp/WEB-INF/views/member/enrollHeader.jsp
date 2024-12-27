@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <% 
-	Member loginMember = (Member)session.getAttribute("loginManager");
+	Member loginMember = (Member)session.getAttribute("loginUser");
 %>
 <head>
 <meta charset="UTF-8">
