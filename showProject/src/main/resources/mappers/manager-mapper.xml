@@ -8,6 +8,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MANAGER_ID" property="managerId" />
 		<result column="MANAGER_PW" property="managerPw" />
 	</resultMap>
+	<resultMap type="Notice" id="noticeResultSet">
+		<result column="NOTICE_NO" property="noticeNo"/>
+		<result column="NOTICE_TITLE" property="noticeTitle"/>
+		<result column="NOTICE_CONTENT" property="noticeContent"/>
+		<result column="CREATEDATE" property="createDate"/>
+		<result column="COUNT" property="count"/>
+	</resultMap>
+	<resultMap type="Show" id="showResultSet">
+		<result column="SHOW_NO" property="showNo"></result>
+		<result column="SHOW_NAME" property="showName"></result>
+		<result column="SHOW_EXPLAIN" property="showExplain"></result>
+		<result column="PRICE" property="price"></result>
+		<result column="NOTICE" property="notice"></result>
+		<result column="HALL_NO" property="hallNo"></result>
+		<result column="GENRE_NO" property="genreNo"></result>
+		<result column="REGION_NO" property="regionNo"></result>
+		<result column="SHOW_START" property="showStart"></result>
+		<result column="SHOW_END" property="showEnd"></result>
+		<result column="COUNT" property="count"></result>
+		<result column="POSTER_ORIGINNAME" property="posterOriginName"></result>
+		<result column="POSTER_CHANGENAME" property="posterChangeName"></result>
+		<result column="DETAIL_ORIGINNAME" property="detailOriginName"></result>
+		<result column="DETAIL_CHANGENAME" property="detailChangeName"></result>
+	</resultMap>
 
 	<select id="loginManager" resultMap="managerResultSet">
 		SELECT MANAGER_ID, MANAGER_PW
@@ -15,6 +39,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MANAGER_ID = #{managerId}
 		AND MANAGER_PW = #{managerPw}
 	</select>
+	
+	<select id="selectNotice" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, CREATEDATE, COUNT
+		FROM NOTICE
+	</select>
+	
+	<insert id="showInsert" parameterType="Show">
+		INSERT INTO SHOW(SHOW_NO,
+						 SHOW_NAME,
+						 SHOW_EXPLAIN,
+						 PRICE,
+						 NOTICE,
+						 HALL_NO,
+						 GENRE_NO,
+						 REGION_NO,
+						 SHOW_START,
+						 SHOW_END,
+						 COUNT,
+						 POSTER_ORIGINNAME,
+						 POSTER_CHANGENAME,
+						 DETAIL_ORIGINNAME,
+						 DETAIL_CHANGENAME)
+				VALUES(SHOW_SEQ.NEXTVAL,
+					   #{showName},
+					   #{showExplain},
+					   #{price},
+					   #{notice},
+					   #{hallNo},
+					   #{genreNo},
+					   #{regionNo},
+					   #{showStart},
+					   #{showEnd},
+					   #{count},
+					   #{posterOriginName},
+					   #{posterChangeName},
+					   #{detailOriginName},
+					   #{detailChangeName})
+	</insert>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		INSERT INTO NOTICE(NOTICE_NO,
+						   NOTICE_TITLE,
+						   NOTICE_CONTENT,
+						   CREATEDATE)
+					VALUES(NOT_SEQ.NEXTVAL,
+						   #{noticeTitle},
+						   #{noticeContent},
+						   SYSDATE)
+	</insert>
 	
 
 

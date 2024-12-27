@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.show.manager.model.vo.Manager"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%  
-	Manager loginManager = (Manager)session.getAttribute("loginManager");
-	boolean isLoginManager = (loginManager != null);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -75,11 +70,8 @@
 
         
        #managerPage{
-        <%if(loginManager != null){%>
-        	display : inline-block;
-        <%} else{%>
-         	display : none;
-        <%} %>
+        	display: ${sessionScope.loginManager != null ? 'inline-block' : 'none'}
+        }
 
         
         
@@ -96,8 +88,8 @@
             <a href="#">이용약관</a> | 
             <a href="#">고객센터</a> | 
             <a href="#">티켓판매안내</a> | 
-            <a href="#">광고안내</a>
-            <a href="${contextPath}/managerPage" id="managerPage"> |  관리자 페이지</a>
+            <a href="#">광고안내</a> | 
+            <a href="${contextPath}/managerPage" id="managerPage">관리자 페이지</a>
              
         </div>
 
@@ -106,6 +98,7 @@
                 <tr>
             <p id="p1">
                         <br>
+                        <img src="/show/resources/images/로고2.png" id="img"><br><br>
                         <img src="${contextPath }/resources/images/로고.jpg" id="img"><br><br>
                         </tr>
                         <tr>
@@ -116,7 +109,7 @@
                  </tr>
             <p id="p2">Copyright © 1998-2024 TicketPal Institute All Right Reserved</p>
             </table>
-            <a href="${contextPath}/mLogin" ><p id="managerLogin">관리자 로그인</p></a>
+            <a href="${contextPath}/managerLogin" ><p id="managerLogin">관리자 로그인</p></a>
             <a href="${contextPath}/managerLogout"><p id="managerLogout">관리자 로그아웃</p></a>
         </div>
     </div>

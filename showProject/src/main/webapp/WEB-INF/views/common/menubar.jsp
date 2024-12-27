@@ -3,15 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>menuber</title>
+    <title>menubar</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Jersey+25+Charted&family=Jua&family=Libre+Barcode+128+Text&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
     <style>
@@ -129,13 +130,22 @@
 </head>
 <body>
 	<!-- alertMsg 비어있지 않을 때만 띄워주기 -황영식 -->
+	<c:if test="${not empty alertMsg }">
 	<script>
-	    var msg = "${alertMsg}";
+		//alert("${alertMsg}");
+		alertify.alert("서비스 요청 성공","${alertMsg}");
+	</script>
+	<c:remove var="alertMsg"/>
+	</c:if>
+	<%-- 
+	<script>
+		var msg = "${sessionScope.alertMsg}";
 	    if (msg != null && msg != "") {
 	        alert(msg);
 	        <% session.removeAttribute("alertMsg"); %>
 	    }
 	</script>
+	--%>
 	
 	<!-- contextPath 추가 -전수민 -->
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
@@ -170,7 +180,7 @@
                     </ul>
                 </td>
                 <td id="td5" align="center">
-                    <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be">
+                    <a href="https://www.youtube.com/watch?si=0u5-or70qp9vCzd3&v=jPhBtq425d4&feature=youtu.be" target="_blank">
                     <img src="${contextPath }/resources/images/암표.jpg" alt="" id="img2"></a> <br>
                     행복한 공연문화를 위해 <br> 지금부터 <span id="span1">암표 거래</span>를 <span id="span2">멈춰주세요</span>
                     
@@ -182,22 +192,18 @@
                 <td id="td6"></td> <!--홈    뮤지컬    연극    콘서트    클래식    전시   고객센터   커뮤티니   이벤트 -->
                 <td colspan="3" id="td8">
                     <ul id="menu">
-
                         <li><a href="${contextPath}">홈</a></li>
                         <li><a href="${contextPath}/musicalList">뮤지컬</a></li>
-
                         <li><a href="${contextPath}/playList">연극</a></li>
                         <li><a href="${contextPath}/concertList">콘서트</a></li>
                         <li><a href="${contextPath}/classicList">클래식</a></li>
                         <li><a href="${contextPath}/displayList">전시</a></li>
                         <li id="li1">|</li>
-                        <li><a href="${contextPath}/notice/list">공지사항</a></li>
+
                         <li><a href="">커뮤니티</a></li>
+                        <li><a href="${contextPath}/notice/list">공지사항</a></li>
                         <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
-
-
                     </ul>
-                   
                 </td>
                 <td id="td7" align="center">
                     <form class="search-box" action="" method="get">
