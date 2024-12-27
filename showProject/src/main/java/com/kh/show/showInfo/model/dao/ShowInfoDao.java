@@ -1,8 +1,7 @@
 package com.kh.show.showInfo.model.dao;
 
 import java.util.ArrayList;
-
-
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -301,6 +300,22 @@ public class ShowInfoDao {
 	public ArrayList<Show> displayRegion6(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("showInfoMapper.displayRegion6");
+	}
+
+
+
+
+	public ArrayList<Show> searchBox(SqlSessionTemplate sqlSession, HashMap<String, String> hashMap) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.searchBox",hashMap);
+	}
+
+
+
+
+	public int searchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> hashMap) {
+		
+		return sqlSession.selectOne("showInfoMapper.searchListCount",hashMap);
 	}
 	
 	

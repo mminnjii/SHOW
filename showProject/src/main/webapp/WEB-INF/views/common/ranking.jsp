@@ -19,8 +19,8 @@
 
 #tt{
         
-        position:relative;
-        left : 200px;
+        
+        margin:auto;
         
        
     }
@@ -44,7 +44,7 @@
         background-color: white;
 
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 30px;
+        font-size: 35px;
         font-weight: 500;
         font-style: normal;
         color: black

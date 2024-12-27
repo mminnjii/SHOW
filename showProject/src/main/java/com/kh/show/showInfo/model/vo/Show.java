@@ -1,6 +1,7 @@
 package com.kh.show.showInfo.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,5 +30,11 @@ public class Show {
 	private String showStart;//    "SHOW_START" DATE,
 	private String showEnd;//    "SHOW_END" DATE
 	private int count;
+	
+	
+	//Hall VO 만들고 mapper에도 추가했음
+	private Hall hall;  // 하나의 Hall 객체만 담도록 수정
+	
+	
 
 }

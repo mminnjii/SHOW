@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reservationMapper">
 
+
 	<resultMap type="Reservation" id="reservationResult">
 		<result column="RESERVATION_ID" property="reservationId"/>
 		<result column="SHOW_NO" property="showNo"/>
@@ -17,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 	</resultMap>
 	
-	
+ 
 	<!-- 예약 번호 가져오기 -->
 	<select id="reSearch" parameterType="_int" resultMap="reservationResult">
 		SELECT RESERVATION_ID, SHOW_NAME 

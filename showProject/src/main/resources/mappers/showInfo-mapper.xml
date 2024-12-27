@@ -19,6 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
 		
+		<result column="HALL_NAME" property="hall.hallName" />
+		
 	</resultMap>	
 
  <!-- 뮤지컬 랭킹(1~5위) count 순으로 리스트 -->
@@ -448,6 +450,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
+	  
+	  <!-- 검색 목록 개수 -->
+	  <select id="searchListCount" resultType="_int">
+	  	SELECT COUNT(*)
+	  	FROM SHOW
+	  	WHERE STATUS = 'Y'
+	  	AND SHOW_NAME LIKE '%' || #{keyword} || '%'
+	  	
+	  	
+	  </select>
+	  
+	  <!-- 검색 목록 -->
+		<select id="searchBox" resultMap="showResultSet">
+	     SELECT S.SHOW_NO,
+	           SHOW_NAME,
+	           SHOW_EXPLAIN,
+	           PRICE,
+	           NOTICE,
+	           HALL_NAME,
+	           GENRE_NAME,
+	           REGION_NAME,
+	           COUNT,
+               SHOW_START,
+               SHOW_END
+	    FROM SHOW S
+	    JOIN GENRE USING(GENRE_NO)
+	    JOIN REGION USING(REGION_NO)
+	    JOIN HALL H USING(HALL_NO)
+	    WHERE STATUS = 'Y'
+	    AND SHOW_NAME LIKE '%' || #{keyword} || '%' 
+	    ORDER BY SHOW_START DESC
+	</select>
+
 	  
 	
 		
