@@ -8,8 +8,7 @@
  		<setting name="jdbcTypeForNull" value="NULL"/>
  	</settings>
  	
- 	
- 	
+
  	<typeAliases>
  		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
@@ -18,20 +17,12 @@
  		<typeAlias type="com.kh.show.reservation.model.vo.Reservation" alias="Reservation"/>
  		<typeAlias type="com.kh.show.reservation.model.vo.SeatsOfRow" alias="SeatsOfRow"/>
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
-<<<<<<< HEAD
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Review" alias="Review"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.ShowRound" alias="ShowRound"/>
 		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
-		
-=======
- 		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
-		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
->>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
+		<typeAlias type="com.kh.show.meeting.model.vo.Meeting" alias="Meeting"/> 		
  	</typeAliases>
 
- 	
- 
- 	
 </configuration>

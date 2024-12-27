@@ -14,10 +14,7 @@
         #boardList {text-align:center;}
         #boardList>tbody>tr:hover {cursor:pointer;}
         #pagingArea {width:fit-content; margin:auto;}
-        
-        /*#searchForm{
-        	width: 40%;
-        }*/
+       
         
         #searchForm>* {
             float:left;
@@ -342,8 +339,6 @@
 									+ "</tr>";
 							}
 							
-							// 페이징 처리도 해주어야 한다? 
-									
 						}else{
 							str += '<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>';
 						}

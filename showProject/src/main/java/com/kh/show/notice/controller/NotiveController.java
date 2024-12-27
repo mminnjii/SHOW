@@ -29,7 +29,6 @@ public class NotiveController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	//@ResponseBody
 	@GetMapping("/list")
 	public String noticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage, Model m) {
 		
@@ -68,42 +67,7 @@ public class NotiveController {
 		
 		return noticeList;
 	}
-
-		
-//	@ResponseBody    // ajax 처리로 변경. -> json 객체로 전달.
-//	@GetMapping(value="/list", produces = "application/json; charset=UTF-8")
-//	public HashMap<String, Object> noticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
-//											,@RequestParam(value = "category", defaultValue = "1") String category) {
-//		// @ResponseBody와 Model 객체를 같이 사용하면 충돌이 발생할 수 있다. => map에 넣어서 전달.
-//		// 페이징 처리 
-//		
-//		System.out.println(currentPage);
-//		
-//		int listCount = noticeService.listCount(); // 공지사항 개수 count 
-//		int pageLimit = 10;  	// 페이징바 최대 개수 
-//		int boardLimit = 10; 	// 한 페이지에 보여질 게시글 개수
-//		
-//		// 페이징 처리를 위한 요소 가지고 오기 
-//		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-//		
-//		ArrayList<Notice> noticeList = new ArrayList<>();
-//		
-//		// 1이면 일반 공지 , 2면 티켓 공지 
-//		if(category.equals("1")) { 
-//			// 리스트 조회하기 (defalt 일반 공지)
-//			noticeList = noticeService.selectList(pi);
-//		}else {
-//			
-//		}
-//		
-//		
-//		HashMap<String, Object> resultMap = new HashMap<>();
-//		resultMap.put("noticeList", noticeList);
-//		resultMap.put("pi", pi);
-//		
-//		return resultMap;
-//	}
-//	
+	
 	
 	// 공지사항 검색 목록  - 페이징 처리 해줘야 한다. 
 	@GetMapping("/search")
@@ -134,38 +98,12 @@ public class NotiveController {
 		
 		return "/notice/noticeView";
 	}
-	
-	// 공지사항 상세페이지 
-//	@GetMapping("detail")
-//	public ModelAndView noticeDetail(int nno, ModelAndView mv, HttpSession session) {
-//		
-//		System.out.println(nno);
-//		
-//		// 공지사항 조회수 up 
-//		int result = noticeService.noticeUpCount(nno);
-//		
-//		if(result>0) {
-//			// 공지사항 상세정보 
-//			Notice notice = noticeService.noticeDetail(nno);
-//			
-//			mv.addObject("nDetail", notice);
-//			System.out.println(notice);
-//			
-//		} else {
-//			session.setAttribute("alertMsg", "공지사항 조회에 실패하였습니다.");
-//		}
-//		
-//
-//		mv.setViewName("/notice/noticeDetail");
-//		
-//		return mv;
-//	}
-	
+
 	
 	// 공지사항 상세페이지
 	@ResponseBody
 	@PostMapping("/detail")
-	public Notice noticeDetail(@RequestParam("nno") int nno) {
+	public Notice noticeDetail(int nno) {
 		
 		System.out.println(nno);
 		
