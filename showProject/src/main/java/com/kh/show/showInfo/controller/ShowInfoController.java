@@ -1,6 +1,7 @@
 package com.kh.show.showInfo.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.show.showInfo.model.service.ShowInfoService;
@@ -72,6 +74,61 @@ public class ShowInfoController {
 	public String info() {
 	
 		return "info";
+	}
+	
+	
+	//검색기능
+	@GetMapping("/search")
+	public String searchBox(@RequestParam String keyword
+							,Model model) {
+		
+		
+		
+		//전달받은 검색 조건 맵에 담기
+		HashMap<String,String> hashMap = new HashMap<>();
+		hashMap.put("keyword", keyword);
+		
+		
+		int searchListCount = showInfoService.searchListCount(hashMap);
+		
+		// searchListCount 값을 hashMap에 추가
+	    hashMap.put("count", String.valueOf(searchListCount));
+		//HashMap은 기본적으로 문자열을 키로 사용한다.
+	    //searchListCount는 int타입이기에 문자열로 변환해야 해서
+	    //String.valueOf를 사용해준다.
+	    
+		if(searchListCount>0) {
+			
+					
+		    ArrayList<Show> searchBox = showInfoService.searchBox(hashMap);
+		    
+		    System.out.println(searchBox);
+		    
+		    model.addAttribute("hashMap",hashMap);
+			model.addAttribute("list",searchBox);
+			
+			return "common/searchPage";
+					
+		}else {
+			
+			model.addAttribute("hashMap",hashMap);
+			
+			
+			return "common/searchError";
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
