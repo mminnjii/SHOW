@@ -24,6 +24,7 @@ public class Show {
 	private String status;				//	STATUS			 VARCHAR2(1 BYTE)
 
 	private int hallNo;					//	HALL_NO			 NUMBER
+	private String hallName;
 	private int genreNo;				//	GENRE_NO		 NUMBER
 	private int regionNo;				//	REGION_NO		 NUMBER
 
