@@ -1,7 +1,7 @@
 package com.kh.show.showInfo.model.service;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -396,6 +396,23 @@ public ArrayList<Show> musicalShow() {
 		
 		return displayRegion6;
 	}
+
+
+
+	//검색 목록
+	@Override
+	public ArrayList<Show> searchBox(HashMap<String, String> hashMap) {
+		
+		return showInfoDao.searchBox(sqlSession,hashMap);
+	}
+
+	//검색 목록 개수
+	@Override
+	public int searchListCount(HashMap<String, String> hashMap) {
+
+		return showInfoDao.searchListCount(sqlSession,hashMap);
+	}
+
 
 
 }

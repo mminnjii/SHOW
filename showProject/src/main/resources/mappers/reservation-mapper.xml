@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reservationMapper">
 
+
 	<resultMap type="Reservation" id="reservationResult">
 		<result column="RESERVATION_ID" property="reservationId"/>
 		<result column="SHOW_NO" property="showNo"/>
@@ -88,5 +89,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ORDER BY RESERVATION_ID DESC) A
 		WHERE ROWNUM = 1
 	</select>
+	
 	
 </mapper>

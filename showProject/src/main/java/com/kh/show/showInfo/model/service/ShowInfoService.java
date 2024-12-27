@@ -1,6 +1,7 @@
 package com.kh.show.showInfo.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.show.showInfo.model.vo.Review;
 import com.kh.show.showInfo.model.vo.Show;
@@ -131,5 +132,11 @@ public interface ShowInfoService {
 	ArrayList<Show> displayRegion5();
 
 	ArrayList<Show> displayRegion6();
+
+	//검색 목록
+	ArrayList<Show> searchBox(HashMap<String, String> hashMap);
+	
+	//검색 목록 개수 
+	int searchListCount(HashMap<String, String> hashMap);
 
 }

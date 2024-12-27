@@ -2,10 +2,11 @@ package com.kh.show.showInfo.model.dao;
 
 import java.util.ArrayList;
 import javax.websocket.Session;
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
 import com.kh.show.showInfo.model.vo.Review;
 import com.kh.show.showInfo.model.vo.Show;
 import com.kh.show.showInfo.model.vo.ShowRound;
@@ -319,6 +320,22 @@ public class ShowInfoDao {
 	public ArrayList<Show> displayRegion6(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("showInfoMapper.displayRegion6");
+	}
+
+
+
+
+	public ArrayList<Show> searchBox(SqlSessionTemplate sqlSession, HashMap<String, String> hashMap) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.searchBox",hashMap);
+	}
+
+
+
+
+	public int searchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> hashMap) {
+		
+		return sqlSession.selectOne("showInfoMapper.searchListCount",hashMap);
 	}
 	
 	// 리뷰조회

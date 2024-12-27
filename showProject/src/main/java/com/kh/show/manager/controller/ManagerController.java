@@ -8,20 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Controller
@@ -29,7 +30,6 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService service;
-//	private Notice notice;
 	
 	@GetMapping("/managerLogin")
 	public String moveLoginManager() {
@@ -69,17 +69,6 @@ public class ManagerController {
 	@GetMapping("/noticeInsert")
 	public String moveNoticeInsert() {
 		return "manager/noticeInsert";
-	}
-	
-	
-	@RequestMapping("/noticeList")
-	public ResponseEntity<List<Notice>> selectNotice() {
-	    try {
-	        List<Notice> noticeList = service.selectNotice(); // 공지사항 목록 가져오기
-	        return ResponseEntity.ok(noticeList); // JSON 형태로 반환
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 에러 처리
-	    }
 	}
 	
 	@GetMapping("/showInsert")
@@ -147,7 +136,7 @@ public class ManagerController {
 
 	        File poster = new File(posterSavePath);
 	        if (!poster.exists()) {
-	            poster.mkdirs(); // 경로가 없으면 생성
+	            poster.mkdirs();
 	        }
 	        
 	        File detail = new File(detailSavePath);
@@ -205,6 +194,36 @@ public class ManagerController {
 			session.setAttribute("alertMsg", "공지사항 등록에 실패하였습니다.");
 			return "redirect:/";
 		}
+	}
+	
+	@GetMapping("/noticeList")
+	@ResponseBody
+	public List<Notice> selectAllNotice(){
+		return service.selectAllNotice();
+	}
+	
+	@GetMapping("/faqList")
+	@ResponseBody
+	public List<Faq> selectAllFaq(){
+		return service.selectAllFaq();
+	}
+	
+	@GetMapping("/memberList")
+	@ResponseBody
+	public List<Member> selectAllMember(){
+		return service.selectAllMember();
+	}
+	
+	@GetMapping("/reservList")
+	@ResponseBody
+	public List<Reservation> selectAllReserv(){
+		return service.selectAllReserv();
+	}
+	
+	@GetMapping("/showList")
+	@ResponseBody
+	public List<Show> selectAllShow(){
+		return service.selectAllShow();
 	}
 	
 	/*
