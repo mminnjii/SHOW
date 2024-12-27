@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 	.content{
-		width: 100%;
+		width: 80%;
 		margin: auto;
         text-align: center;
 	}
@@ -22,16 +22,18 @@
         font-size: 12px;
     }
 	.inner{
-		width: 30%;
-		margin: auto;
+		width: 1000px;
 		padding-top: 5%;
         padding-left: 2%;
-		text-align: left;
+        margin: auto;
+        border-top: 1px solid lightgray;
 	}
 
     /*테이블 관련*/
     #tos{
+        margin: auto;
         position: relative;
+        text-align: left;
         width: 400px;
     }
     #tos td{
@@ -55,6 +57,7 @@
 
     /*버튼*/
     #next{
+        margin: auto;
         width: 400px;
         position: relative;
     }
