@@ -226,10 +226,17 @@
                 </td>
                 <td id="dd"></td>
                 <td>
+                <a href="${contextPath}/meeting/list">
                     <p><span id="a1">함께 공연을 즐기는</span> <span id="a2">소모임</span><br><span id="a3">"같이 공연 보러 갈래?"</span></p>
+                </a>
                 </td>
+
+                <td id="rr"></td>
+                <td><a href="${contextPath}/meeting/list">
+
                 <td id="kk"></td>
                 <td><a href="">
+
                 <img src="/show/resources/images/소모임.jpg" alt="" id="ticket"> </a>
                 </td>
                 <td id="rr"></td>
