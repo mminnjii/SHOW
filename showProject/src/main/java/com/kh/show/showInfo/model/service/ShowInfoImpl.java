@@ -21,10 +21,6 @@ public class ShowInfoImpl implements ShowInfoService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-<<<<<<< HEAD
-	
-	
-=======
 @Override
 public ArrayList<Show> musicalShow() {
 	
@@ -34,14 +30,12 @@ public ArrayList<Show> musicalShow() {
 	return musicalShowList;
 }
 
->>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
 	
 	@Override
 	public Show selectShow() {
 		Show s = showInfoDao.selectShow(sqlSession);
 		return s;
 	}
-	
 
 	@Override
 	public ArrayList<ShowRound> selectRound() {
@@ -74,7 +68,6 @@ public ArrayList<Show> musicalShow() {
 
 
 	@Override
-<<<<<<< HEAD
 	public int selectRcount() {
 		return showInfoDao.selectRcount(sqlSession);
 	}
@@ -93,17 +86,6 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
-
-
-
-
-
-
-
-
-	
-	
-=======
 	public ArrayList<Show> musicalRegion() {
 		
 		ArrayList<Show> musicalRegionList = showInfoDao.musicalRegionList(sqlSession);
@@ -264,7 +246,6 @@ public ArrayList<Show> musicalShow() {
 	@Override
 	public ArrayList<Show> concertRegion4() {
 
-
 		ArrayList<Show> concertRegionList4 = showInfoDao.concertRegionList4(sqlSession);
 		
 		return concertRegionList4;
@@ -273,7 +254,6 @@ public ArrayList<Show> musicalShow() {
 
 	@Override
 	public ArrayList<Show> concertRegion5() {
-
 
 		ArrayList<Show> concertRegionList5 = showInfoDao.concertRegionList5(sqlSession);
 		
@@ -412,12 +392,10 @@ public ArrayList<Show> musicalShow() {
 	@Override
 	public ArrayList<Show> displayRegion6() {
 
-
 		ArrayList<Show> displayRegion6 = showInfoDao.displayRegion6(sqlSession);
 		
 		return displayRegion6;
 	}
 
->>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
 
 }

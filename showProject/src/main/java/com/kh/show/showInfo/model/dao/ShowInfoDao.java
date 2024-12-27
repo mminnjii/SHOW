@@ -1,21 +1,9 @@
 package com.kh.show.showInfo.model.dao;
 
 import java.util.ArrayList;
-
-<<<<<<< HEAD
 import javax.websocket.Session;
-=======
-
-
 import org.mybatis.spring.SqlSessionTemplate;
->>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
-
 import org.apache.ibatis.session.SqlSession;
-<<<<<<< HEAD
-import org.mybatis.spring.SqlSessionTemplate;
-=======
-
->>>>>>> branch 'main' of https://github.com/mminnjii/SHOW.git
 import org.springframework.stereotype.Repository;
 
 import com.kh.show.showInfo.model.vo.Review;
