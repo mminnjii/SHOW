@@ -18,15 +18,11 @@
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
 		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
-
+		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/>
+		<typeAlias type="com.kh.show.reservation.model.vo.ManagerPageReservation" alias="ManagerReservation"/>		
 		<typeAlias type="com.kh.show.showInfo.model.vo.Hall" alias="Hall"/> 
-
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
-    
 		<typeAlias type="com.kh.show.meeting.model.vo.Meeting" alias="Meeting"/> 		
-
-
-
  	</typeAliases>
 
  	

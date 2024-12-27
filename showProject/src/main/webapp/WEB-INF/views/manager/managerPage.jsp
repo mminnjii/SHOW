@@ -171,9 +171,9 @@
             </div>
 
             <!-- 공지사항 목록 -->
-            <div id="notice-list">
-                <p>공지사항 데이터를 불러오고 있습니다...</p>
-            </div>
+            <div id="data-container">
+			    <p>데이터를 불러오고 있습니다...</p>
+		    </div>
         </div>
 
 		<!-- 공지사항 작성 버튼 -->
@@ -194,38 +194,33 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
+
         // 공지사항 관리 버튼 클릭 시
         document.getElementById('notice-management-btn').addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 동작 방지
-            console.log('공지사항 관리 버튼 클릭됨'); // 디버깅용 메시지
-            document.querySelector('.create-notice-btn').style.display = 'block'; // 공지사항 작성 버튼 표시
-            document.querySelector('.create-faq-btn').style.display = 'none'; // FAQ 작성 버튼 숨기기
+            event.preventDefault();
+            loadData('notice');
+            document.querySelector('.create-notice-btn').style.display = 'block';
+            document.querySelector('.create-faq-btn').style.display = 'none';
             document.querySelector('.create-show-btn').style.display = 'none';
         });
 
         // FAQ 관리 버튼 클릭 시
         document.getElementById('faq-management-btn').addEventListener('click', function(event) {
             event.preventDefault(); // 기본 동작 방지
-            console.log('FAQ 관리 버튼 클릭됨'); // 디버깅용 메시지
+            loadData('faq');
             document.querySelector('.create-faq-btn').style.display = 'block'; // FAQ 작성 버튼 표시
             document.querySelector('.create-show-btn').style.display = 'none';
             document.querySelector('.create-notice-btn').style.display = 'none'; // 공지사항 작성 버튼 숨기기
         });
         
-	     // 공연 관리 버튼 클릭 시
-	     document.getElementById('show-management-btn').addEventListener('click', function(event) {
-	         event.preventDefault(); // 기본 동작 방지
-	         console.log('공연 관리 버튼 클릭됨'); // 디버깅용 메시지
-	         document.querySelector('.create-show-btn').style.display = 'block';
-	         document.querySelector('.create-faq-btn').style.display = 'none'; // FAQ 작성 버튼 표시
-	         document.querySelector('.create-notice-btn').style.display = 'none'; // 공지사항 작성 버튼 숨기기
-	     });
-	     
-	     document.getElementById('createShow').addEventListener('click', function(event){
-	    	 event.preventDefault();
-	    	 console.log('공연 작성 버튼 클릭됨');
-	    	 window.location.href = '${contextPath}/showInsert';
-	     });
+        // 공연 관리 버튼 클릭 시
+        document.getElementById('show-management-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 동작 방지
+            loadData('show');
+            document.querySelector('.create-show-btn').style.display = 'block';
+            document.querySelector('.create-faq-btn').style.display = 'none'; // FAQ 작성 버튼 숨기기
+            document.querySelector('.create-notice-btn').style.display = 'none'; // 공지사항 작성 버튼 숨기기
+        });
 
         // 버튼 숨기기 초기화 함수
         function hideCreateButtons() {
@@ -234,38 +229,39 @@
             document.querySelector('.create-show-btn').style.display = 'none';
         }
 
-        // 공지사항 목록 로드 함수
-        function loadNoticeList() {
-		    $.ajax({
-		        url: '/noticeList', // 수정된 URL
-		        method: 'GET',
-		        dataType: 'json', // JSON 형식으로 데이터 처리
-		        success: function(data) {
-		            const noticeList = document.getElementById('notice-list');
-		            noticeList.innerHTML = ''; // 기존 내용 비우기
-		            if (data.length > 0) {
-		                data.forEach(notice => {
-		                    const noticeItem = document.createElement('div');
-		                    noticeItem.className = 'notice-item';
-		                    noticeItem.innerHTML = `
-		                        <h3>${notice.title}</h3>
-		                        <p>${notice.content}</p>
-		                        <small>작성일: ${notice.createdDate}</small>
-		                    `;
-		                    noticeList.appendChild(noticeItem);
-		                });
-		            } else {
-		                noticeList.innerHTML = '<p>등록된 공지사항이 없습니다.</p>';
-		            }
-		        },
-		        error: function(xhr, status, error) {
-		            console.error("AJAX 요청 실패:", status, error);
-		            document.getElementById('notice-list').innerHTML = '<p>데이터를 불러오는데 실패하였습니다.</p>';
-		        }
-		    });
-		}
-        // 페이지 로드 시 공지사항 목록 로드
-        loadNoticeList();
+        // 서버에서 데이터 불러오기
+        function loadData(type) {
+            $.ajax({
+                url: '/getData',  // 서버에서 데이터를 가져올 URL
+                method: 'GET',
+                data: { type: type },  // 어떤 데이터를 가져올지 구분할 type 파라미터 전달
+                dataType: 'json',
+                success: function(data) {
+                    console.log("AJAX 요청 성공", data);  // AJAX 성공 로그
+                    const dataContainer = document.getElementById('data-container');
+                    dataContainer.innerHTML = '';  // 기존 데이터 지우기
+
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'item';
+                            itemDiv.innerHTML = `
+                                <h3>${item.title}</h3>
+                                <p>${item.content}</p>
+                                <small>작성일: ${item.createdDate}</small>
+                            `;
+                            dataContainer.appendChild(itemDiv);
+                        });
+                    } else {
+                        dataContainer.innerHTML = '<p>등록된 데이터가 없습니다.</p>';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX 요청 실패:", status, error);  // AJAX 실패 로그
+                    document.getElementById('data-container').innerHTML = '<p>데이터를 불러오는데 실패하였습니다.</p>';
+                }
+            });
+        }
     });
     </script>
     <%@include file="/WEB-INF/views/common/footer.jsp" %>
