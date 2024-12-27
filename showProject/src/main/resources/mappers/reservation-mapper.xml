@@ -7,9 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Reservation" id="reservationResult">
 		<result column="RESERVATION_ID" property="reservationId"/>
 		<result column="SHOW_NO" property="showNo"/>
+		<result column="SHOW_NAME" property="showName"/>	
 		<result column="ROUND_ID" property="roundId"/>
 		<result column="USER_NO" property="userNo"/>
 		<result column="HALL_NO" property="hallNo"/>
+		<result column="HALL_NAME" property="hallName"/>
+		<result column="SHOW_TIME" property="showTime"/>
+		<result column="SHOW_DATE" property="showDate"/>
+		<result column="SHOW_ROUND" property="showRound"/>
 		
 		<collection property="showList" ofType="Show">
 			<result column="SHOW_NAME" property="showName"/>	
@@ -68,13 +73,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 예약테이블 생성 후 확인데이터 가져오기 -->
-	<select id="selectReservation">
+	<select id="selectReservation" resultMap="reservationResult">
 		SELECT A.*
 		FROM (SELECT RESERVATION_ID,
 		               SHOW_NAME,
 		               SHOW_ROUND,
 		               SHOW_TIME,
-		               SHOW_DATE,
+		               TRUNC(SHOW_DATE)SHOW_DATE,
 		               HALL_NAME
 		        FROM RESERVATION R
 		        JOIN SHOW USING (SHOW_NO)

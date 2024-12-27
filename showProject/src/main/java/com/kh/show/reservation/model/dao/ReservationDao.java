@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 @Repository
@@ -31,6 +32,10 @@ public class ReservationDao {
 
 	public int createReservation(SqlSession session, Map<String, Object> r) {
 		return session.insert("reservationMapper.createReservation",r);
+	}
+
+	public Reservation selectReservation(SqlSession session) {
+		return session.selectOne("reservationMapper.selectReservation");
 	}
 
 

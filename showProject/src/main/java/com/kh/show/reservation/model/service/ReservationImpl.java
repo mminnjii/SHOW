@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.show.reservation.model.dao.ReservationDao;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 @Service
@@ -42,6 +43,11 @@ public class ReservationImpl implements ReservationService {
 	@Override
 	public int createReservation(Map<String, Object> r) {
 		return reservationDao.createReservation(sqlSession,r);
+	}
+
+	@Override
+	public Reservation selectReservation() {
+		return reservationDao.selectReservation(sqlSession);
 	}
 
 

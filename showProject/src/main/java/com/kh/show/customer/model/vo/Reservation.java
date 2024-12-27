@@ -18,10 +18,15 @@ public class Reservation {
 
 	private int reservationId;	//	RESERVATION_ID
 	private int showNo;			//	SHOW_NO
+	private String showName;	// 사용을 위해 추가 (컬렉션 쓰기엔 적은데이터로 판단)
 	private int roundId;		//	ROUND_ID
+	private int showRound;		// 사용을 위해 추가
 	private int userNo;			//	USER_NO
 	private int hallNo;			//	HALL_NO
+	private String hallName;    // 사용을 위해 추가
 	private String status;		//	STATUS
+	private String showTime;	// 사용을 위해 추가	
+	private Date showDate;	// 사용을 위해 추가	
 	private Date createDate;	//	CREATEDATE
 	private String precaution;	//	PRECAUTION
 

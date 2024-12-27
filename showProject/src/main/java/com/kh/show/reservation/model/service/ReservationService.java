@@ -3,6 +3,7 @@ package com.kh.show.reservation.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 public interface ReservationService {
@@ -22,6 +23,9 @@ public interface ReservationService {
 	
 	// reservation 생성
 	int createReservation(Map<String, Object> r);
+	
+	// 생성된 reservation 읽어오기
+	Reservation selectReservation();
 
 	
 	

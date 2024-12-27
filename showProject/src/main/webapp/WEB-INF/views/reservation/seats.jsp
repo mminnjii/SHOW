@@ -8,14 +8,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+    	<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Calendar and Seats</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 80px;
- 
+ 		}
+ 		
+ 		.modal-body {
+		    text-align: left;
+		}
+		 		
         .stage {
             padding: 10px 20px;
             background-color: gray;
@@ -74,6 +82,32 @@
     </style>
 </head>
 <body>
+	
+       <div class="modal fade" id="Modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <!-- 모달 헤더 -->
+                  <div class="modal-header">
+                      <h5 class="modal-title">예매안내</h5>
+                  </div>
+                  <!-- 모달 바디 -->
+                  <div class="modal-body">
+               		<c:if test="${not empty rInfo }">
+               		<h4>${rInfo.showName}</h4><br>
+               			(${rInfo.showRound} 회차)<br>
+               			공연일자 : ${rInfo.showDate} <br>
+               			공연시간 : ${rInfo.showTime} 를 선택하셨습니다. <br>
+               		</c:if>
+                  </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                   <button type="button" class="btn btn-secondary" id="back" data-bs-dismiss="back">취소</button>
+               </div>
+              </div>
+          </div>
+      </div>
+	
+	
 	
     <div class="stage">무대(STAGE)</div>
     
@@ -183,6 +217,7 @@
 		<p style="margin-top: 800px;"></p>
 		
     <script>
+
 	     $('.seat').on('click', function() {
 	    	 
 	    	   	// 선택 좌석
@@ -268,6 +303,9 @@
 	     	
   	     	
   	     	$(function(){
+  	     		
+  	     	 	$('#Modal').modal('show');
+  	     		
   	     		
   	     		var taken = ${taken}; // JSTL 데이터를 JSON으로 전달
   	     	 

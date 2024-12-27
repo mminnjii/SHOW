@@ -49,11 +49,13 @@ public class ReservationController {
 		
 		int result = reservationService.createReservation(r);  
 		
-//		if(result>0) {
-//			
-//			ArrayList<Reservation> num  = reservationService.selectSeatsNum();
-//			
-//		}
+		if(result>0) {
+			Reservation rInfo = reservationService.selectReservation();
+			model.addAttribute("rInfo",rInfo);
+			// System.out.println(rInfo);
+		}else {
+			model.addAttribute("alert","예약이 생성되지 못했습니다. 다시 선택해주세요");
+		}
 		
 		
 		// status "N"인 좌석 조회
@@ -99,7 +101,7 @@ public class ReservationController {
 			 return 0;
 		 }
 		 
-		 // 예약테이블 데이터 생성
+		
 		 
 		 
 		 
