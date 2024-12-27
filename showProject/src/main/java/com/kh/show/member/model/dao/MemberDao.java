@@ -58,4 +58,8 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateNewPassword",map);
 	}
 
+	public int startSub(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("memberMapper.startSub",userId);
+	}
+
 }

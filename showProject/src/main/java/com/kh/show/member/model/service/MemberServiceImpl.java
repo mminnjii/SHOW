@@ -80,6 +80,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.updateNewPassword(sqlSession,map);
 	}
 
+	@Override
+	public int startSub(String userId) {
+		return memberDao.startSub(sqlSession,userId);
+	}
+
 	
 
 }

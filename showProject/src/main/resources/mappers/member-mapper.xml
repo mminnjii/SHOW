@@ -119,7 +119,11 @@
 		AND STATUS = 'Y'
 	</select>
 
-
+	<update id="startSub" parameterType="String">
+		UPDATE MEMBER
+		SET SUBSCRIBE = 'Y'
+		WHERE USER_ID = #{userId}
+	</update>
 
 
 

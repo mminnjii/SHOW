@@ -250,6 +250,26 @@ public class MemberController {
 		
 		return "member/subscribe";
 	}
+	@GetMapping("/group")
+	public String group() {
+		
+		return "member/myGroup";
+	}
+	@GetMapping("/chat")
+	public String chat() {
+		
+		return "member/myChat";
+	}
+	@GetMapping("/qna")
+	public String qna() {
+		
+		return "member/myQna";
+	}
+	@GetMapping("/payment")
+	public String payment() {
+		
+		return "member/myPayment";
+	}
 	
 	//회원 정보 업데이트 메소드
 	@PostMapping("update.me")
@@ -408,6 +428,27 @@ public class MemberController {
 	public String rank() {
 		
 		return "member/memberRank";
+	}
+	
+	//구독 시작 메소드
+	@PostMapping("/subscribe.me")
+	public String startSub(String userId,
+						   Member m,
+			  			   HttpSession session) {	
+		
+		int result = memberService.startSub(userId);
+		
+		System.out.println(m);
+		
+		System.out.println(result);
+		
+		if(result>0) {
+			Member loginUser = memberService.loginMember(m);
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("alertMsg", "구독 시작!");
+		}
+		
+		return "member/subscribe";
 	}
 	
 	

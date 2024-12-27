@@ -28,4 +28,6 @@ public interface MemberService {
 	int findPwd(HashMap<String, String> map);
 	//비밀번호 찾고 변경2
 	int updateNewPassword(HashMap<String, String> map);
+	//구독 서비스
+	int startSub(String userId);
 }
