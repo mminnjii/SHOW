@@ -75,7 +75,7 @@
 		width: 260px;
 	}
 
-	#btn1{
+	#btn2{
         background-color: #597C9B;
 		border-radius: 8px;
 		border: none;
@@ -166,12 +166,12 @@
 						<div id="next" style="text-align: center;">
 							<c:choose>
 								<c:when test="${loginUser.subscribe == 'Y' }">
-									<button id="btn1" style="background-color: #8fc4f2;" disabled>이미 구독 중이십니다</button>
+									<button id="btn2" style="background-color: #8fc4f2;" disabled>이미 구독 중이십니다</button>
 								</c:when>
 								<c:otherwise>
 									<input type="hidden" value="${loginUser.userId}" name="userId">
 									<form action="subscribe.me" method="post">
-										<button id="btn1" onclick="startSub();" disabled>월 9,900원으로 구독</button>
+										<button id="btn2" onclick="startSub();" disabled>월 9,900원으로 구독</button>
 									</form>
 								</c:otherwise>
 							</c:choose>
@@ -187,10 +187,10 @@
             $("#all").click(function(){
                 if($(this).prop("checked")==true){
                     $("input[name=ck]").prop("checked",true);
-                    $('#btn1').prop('disabled', false);
+                    $('#btn2').prop('disabled', false);
                 }else{
                     $("input[name=ck]").prop("checked",false);
-                    $('#btn1').prop('disabled', true); 
+                    $('#btn2').prop('disabled', true); 
                 }
             });
         });
@@ -199,9 +199,9 @@
             // 체크박스 상태에 따라 버튼 활성화/비활성화 함수
             function state() {
                 if ($('#t1').prop('checked')) {
-                    $('#btn1').prop('disabled', false);  // 두 체크박스가 모두 선택되면 버튼 활성화
+                    $('#btn2').prop('disabled', false);  // 두 체크박스가 모두 선택되면 버튼 활성화
                 } else {
-                    $('#btn1').prop('disabled', true);   // 하나라도 선택되지 않으면 버튼 비활성화
+                    $('#btn2').prop('disabled', true);   // 하나라도 선택되지 않으면 버튼 비활성화
                 }
             }
 

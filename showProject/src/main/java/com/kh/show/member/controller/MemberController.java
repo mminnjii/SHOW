@@ -472,9 +472,6 @@ public class MemberController {
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
 		
-		System.out.println(list);
-		System.out.println(pi);
-		
 		return "member/myQna";
 	}
 	

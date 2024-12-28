@@ -131,14 +131,14 @@
 							$("#qnaList>tbody>tr").click(function(){
 								var bno = $(this).children().first().text();
 								
-								location.href = "detail?bno="+bno;
+								//location.href = "detail?bno="+bno;
 							});
 							
 						</script>
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="search?currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}?currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
@@ -150,7 +150,7 @@
 										<c:when test="${empty list }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="search?currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}?currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
