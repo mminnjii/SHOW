@@ -83,7 +83,7 @@
 <body>
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	    <div class="container">
-		        <h1>공연 등록</h1>
+		        <h1>공지사항 등록</h1>
 		<form action="${contextPath}/noticeInsert" method="POST" enctype="multipart/form-data">
 		    <!-- 제목 -->
 		    <div class="form-group">

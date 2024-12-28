@@ -171,7 +171,7 @@
 		                   </c:when>
 		                   <c:otherwise>
 		                   		<!-- 로그인 후 -->
-		                   		<lable>${loginUser.userName }님</lable> &nbsp;&nbsp;
+		                   		<label>${loginUser.userName }님</label> &nbsp;&nbsp;
 		                   		<li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
 		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
 		                   </c:otherwise>
