@@ -90,5 +90,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROWNUM = 1
 	</select>
 	
+		<!-- 결제 전 예약정보 확인 -->
+	<select id="confirmReservation" resultMap="reservationResult">
+		SELECT RESERVATION_ID,
+               SHOW_NAME,
+               SHOW_ROUND,
+               SHOW_TIME,
+               TRUNC(SHOW_DATE)SHOW_DATE,
+               HALL_NAME
+		FROM RESERVATION R
+		JOIN SHOW USING (SHOW_NO)
+		JOIN SHOWROUND USING (ROUND_ID)
+		JOIN HALL USING(HALL_NO)
+		WHERE RESERVATION_ID = #{reservationId}
+	</select>
+	
 	
 </mapper>

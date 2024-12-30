@@ -26,6 +26,9 @@ public interface ReservationService {
 	
 	// 생성된 reservation 읽어오기
 	Reservation selectReservation();
+	
+	// 결제 전 예약정보 확인
+	Reservation confirmReservation(String reservationId);
 
 	
 	

@@ -50,5 +50,10 @@ public class ReservationImpl implements ReservationService {
 		return reservationDao.selectReservation(sqlSession);
 	}
 
+	@Override
+	public Reservation confirmReservation(String reservationId) {
+		return reservationDao.confirmReservation(sqlSession,reservationId);
+	}
+
 
 }

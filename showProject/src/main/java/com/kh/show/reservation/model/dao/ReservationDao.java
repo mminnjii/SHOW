@@ -38,6 +38,10 @@ public class ReservationDao {
 		return session.selectOne("reservationMapper.selectReservation");
 	}
 
+	public Reservation confirmReservation(SqlSession session, String reservationId) {
+		return session.selectOne("reservationMapper.confirmReservation",reservationId);
+	}
+
 
 
 }

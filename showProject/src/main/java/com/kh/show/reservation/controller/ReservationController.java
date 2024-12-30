@@ -51,9 +51,10 @@ public class ReservationController {
 		
 		if(result>0) {
 			Reservation rInfo = reservationService.selectReservation();
+			System.out.println(rInfo.getReservationId());
 			model.addAttribute("rInfo",rInfo);
 			// System.out.println(rInfo);
-			// System.out.println(rInfo.getReservationId());
+			
 		}else {
 			model.addAttribute("alert","예약이 생성되지 못했습니다. 다시 선택해주세요");
 		}
@@ -74,12 +75,11 @@ public class ReservationController {
 	
 	@ResponseBody
 	@PostMapping("/selectedSeats")
-	public int selectedSeats(HttpSession session, int num ,String selectedName,String reservationId) {
+	public int selectedSeats(HttpSession session, int num ,String selectedName) {
 		 // System.out.println(num);
 		 // System.out.println(selectedName);
 		 // session.setAttribute("num", num);
 		//  session.setAttribute("selectedName", selectedName);
-		System.out.println(reservationId); // null
 		
 		 // 공연장(hall)테이블 총좌석 수 변환(-).
 		 int result1 = reservationService.updateTotalNum(num); 
@@ -98,6 +98,10 @@ public class ReservationController {
 		 }
 		 
 		 if(num==result2 && result1>0) {
+			 
+			 session.setAttribute("num", num);
+			 session.setAttribute("selectedName", selectedName);
+			 
 			 return num;
 		 }else {
 			 return 0;

@@ -249,7 +249,7 @@
                     			var tr = $("<tr>").append(r).append(num);
                     			$("#select>tbody").append(tr);
                    		}else{
-        	           			var e = $("<td>").text("E석");
+        	           			var e = $("<td>").text("S석");
         	        			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
         	        			var tr = $("<tr>").append(e).append(num);
         	        			$("#select>tbody").append(tr);
@@ -299,7 +299,21 @@
       				}, 
       				success : function(num){
       					if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
-      						 window.location.href = "/show/payments/pay";
+      						 
+      					    const form = document.createElement("form");
+      				        form.method = "POST";
+      				        form.action = "/show/payments/pay";
+
+      				        const hiddenField = document.createElement("input");
+      				        hiddenField.type = "hidden";
+      				        hiddenField.name = "reservationId";
+      				        hiddenField.value = reservationId;
+
+      				        form.appendChild(hiddenField);
+      				        document.body.appendChild(form);
+      				        form.submit();
+      						
+      						// window.location.href = "/show/payments/pay?reservationId="+encodeURIComponent(reservationId);
       					}else{
       						alert("요청에 실패하였습니다.");
       					}
