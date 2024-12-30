@@ -1,5 +1,10 @@
 package com.kh.show.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
@@ -13,9 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.show.common.template.PageInfo;
+import com.kh.show.common.template.Pagenation;
+import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
 
@@ -240,23 +250,95 @@ public class MemberController {
 		
 		return "member/deleteMember";
 	}
+	@GetMapping("/subscribe")
+	public String subscribe() {
+		
+		return "member/subscribe";
+	}
+	@GetMapping("/group")
+	public String group() {
+		
+		return "member/myGroup";
+	}
+	@GetMapping("/chat")
+	public String chat() {
+		
+		return "member/myChat";
+	}
+	
+	@GetMapping("/payment")
+	public String payment() {
+		
+		return "member/myPayment";
+	}
 	
 	//회원 정보 업데이트 메소드
 	@PostMapping("update.me")
 	public ModelAndView updateMember(Member m,
+									 MultipartFile upfile,
 									 HttpSession session,
 									 ModelAndView mv) {
+		
+		//삭제 할 파일명 저장 변수
+		String deleteFile = null;
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			//기존 첨부파일이 서버에 업로드 되어있는 파일명 저장
+			if(m.getOriginName()!=null) {
+				//삭제할 기존 파일명 저장
+				deleteFile = m.getChangeName();
+			}
+			
+			//새로 업로드된 파일 정보 데이터베이스 등록 및 파일 서버 업로드 처리
+			String changeName = saveFile(upfile,session);
+			
+			//업로드 처리 후 변경된 파일명 데이터베이스에 등록하기 위해 m에 세팅
+			m.setOriginName(upfile.getOriginalFilename());//원본 파일명
+			m.setChangeName(changeName);//서버 업로드 파일명
+			
+		}
+		
 		int result = memberService.updateMember(m);
 		
 		if(result>0) {
+			//기존 파일이 있을 시 삭제
+			if(deleteFile != null) {
+				new File(session.getServletContext().getRealPath("/resources/profile/"+deleteFile)).delete();
+			}
 			Member loginUser = memberService.loginMember(m);
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("member/myPage");
+		}else {
+			mv.setViewName("member/memberUpdate");
 		}
 		
 		return mv;
 	}
 	
+	//파일 업로드 처리 메소드
+	private String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		//1.원본 파일명 추출
+		String originName = upfile.getOriginalFilename();
+		//2.시간 형식 문자열로 만들기
+		String currentTime = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		//3.확장자 추출
+		String ext = originName.substring(originName.lastIndexOf("."));
+		//4.랜덤값 5자리
+		int ranNum = (int)(Math.random()*90000+10000);
+		//5.합치기
+		String changeName = currentTime+ranNum+ext;
+		//6.업로드하고자 하는 서버의 물리적인 경로 찾아내기
+		String savePath = session.getServletContext().getRealPath("/resources/profile/");
+		//7.경로와 수정파일명 합쳐서 파일 업로드 처리
+		try {
+			upfile.transferTo(new File(savePath+changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
 	//회원 배송지 추가
 	@PostMapping("/address.me")
 	public String memberAddress(String userId,
@@ -347,6 +429,53 @@ public class MemberController {
 	public String rank() {
 		
 		return "member/memberRank";
+	}
+	
+	//구독 시작 메소드
+	@PostMapping("/subscribe.me")
+	public String startSub(String userId,
+						   Member m,
+			  			   HttpSession session) {	
+		
+		int result = memberService.startSub(userId);
+		
+		System.out.println(m);
+		
+		System.out.println(result);
+		
+		if(result>0) {
+			Member loginUser = memberService.loginMember(m);
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("alertMsg", "구독 시작!");
+		}
+		
+		return "member/subscribe";
+	}
+	
+
+	
+	//qna 리스트 메소드
+	@GetMapping("/qna")
+	public String qna(@RequestParam(value="currentPage",defaultValue="1")
+					  int currentPage,
+					  Model model,
+					  int userNo) {
+		
+		int listCount = memberService.listCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		ArrayList<Question> list = memberService.qnaList(userNo,pi);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		
+		System.out.println(list);
+		System.out.println(pi);
+		
+		return "member/myQna";
 	}
 	
 	

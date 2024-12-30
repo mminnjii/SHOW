@@ -26,15 +26,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/dev/commons-fileupload-1.5.jar"/>
-	<classpathentry kind="lib" path="D:/dev/cos-05Nov2002.jar"/>
-	<classpathentry kind="lib" path="D:/dev/gson-2.10.1.jar"/>
-	<classpathentry kind="lib" path="D:/dev/json-simple-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/dev/ojdbc8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

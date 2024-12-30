@@ -127,8 +127,18 @@
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="price">가격</label>
-		        <input type="text" id="price" name="price" required>
+		        <label for="price">R석 가격</label>
+		        <input type="text" id="price" name="rPrice" required>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="price">S석 가격</label>
+		        <input type="text" id="price" name="sPrice" required>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="price">VIP석 가격</label>
+		        <input type="text" id="price" name="vPrice" required>
 		    </div>
 		    
 		    <div class="form-group">

@@ -1,11 +1,14 @@
 package com.kh.show.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.show.common.template.PageInfo;
+import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.dao.MemberDao;
 import com.kh.show.member.model.vo.Member;
 
@@ -78,6 +81,21 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updateNewPassword(HashMap<String, String> map) {
 		return memberDao.updateNewPassword(sqlSession,map);
+	}
+
+	@Override
+	public int startSub(String userId) {
+		return memberDao.startSub(sqlSession,userId);
+	}
+
+	@Override
+	public int listCount(int userNo) {
+		return memberDao.listCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Question> qnaList( int userNo, PageInfo pi) {
+		return memberDao.qnaList(sqlSession,userNo,pi);
 	}
 
 	

@@ -6,9 +6,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.manager.model.dao.ManagerDao;
 import com.kh.show.manager.model.vo.Manager;
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Service
@@ -20,6 +23,8 @@ public class ManagerServiceImpl implements ManagerService {
 	@Autowired
 	private ManagerDao dao;
 	
+//	공연 작성 관련 switch문
+//	장르 번호에 맞는 장르 이름을 반환
     private String getGenreName(int genreNo) {
         switch (genreNo) {
             case 1: return "뮤지컬";
@@ -31,7 +36,7 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    // 지역 번호에 맞는 지역 이름을 반환
+//  지역 번호에 맞는 지역 이름을 반환
     private String getRegionName(int regionNo) {
         switch (regionNo) {
             case 1: return "서울";
@@ -44,19 +49,15 @@ public class ManagerServiceImpl implements ManagerService {
             default: return "알 수 없음";
         }
     }
-	
+    
+//	관리자 로그인
 	@Override
 	public Manager loginManager(Manager m) {
 		
 		return dao.loginManager(sqlSession, m);
 	}
-
-	@Override
-	public List<Notice> selectNotice() {
-
-		return dao.selectNotice(sqlSession);
-	}
-
+	
+//	공연 작성
 	@Override
 	public int showInsert(Show show) {
 
@@ -69,10 +70,46 @@ public class ManagerServiceImpl implements ManagerService {
 		return dao.showInsert(sqlSession, show);
 	}
 	
+//	공지사항 작성
 	@Override
 	public int noticeInsert(Notice n) {
 		
 		return dao.noticeInsert(sqlSession, n);
+	}
+
+//	공지사항 불러오기
+	@Override
+	public List<Notice> selectAllNotice() {
+
+		return dao.selectAllNotice(sqlSession);
+	}
+
+//	FAQ 불러오기
+	@Override
+	public List<Faq> selectAllFaq() {
+
+		return dao.selectAllFaq(sqlSession);
+	}
+
+//	회원 불러오기
+	@Override
+	public List<Member> selectAllMember() {
+
+		return dao.selectAllMember(sqlSession);
+	}
+
+//	예약 불러오기
+	@Override
+	public List<Reservation> selectAllReserv() {
+
+		return dao.selectAllReserv(sqlSession);
+	}
+
+//	공연 불러오기
+	@Override
+	public List<Show> selectAllShow() {
+
+		return dao.selectAllShow(sqlSession);
 	}
 
 	
