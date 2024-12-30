@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.showInfo.model.vo.Genre;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Repository
 public class MeetingDao {
@@ -31,5 +33,27 @@ public class MeetingDao {
 	public int listCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("meetingMapper.listCount");
 	}
+	
+	// 카테고리 목록 
+	public ArrayList<Genre> selectGenre(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("meetingMapper.selectGenre");
+	}
+	
+	// 공연 목록 리스트 
+	public ArrayList<Show> selMeetingShow(SqlSessionTemplate sqlSession, int genreNo) {
+		return (ArrayList)sqlSession.selectList("showInfoMapper.selMeetingShow", genreNo);
+	}
 
+	// 소모임 생성 메소드 
+	public int meetingInsert(SqlSessionTemplate sqlSession, Meeting m) {
+		return sqlSession.insert("meetingMapper.meetingInsert", m);
+	}
+
+	// 소모임 상세 내용 
+	public Meeting meetingDetail(SqlSessionTemplate sqlSession, int mno) {
+		System.out.println("dao  : "+ mno);
+		return sqlSession.selectOne("meetingMapper.meetingDetail", mno);
+	}
+	
+	
 }

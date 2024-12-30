@@ -14,18 +14,78 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MEETING_DATE" property="meetingDate"/>
 		<result column="START_DATE" property="startDate"/>
 		<result column="END_DATE" property="endDate"/>
+		
+		<!-- collection으로 member 값 가져오기 -->
+		<collection property="memList" ofType="Member">
+			<result column="USER_NO" property="userNo"/>
+			<result column="USER_ID" property="userId"/>
+		</collection>
 	</resultMap>
 
+	<!-- 소모임 목록 -->
 	<select id="meetingList" resultMap="meetingResult">
-		SELECT * 
-		FROM MEETING 
-		WHERE STATUS='Y'
+		SELECT MEETING_NO
+		        ,USER_NO
+		        ,MEETING_TITLE
+		        ,SHOW_NO
+		        ,MEETING_PLACE
+		        ,MEETING_COUNT
+		        ,MEETING_DATE
+		        ,START_DATE
+		        ,END_DATE
+		        ,INFOMATION
+		        ,ME.STATUS
+		        ,USER_ID 
+		FROM MEETING ME
+		JOIN MEMBER USING(USER_NO)
+		WHERE ME.STATUS='Y'
+		ORDER BY MEETING_NO DESC
 	</select>
 	
+	<!-- 공연 목록 개수 세기 -->
 	<select id="listCount" resultType="_int">
 		SELECT COUNT(*) 
 		FROM MEETING 
 		WHERE STATUS='Y'
 	</select>
+	
+	<!-- 공연 카테고리 불러오기 -->
+	<select id="selectGenre" resultType="com.kh.show.showInfo.model.vo.Genre">
+		SELECT GENRE_NO genreNo, GENRE_NAME genreName 
+		FROM GENRE
+	</select>
+	
+	<!-- 소모임 생성 메소드 -->
+	<insert id="meetingInsert" parameterType="Meeting">
+		INSERT INTO MEETING(MEETING_NO
+		                    ,USER_NO
+		                    ,MEETING_TITLE
+		                    ,SHOW_NO
+		                    ,MEETING_PLACE
+		                    ,MEETING_COUNT
+		                    ,MEETING_DATE
+		                    ,START_DATE
+		                    ,END_DATE
+		                    ,INFOMATION
+		                    ) 
+		            VALUES(MEET_SEQ.NEXTVAL
+		                    ,#{userNo}
+		                    ,#{meetingTitle}
+		                    ,#{showNo}
+		                    ,#{meetingPlace}
+		                    ,#{meetingCount}
+		                    ,#{meetingDate}
+		                    ,SYSDATE
+		                    ,#{endDate}
+		                    ,#{information}
+		                    )
+	</insert>
+	
+	<select id="meetingDetail" parameterType="_int" resultMap="meetingResult">
+		SELECT * 
+		FROM MEETING
+		WHERE MEETING_NO = #{mno}
+	</select>
+	
 	
 </mapper>

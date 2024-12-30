@@ -271,7 +271,11 @@
         		});
 	        });
 	        
+	        
 	        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+	        
+	        
+	        
 	        
 	        // 선택한 셀렉트 박스의 값 유지
 	        $("option[value='${map.condition}']").attr("selected", true);
@@ -333,8 +337,8 @@
 							for(var i=0; i<noticeList.length; i++){
 								str += "<tr>"
 									+ "<td>"+ noticeList[i].openNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].openName +"</td>"
-									+ "<td>"+ noticeList[i].openExplain +"</td>"
+									+ "<td style='text-align: left;'>"+ noticeList[i].openExplain +"</td>"
+									+ "<td>"+ noticeList[i].openName +"</td>"
 									+ "<td>"+ noticeList[i].genreNo +"</td>"
 									+ "</tr>";
 							}

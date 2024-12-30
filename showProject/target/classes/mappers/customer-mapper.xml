@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="USER_NO" property="userNo" />
 		<result column="RESERVATION_ID" property="reservationId" />
 		<result column="QCATEGORY_NO" property="qcategoryNo" />
-		<result column="Q_TITLE" property="qTitle" />
-		<result column="Q_CONTENT" property="qContent" />
+		<result column="Q_TITLE" property="quTitle" />
+		<result column="Q_CONTENT" property="quContent" />
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="CREATEDATE" property="createDate" />

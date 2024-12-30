@@ -127,9 +127,9 @@
 
             <div class="input">
                 <p>문의 내용 <span class="sColor">*</span></p>
-                <input type="text" id="qTitle" name="qTitle" class="form-control" placeholder="제목을 입력해 주세요" required><br>
+                <input type="text" id="quTitle" name="quTitle" class="form-control" placeholder="제목을 입력해 주세요" required><br>
                 
-                <textarea type="text" name="qContent" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요." required></textarea>
+                <textarea name="quContent" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요." required></textarea>
             </div>
             
             <div class="input">

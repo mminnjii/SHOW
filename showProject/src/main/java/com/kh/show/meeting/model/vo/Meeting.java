@@ -1,6 +1,9 @@
 package com.kh.show.meeting.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
+
+import com.kh.show.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Meeting {
 
 	private int meetingNo; 			//MEETING_NO	NUMBER
-	private int userNo;				//USER_NO	NUMBER
+	private String userNo;				//USER_NO	NUMBER
 	private String meetingTitle; 	//MEETING_TITLE	VARCHAR2(500 BYTE)
 	private int showNo;				//SHOW_NO	NUMBER
 	private String meetingPlace; 	//MEETING_PLACE	VARCHAR2(100 BYTE)
@@ -22,7 +25,9 @@ public class Meeting {
 	private Date meetingDate; 		//MEETING_DATE	DATE
 	private Date startDate; 		//START_DATE	DATE
 	private Date endDate;			//END_DATE	DATE
-	private String information;		//INFOMATION	VARCHAR2(2000 BYTE)
+	private String infomation;		//INFOMATION	VARCHAR2(2000 BYTE)
 	private String status;			//STATUS	VARCHAR2(1 BYTE)
 
+	private ArrayList<Member> memList;
+	
 }
