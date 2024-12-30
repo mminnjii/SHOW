@@ -133,7 +133,7 @@ public class CustomerController {
 	
 	
 	// 1:1 문의 등록 
-	// 회원이 아닌 경우와 회원인 경우 나누는 조건 처리 필요 : 회원 정보 전달 안됨.
+	// 회원이 아닌 경우와 회원인 경우 나누는 조건 처리 필요 
 	@PostMapping("/queInsert")
 	public String questionInsert(Question q, MultipartFile upfile, HttpSession session, Member m) {
 		
@@ -149,21 +149,12 @@ public class CustomerController {
 			q.setChangeName("/resources/questionUpFile/" + changeName);
 		}
 		
-		int result = 0;
-		
-		// 회원 비회원에 따라 저장되는 DB가 다르다. 
-		if(m.getUserNo() != 0) {  // 회원인 경우
-			result = customerService.questionInsert(q);
-		}else {  // 회원이 아닌 경우 
-			result = customerService.questionNonInsert(q);			
-		}
+		int result = customerService.questionInsert(q);
 		
 		String alertMsg = "";
 		
 		if(result>0) {
-			alertMsg = (m.getUserNo() != 0) 
-									? "1:1 문의가 등록되었습니다. 마이페이지에서 내역을 확인하실 수 있습니다." 
-									: "1:1 문의가 등록되었습니다.";
+			alertMsg = "1:1 문의가 등록되었습니다. 마이페이지에서 내역을 확인하실 수 있습니다.";
 		}else {
 			alertMsg = "1:1 문의등록이 실패되었습니다." ;
 		}
