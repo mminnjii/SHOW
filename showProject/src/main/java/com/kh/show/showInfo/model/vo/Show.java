@@ -1,8 +1,5 @@
 package com.kh.show.showInfo.model.vo;
 
-import java.sql.Date;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

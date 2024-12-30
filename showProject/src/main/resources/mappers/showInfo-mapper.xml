@@ -446,6 +446,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY SHOW_NO
 	</select>
 
+	<!-- 공연 목록 - 소모임 신청시 필요 - 전수민 -->
+	<select id="selMeetingShow" parameterType="_int" resultMap="showResultSet">
+		SELECT SHOW_NO
+		        ,SHOW_NAME
+		        ,SHOW_EXPLAIN
+		        ,PRICE
+		        ,NOTICE
+		        ,STATUS
+		        ,HALL_NO
+		        ,GENRE_NO
+		        ,REGION_NO
+		        ,SHOW_START
+		        ,SHOW_END
+		        ,COUNT
+		        ,POSTER_ORIGINNAME
+		        ,POSTER_CHANGENAME
+		        ,DETAIL_ORIGINNAME
+		        ,DETAIL_CHANGENAME
+		FROM SHOW 
+		WHERE GENRE_NO = #{genreNo}
+	</select>
+	
+	
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공연상세ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<!-- 공연상세 페이지를 위한 공연정보 조회 -->
 	<select id="selectShow" resultMap="showResultSet">
