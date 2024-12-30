@@ -132,7 +132,6 @@
 
 	        <br>
 			<button onclick="reservation();">예약하기</button>
-			<!--  <button onclick="location.href='/show/reservation/seats'">예약하기</button> -->
 	    </div>
 	    
 	    
@@ -144,12 +143,15 @@
 	                <c:choose>
 						<c:when test="${not empty s }">
 					      	 <h2>${s.showName }</h2> <br>
-			                <p>장르 : ${s.genreNo }</p> 
+			                <p>장르 : ${s.genreName }</p> 
 			                <p>소개 : ${s.showExplain }</p> 
-			                <p>장소 : ${s.hallNo }</p> 
+			                <p>장소 : ${s.hallName }</p> 
 			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
 			                <p>공연시간 : 120분</p>
-			                <p>가격 : ${s.price }</p>
+			                <p>VIP석 : ${vipPrice } &nbsp;||&nbsp; 
+				                R석 : ${rPrice } &nbsp;||&nbsp; 
+				                S석 : ${s.price }
+			                </p>
 						</c:when>                
 		                <c:otherwise>
 		                	<h2>상세정보를 불러올 수 없습니다.</h2>

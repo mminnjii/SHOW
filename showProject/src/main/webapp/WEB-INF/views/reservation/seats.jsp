@@ -168,6 +168,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'VIP' }">
 									<td>VIP석&nbsp;(A-B)</td>
+									<td>${vipPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -177,6 +178,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'R' }">
 									<td>R석&nbsp;(C-F)</td>
+									<td>${rPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -186,6 +188,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'S' }">
 									<td>S석 &nbsp;(F-H)</td>
+									<td>${sPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -260,8 +263,6 @@
         			}else{
         					console.log($("#select>tbody").find("tr").last());
         					$("#select>tbody").find("tr").last().remove();
-        					// $("#select>tbody").find("td").last().prev().remove();
-        					// $("#select>tbody").find("td").last().remove();
         			}
         			
 	    	});
@@ -281,19 +282,15 @@
   	     	$(".submit").on('click',function(){
   	     		
   	     		var num = $("#select>tbody tr").find("td:nth-child(even)").length;
-  	     		// console.log(num);
   	     		// 짝수요소만 찾아서 ,로 이어서 문자열 만들기
   	     		var selectedName = $("#select>tbody tr").find("td:nth-child(even)").map(function() {
   	     		  return $(this).text();
   	     		}).get().join(",");
 
-  	     		// console.log(selectedName);
   	     		// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
   	     	 	 var reservationId = ${rInfo.reservationId };
   	     		
   	     	 	var roundId = $('input[name="roundId"]').val();
-  	     	 	 
-  	     	 	 // console.log(reservationId);
   	     	 	
       			$.ajax({
       				url : "/show/reservation/selectedSeats",
@@ -342,7 +339,6 @@
   	     	    console.log(${taken});
   	     		
   	     		taken.forEach(function (seatId) {
-  	     			// console.log(seatId)
   	     	        // 테이블 내에서 data-seat 속성을 가진 요소를 선택
   	     	        $("#seats").find("[data-seat='" + seatId + "']")
   	     	            .addClass("blackout") // blackout 클래스 추가

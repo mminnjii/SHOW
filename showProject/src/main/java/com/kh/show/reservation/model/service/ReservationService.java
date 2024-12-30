@@ -15,9 +15,6 @@ public interface ReservationService {
 	// 등급별 좌석 수 조회
 	ArrayList<SeatsOfRow> selectSeatsNum(int roundId);
 	
-	// 공연장(hall)테이블 총좌석 수 변환(-).
-	int updateTotalNum(int num);
-	
 	// 좌석 상태 변환
 	int updateSeatStatus(Map<String, Object> seats);
 	

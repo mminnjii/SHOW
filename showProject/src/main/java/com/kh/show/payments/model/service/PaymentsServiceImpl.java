@@ -23,4 +23,14 @@ public class PaymentsServiceImpl implements PaymentsService {
 		return paymentsDao.createPay(sqlSession,info);
 	}
 
+	@Override
+	public int createTicket(Map<String, Object> ticket) {
+		return paymentsDao.createTicket(sqlSession,ticket);
+	}
+
+	@Override
+	public int selectId(Map<String, Object> ticket) {
+		return paymentsDao.selectId(sqlSession,ticket);
+	}
+
 }

@@ -31,11 +31,6 @@ public class ReservationImpl implements ReservationService {
 	}
 
 	@Override
-	public int updateTotalNum(int num) {
-		return reservationDao.updateTotalNum(sqlSession,num);
-	}
-
-	@Override
 	public int updateSeatStatus(Map<String, Object> seats) {
 		return reservationDao.updateSeatStatus(sqlSession,seats);
 	}

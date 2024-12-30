@@ -1,6 +1,8 @@
 package com.kh.show.payments.controller;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -35,20 +37,12 @@ public class PaymentsController {
 									 @RequestParam("reservationId") String reservationId, Model model) {
 		
 		
-		// System.out.println(reservationId);
-		
 		// 결제 전 예약정보 확인
 		Reservation rInfo = reservationService.confirmReservation(reservationId);
-		// System.out.println(rInfo);
 		model.addAttribute("rInfo",rInfo);
-		
-		System.out.println(rInfo.getReservationId());
 		
 		int num = (int) session.getAttribute("num");
 		String selectedName = (String) session.getAttribute("selectedName");
-		
-		// System.out.println(num);
-		// System.out.println(selectedName);
 		
 		String[] seatArray = selectedName.split(","); 
 		
@@ -70,7 +64,8 @@ public class PaymentsController {
 			 }
 		 }
 		 
-		 model.addAttribute("totalPrice",totalPrice);
+		 NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+		 model.addAttribute("totalPrice",formatter.format(totalPrice));
 		 model.addAttribute("gradeName",gradeName);
 		
 		return "payments/payment";
@@ -81,16 +76,10 @@ public class PaymentsController {
 	
 	@PostMapping("/bank")
 	public String paymentComplete(HttpSession session,String imp_uid, String merchant_uid, 
-								  String reservationId, String amount, int method) {
+								  String reservationId, String amount, int method, int roundId) {
 		
 		String[] impParts = imp_uid.split("_");
-		// String[] reserParts = merchant_uid.split("_");
-		
 		String payId = impParts[1];
-		
-		System.out.println(payId);
-		System.out.println(amount);
-		System.out.println(method);
 		
 		String selectedName = (String) session.getAttribute("selectedName");
 		String[] seatArray = selectedName.split(","); 
@@ -105,22 +94,38 @@ public class PaymentsController {
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(info);
-//		PAYMENT_ID
-//		RESERVATION_ID
-//		PRICE
-//		PAYMENT_METHOD
-//		PAYMENT_DATE
-//		STATUS
-//		METHOD
 		
-		System.out.println(result);
+		// 좌석별 티켓 생성
+//		TICKET_ID
+//		RESERVATION_ID
+//		SEAT_ID
+//		PAYMENT_ID
+//		STATUS
+		int result2 = 0;
+		Map<String, Object> ticket = new HashMap<>();
+		ticket.put("reservationId", reservationId);
+		ticket.put("payId", payId);
+		ticket.put("roundId", roundId); // roundId 여야한다.
+		
+		System.out.println(roundId);
 		
 		 for(String name : seatArray) {
-			 // 좌석 별 티켓 생성
-			 System.out.println(name);
+			 // 좌석 별 티켓 생성 
+			ticket.put("name", name);
+			int seatsId = paymentsService.selectId(ticket);
+			ticket.put("seatsId", seatsId);
+		    int result3 = paymentsService.createTicket(ticket);
+	        if (result3 == 0) {
+	        	System.out.println ("좌석 상태 변환에 실패하였습니다. : " + name);
+	        }
+	        result2 += result3;
+			 
 		 }
 		
-		 
+		 if(seatArray.length==result2) {
+			 session.setAttribute("selectedName", selectedName);
+			 return null;
+		 }
 		 
 		
 //		 String getToken = importService.getToken();

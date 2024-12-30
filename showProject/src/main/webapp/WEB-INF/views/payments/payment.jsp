@@ -22,13 +22,16 @@
 			<br>
 			<c:if test="${not empty rInfo }">
 			<input type="hidden" name="reservationId" value="${rInfo.reservationId} "></input>
+			<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
 	     		<table align="center">
 	     			<thead>
 	     				<tr>
 	     					<th id="name" colspan="3">${rInfo.showName}</th>
 	     				</tr>
 	     				<tr align="center">
-	     					<td colspan="3">(${rInfo.showRound} 회차)</td>
+	     					<td colspan="1">(</td>
+	     					<td colspan="1">${rInfo.showRound}</td>
+	     					<td colspan="1">) 회차</td>
 	     				</tr>
 	     			</thead>
 	     			<tbody>
@@ -87,8 +90,10 @@
     <script>
     	
    		 var reservation_uid = $('input[name="reservationId"]').val();
+   		 var roundId = $('input[name="roundId"]').val();
    		 var name = $("#name").text();
    		 var amount = $("#amount").text();
+   		
    		 
    		 console.log(reservation_uid);
    		 console.log(name);
@@ -169,7 +174,8 @@
 	                         merchant_uid: rsp.merchant_uid,
 	                         reservationId : reservation_uid,
 	                         amount : amount,
-	                         method : 2
+	                         method : 2,
+	                         roundId : roundId
 	                     },
 	                     success: function () {
 	                         alert("결제 정보 저장 성공"); // 마이페이지로 이동?

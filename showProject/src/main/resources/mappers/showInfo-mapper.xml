@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="HALL_NO" property="hallNo" />
 		<result column="HALL_NAME" property="hallName" />
 		<result column="GENRE_NO" property="genreNo" />
+		<result column="GENRE_Name" property="genreName" />
 		<result column="REGION_NO" property="regionNo" />
 		<result column="REGION_NAME" property="regionName" />
 		<result column="SHOW_START" property="showStart" />
@@ -478,10 +479,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateShowRound">
 		UPDATE SHOWROUND
 		SET STATUS = 'N'
-		WHERE HALL_NO IN (
-		            SELECT HALL_NO
-		            FROM HALL
-		            WHERE TOTAL_SEAT = 0)
+		WHERE ROUND_ID IN (
+		                SELECT ROUND_ID
+		                FROM SEATS
+		                JOIN HALL USING(HALL_NO)
+		                WHERE STATUS = 'N'
+		                GROUP BY ROUND_ID,TOTAL_SEAT
+		                HAVING COUNT(*) = TOTAL_SEAT)
 	</update>
 	
 	

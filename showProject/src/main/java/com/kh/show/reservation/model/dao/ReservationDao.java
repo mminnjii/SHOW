@@ -21,10 +21,6 @@ public class ReservationDao {
 	public ArrayList<String> selectTakenSeats(SqlSession session, int roundId) {
 		return (ArrayList)session.selectList("reservationMapper.selectTakenSeats",roundId);
 	}
-	
-	public int updateTotalNum(SqlSession session, int num) {
-		return session.update("reservationMapper.updateTotalNum",num);
-	}
 
 	public int updateSeatStatus(SqlSession session, Map<String, Object> seats) {
 		return session.update("reservationMapper.updateSeatStatus",seats);

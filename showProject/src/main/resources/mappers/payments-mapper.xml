@@ -12,11 +12,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
-	<!-- 선택한 좌석 번호 가져오기 -->
-	<select id="">
-		SELECT SEAT_ID
-		FROM SEATS
-		WHERE ROW_NAME || COL_NO = 'A1'
+	<!-- 티켓 테이블 생성을 위한 좌석번호 -->
+	<select id="selectId" resultType="_int" parameterType="HashMap">
+		 SELECT SEAT_ID
+		 FROM SEATS
+		 WHERE ROW_NAME || COL_NO = #{name}
+		 AND ROUND_ID = #{roundId}
 	</select>
+	
+	<!-- 티켓 테이블 생성 -->
+	<insert id="createTicket" parameterType="HashMap">
+		 INSERT INTO TICKET
+			VALUES(TICKET_SEQ.NEXTVAL, #{reservationId}, #{seatsId}, #{payId}, DEFAULT)   
+	</insert>
 	
 </mapper>

@@ -29,46 +29,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="GRADE_NAME" property="gradeName"/>
 	</resultMap>
 	
-	<!-- 예약 번호 가져오기 -->
-	<select id="reSearch" parameterType="_int" resultMap="reservationResult">
-		SELECT RESERVATION_ID, SHOW_NAME 
-		FROM RESERVATION
-		JOIN SHOW USING(SHOW_NO)
-		WHERE USER_NO = #{userNo}
-	</select>
-	
-	<select id="selectTakenSeats" resultType="String">
-		SELECT ROW_NAME || COL_NO  AS TAKEN
-		FROM SEATS
-		WHERE STATUS = 'N'
-		AND ROUND_ID = #{roundId}
-	</select>
-	
-	
-	<!-- 등급별좌석 수 조회 -->
-	<select id="selectSeatsNum" resultMap="SeatsOfRowResultSet">
-		SELECT  COUNT(*) AS COUNT,
-                GRADE_NAME 
-		FROM SEATSOFROW
-		JOIN SEATS USING(ROW_NAME)
-		WHERE STATUS = 'Y'
-		AND ROUND_ID= #{roundId}
-		GROUP BY GRADE_NAME
-	</select>
-	
-	<!-- 공연장(hall)테이블 총좌석 수 변환(-). -->
-	<update id="updateTotalNum" parameterType="_int">
-		  UPDATE HALL
-    	  SET TOTAL_SEAT = <![CDATA[TOTAL_SEAT - #{num}]]>
-	</update>
-	
-	<!-- 좌석 상태 변환 -->
-	<update id="updateSeatStatus" parameterType="HashMap">
-		UPDATE SEATS
-		SET STATUS = 'N'
-		WHERE ROW_NAME || COL_NO = #{name}
-		AND ROUND_ID = #{roundId}
-	</update>
 	
 	<!-- 예약테이블 생성 -->
 	<insert id="createReservation" parameterType="HashMap">
@@ -94,9 +54,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROWNUM = 1
 	</select>
 	
-		<!-- 결제 전 예약정보 확인 -->
+	<!-- status "N"인 좌석 조회 -->
+	<select id="selectTakenSeats" resultType="String">
+		SELECT ROW_NAME || COL_NO  AS TAKEN
+		FROM SEATS
+		WHERE STATUS = 'N'
+		AND ROUND_ID = #{roundId}
+	</select>
+	
+	
+	<!-- 등급별좌석 수 조회 -->
+	<select id="selectSeatsNum" resultMap="SeatsOfRowResultSet">
+		SELECT  COUNT(*) AS COUNT,
+                GRADE_NAME 
+		FROM SEATSOFROW
+		JOIN SEATS USING(ROW_NAME)
+		WHERE STATUS = 'Y'
+		AND ROUND_ID= #{roundId}
+		GROUP BY GRADE_NAME
+	</select>
+	
+	
+	<!-- 좌석 상태 변환 -->
+	<update id="updateSeatStatus" parameterType="HashMap">
+		UPDATE SEATS
+		SET STATUS = 'N'
+		WHERE ROW_NAME || COL_NO = #{name}
+		AND ROUND_ID = #{roundId}
+	</update>
+	
+	
+
+	
+	<!-- 예약 번호 가져오기 -->
+	<select id="reSearch" parameterType="_int" resultMap="reservationResult">
+		SELECT RESERVATION_ID, SHOW_NAME 
+		FROM RESERVATION
+		JOIN SHOW USING(SHOW_NO)
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	
+	<!-- 결제 전 예약정보 확인 -->
 	<select id="confirmReservation" resultMap="reservationResult">
 		SELECT RESERVATION_ID,
+			   ROUND_ID,
                SHOW_NAME,
                SHOW_ROUND,
                SHOW_TIME,
