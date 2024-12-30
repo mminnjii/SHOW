@@ -452,8 +452,6 @@ public class MemberController {
 		return "member/subscribe";
 	}
 	
-
-	
 	//qna 리스트 메소드
 	@GetMapping("/qna")
 	public String qna(@RequestParam(value="currentPage",defaultValue="1")
