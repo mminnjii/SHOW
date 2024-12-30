@@ -96,7 +96,7 @@
             <tbody>
             	<c:choose>
             		<c:when test="${empty meList}">
-            			<tr >
+            			<tr>
 							<td colspan="5" style="text-align: center;">소모임이 없습니다.</td>	
                   		</tr>
             		</c:when>
@@ -105,7 +105,7 @@
 		                   <tr>
 		                      <td>${m.meetingNo}</td>
 		                      <td>${m.meetingTitle}</td>
-		                      <td>모임장 아이디</td>
+		                      <td>${m.memList[0].userId}</td> <!-- 리스트이기 떄문에 객체에 접근해야 한다. -->
 		                      <td>현재참여인원/${m.meetingCount}</td>
 		                      <td>${m.startDate} ~ ${m.endDate}</td>
 		                  </tr>
@@ -178,8 +178,18 @@
         
         
         <script>
+        	// 선택한 셀렉트 박스의 값 유지
             $("option[value='${map.condition}']").attr("selected", true);
             
+        	// 행 선택시 detailView로 이동 
+        	$("#meetingList tbody").on("click", "tr", function(){
+        		
+        		var mno = $(this).children().first().text();
+        		
+        		location.href = 'meetingDetail?mno=' + mno;
+    
+        	});
+        	
         </script>
         
         

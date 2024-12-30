@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.meeting.model.dao.MeetingDao;
 import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.showInfo.model.vo.Genre;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Service
 public class MeetingServiceImpl implements MeetingService {
@@ -29,6 +31,32 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public int listCount() {
 		return meetingdao.listCount(sqlSession);
+	}
+
+	// 카테고리 목록
+	@Override
+	public ArrayList<Genre> selectGenre() {
+		return meetingdao.selectGenre(sqlSession);
+	}
+
+	// 공연 목록 리스트 
+	@Override
+	public ArrayList<Show> selMeetingShow(int genreNo) {
+		System.out.println("서비스"+genreNo);
+		return meetingdao.selMeetingShow(sqlSession, genreNo);
+	}
+
+	// 소모임 생성 메소드 
+	@Override
+	public int meetingInsert(Meeting m) {
+		return meetingdao.meetingInsert(sqlSession, m);
+	}
+
+	// 소모임 상세 내용 
+	@Override
+	public Meeting meetingDetail(int mno) {
+		System.out.println("service : "+ mno);
+		return meetingdao.meetingDetail(sqlSession, mno);
 	}
 
 }
