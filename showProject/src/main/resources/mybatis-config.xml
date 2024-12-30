@@ -6,9 +6,6 @@
  	<settings>
  		<setting name="jdbcTypeForNull" value="NULL"/>
  	</settings>
- 	
- 	
- 	
  	<typeAliases>
  		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
@@ -26,8 +23,4 @@
 		<typeAlias type="com.kh.show.showInfo.model.vo.Review" alias="Review"/> 		
 		<typeAlias type="com.kh.show.showInfo.model.vo.ShowRound" alias="ShowRound"/> 		
  	</typeAliases>
-
- 	
- 
- 	
 </configuration>
