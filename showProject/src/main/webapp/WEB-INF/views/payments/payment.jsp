@@ -19,17 +19,52 @@
 </head>
 <body>
 		<div align="center">
+			<br>
 			<c:if test="${not empty rInfo }">
-	     		<h4>${rInfo.showName}</h4><br>
-	     			(${rInfo.showRound} 회차)<br>
-	     			공연일자 : ${rInfo.showDate} <br>
-	     			공연시간 : ${rInfo.showTime} <br>
-	     			공연장소 : ${rInfo.hallName} <br>
-	     			
-	     			좌석 : ${selectedName} <br>
-	     			좌석이름 : ${gradeName} <br>
-	     			총 좌석 수 : ${num} 개 <br>
-	     			Total ${totalPrice}원 
+			<input type="hidden" name="reservationId" value="${rInfo.reservationId} "></input>
+	     		<table align="center">
+	     			<thead>
+	     				<tr>
+	     					<th id="name" colspan="3">${rInfo.showName}</th>
+	     				</tr>
+	     				<tr align="center">
+	     					<td colspan="3">(${rInfo.showRound} 회차)</td>
+	     				</tr>
+	     			</thead>
+	     			<tbody>
+	     				<tr>
+	     					<td>공연일자 :</td>
+	     					<td colspan="2">${rInfo.showDate}</td>
+	     				</tr>
+     					<tr>
+     						<td>공연시간 :</td>
+	     					<td colspan="2">${rInfo.showTime}</td>
+	     				</tr>
+     					<tr>
+     						<td>공연장소 :</td>
+	     					<td colspan="2">${rInfo.hallName}</td>
+	     				</tr>
+	     				
+	     				<tr>
+	     					<td>좌석 :</td>
+	     					<td colspan="2">${selectedName}</td>
+	     				</tr>
+	     				<tr>
+	     					<td>좌석이름 :</td>
+	     					<td colspan="2">${gradeName}</td>
+	     				</tr>
+	     				<tr>
+	     					<td>총 좌석 수 :</td>
+	     					<td>${num}</td>
+	     					<td>개</td>
+	     				</tr>
+     					<tr>
+     						<td>Total : </td>
+	     					<td id="amount"> ${totalPrice}</td>
+	     					<td>원</td>
+	     				</tr>
+	     			</tbody>
+	     		</table>
 	        </c:if>
 	        
 	        <br><br><br><br>
@@ -38,11 +73,10 @@
     		<button id="back">다시 선택하기</button>
         </div>
         
-<!-- 결제번호
+<!-- 
+결제번호
 예약번호
 결제금액
-
-
 결제방식(카드1/무통장2)
 결제시각
 결제상태
@@ -51,24 +85,56 @@
 	
 
     <script>
-    
-        // 아임포트 초기화
+    	
+   		 var reservation_uid = $('input[name="reservationId"]').val();
+   		 var name = $("#name").text();
+   		 var amount = $("#amount").text();
+   		 
+   		 console.log(reservation_uid);
+   		 console.log(name);
+   		 console.log(amount);
+       
+   		 // 아임포트 초기화
          IMP.init("imp17528612"); // 테스트용 고객사 식별 코드
 
         // 결제 요청
         $("#card").on("click", function () {
-            IMP.request_pay({
+            
+        	 
+        	IMP.request_pay({
                 pg: "html5_inicis", // PG사
                 pay_method: "card", // 결제 수단
-                merchant_uid: "order_" + new Date().getTime(), // 고유 주문번호
-                name: "테스트 상품", // 상품명
-                amount: 10000, // 결제 금액
+                merchant_uid: "order_" + reservation_uid, // 예약번호
+                name: name, // 상품명
+                amount: "100", // 결제 금액
                 buyer_email: "test@example.com", // 구매자 이메일
                 buyer_name: "홍길동", // 구매자 이름
                 buyer_tel: "01012345678", // 구매자 전화번호
             }, function (rsp) {
                 if (rsp.success) {
-                    alert("결제가 완료되었습니다. 승인번호: " + rsp.imp_uid);
+                    // alert("결제가 완료되었습니다. 결제번호: " + rsp.imp_uid);
+                    
+               	 $.ajax({
+                     url: "/show/payments/card",
+                     type: "POST",
+                     data: {
+                         imp_uid: rsp.imp_uid,
+                         merchant_uid: rsp.merchant_uid,
+                         reservationId : reservation_uid,
+                         amount : amount,
+                         method : 1
+                         
+                     },
+                     success: function () {
+                         alert("결제 정보 저장 성공");
+                     },
+                     error: function () {
+                         alert("결제 정보 저장 실패");
+                     }
+                 });
+                    
+                    
+                    
                 } else {
                     alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
                 }
@@ -81,9 +147,9 @@
 	        IMP.request_pay({
 	            pg: "html5_inicis",             // PG사 (예: 이니시스)
 	            pay_method: "vbank",            // 결제 수단 (vbank: 가상계좌)
-	            merchant_uid: "order_" + new Date().getTime(),   // 주문번호 (고유값)
-	            name: "테스트 상품",             // 상품명
-	            amount: 5000,                   // 결제 금액
+	            merchant_uid: "order_" + reservation_uid,   // 주문번호 (고유값)
+	            name: name,             // 상품명
+	            amount: amount,                   // 결제 금액
 	            buyer_email: "test@example.com", // 구매자 이메일
 	            buyer_name: "홍길동",             // 구매자 이름
 	            buyer_tel: "01012345678",        // 구매자 전화번호
@@ -96,15 +162,18 @@
                     console.log(rsp.merchant_uid);
 	            	
 	            	 $.ajax({
-	                     url: "/show/payments/paymentComplete",
+	                     url: "/show/payments/bank",
 	                     type: "POST",
 	                     data: {
-	                         imp_uid: rsp.imp_uid,
-	                         merchant_uid: rsp.merchant_uid
+	                    	 imp_uid: rsp.imp_uid,
+	                         merchant_uid: rsp.merchant_uid,
+	                         reservationId : reservation_uid,
+	                         amount : amount,
+	                         method : 2
 	                     },
 	                     success: function () {
-	                         alert("결제 정보 저장 성공");
-	                     },
+	                         alert("결제 정보 저장 성공"); // 마이페이지로 이동?
+	                     }, 
 	                     error: function () {
 	                         alert("결제 정보 저장 실패");
 	                     }

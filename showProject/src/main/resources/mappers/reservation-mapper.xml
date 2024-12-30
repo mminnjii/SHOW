@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT ROW_NAME || COL_NO  AS TAKEN
 		FROM SEATS
 		WHERE STATUS = 'N'
+		AND ROUND_ID = #{roundId}
 	</select>
 	
 	
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM SEATSOFROW
 		JOIN SEATS USING(ROW_NAME)
 		WHERE STATUS = 'Y'
+		AND ROUND_ID= #{roundId}
 		GROUP BY GRADE_NAME
 	</select>
 	
@@ -61,10 +63,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 좌석 상태 변환 -->
-	<update id="updateSeatStatus" parameterType="String">
+	<update id="updateSeatStatus" parameterType="HashMap">
 		UPDATE SEATS
 		SET STATUS = 'N'
 		WHERE ROW_NAME || COL_NO = #{name}
+		AND ROUND_ID = #{roundId}
 	</update>
 	
 	<!-- 예약테이블 생성 -->
@@ -77,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectReservation" resultMap="reservationResult">
 		SELECT A.*
 		FROM (SELECT RESERVATION_ID,
+					   ROUND_ID,
 		               SHOW_NAME,
 		               SHOW_ROUND,
 		               SHOW_TIME,

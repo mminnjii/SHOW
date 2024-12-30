@@ -93,6 +93,7 @@
                   <!-- 모달 바디 -->
                   <div class="modal-body">
                		<c:if test="${not empty rInfo }">
+               		<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
                		<h4>${rInfo.showName}</h4><br>
                			(${rInfo.showRound} 회차)<br>
                			공연일자 : ${rInfo.showDate} <br>
@@ -217,6 +218,8 @@
 		<p style="margin-top: 800px;"></p>
 		
     <script>
+    	
+    	
     
     	$('#back').on('click',function(){
     		history.back();
@@ -287,7 +290,10 @@
   	     		// console.log(selectedName);
   	     		// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
   	     	 	 var reservationId = ${rInfo.reservationId };
-  	     		console.log(reservationId);
+  	     		
+  	     	 	var roundId = $('input[name="roundId"]').val();
+  	     	 	 
+  	     	 	 // console.log(reservationId);
   	     	 	
       			$.ajax({
       				url : "/show/reservation/selectedSeats",
@@ -295,7 +301,8 @@
       				data : {
       					num : num,
       					selectedName : selectedName,
-      					reservationNo : reservationId
+      					reservationNo : reservationId,
+      					roundId : roundId
       				}, 
       				success : function(num){
       					if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){

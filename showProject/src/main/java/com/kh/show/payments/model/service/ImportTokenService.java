@@ -52,10 +52,11 @@ public class ImportTokenService {
 	 
 	 
 	 
-	   public String getPaymentDetails(String token, String merchant_uid) {
+	   public String getPaymentDetails(String token, String imp_uid, String merchant_uid) {
 	        try {
 	            HttpClient client = HttpClient.newHttpClient();
-	            String url = "https://api.iamport.kr/payments/find/" + URLEncoder.encode(merchant_uid, StandardCharsets.UTF_8);
+	            String url = "https://api.iamport.kr/payments/" + imp_uid
+	            		+ "" ;
 	            
 	            System.out.println("사용 중인 토큰: " + token);
 	            System.out.println(merchant_uid);
@@ -63,7 +64,7 @@ public class ImportTokenService {
 	            
 	            HttpRequest request = HttpRequest.newBuilder()
 	                    .uri(URI.create(url))
-	                    .header("Authorization", token) // 발급받은 토큰 추가
+	                    .header("Authorization",  "Bearer " + token) // 발급받은 토큰 추가
 	                    .GET()
 	                    .build();
 

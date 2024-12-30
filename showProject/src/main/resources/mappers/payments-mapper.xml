@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paymentsMapper">
+
+	
+	<!-- 결제 테이블 생성 -->
+	<insert id="createPay" parameterType="HashMap">
+		INSERT INTO PAYMENTS
+		VALUES(#{payId},#{reservationId},#{amount},#{method},SYSDATE,#{status},1)
+	</insert>
+	
+	
+	<!-- 선택한 좌석 번호 가져오기 -->
+	<select id="">
+		SELECT SEAT_ID
+		FROM SEATS
+		WHERE ROW_NAME || COL_NO = 'A1'
+	</select>
+	
+</mapper>

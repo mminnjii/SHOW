@@ -21,13 +21,13 @@ public class ReservationImpl implements ReservationService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public ArrayList<SeatsOfRow> selectSeatsNum() {
-		return reservationDao.selectSeatsNum(sqlSession);
+	public ArrayList<SeatsOfRow> selectSeatsNum(int roundId) {
+		return reservationDao.selectSeatsNum(sqlSession,roundId);
 	}
 	
 	@Override
-	public ArrayList<String> selectTakenSeats() {
-		return reservationDao.selectTakenSeats(sqlSession);
+	public ArrayList<String> selectTakenSeats(int roundId) {
+		return reservationDao.selectTakenSeats(sqlSession,roundId);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class ReservationImpl implements ReservationService {
 	}
 
 	@Override
-	public int updateSeatStatus(String name) {
-		return reservationDao.updateSeatStatus(sqlSession,name);
+	public int updateSeatStatus(Map<String, Object> seats) {
+		return reservationDao.updateSeatStatus(sqlSession,seats);
 	}
 
 	@Override

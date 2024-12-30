@@ -51,9 +51,7 @@ public class ReservationController {
 		
 		if(result>0) {
 			Reservation rInfo = reservationService.selectReservation();
-			System.out.println(rInfo.getReservationId());
 			model.addAttribute("rInfo",rInfo);
-			// System.out.println(rInfo);
 			
 		}else {
 			model.addAttribute("alert","예약이 생성되지 못했습니다. 다시 선택해주세요");
@@ -61,12 +59,12 @@ public class ReservationController {
 		
 		
 		// status "N"인 좌석 조회
-		ArrayList<String> taken= reservationService.selectTakenSeats();  
+		ArrayList<String> taken= reservationService.selectTakenSeats(roundId);  
 		Gson gson = new Gson();
 		model.addAttribute("taken",gson.toJson(taken));
 		
 		// 등급별 좌석 수 조회
-		ArrayList<SeatsOfRow> num  = reservationService.selectSeatsNum();  
+		ArrayList<SeatsOfRow> num  = reservationService.selectSeatsNum(roundId);  
 		model.addAttribute("num", num);
 		return "reservation/seats";
 		
@@ -75,11 +73,13 @@ public class ReservationController {
 	
 	@ResponseBody
 	@PostMapping("/selectedSeats")
-	public int selectedSeats(HttpSession session, int num ,String selectedName) {
+	public int selectedSeats(HttpSession session, int num ,String selectedName, int roundId) {
 		 // System.out.println(num);
 		 // System.out.println(selectedName);
 		 // session.setAttribute("num", num);
 		//  session.setAttribute("selectedName", selectedName);
+		
+
 		
 		 // 공연장(hall)테이블 총좌석 수 변환(-).
 		 int result1 = reservationService.updateTotalNum(num); 
@@ -90,7 +90,10 @@ public class ReservationController {
 		
 		 for(String name : seatArray) {
 			 
-		    int result = reservationService.updateSeatStatus(name);
+			Map<String, Object> seats = new HashMap<>();
+			seats.put("name", name);
+			seats.put("roundId", roundId);
+		    int result = reservationService.updateSeatStatus(seats);
 	        if (result == 0) {
 	        	System.out.println ("좌석 상태 변환에 실패하였습니다. : " + name);
 	        }

@@ -14,20 +14,20 @@ import com.kh.show.reservation.model.vo.SeatsOfRow;
 public class ReservationDao {
 	
 	
-	public ArrayList<SeatsOfRow> selectSeatsNum(SqlSession session) {
-		return (ArrayList)session.selectList("reservationMapper.selectSeatsNum");
+	public ArrayList<SeatsOfRow> selectSeatsNum(SqlSession session, int roundId) {
+		return (ArrayList)session.selectList("reservationMapper.selectSeatsNum",roundId);
 	}
 
-	public ArrayList<String> selectTakenSeats(SqlSession session) {
-		return (ArrayList)session.selectList("reservationMapper.selectTakenSeats");
+	public ArrayList<String> selectTakenSeats(SqlSession session, int roundId) {
+		return (ArrayList)session.selectList("reservationMapper.selectTakenSeats",roundId);
 	}
 	
 	public int updateTotalNum(SqlSession session, int num) {
 		return session.update("reservationMapper.updateTotalNum",num);
 	}
 
-	public int updateSeatStatus(SqlSession session, String name) {
-		return session.update("reservationMapper.updateSeatStatus",name);
+	public int updateSeatStatus(SqlSession session, Map<String, Object> seats) {
+		return session.update("reservationMapper.updateSeatStatus",seats);
 	}
 
 	public int createReservation(SqlSession session, Map<String, Object> r) {
