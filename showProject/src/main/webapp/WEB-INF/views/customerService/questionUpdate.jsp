@@ -55,10 +55,10 @@
 	<br><br>
     <div class="a">
     	&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
-        <h2>1:1 문의하기</h2>
+        <h2>문의 수정</h2>
 	
 		<!-- 회원인 경우와 아닌 경우로 조건처리 필요 -->        
-        <form class="outer" method="POST" action="${contextPath}/queInsert" enctype="multipart/form-data" >  <!-- 파일 업로드 -->
+        <form class="outer" method="POST" action="${contextPath}/qUpdate" enctype="multipart/form-data" >  <!-- 파일 업로드 -->
         <!-- 회원인 경우에는 회원의 정보를 보여줘야 한다. 해당 조건 처리 필요. -->
         <c:choose>
         	<c:when test="${empty loginUser}">
@@ -96,7 +96,7 @@
         	</c:otherwise>
         </c:choose>
 
-			            
+
             <div class="input">
                 <p>문의 유형 <span class="sColor">*</span> <span style="font-size: 12px;" disabled> (티켓 취소/환불/변경은 전화 1234-1234로 요청해 주세요)</span></p>
                 <select id="qcategoryNo" name="qcategoryNo"  class="form-control" required>
@@ -127,14 +127,20 @@
 
             <div class="input">
                 <p>문의 내용 <span class="sColor">*</span></p>
-                <input type="text" id="quTitle" name="quTitle" class="form-control" placeholder="제목을 입력해 주세요" required><br>
+                <input type="text" id="quTitle" name="quTitle" value="${q.quTitle}" class="form-control" placeholder="제목을 입력해 주세요" required><br>
                 
-                <textarea type="text" name="quContent" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요." required></textarea>
+                <textarea type="text" name="quContent" class="form-control" style="resize: none; height: 150px;" placeholder="문의 내용을 자세하게 입력해 주세요." required>${q.quContent}</textarea>
             </div>
             
             <div class="input">
                 <p>첨부파일</p>
-                <input type="file" id="upfile" class="form-control-file border" name="upfile">
+                <input type="file" id="upfile" class="form-control-file border" name="reUpfile">
+				<!--기존 파일이 있을 시-->
+				<c:if test="${not empty q.originName}">
+					 현재 파일 : <a href="${contextPath}${q.changeName}" download="${q.originName}">${q.originName}</a>
+					 <input type="hidden" name="changeName" value="${q.changeName}">
+					 <input type="hidden" name="originName" value="${q.originName}">
+				</c:if>
                 <ul>
                     <li>사진 및 파일은 1개 등록 가능합니다.</li>
                     <li>10MB 이내의 모든 이미지 및 PDF, TXT, MS office 문서 및 zip파일을 업로드해주세요.</li>
@@ -166,26 +172,13 @@
                 </div>
             </div>
             <br>
-            <button class="form-control" onclick="return checkPhone();">문의하기</button>
+			<input type="hidden" name="questionNo" value="${q.questionNo}">
+            <button type="submit" class="form-control">수정 완료</button>
 
         </form>
     </div>
         
    	<script>
-   		
-   		// 핸드폰 번호 체크 정규식 
-   		function checkPhone(){
-   			var regExp = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
-			var phone = $("#phone").val();
-   			
-   			if(!regExp.test(phone)){
-   				alert("휴대폰 번호를 다시 입력해 주세요.");
-   				$("#phone").focus();	
-   				
-   				return false;
-   			}
-   			return true;
-   		}
    	
    		// 전체동의 체크박스 
 		function checkAll(){

@@ -198,10 +198,10 @@ a {
 				<p>자세한 상담이 가능해요</p>
 			</a>
 
-			<div class="oneQ">
+			<a class="oneQ" href="${contextPath}/qna?userNo=${loginUser.userNo}">
 				<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
 				<p>문의한 내용을 확인해보세요</p>
-			</div>
+			</a>
 		</div>
 		<br>
 		<br>

@@ -468,12 +468,13 @@ public class MemberController {
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
 		ArrayList<Question> list = memberService.qnaList(userNo,pi);
-		
+
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
 		
 		return "member/myQna";
 	}
+	
 	
 	
 	

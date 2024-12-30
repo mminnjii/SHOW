@@ -27,6 +27,15 @@ public interface CustomerService {
 	ArrayList<Reservation> reSearch(int userNo);
 
 	int faqCount(String faqNo);
+
+	//문의 상세 페이지
+	Question selectQna(int qno);
+
+	//문의 내용 삭제
+	int qnaDelete(int questionNo);
+
+	//문의 업데이트
+	int updateQna(Question q);
 	
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.show.customer.model.vo.Question" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,26 @@
 		background-color: rgb(246, 246, 246);
 	}
 
+	/*qna body*/
+	#pay-body{
+		width: 80%;
+		height: 80%;
+		margin: auto;
+	}
+
+	#payList{
+		text-align: center;
+	}
+	#payList>tbody>tr:hover{
+		cursor: pointer;
+		background-color: white;
+	}
+
+	#pagingArea{
+		width: fit-content;
+		margin: auto;
+	}
+
 	
 
 	
@@ -55,6 +76,7 @@
 	<div class="content">
 		<br><br>
 		<div class="inner">
+			<input type="hidden" name="userNo" value="${loginUser.userNo}">
 			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
@@ -65,13 +87,93 @@
 					<br>
 					<h5>내 소모임</h5>
 					<br>
+					<div id="pay-body">
+						<br>
+						<table id="payList" class="table table-hover" align="center">
+							<thead>
+								<tr>
+									<th>소모임 번호</th>
+									<th>소모임 이름</th>
+									<th>호스트 ID</th>
+									<th>인원 수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty list }">
+										<tr>
+											<td colspan="4">가입된 소모임이 없습니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="g" items="${list }">
+											<tr>
+												<td>1</td>
+												<td>반 고흐전</td>
+												<td>admin</td>
+												<td>10명</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<br>
+						<script>
+            	
+							$("#qnaList>tbody>tr").click(function(){
+								var bno = $(this).children().first().text();
+								
+								//location.href = "detail?bno="+bno;
+							});
+							
+						</script>
+						<div id="pagingArea" align="center">
+							<ul class="pagination">
+								<c:if test="${pi.currentPage != 1 }">
+									<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
+								</c:if>
+								
+								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
+									<c:url var="group" value="group">
+										<c:param name="userNo" value="${loginUser.userNo }"/>
+										<c:param name="currentPage" value="${i }"/>
+									</c:url>
+									<li class="page-item">
+										<a class="page-link" href="${group }">${i}</a>
+									</li>
+								</c:forEach>
+								
+								<c:if test="${pi.currentPage != pi.maxPage }">
+									<c:choose>
+										<c:when test="${empty list }">
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</ul>
+						</div>
+						<br clear="both"><br>
+					</div>
 				</div>
             </div>
 		</div>
 	</div>
 
 	<script>
-		
+		window.addEventListener('beforeunload', function () {
+       	 localStorage.setItem('scrollPosition', window.scrollY);
+    	});
+
+    	// 스크롤 위치 복원
+    	window.addEventListener('load', function () {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        	if (scrollPosition) {
+           	 window.scrollTo(0, parseInt(scrollPosition, 10));
+       	 }
+    	});
 	</script>
 	
 
