@@ -122,8 +122,9 @@
         <label for="endDate">모집 마감일</label>
         <input type="date" id="endDate" name="endDate" required>  <!-- 오늘날짜 이전은 선택 불가능하게 조건처리 -->
         
-        <label for="information">소모임 안내사항</label>
-        <textarea id="information" name="information" rows="5" placeholder="소모임 안내사항을 작성하세요" style="resize: none;"></textarea>
+        <!-- wrap="hard" 데이터가 서버로 제출될 때, 입력된 텍스트를 줄바꿈한다. hard 속성값을 사용할 경우에는 cols 속성이 명시되어 있어야 한다. -->
+        <label for="infomation">소모임 안내사항</label>
+        <textarea id="infomation" wrap="hard" name="infomation" rows="10" placeholder="소모임 안내사항을 작성하세요" style="resize: none;"></textarea>
         
         <button type="submit">소모임 생성</button>
     </form>

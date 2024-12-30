@@ -64,12 +64,12 @@
         <h2>소모임</h2>
         
         <br>
-        <form id="searchForm" action="${contextPath}/" method="get" align="center">
+        <form id="searchForm" action="${contextPath}/meeting/search" method="get">
             <div class="select">
                 <select class="custom-select" name="condition">
                     <option value="total">전체</option>
-                    <option value="writer">작성자</option>
-                    <option value="title">제목</option>
+                    <option value="title">모임명</option>
+                    <option value="writer">모임장</option>
                 </select>
             </div>
     
@@ -97,7 +97,7 @@
             	<c:choose>
             		<c:when test="${empty meList}">
             			<tr>
-							<td colspan="5" style="text-align: center;">소모임이 없습니다.</td>	
+							<td colspan="5" style="text-align: center;" id="noting" >소모임이 없습니다.</td>	
                   		</tr>
             		</c:when>
             		<c:otherwise>
@@ -148,7 +148,7 @@
 					</c:when>
 					
 					<c:otherwise> <%--검색이라면 --%>
-						<c:url var="searchUrl" value="${contextPath}/meeting">
+						<c:url var="searchUrl" value="/meeting/search">
 							<c:param name="currentPage" value="${i}"/>
 							<c:param name="condition" value="${map.condition}"/>
 							<c:param name="keyword" value="${map.keyword}"/>
@@ -187,8 +187,13 @@
         		var mno = $(this).children().first().text();
         		
         		location.href = 'meetingDetail?mno=' + mno;
-    
+    			
+        		
         	});
+        	
+        	// 소모임이 없는 경우 클릭이벤트 제거
+        	
+        	
         	
         </script>
         

@@ -116,8 +116,10 @@ public class NotiveController {
 			// 공지사항 상세정보 
 			noticeDetail = noticeService.noticeDetail(nno);
 			
-			System.out.println("detail : "+ noticeDetail);
-			
+			String noticeContent = noticeDetail.getNoticeContent();
+			noticeContent = noticeContent.replace("\n", "<br>");
+			noticeDetail.setNoticeContent(noticeContent);
+					
 		} 
 		
 		return noticeDetail; 
@@ -140,6 +142,13 @@ public class NotiveController {
 		
 		// 리스트 조회하기 (defalt 일반 공지)
 		ArrayList<OpenNotice> noticeList = noticeService.selectOpenList(pi);
+		
+		// 문자열 \n 줄바꿈 html 줄바꿈 태그로 변경
+		for(OpenNotice on : noticeList) {
+			String openExplain = on.getOpenExplain();
+			openExplain = openExplain.replace("\n", "<br>");
+			on.setOpenExplain(openExplain);
+		}
 		
 		return noticeList;
 	}

@@ -45,7 +45,15 @@ public class CustomerController {
 		// faq TOP 5 LIST
 		ArrayList<Faq> faqList = customerService.selectFaqList();
 		
-					// 전달할 값 			/	값을 보낼 view 
+		for(Faq f:faqList) {
+			String faqContent = f.getFaqContent();
+			// content 값을 가져와 \n 줄바꿈을 html에서 처리 가능하도록 <br> 태그로 바꾸어 처리해준다.
+			faqContent = faqContent.replace("\n", "<br>");
+			
+			f.setFaqContent(faqContent);
+		}
+
+		// 전달할 값 			/	값을 보낼 view 
 		mv.addObject("faqList", faqList).setViewName("customerService/customerService");
 		
 		return mv;
@@ -56,6 +64,15 @@ public class CustomerController {
 	public String faqList(Model m){
 
 		ArrayList<Faq> faqList = customerService.selectFaqList();
+
+		for(Faq f:faqList) {
+			String faqContent = f.getFaqContent();
+			// null 값인 경우에는 빈 값에 접근이 불가능하므로 조건처리 해주어야 한다. 
+			if(faqContent != null) {
+				faqContent = faqContent.replace("\n", "<br>");
+			}
+			f.setFaqContent(faqContent);
+		}
 
 		m.addAttribute("faqList", faqList);
 		
@@ -77,6 +94,14 @@ public class CustomerController {
 			faqList = customerService.faqFilterList(qcategoryNo);
 		}
 		
+		for(Faq f:faqList) {
+			String faqContent = f.getFaqContent();
+			if(faqContent != null) {
+				faqContent = faqContent.replace("\n", "<br>");
+			}
+			f.setFaqContent(faqContent);
+		}
+	
 		return faqList;
 	}
 	
@@ -87,6 +112,14 @@ public class CustomerController {
 	public ArrayList<Faq> faqSearchList(String keyword){
 		
 		ArrayList<Faq> searchList = customerService.faqSearchList(keyword);
+		
+		for(Faq s: searchList) {
+			String faqContent = s.getFaqContent();
+			if(faqContent != null) {
+				faqContent = faqContent.replace("\n", "<br>");
+			}
+			s.setFaqContent(faqContent);
+		}
 		
 		return searchList;
 	}
@@ -179,8 +212,6 @@ public class CustomerController {
 	@ResponseBody
 	@PostMapping(value="/reSearch", produces = "application/json; charset=UTF-8")
 	public ArrayList<Reservation> reSearch(int userNo){
-		
-		System.out.println("회원 번호 : "+userNo);
 		
 		ArrayList<Reservation> reList = customerService.reSearch(userNo);
 		
