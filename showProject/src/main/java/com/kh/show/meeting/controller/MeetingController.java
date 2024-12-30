@@ -1,6 +1,7 @@
 package com.kh.show.meeting.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,7 @@ import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.meeting.model.service.MeetingService;
 import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.showInfo.model.vo.Genre;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -39,19 +41,15 @@ public class MeetingController {
 		// 페이징 처리 
 		int listCount = meetingService.listCount();
 		int PageLimit = 10;
-		int boardLimit = 5;
+		int boardLimit = 10;
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, PageLimit, boardLimit);
 		
 		// 소모임 리스트 
 		ArrayList<Meeting> meList = meetingService.meetingList(pi);
-		
+
 		m.addAttribute("meList", meList);
 		m.addAttribute("pi",pi);
-		
-		for(Meeting me : meList) {
-			System.out.println(me);
-		}
 		
 		return "meeting/meeting";
 	}
@@ -94,16 +92,93 @@ public class MeetingController {
 	@GetMapping("meetingDetail")
 	public String meetingDetail(String mno, Model m) {
 		
-		System.out.println(mno);
+		// 상세화면 
 		Meeting meDetail = meetingService.meetingDetail(Integer.parseInt(mno));
+		// 소모임 참여 인원 count
+		int meetingCount = meetingService.meetingCount(mno);
+		m.addAttribute("meetingCount", meetingCount);
 		
-		System.out.println(meDetail);
+		String infomation = meDetail.getInfomation();
+		if(infomation != null) {
+			infomation = infomation.replace("\n", "<br>");
+		}
+		meDetail.setInfomation(infomation);
 		
 		m.addAttribute("meDetail", meDetail);
 		
 		return "meeting/meetingDetail";
 	}
 	
+	// 소모임 참여 
+	@ResponseBody
+	@GetMapping("join")
+	public int meetingJoin(MeetingJoin mj) { 
 	
+		int result= 0;
+		
+		// 하나의 소모임에 한번만 참여할 수 있도록 제한.
+		// 1. 회원 참여 이력이 있는지 확인 
+		boolean sjUser = meetingService.searchJoinUser(mj); 
+		
+		System.out.println(sjUser);
+		
+		if(sjUser) {
+			result = 0;
+		}else {
+			result = meetingService.meetingJoin(mj);
+		}
+		
+		System.out.println(result);
+		return result;
+	}
+	
+	// 소모임 참여 취소 
+	@ResponseBody
+	@PostMapping("joinCancle")
+	public int joinCancle(MeetingJoin mj) {
+		
+		int result= 0;
+		// 회원이 아이디가 join 테이블에 있는지 확인하고 삭제. 
+		
+		// 하나의 소모임에 한번만 참여할 수 있도록 제한.
+		// 1. 회원 참여 이력이 있는지 확인 
+		boolean sjUser = meetingService.searchJoinUser(mj); 
+		
+		System.out.println(sjUser);
+		
+		if(sjUser) {
+			result = meetingService.joinCancle(mj);
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	
+	// 소모임 검색  | 페이징 처리도 해야 한다. 
+	@GetMapping("search")
+	public String  searchMeetingList(@RequestParam(value="currentPage", defaultValue = "1") int currentPage, 
+												String condition, String keyword, Model m){
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		
+		// 페이징 처리 
+		int listCount = meetingService.listCount();
+		int PageLimit = 10;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, PageLimit, boardLimit);
+		
+		ArrayList<Meeting> meList = meetingService.searchMeetingList(pi, map);
+		
+		m.addAttribute("meList", meList);
+		m.addAttribute("pi",pi);
+		m.addAttribute("map", map);
+		
+		return "meeting/meeting";
+	}
 	
 }

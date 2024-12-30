@@ -1,6 +1,7 @@
 package com.kh.show.meeting.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.meeting.model.dao.MeetingDao;
 import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.showInfo.model.vo.Genre;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -42,7 +44,6 @@ public class MeetingServiceImpl implements MeetingService {
 	// 공연 목록 리스트 
 	@Override
 	public ArrayList<Show> selMeetingShow(int genreNo) {
-		System.out.println("서비스"+genreNo);
 		return meetingdao.selMeetingShow(sqlSession, genreNo);
 	}
 
@@ -55,8 +56,36 @@ public class MeetingServiceImpl implements MeetingService {
 	// 소모임 상세 내용 
 	@Override
 	public Meeting meetingDetail(int mno) {
-		System.out.println("service : "+ mno);
 		return meetingdao.meetingDetail(sqlSession, mno);
+	}
+
+	// 소모임 참여 메소드 
+	@Override
+	public int meetingJoin(MeetingJoin mj) {
+		return meetingdao.meetingJoin(sqlSession, mj);
+	}
+
+	// 소모임 참여 인원 count
+	@Override
+	public int meetingCount(String mno) {
+		return meetingdao.meetingCount(sqlSession, mno);
+	}
+
+	// 소모임 참여 취소 
+	@Override
+	public int joinCancle(MeetingJoin mj) {
+		return meetingdao.joinCancle(sqlSession, mj);
+	}
+
+	// 회원 참여 이력 확인
+	@Override
+	public boolean searchJoinUser(MeetingJoin mj) {
+		return meetingdao.searchJoinUser(sqlSession, mj);
+	}
+
+	@Override
+	public ArrayList<Meeting> searchMeetingList(PageInfo pi, HashMap<String, Object> map) {
+		return meetingdao.searchMeetingList(sqlSession, pi, map);
 	}
 
 }
