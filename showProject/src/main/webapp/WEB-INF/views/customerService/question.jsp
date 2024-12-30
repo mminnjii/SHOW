@@ -57,46 +57,24 @@
     	&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
         <h2>1:1 문의하기</h2>
 	
-		<!-- 회원인 경우와 아닌 경우로 조건처리 필요 -->        
         <form class="outer" method="POST" action="${contextPath}/queInsert" enctype="multipart/form-data" >  <!-- 파일 업로드 -->
-        <!-- 회원인 경우에는 회원의 정보를 보여줘야 한다. 해당 조건 처리 필요. -->
-        <c:choose>
-        	<c:when test="${empty loginUser}">
-	            <div class="input">
-	                <p>이름 <span class="sColor">*</span></p>
-	                <input type="text" name="userName" class="form-control"  placeholder="이름을 입력하세요" required> 
-	            </div>
-	
-	            <div class="input">
-	                <p>답변 받을 이메일 주소 <span class="sColor">*</span></p>
-	                <input type="email" name="email" class="form-control"  placeholder="이메일을 입력하세요" required>
-	            </div>
-	
-	            <div class="input">
-	                <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
-	                <input type="text" id="phone" name="phone" class="form-control"  placeholder="휴대폰 번호를 입력하세요(-제외)" required> 
-	            </div>
-        	</c:when>
-        	<c:otherwise>
-        		<div class="input">
-	                <p>이름 <span class="sColor">*</span></p>
-	                <input type="text" name="userName" class="form-control" value="${loginUser.userName}" readonly required> 
-	            	<input type="hidden" name="userNo" value="${loginUser.userNo}" >
-	            </div>
-	
-	            <div class="input">
-	                <p>답변 받을 이메일 주소 <span class="sColor">*</span></p>
-	                <input type="email" name="email" class="form-control"  value="${loginUser.email}" readonly required>
-	            </div>
-	
-	            <div class="input">
-	                <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
-	                <input type="text" id="phone" name="phone" class="form-control" value="${loginUser.phone}" readonly required> 
-	            </div>
-        	</c:otherwise>
-        </c:choose>
+    
+       		<div class="input">
+                <p>이름 <span class="sColor">*</span></p>
+                <input type="text" name="userName" class="form-control" value="${loginUser.userName}" readonly required> 
+            	<input type="hidden" name="userNo" value="${loginUser.userNo}" >
+            </div>
 
-			            
+            <div class="input">
+                <p>답변 받을 이메일 주소 <span class="sColor">*</span></p>
+                <input type="email" name="email" class="form-control"  value="${loginUser.email}" readonly required>
+            </div>
+
+            <div class="input">
+                <p>답변 받을 휴대폰 번호 <span class="sColor">*</span></p>
+                <input type="text" id="phone" name="phone" class="form-control" value="${loginUser.phone}" readonly required> 
+            </div>
+
             <div class="input">
                 <p>문의 유형 <span class="sColor">*</span> <span style="font-size: 12px;" disabled> (티켓 취소/환불/변경은 전화 1234-1234로 요청해 주세요)</span></p>
                 <select id="qcategoryNo" name="qcategoryNo"  class="form-control" required>
@@ -115,7 +93,7 @@
                     
                     </select>
                     <div class="input-group-append">  <!-- 예약 조회 버튼을 누르면 로그인한 회원의 예약 내역을 불러와서 보여줘야 한다  -->
-       	            	<button id="reSearchBtn" class="form-control" type="button" onClick="reSearch();"  ${empty loginUser ? 'disabled' : ''}>예약번호 조회</button>
+       	            	<button id="reSearchBtn" class="form-control" type="button" onClick="reSearch();">예약번호 조회</button>
                     </div>
                 </div>
 					

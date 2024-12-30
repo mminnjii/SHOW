@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     ,#{userNo}
                     ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
                     ,#{qcategoryNo}
-                    ,#{qTitle}
-                    ,#{qContent}
+                    ,#{quTitle}
+                    ,#{quContent}
                     ,#{originName}
                     ,#{changeName})
 	</insert>
@@ -88,8 +88,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				                    ,#{email}
 				                    ,#{qcategoryNo}
 				                    ,#{phone}
-				                    ,#{qTitle}
-				                    ,#{qContent}
+				                    ,#{quTitle}
+				                    ,#{quContent}
 				                    ,#{originName}
 				                    ,#{changeName}
 				                    )
