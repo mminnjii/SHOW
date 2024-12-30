@@ -50,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%' 
 			</when>
 			<otherwise>
-				AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'
-				AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%'
+				AND (NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+				OR NOTICE_CONTENT LIKE '%' || #{keyword} || '%')
 			</otherwise>
 		</choose>
 	</select>
