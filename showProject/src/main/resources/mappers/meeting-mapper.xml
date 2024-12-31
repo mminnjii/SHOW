@@ -14,18 +14,165 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MEETING_DATE" property="meetingDate"/>
 		<result column="START_DATE" property="startDate"/>
 		<result column="END_DATE" property="endDate"/>
+		<result column="INFOMATION" property="infomation"/>
+		<result column="STATUS" property="status"/>
+		
+		<!-- collection으로 member 값 가져오기 -->
+		<collection property="memList" ofType="Member">
+			<result column="USER_NO" property="userNo"/>
+			<result column="USER_ID" property="userId"/>
+		</collection>
+		
+		<collection property="show" ofType="Show">
+			<result column="SHOW_NO" property="showNo"/>
+			<result column="SHOW_NAME" property="showName"/>
+		</collection>
 	</resultMap>
-
+	
+	<resultMap type="MeetingJoin" id="MeetingResultMap">
+		<result column="MEETING_NO" property="meetingNo"/>
+		<result column="USER_NO" property="userNo"/>
+	</resultMap>
+	
+	<!-- 소모임 목록 -->
 	<select id="meetingList" resultMap="meetingResult">
-		SELECT * 
-		FROM MEETING 
-		WHERE STATUS='Y'
+		SELECT MEETING_NO
+		        ,USER_NO
+		        ,MEETING_TITLE
+		        ,SHOW_NO
+		        ,MEETING_PLACE
+		        ,MEETING_COUNT
+		        ,MEETING_DATE
+		        ,START_DATE
+		        ,END_DATE
+		        ,INFOMATION
+		        ,ME.STATUS
+		        ,USER_ID 
+		FROM MEETING ME
+		JOIN MEMBER USING(USER_NO)
+		WHERE ME.STATUS='Y'
+		ORDER BY MEETING_NO DESC
 	</select>
 	
+	<!-- 공연 목록 개수 세기 -->
 	<select id="listCount" resultType="_int">
 		SELECT COUNT(*) 
 		FROM MEETING 
 		WHERE STATUS='Y'
+	</select>
+	
+	<!-- 공연 카테고리 불러오기 -->
+	<select id="selectGenre" resultType="com.kh.show.showInfo.model.vo.Genre">
+		SELECT GENRE_NO genreNo, GENRE_NAME genreName 
+		FROM GENRE
+	</select>
+	
+	<!-- 소모임 생성 메소드 -->
+	<insert id="meetingInsert" parameterType="Meeting">
+		INSERT INTO MEETING(MEETING_NO
+		                    ,USER_NO
+		                    ,MEETING_TITLE
+		                    ,SHOW_NO
+		                    ,MEETING_PLACE
+		                    ,MEETING_COUNT
+		                    ,MEETING_DATE
+		                    ,START_DATE
+		                    ,END_DATE
+		                    ,INFOMATION
+		                    ) 
+		            VALUES(MEET_SEQ.NEXTVAL
+		                    ,#{userNo}
+		                    ,#{meetingTitle}
+		                    ,#{showNo}
+		                    ,#{meetingPlace}
+		                    ,#{meetingCount}
+		                    ,#{meetingDate}
+		                    ,SYSDATE
+		                    ,#{endDate}
+		                    ,#{infomation}
+		                    )
+	</insert>
+	
+	<!-- 소모임 상세 내역 -->
+	<select id="meetingDetail" parameterType="_int" resultMap="meetingResult">
+		SELECT M.MEETING_NO
+		      ,M.USER_NO
+		      ,M.MEETING_TITLE
+		      ,S.SHOW_NAME
+		      ,M.MEETING_PLACE
+		      ,M.MEETING_COUNT
+		      ,M.MEETING_DATE
+		      ,M.START_DATE
+		      ,M.END_DATE
+		      ,M.INFOMATION
+		      ,M.STATUS
+		FROM MEETING M
+		LEFT JOIN SHOW S ON (M.SHOW_NO=S.SHOW_NO)
+		WHERE MEETING_NO = #{mno}
+	</select>
+	
+	<!-- 소모임 참여 -->
+	<insert id="meetingJoin" parameterType="MeetingJoin">
+		INSERT INTO MEETING_JOIN 
+			VALUES(#{meetingNo}, #{userNo})
+	</insert>
+	
+	<!-- meetingCount -->
+	<select id="meetingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEETING_JOIN
+		WHERE MEETING_NO = #{mno}
+	</select>
+	
+	<!-- 소모임 참여 취소 -->
+	<delete id="joinCancle">
+		DELETE MEETING_JOIN
+		WHERE MEETING_NO = #{meetingNo}
+		    AND USER_NO = #{userNo}
+	</delete>
+	
+	<!-- 참여 이력 확인. 
+		 * 마이바티스는 반환되는 값이 없으면 null을 반환한다 boolean으로 반환받기 위해서는 
+		   1 true, 0 false로 리턴하여 사용한다.
+		   => 오라클에는 boolean 타입이 없기 때문에 1, 0으로 변환 
+	-->
+	<select id="searchJoinUser" resultType="boolean">
+		SELECT CASE WHEN COUNT(*) = 1 THEN 1 ELSE 0 END AS JOINCOUNT
+		FROM MEETING_JOIN 
+		WHERE MEETING_NO = #{meetingNo}
+		    AND USER_NO = #{userNo}
+	</select>
+	
+	
+	<select id="searchMeetingList" resultMap="meetingResult">
+		SELECT MEETING_NO
+		        ,USER_NO
+		        ,MEETING_TITLE
+		        ,SHOW_NO
+		        ,MEETING_PLACE
+		        ,MEETING_COUNT
+		        ,MEETING_DATE
+		        ,START_DATE
+		        ,END_DATE
+		        ,INFOMATION
+		        ,ME.STATUS
+		        ,USER_ID 
+		FROM MEETING ME
+		JOIN MEMBER USING(USER_NO)
+		WHERE ME.STATUS='Y'
+			<choose>
+				<when test="condition == title">
+					MEETING_TITLE LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="condition == writer">
+					USER_ID LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND (MEETING_TITLE LIKE '%' || #{keyword} || '%'
+					OR USER_ID LIKE '%' || #{keyword} || '%' )
+				</otherwise>
+			</choose>
+		ORDER BY MEETING_NO DESC
 	</select>
 	
 </mapper>

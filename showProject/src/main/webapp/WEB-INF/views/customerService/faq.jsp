@@ -149,7 +149,7 @@
             </span>
       		<br><br>
       		<div class="divFilter">
-	           	<c:if test="${not empty faqList }">
+	           	<c:if test="${not empty faqList}">
 	           		<c:forEach var="list" items="${faqList}">
 			      		<div class="faq">
 							<input type="hidden" value="${list.faqNo}" id="faqNo">
