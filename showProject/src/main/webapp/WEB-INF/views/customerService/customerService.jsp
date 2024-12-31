@@ -29,8 +29,9 @@
 }
 
 .oneQ {
-	margin-top: 10px;
-	padding: 20px 0px 15px 20px;
+	margin: 10px 10px 0px 0px;
+	padding: 15px 0px 10px 15px;
+	width: 95%;
 	border-radius: 10px;
 	box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
@@ -46,22 +47,13 @@
 	margin: 0px auto;
 	background-color: white;
 	padding: 20px;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
+	border: 1px solid lightgray;
+   	border-radius: 0px 0px  10px 10px;
+	border-top : none;
 }
 
 .a h1 {
 	text-align: center;
-}
-
-a {
-	display: block;
-	width: 100%;
-	text-decoration: none; /* 밑줄 제거 */
-	color: black;
-	padding: 10px;
-	border-radius: 10px;
-	cursor: pointer;
 }
 
 #search {
@@ -153,6 +145,24 @@ a {
 	color: white;
 }
 
+.link{
+	display: block;
+    width: inherit;
+    height: inherit;
+    text-decoration: none;
+    padding: inherit; 
+}
+
+.allFaq{
+   display: block;
+   width: 100%;
+   text-decoration: none; /* 밑줄 제거 */
+   color: black;
+   padding: 10px;
+   border-radius: 10px;
+   cursor: pointer;
+}
+
 /* display: inline-block; /* 버튼 스타일 */
 </style>
 
@@ -161,8 +171,6 @@ a {
 
 	<%@include file="/WEB-INF/views/common/menubar.jsp"%>
 
-	<br>
-	<br>
 	<div class="a">
 		<h1>고객님, 무엇을 도와드릴까요?</h1>
 
@@ -186,21 +194,25 @@ a {
            </div>
 
 			<div align="center" class="aStyle">
-				<a href="${contextPath}/faq">자주 묻는 질문 전체보기</a>
+				<a href="${contextPath}/faq" class="allFaq">자주 묻는 질문 전체보기</a>
 			</div>
 		</div>
 
 
 		<div class="outer2">
 			<h3>다른 도움이 필요하신가요?</h3>
-			<a class="oneQ" href="${contextPath}/question">
-				<i class="fa-solid fa-magnifying-glass"></i> 1:1 문의하기
-				<p>자세한 상담이 가능해요</p>
-			</a>
+			<div class="oneQ">
+				<a href="${contextPath}/question" class="link">
+					<i class="fa-solid fa-magnifying-glass"></i> 1:1 문의하기
+					<p>자세한 상담이 가능해요</p>
+				</a>
+			</div>
 
 			<div class="oneQ">
-				<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
-				<p>문의한 내용을 확인해보세요</p>
+				<a href="" class="link">
+					<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
+					<p>문의한 내용을 확인해보세요</p>				
+				</a>
 			</div>
 		</div>
 		<br>
@@ -273,6 +285,7 @@ a {
 	    
 	</script>
 
+<br><br>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 
