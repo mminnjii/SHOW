@@ -160,7 +160,7 @@
             
             <c:choose>
             	<c:when test="${empty noticeList}">
-            		<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>
+            		<tr><td id="noting" style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>
             	</c:when>
             	<c:otherwise>
             		<c:forEach var="list" items="${noticeList}">
@@ -208,7 +208,7 @@
 					</c:when>
 					
 					<c:otherwise> <%--검색이라면 --%>
-						<c:url var="searchUrl" value="${contextPath}/notice/search">
+						<c:url var="searchUrl" value="/notice/search">
 							<c:param name="currentPage" value="${i}"/>
 							<c:param name="condition" value="${map.condition}"/>
 							<c:param name="keyword" value="${map.keyword}"/>
@@ -271,7 +271,11 @@
         		});
 	        });
 	        
+	        
 	        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+	        
+	        
+	        
 	        
 	        // 선택한 셀렉트 박스의 값 유지
 	        $("option[value='${map.condition}']").attr("selected", true);
@@ -333,8 +337,8 @@
 							for(var i=0; i<noticeList.length; i++){
 								str += "<tr>"
 									+ "<td>"+ noticeList[i].openNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].openName +"</td>"
-									+ "<td>"+ noticeList[i].openExplain +"</td>"
+									+ "<td style='text-align: left;'>"+ noticeList[i].openExplain +"</td>"
+									+ "<td>"+ noticeList[i].openName +"</td>"
 									+ "<td>"+ noticeList[i].genreNo +"</td>"
 									+ "</tr>";
 							}
@@ -349,6 +353,8 @@
 					}
 				});
 			});
+			
+			
 			
         </script>
         

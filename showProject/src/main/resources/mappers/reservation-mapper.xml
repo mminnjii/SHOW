@@ -54,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROWNUM = 1
 	</select>
 	
+
 	<!-- status "N"인 좌석 조회 -->
 	<select id="selectTakenSeats" resultType="String">
 		SELECT ROW_NAME || COL_NO  AS TAKEN
@@ -113,3 +114,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 </mapper>
+

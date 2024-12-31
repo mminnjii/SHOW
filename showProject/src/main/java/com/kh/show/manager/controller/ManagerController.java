@@ -81,46 +81,29 @@ public class ManagerController {
 	    @ModelAttribute Show show,
 	    @RequestParam("posterImage") MultipartFile posterFile,
 	    @RequestParam("detailImage") MultipartFile detailFile,
-	    @RequestParam("genreNo") int genreNo,   // genreNo는 int로 받음
-	    @RequestParam("regionNo") int region,   // regionNo는 int로 받음
-	    @RequestParam("hallNo") int hallNo,     // hallNo는 int로 받음
 	    HttpServletRequest request,
 	    HttpSession session) {
 		
 		String genreName = "";
-		switch (genreNo) {
-		    case 1: genreName = "뮤지컬";
-		        break;
-		    case 2: genreName = "연극";
-		        break;
-		    case 3: genreName = "콘서트";
-		        break;
-		    case 4: genreName = "클래식";
-		        break;
-		    case 5: genreName = "전시";
-		        break;
-		    default: genreName = "기타";
-		        break;
+		switch (show.getGenreNo()) {
+		    case 1: genreName = "뮤지컬"; break;
+		    case 2: genreName = "연극"; break;
+		    case 3: genreName = "콘서트"; break;
+		    case 4: genreName = "클래식"; break;
+		    case 5: genreName = "전시"; break;
+		    default: genreName = "기타"; break;
 		}
 
 		String regionName = "";
-		switch (region) {
-		    case 1: regionName = "서울";
-		        break;
-		    case 2: regionName = "경기/인천";
-		        break;
-		    case 3: regionName = "충청/강원";
-		        break;
-		    case 4: regionName = "대구/경북";
-		        break;
-		    case 5: regionName = "부산/경남";
-		        break;
-		    case 6: regionName = "광주/전라";
-		        break;
-		    case 7: regionName = "제주";
-		        break;
-		    default: regionName = "기타";
-		        break;
+		switch (show.getRegionNo()) {
+		    case 1: regionName = "서울"; break;
+		    case 2: regionName = "경기/인천"; break;
+		    case 3: regionName = "충청/강원"; break;
+		    case 4: regionName = "대구/경북"; break;
+		    case 5: regionName = "부산/경남"; break;
+		    case 6: regionName = "광주/전라"; break;
+		    case 7: regionName = "제주"; break;
+		    default: regionName = "기타"; break;
 		}
 
 	    // 1. 파일 처리
@@ -157,9 +140,9 @@ public class ManagerController {
 	        }
 
 	        // 3. VO에 값 세팅
-	        show.setGenreNo(genreNo);
-	        show.setRegionNo(region);
-	        show.setHallNo(hallNo);
+	        show.setGenreNo(show.getGenreNo());
+	        show.setRegionNo(show.getRegionNo());
+	        show.setHallNo(show.getHallNo());
 	        show.setPosterOriginName(posterOriginName);
 	        show.setPosterChangeName(changeName);
 	        show.setDetailOriginName(detailOriginName);
