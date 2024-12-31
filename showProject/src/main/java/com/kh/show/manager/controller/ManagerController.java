@@ -8,20 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Controller
@@ -29,7 +30,6 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService service;
-//	private Notice notice;
 	
 	@GetMapping("/managerLogin")
 	public String moveLoginManager() {
@@ -71,17 +71,6 @@ public class ManagerController {
 		return "manager/noticeInsert";
 	}
 	
-	
-	@RequestMapping("/noticeList")
-	public ResponseEntity<List<Notice>> selectNotice() {
-	    try {
-	        List<Notice> noticeList = service.selectNotice(); // 공지사항 목록 가져오기
-	        return ResponseEntity.ok(noticeList); // JSON 형태로 반환
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 에러 처리
-	    }
-	}
-	
 	@GetMapping("/showInsert")
 	public String moveShowInsert() {
 		return "manager/showInsert";
@@ -92,46 +81,29 @@ public class ManagerController {
 	    @ModelAttribute Show show,
 	    @RequestParam("posterImage") MultipartFile posterFile,
 	    @RequestParam("detailImage") MultipartFile detailFile,
-	    @RequestParam("genreNo") int genreNo,   // genreNo는 int로 받음
-	    @RequestParam("regionNo") int region,   // regionNo는 int로 받음
-	    @RequestParam("hallNo") int hallNo,     // hallNo는 int로 받음
 	    HttpServletRequest request,
 	    HttpSession session) {
 		
 		String genreName = "";
-		switch (genreNo) {
-		    case 1: genreName = "뮤지컬";
-		        break;
-		    case 2: genreName = "연극";
-		        break;
-		    case 3: genreName = "콘서트";
-		        break;
-		    case 4: genreName = "클래식";
-		        break;
-		    case 5: genreName = "전시";
-		        break;
-		    default: genreName = "기타";
-		        break;
+		switch (show.getGenreNo()) {
+		    case 1: genreName = "뮤지컬"; break;
+		    case 2: genreName = "연극"; break;
+		    case 3: genreName = "콘서트"; break;
+		    case 4: genreName = "클래식"; break;
+		    case 5: genreName = "전시"; break;
+		    default: genreName = "기타"; break;
 		}
 
 		String regionName = "";
-		switch (region) {
-		    case 1: regionName = "서울";
-		        break;
-		    case 2: regionName = "경기/인천";
-		        break;
-		    case 3: regionName = "충청/강원";
-		        break;
-		    case 4: regionName = "대구/경북";
-		        break;
-		    case 5: regionName = "부산/경남";
-		        break;
-		    case 6: regionName = "광주/전라";
-		        break;
-		    case 7: regionName = "제주";
-		        break;
-		    default: regionName = "기타";
-		        break;
+		switch (show.getRegionNo()) {
+		    case 1: regionName = "서울"; break;
+		    case 2: regionName = "경기/인천"; break;
+		    case 3: regionName = "충청/강원"; break;
+		    case 4: regionName = "대구/경북"; break;
+		    case 5: regionName = "부산/경남"; break;
+		    case 6: regionName = "광주/전라"; break;
+		    case 7: regionName = "제주"; break;
+		    default: regionName = "기타"; break;
 		}
 
 	    // 1. 파일 처리
@@ -147,7 +119,7 @@ public class ManagerController {
 
 	        File poster = new File(posterSavePath);
 	        if (!poster.exists()) {
-	            poster.mkdirs(); // 경로가 없으면 생성
+	            poster.mkdirs();
 	        }
 	        
 	        File detail = new File(detailSavePath);
@@ -168,9 +140,9 @@ public class ManagerController {
 	        }
 
 	        // 3. VO에 값 세팅
-	        show.setGenreNo(genreNo);
-	        show.setRegionNo(region);
-	        show.setHallNo(hallNo);
+	        show.setGenreNo(show.getGenreNo());
+	        show.setRegionNo(show.getRegionNo());
+	        show.setHallNo(show.getHallNo());
 	        show.setPosterOriginName(posterOriginName);
 	        show.setPosterChangeName(changeName);
 	        show.setDetailOriginName(detailOriginName);
@@ -205,6 +177,36 @@ public class ManagerController {
 			session.setAttribute("alertMsg", "공지사항 등록에 실패하였습니다.");
 			return "redirect:/";
 		}
+	}
+	
+	@GetMapping("/noticeList")
+	@ResponseBody
+	public List<Notice> selectAllNotice(){
+		return service.selectAllNotice();
+	}
+	
+	@GetMapping("/faqList")
+	@ResponseBody
+	public List<Faq> selectAllFaq(){
+		return service.selectAllFaq();
+	}
+	
+	@GetMapping("/memberList")
+	@ResponseBody
+	public List<Member> selectAllMember(){
+		return service.selectAllMember();
+	}
+	
+	@GetMapping("/reservList")
+	@ResponseBody
+	public List<Reservation> selectAllReserv(){
+		return service.selectAllReserv();
+	}
+	
+	@GetMapping("/showList")
+	@ResponseBody
+	public List<Show> selectAllShow(){
+		return service.selectAllShow();
 	}
 	
 	/*

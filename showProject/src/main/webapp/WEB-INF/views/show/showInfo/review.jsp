@@ -42,8 +42,8 @@
 			    background-color: gold; /* 금색으로 채운 별 */
 			}
 			
-			.half {
-			    background: linear-gradient(to right, gold 50%, lightgray 50%); /* 반으로 채운 별 */
+			.partially-filled {
+			     background: linear-gradient(to right, gold var(--percent), lightgray var(--percent));
 			}	
 			
 		.search-box{
@@ -84,20 +84,20 @@
 		
 		<div class="container">
 	        <div class="star-rating">
-	         	<h2>관람평점 : ${reviewRank}</h2>
+	         	<h2>관람평점 : ${reviewAvg}</h2>
 	             <!-- 5개의 별을 반복 -->
 	             <c:forEach var="i" begin="1" end="5">
 	                 <!-- 평점에 따라 별을 채우거나 비움 -->
-	                 <div class="star 
-	                     ${i <= reviewRank ? 'filled' : 
-	                     (i - 0.5 <= reviewRank ? 'half' : '')}">
-	                 </div>
+			     <div class="star 
+		        ${i <= Math.floor(reviewAvg) ? 'filled' :
+		        (i == Math.floor(reviewAvg) + 1 ? 'partially-filled' : '')}" 
+		        style="--percent: ${(reviewAvg - avgFloor) * 100}%;"></div>
 	             </c:forEach>
 	        </div>
 		</div>
 		
-          <form class="search-box" action="" method="get">
-              <input type="text" class="search-text" placeholder="검색어를 입력하세요.">
+          <form class="search-box" action="/show/showInfo/reviewSearch" method="get">
+              <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
               <button class="search-btn" type="submit">
               <i class="fa-solid fa-magnifying-glass"></i>
               </button>
@@ -105,33 +105,43 @@
 		
 		<div>
 			<br><br><br>
-			이 공연에 남긴 후기 :&nbsp; 15개 <br><br> 
+			이 공연에 남긴 후기 :&nbsp; ${count } <br><br><br>  
 		</div>
 		<div class=comment>
-			NO :&nbsp;&nbsp;${r.replyNo} 101 &nbsp; |&nbsp;&nbsp; 
-			작성자 :&nbsp;&nbsp;${r.userNo} user01 &nbsp; |&nbsp;&nbsp; 
-			작성일 :&nbsp;&nbsp;${r.date} 2024-12-18 &nbsp;| &nbsp; 
-			평점 :&nbsp;&nbsp;${r.rate} 4.5 &nbsp; | &nbsp;&nbsp; 
-			조회수 :&nbsp;&nbsp;${r.date} 50 
-			
+			<c:choose>
+				<c:when test="${not empty r }" >
+					<c:forEach items="${r }" var="r">
+					
+						NO :&nbsp;&nbsp;${r.reviewId}&nbsp; |&nbsp;&nbsp; 
+						작성자 :&nbsp;&nbsp;${r.userId} &nbsp; |&nbsp;&nbsp; 
+						작성일 :&nbsp;&nbsp;${r.createDate}&nbsp;| &nbsp; 
+						평점 :&nbsp;&nbsp;${r.reviewScore}&nbsp; 
+						<br>
+						<h3 class="title" data-content="${r.reviewTitle}">
+							${r.reviewTitle}
+						</h3>
+						<h5 class="origin" data-content="${r.reviewContent}">
+							${r.reviewContent}
+						</h5> <br><br><br><br><br>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<h2>작성된 리뷰가 없습니다.</h2>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	<%-- 		<c:if test="${r.userNo eq loginUser.userId}">
 				<br>
 				<button class="modify" data-rno="${r.replyNo }">수정하기</button>
 				<button class="delete" data-rno="${r.replyNo }">삭제하기</button>
 				<button id="back2">뒤로가기</button>
 			</c:if> --%>
-			<br><br>
-			<h3 class="title" data-content="${r.replyContent}">
-				너무나 와 닿았던 극
-			</h3>
-			<h5 class="origin" data-content="${r.replyContent}">
-				세상은 돌고 도는 것처럼, 새삼 대사나 넘버가 더욱 잘 들리는 회차였다.
-			</h5>
-		</div>
+	
+		
 	
 			<button id="submit" style="display: none;">작성하기</button>
 			<button id="back" style="display: none;">뒤로가기</button>
-			<p style="margin-top: 1000px;"></p>
+			<p style="margin-top: 10000px;"></p>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

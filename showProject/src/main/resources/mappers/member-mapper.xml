@@ -3,14 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-	
-
-	
-	
-	
-
-
-  
 
 	<resultMap type="Member" id="memberResultSet">
 		<result column="USER_NO" property="userNo"/>
@@ -23,6 +15,8 @@
 		<result column="ADDRESS" property="address"/>
 		<result column="ENROLL_DATE" property="enrollDate"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="RANK" property="rank"/>
 		<result column="SUBSCRIBE" property="subscribe"/>
 		<result column="STATUS" property="status"/>
@@ -72,7 +66,9 @@
 			USER_RRN = #{userRrn},
 			PHONE = #{phone},
 			EMAIL = #{email},
-			MODIFY_DATE = SYSDATE
+			MODIFY_DATE = SYSDATE,
+			ORIGIN_NAME = #{originName},
+			CHANGE_NAME = #{changeName}
 		WHERE USER_ID = #{userId}
 	</update>
 
@@ -115,9 +111,29 @@
 		AND STATUS = 'Y'
 	</select>
 
+	<update id="startSub" parameterType="String">
+		UPDATE MEMBER
+		SET SUBSCRIBE = 'Y'
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<select id="listCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
 
 
-
+	<select id="qnaList" resultType="Question">
+		SELECT QUESTION_NO questionNo,
+			   Q_TITLE quTitle,
+			   CREATEDATE createDate,
+			   ORIGIN_NAME originName
+		FROM QUESTION
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
 
 </mapper>
 

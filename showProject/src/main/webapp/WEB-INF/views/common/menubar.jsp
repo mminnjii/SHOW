@@ -159,8 +159,7 @@
             <tr id="tr1">
 
                 <td id="td1"></td>
-                <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고.jpg" alt="로고" id="logo"></a></td>
-
+                <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고2.png" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
                     <ul>
@@ -172,7 +171,7 @@
 		                   </c:when>
 		                   <c:otherwise>
 		                   		<!-- 로그인 후 -->
-		                   		<lable>${loginUser.userName }님</lable> &nbsp;&nbsp;
+		                   		<label>${loginUser.userName }님</label> &nbsp;&nbsp;
 		                   		<li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
 		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
 		                   </c:otherwise>
@@ -202,11 +201,13 @@
                         <li><a href="${contextPath}/concertList">콘서트</a></li>
                         <li><a href="${contextPath}/classicList">클래식</a></li>
                         <li><a href="${contextPath}/displayList">전시</a></li>
+
+
                         <li id="li1">|</li>
 
                         <li><a href="">커뮤니티</a></li>
                         <li><a href="${contextPath}/notice/list">공지사항</a></li>
-                        <li><a href="/show/showInfo/detail">공연상세(test용)</a> </li>
+                       
                     </ul>
                 </td>
                 

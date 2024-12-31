@@ -1,5 +1,10 @@
+<%@page import="com.kh.show.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% 
+	Member loginMember = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,9 +73,24 @@
     .menu-click {
         background-color: rgb(250, 250, 255);
     }
+    
+    #btn1{
+    	border:none;
+    	background-color: white;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    #btn1:focus{
+        border: none;
+        outline: none;
+    }
+    #btn1:hover{
+        color:rgb(47, 47, 174);
+    }
 </style>
 </head>
 <body>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
     <div id="side-body">
         <div id="side-menu" align="center">
             <ul id="side-list">
@@ -96,8 +116,12 @@
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <a class="side-title" href="${contextPath}/qna">문의 내역</a>
+                <form action="${contextPath}/qna" method="GET">
+                    <!-- <a class="side-title">문의 내역</a> -->
+                    <button id="btn1">문의 내역</button>
+                    <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <ul class="side-sub-menu"></ul>
+                </form>
                 </li>
                 <li>
                     <a class="side-title" href="${contextPath}/payment">결제 목록</a>

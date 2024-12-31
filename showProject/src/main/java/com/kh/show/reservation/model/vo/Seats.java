@@ -2,6 +2,7 @@ package com.kh.show.reservation.model.vo;
 
 import java.sql.Date;
 
+
 import com.kh.show.payments.model.vo.Payments;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 public class Seats {
 	private int seatId;	//	SEAT_ID
 	private int hallNo;	//	HALL_NO
-	private String seatName;	//	SEAT_NAME
-	private String rowNum;	//	ROW_NUM
+	private String rowName; //	ROW_NAME
+	private int colNum;		//	COL_NO
 	private String status;	//	STATUS
+	// private int count;	//	db에는 없지만 좌석 수 확인용 필드 추가
 }
