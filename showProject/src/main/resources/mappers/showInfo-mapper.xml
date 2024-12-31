@@ -18,8 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_START" property="showStart" />
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
+		<result column="POSTER_CHANGENAME" property="posterChangeName" />
+		<result column="POSTER_ORIGINNAME" property="posterOriginName" />
 		
 		<result column="HALL_NAME" property="hall.hallName" />
+		
+	</resultMap>	
+	
+	
+	<resultMap type="Region" id="regionResultSet">
+		<result column="REGION_NAME" property="regionName" />
 		
 	</resultMap>	
 
@@ -31,8 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		  SELECT SHOW_NAME
   	       		 ,SHOW_START
   	       		 ,SHOW_END
+  	       		 ,POSTER_CHANGENAME
+  	       		 ,POSTER_ORIGINNAME
   	      FROM SHOW
-  	      WHERE GENRE_NO = '2'
+  	      WHERE GENRE_NO = '1'
   	      ORDER BY COUNT DESC
   	      )
 
@@ -61,6 +71,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
 		WHERE S.STATUS = 'Y'
 	</select>
+	
+	<!-- 뮤지컬 서울 지역 리스트 -->
+	  <select id="musicalRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '1'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
 
 
 	<!-- 뮤지컬 경기/인천 지역 리스트 -->
@@ -68,6 +91,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '2'
@@ -79,6 +104,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '3'
@@ -90,6 +117,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '4'
@@ -101,6 +130,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '5'
@@ -112,6 +143,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '6'
@@ -123,6 +156,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '7'
@@ -137,6 +172,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		  SELECT SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
 	  	      WHERE GENRE_NO = '2'
 	  	      ORDER BY COUNT DESC
@@ -144,13 +181,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
 	  
+	  <!-- 연극 서울 지역 리스트 -->
+	  <select id="playRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '2'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
 	  <!-- 연극 경기/인천 지역 리스트 -->
 	  <select id="InchPlay" resultMap="showResultSet">
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
@@ -160,8 +212,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
@@ -171,8 +225,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
@@ -182,8 +238,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
@@ -193,19 +251,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
 	  
-	   <!-- 뮤지컬 제주 지역 리스트 -->
+	   <!-- 연극 제주 지역 리스트 -->
 	  <select id="jejPlay" resultMap="showResultSet">
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -217,20 +279,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		  SELECT SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '3'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
+	  
+	  <!-- 콘서트 서울 지역 리스트 -->
+	  <select id="concertRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '3'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
 	
 	<!-- 콘서트 경기/인천 지역 리스트 -->
 	  <select id="concertRegionList1" resultMap="showResultSet">
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
@@ -240,8 +320,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
@@ -251,8 +333,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
@@ -262,8 +346,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
@@ -273,8 +359,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
@@ -284,8 +372,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -297,11 +387,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		  SELECT SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+               		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '4'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
+	  </select>
+	  
+	  <!-- 클래식 서울 지역 리스트 -->
+	  <select id="classicRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '4'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 클래식 경기/인천 지역 리스트 -->
@@ -309,8 +414,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
@@ -320,8 +427,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
@@ -331,8 +440,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
@@ -342,8 +453,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
@@ -353,8 +466,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
@@ -364,8 +479,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -377,21 +494,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		  SELECT SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '5'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
 	  
 	  
+	  <!-- 전시 서울 지역 리스트 -->
+	  <select id="displayRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '5'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
 	  <!-- 전시 경기/인천 지역 리스트 -->
 	  <select id="displayRegion1" resultMap="showResultSet">
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
@@ -401,8 +535,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
@@ -412,8 +548,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
@@ -423,8 +561,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
@@ -434,8 +574,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
@@ -445,8 +587,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	SELECT SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -483,6 +627,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY SHOW_START DESC
 	</select>
 
+
+	<!-- 메인 지역별 랭킹 지역이름으로 버튼 가져오기 -->
+	<select id="mainRegionRank" resultMap="regionResultSet">
+		SELECT REGION_NAME
+		FROM REGION
+	
+	</select>
 	  
 	
 		

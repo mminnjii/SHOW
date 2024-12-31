@@ -137,31 +137,31 @@
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
-                    <span id="j1">뉴욕의 거장들</span><br>
-                    <span id="j2">2025.01.10-2025.07.12</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <span id="j1">광화문연가</span><br>
+                    <span id="j2">2024.02.08-2025.02.09</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/베르테르.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">베르테르</span><br>
-                    <span id="j2">2025.01.17-2025.03.16</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <span id="j1">글루미 선데이</span><br>
+                    <span id="j2">2024.11.05-2025.01.26</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">강홍석</span><br>
-                    <span id="j2">2025.02.08-2025.02.09</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <span id="j1">클로버</span><br>
+                    <span id="j2">2024.11.05-2025.01.26</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/시라노.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">시라노</span><br>
-                    <span id="j2">2024.12.06-2025.02.23</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <span id="j1">틱틱붐</span><br>
+                    <span id="j2">2024.12.17-2025.02.02</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/오페라.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
                     <span id="j1">오페라</span><br>
                     <span id="j2">2024.12.22-2024.12.30</span>
                 </td>           
@@ -198,9 +198,9 @@
                                 var str = "";
                                 for(var i = 0; i < result.length; i++){
                                     
-                                    
+                                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     str += "<td>"
-                                          + "<a href=''><img src='/show/resources/images/강홍석.jpg' alt='' id='f1'></a><br><br>"
+                                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"

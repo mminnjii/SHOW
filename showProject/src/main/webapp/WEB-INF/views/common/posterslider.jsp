@@ -12,7 +12,9 @@
 	            
 	        }
 	#m2{
-	          width: 20%;
+	          width: 30%;
+	          background-color: #E1C7A1;
+	          height: 550px;
 	            
 	        }
     
@@ -125,8 +127,9 @@
         filter: drop-shadow(2px 6px 6px #c3c3c3);
         left : 170px;
         z-index: 2;
-        padding-left: 20px;
-        padding-right: 20px;
+       
+        
+        
         
     }
     #ll{
@@ -137,6 +140,50 @@
     width:20px;
     }
     
+    #timeOne{
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 30px;
+        font-weight: 500;
+        font-style: normal;
+        position: relative;
+        left : 80px;
+       
+        }
+        #timeTable{
+            margin: auto;
+        }
+        #uu{
+            height: 2px;
+        }
+        #uuu{
+            height: 10px;
+        }
+        #u1{
+        width: 30px;
+        height: 30px;
+        position: relative;
+        left:30px;
+        }
+        #u2{
+            width: 50px;
+            height: 50px;
+            position: relative;
+            top: 10px;
+            
+        }
+        #u3{
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        font-style: normal;
+        position: relative;
+        left : 50px;
+        top : -8px;
+        }
+        
+        #mainDiv{
+        display: flex; /*div의 table을 2개 사용하면서 나란히 놓고 싶을 때 사용하는 css*/
+        }
     
  
    
@@ -150,7 +197,7 @@
 </head>
 <body>
 
-<div>
+<div id="mainDiv">
         <table id="poster">
             <tr>
             	<td id="m1">
@@ -172,10 +219,55 @@
                 
                    
                 </td>
-
-				<td id="m2"> 공연 실시간 순위 </td>
-            
+             </tr>
+            </table>    
+                
+                <table id="m2">
+				
+				 <tr id="uu"></tr>
+            <tr>
+                <td >
+                     <span id="timeOne">실시간 공연 순위<img src="/show/resources/images/images2/ranking.png" alt="" id="u2"></span>
+                </td>
+            </tr> 
+            <tr id="uuu"></tr>
+            <tr>
+                <td><img src="/show/resources/images/images2/1.png" alt="" id="u1"><a href=""><span id="u3">뉴욕의 거장들</span></a></td>
             </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/2.png" alt=""  id="u1"><a href=""><span id="u3">꾳의 비밀</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/3.png" alt=""  id="u1"><a href=""><span id="u3">틱틱붐</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/4.png" alt=""  id="u1"><a href=""><span id="u3">퍼스트 맨</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/5.png" alt=""  id="u1"><a href=""><span id="u3">클로버</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/6.png" alt=""  id="u1"><a href=""><span id="u3">르 스페이스</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/7.png" alt=""  id="u1"><a href=""><span id="u3">글루미 선데이</span></a></td>
+            </tr>
+            
+            <tr>
+                <td><img src="/show/resources/images/images2/8.png" alt=""  id="u1"><a href=""><span id="u3">김연우 콘서트</span></a></td>
+            </tr>
+            
+            
+				
+				
+            
+          
 
         </table>
     </div>
@@ -209,7 +301,7 @@
             <tr>
             	<td id="rr"></td>
             	
-                <td >
+                <td>
                     <p><span id="c1">누구나 즐길 수 있는 행복한 공연문화를 위해</span> <br> <span id="c2">지금부터 </span>
                     <span id="c3">암표 거래</span><span id="c4">를</span> <span id="c5">멈춰주세요</span> 
                     </p>
@@ -224,22 +316,23 @@
                 <td id="and">
                     |
                 </td>
+                <td id="kk" ></td>
                 <td id="dd"></td>
                 <td>
                 <a href="${contextPath}/meeting/list">
-                    <p><span id="a1">함께 공연을 즐기는</span> <span id="a2">소모임</span><br><span id="a3">"같이 공연 보러 갈래?"</span></p>
+                    <span id="a1">함께 공연을 즐기는</span> <span id="a2">소모임</span><br><span id="a3">"같이 공연 보러 갈래?"</span>
                 </a>
                 </td>
+                
 
-                <td id="rr"></td>
-                <td><a href="${contextPath}/meeting/list">
+               
 
-                <td id="kk"></td>
-                <td><a href="">
-
-                <img src="/show/resources/images/소모임.jpg" alt="" id="ticket"> </a>
+                
+				<td>
+                <a  href="${contextPath}/meeting/list"><img src="/show/resources/images/소모임.jpg" alt="" id="ticket"></a>
                 </td>
                 <td id="rr"></td>
+                <td id="kk" ></td>
                 <td id="kk" ></td>
                 
             </tr>
