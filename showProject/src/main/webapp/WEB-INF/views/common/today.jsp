@@ -121,10 +121,10 @@
     
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/show/resources/images/오현우2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/베르테르2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/뉴욕의 거장들2.png" alt=""></div>
-          <div class="swiper-slide"><img src="/show/resources/images/투란도트2.png" alt=""></div>
+          <div class="swiper-slide"><img src="${contextPath }/resources/images/오현우2.png" alt=""></div>
+          <div class="swiper-slide"><img src="${contextPath }/resources/images/베르테르2.png" alt=""></div>
+          <div class="swiper-slide"><img src="${contextPath }/resources/images/뉴욕의 거장들2.png" alt=""></div>
+          <div class="swiper-slide"><img src="${contextPath }/resources/images/투란도트2.png" alt=""></div>
           
         </div>
         
