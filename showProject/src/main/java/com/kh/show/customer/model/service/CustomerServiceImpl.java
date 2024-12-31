@@ -66,4 +66,19 @@ public class CustomerServiceImpl implements CustomerService{
 		return cServiceDao.faqCount(sqlSession, faqNo);
 	}
 
+	@Override
+	public Question selectQna(int qno) {
+		return cServiceDao.selectQna(sqlSession, qno);
+	}
+
+	@Override
+	public int qnaDelete(int questionNo) {
+		return cServiceDao.qnaDelete(sqlSession, questionNo);
+	}
+
+	@Override
+	public int updateQna(Question q) {
+		return cServiceDao.updateQna(sqlSession,q);
+	}
+
 }

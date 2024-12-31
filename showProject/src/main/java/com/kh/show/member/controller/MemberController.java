@@ -452,8 +452,6 @@ public class MemberController {
 		return "member/subscribe";
 	}
 	
-
-	
 	//qna 리스트 메소드
 	@GetMapping("/qna")
 	public String qna(@RequestParam(value="currentPage",defaultValue="1")
@@ -468,15 +466,13 @@ public class MemberController {
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
 		ArrayList<Question> list = memberService.qnaList(userNo,pi);
-		
+
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
 		
-		System.out.println(list);
-		System.out.println(pi);
-		
 		return "member/myQna";
 	}
+	
 	
 	
 	

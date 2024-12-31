@@ -64,7 +64,6 @@
 		width: fit-content;
 		margin: auto;
 	}
-
 	
 
 	
@@ -86,9 +85,11 @@
 				<div id="mypage-body">
 					<br>
 					<h5>문의 내역</h5>
-					<br>
 					<div id="qna-body">
-						<br>
+						<div id="toQ" align="right">
+							<button class="btn btn-primary" onclick="toQ();">문의 작성</button>
+						</div>
+						<div style="height: 5px;"></div>
 						<table id="qnaList" class="table table-hover" align="center">
 							<thead>
 								<tr>
@@ -107,7 +108,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="q" items="${list }">
-											<tr>
+											<tr class="detail-qna">
 												<td>${q.questionNo }</td>
 												<td>${q.quTitle }</td>
 												<td>${q.createDate }</td>
@@ -127,22 +128,32 @@
 						</table>
 						<br>
 						<script>
+
+							function toQ(){
+								location.href = "${contextPath}/question"
+							}
             	
-							$("#qnaList>tbody>tr").click(function(){
-								var bno = $(this).children().first().text();
+							$("#qnaList .detail-qna").click(function(){
+								var qno = $(this).children().first().text();
 								
-								location.href = "detail?bno="+bno;
+								location.href = "qDetail?qno="+qno;
 							});
 							
 						</script>
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="search?currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}?currentPage=${i}">${i}</a></li>
+									<c:url var="qna" value="qna">
+										<c:param name="userNo" value="${loginUser.userNo }"/>
+										<c:param name="currentPage" value="${i }"/>
+									</c:url>
+									<li class="page-item">
+										<a class="page-link" href="${qna }">${i}</a>
+									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
@@ -150,7 +161,7 @@
 										<c:when test="${empty list }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="search?currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -164,7 +175,18 @@
 	</div>
 
 	<script>
-		
+		// 스크롤 위치 저장
+		window.addEventListener('beforeunload', function () {
+       	 localStorage.setItem('scrollPosition', window.scrollY);
+    	});
+
+    	// 스크롤 위치 복원
+    	window.addEventListener('load', function () {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        	if (scrollPosition) {
+           	 window.scrollTo(0, parseInt(scrollPosition, 10));
+       	 }
+    	});
 	</script>
 	
 

@@ -250,6 +250,18 @@
 					})
 				});
 			});
+
+		window.addEventListener('beforeunload', function () {
+       	 localStorage.setItem('scrollPosition', window.scrollY);
+    	});
+
+    	// 스크롤 위치 복원
+    	window.addEventListener('load', function () {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        	if (scrollPosition) {
+           	 window.scrollTo(0, parseInt(scrollPosition, 10));
+       	 }
+    	});
 	</script>
 	
 
