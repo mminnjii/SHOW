@@ -263,15 +263,6 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		
-		<!-- 아임포트 결제값 받기 위한 webClient -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-webflux</artifactId>
-		    <version>3.1.5</version> <!-- Spring Boot 버전을 명시 -->
-		</dependency>
-
-
 
 	</dependencies>
 	<build>

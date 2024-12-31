@@ -160,44 +160,49 @@
 	            buyer_tel: "01012345678",        // 구매자 전화번호
 	            vbank_due: "20241231235959",     // 입금 기한 (YYYYMMDDHHmmss 형식)
 	        }, function (rsp) {
-	        	console.log(rsp)
-	            if (rsp.success) {
-	               
-	                console.log(rsp.imp_uid);
-                    console.log(rsp.merchant_uid);
-	            	
-	            	 $.ajax({
+	           
+	        	
+	        	
+	        	if (rsp.success) {
+	        			console.log(rsp);
+	        		    console.log(rsp.receipt_url); 
+	        		    console.log(rsp.vbank_name); // 계좌은행
+	        		    console.log(rsp.vbank_num); // 계좌번호
+	        		    console.log(rsp.vbank_date); // duedate?
+	        		
+       		    let paymentData = {
+	       		    		imp_uid: rsp.imp_uid,
+	                        reservationId : reservation_uid,
+	                        amount : amount,
+	                        roundId : roundId,
+	                        receipt : rsp.receipt_url,
+	                        vbank_name : rsp.vbank_name,
+	                        vbank_num : rsp.vbank_num,
+	                        vbank_date : rsp.vbank_date
+       		    		};	    		
+	        		    		
+	        		
+ 	            	 $.ajax({
 	                     url: "/show/payments/bank",
 	                     type: "POST",
-	                     data: {
-	                    	 imp_uid: rsp.imp_uid,
-	                         merchant_uid: rsp.merchant_uid,
-	                         reservationId : reservation_uid,
-	                         amount : amount,
-	                         method : 2,
-	                         roundId : roundId
-	                     },
-	                     success: function () {
-	                         alert("결제 정보 저장 성공"); // 마이페이지로 이동?
+	                     data: JSON.stringify(paymentData),
+	                     contentType: 'application/json',
+	                     success: function (success) {
+	                         alert(success); 
+	                         
+	                         
+	                         
 	                     }, 
 	                     error: function () {
 	                         alert("결제 정보 저장 실패");
 	                     }
-	                 });
-	            	
-	            	// alert("가상계좌 발급 성공: " + rsp.vbank_num + " (" + rsp.vbank_name + ")");
-	                // console.log(rsp); // rsp.vbank_num: 가상계좌 번호, rsp.vbank_name: 은행명
-	                // 결제 후 +3일 정도?
+	                 }); 
+	            	 
 	            } else {
 	                alert("가상계좌 발급 실패: " + rsp.error_msg);
 	            }
 	        });
         }); 
     </script>
-    
-    
-<!--            은행명 (rsp.vbank_name)
-            계좌번호 (rsp.vbank_num)
-            입금 기한 (rsp.vbank_date) --> 
 </body>
 </html>
