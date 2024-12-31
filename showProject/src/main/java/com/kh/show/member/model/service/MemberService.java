@@ -5,7 +5,10 @@ import java.util.HashMap;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.customer.model.vo.Reservation;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.showInfo.model.vo.Review;
+import com.kh.show.showInfo.model.vo.Show;
 
 public interface MemberService {
 	
@@ -34,8 +37,16 @@ public interface MemberService {
 	//구독 서비스
 	int startSub(String userId);
 	
-	//목록 수 조회
+	//문의 목록 수 조회
 	int listCount(int userNo);
 	//회원 qna 목록 조회
 	ArrayList<Question> qnaList(int userNo, PageInfo pi);
+	//리뷰 수 조회
+	int rListCount(int userNo);
+	//리뷰 목록 추출
+	ArrayList<Review> reviewList(int userNo, PageInfo pi);
+	//공연 수 조회
+	int sListCount(int userNo);
+	//공연 목록 조회
+	ArrayList<Reservation> showList(int userNo, PageInfo pi);
 }

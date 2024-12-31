@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Review {
 	private int reviewId; //	REVIEW_ID
-	private int showNo;  //	SHOW_NO
+	private String showNo;  //	SHOW_NO
 	private String userId;	//	USER_NO
-	private int reviewScore;	//	REVIEW_SCORE
+	private double reviewScore;	//	REVIEW_SCORE
 	private String reviewTitle;	//	REVIEW_TITLE
 	private String reviewContent;	//	REVIEW_CONTENT
 	private Date createDate;	//	CREATE_DATE

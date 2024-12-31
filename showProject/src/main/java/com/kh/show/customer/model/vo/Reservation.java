@@ -1,6 +1,6 @@
 package com.kh.show.customer.model.vo;
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -31,6 +31,6 @@ public class Reservation {
 	private String precaution;	//	PRECAUTION
 
 	// mapper에서 collection 이용하기 위해 사용.
-	private List<Show> showList;
+	private ArrayList<Show> showList;
 	
 }
