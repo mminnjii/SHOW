@@ -24,7 +24,6 @@
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
 
 
-		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/>
 		<typeAlias type="com.kh.show.reservation.model.vo.ManagerPageReservation" alias="ManagerReservation"/>		
 		<typeAlias type="com.kh.show.showInfo.model.vo.Hall" alias="Hall"/> 		
 
