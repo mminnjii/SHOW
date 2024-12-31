@@ -33,11 +33,11 @@
             text-align: left;
             width: 70%;
             margin: 0px auto;
-            margin-top: 30px;
             background-color: white;
             padding: 3% 5%;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid lightgray;
+            border-radius: 0px 0px  10px 10px;
+			border-top : none;
         }
 
         #noticeList tbody>tr:hover{
@@ -111,13 +111,10 @@
     </style>
 </head>
 <body>
-	
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
-	
     <div class="a">
         <h2 align="center">공지사항</h2>
         
-        <br><br>
         <div class="btnForm">
 	       <div class="btnGroup">
 	           <button id="general" class="noBtn" value="general">일반 공지</button>
