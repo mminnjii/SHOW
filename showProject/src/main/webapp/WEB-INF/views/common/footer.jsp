@@ -98,7 +98,7 @@
                 <tr>
             <p id="p1">
                         <br>
-                        <img src="/show/resources/images/로고2.png" id="img"><br><br>
+                        <img src="${contextPath }/resources/images/로고2.png" id="img"><br><br>
                         </tr>
                         <tr>
 		                <p>주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩 (구관) 19F, 20F | 대표이사:김민지 | 사업자등록번호:144-21-25090 <br>

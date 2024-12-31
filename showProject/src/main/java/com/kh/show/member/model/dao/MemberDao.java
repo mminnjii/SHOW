@@ -1,5 +1,6 @@
 package com.kh.show.member.model.dao;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.customer.model.vo.Reservation;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.showInfo.model.vo.Review;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Repository
 public class MemberDao {
@@ -77,6 +81,32 @@ public class MemberDao {
 		RowBounds rowbounds = new RowBounds(offset,limit);
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.qnaList",userNo, rowbounds);
+	}
+
+	public int rListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.rListCount",userNo);
+	}
+
+	public ArrayList<Review> reviewList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+
+		return (ArrayList)sqlSession.selectList("memberMapper.reviewList",userNo, rowbounds);
+	}
+
+	public int sListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.sListCount",userNo);
+	}
+
+	public ArrayList<Reservation> showList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.mshowList",userNo,rowbounds);
 	}
 
 }
