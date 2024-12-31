@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,8 +73,14 @@
 		width: 80px;
 		height: 80px;
 		margin: 6px 15px;
-
+		overflow: hidden;
 		border-radius: 40px;
+	}
+
+	#profile{
+		width:100%;
+		height:100%;
+		object-fit: cover;
 	}
 
 	#my-info-detail{
@@ -103,7 +110,19 @@
 		color: black;
 	}
 
-	
+	#b1{
+		color: white;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	#b2{
+		color: blue;
+	}
+
+	#b3{
+		color: red;
+	}
+
 	
 </style>
 </head>
@@ -123,11 +142,25 @@
 					<div id="my-profile">
 						<div id="my-info">
 							<div id="my-img" style="border: 2px solid black;">
-								<img src="">
+								<img src="${contextPath }/resources/profile/${loginUser.changeName}" id="profile">
 							</div>
 							<div id="my-info-detail">
 								${loginUser.userName} 회원님 &nbsp;&nbsp;
-								${loginUser.rank} 등급
+								<c:choose>
+									<c:when test="${loginUser.rank == 'WHITE'}">
+										<b id="b1">${loginUser.rank}</b>
+									</c:when>
+									<c:when test="${loginUser.rank == 'BLUE'}">
+										<b id="b2">${loginUser.rank}</b>
+									</c:when>
+									<c:when test="${loginUser.rank == 'RED'}">
+										<b id="b3">${loginUser.rank}</b>
+									</c:when>
+									<c:otherwise>
+										<b id="b4">${loginUser.rank}</b>
+									</c:otherwise>
+								</c:choose>
+								등급
 							</div>
 						</div>
 					</div>
@@ -157,6 +190,21 @@
             </div>
 		</div>
 	</div>
+
+	<script>
+		// 스크롤 위치 저장
+		window.addEventListener('beforeunload', function () {
+       	 localStorage.setItem('scrollPosition', window.scrollY);
+    	});
+
+    	// 스크롤 위치 복원
+    	window.addEventListener('load', function () {
+        	const scrollPosition = localStorage.getItem('scrollPosition');
+        	if (scrollPosition) {
+           	 window.scrollTo(0, parseInt(scrollPosition, 10));
+       	 }
+    	});
+	</script>
 	
 
     <br><br><br>

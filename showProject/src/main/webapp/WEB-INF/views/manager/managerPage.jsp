@@ -31,21 +31,23 @@
             color: #fff;
         }
 
-        .sidebar a {
+        .sidebar > button {
             display: block;
-            padding: 15px;
+            width: 100%;
+            padding: 40px;
+            background-color: #2c3e50;
             color: #fff;
             text-decoration: none;
             font-size: 18px;
             border-bottom: 1px solid #34495e;
         }
 
-        .sidebar a:hover {
+        .sidebar > button:hover {
             background-color: #34495e;
         }
 
         .main-content {
-        	position: relative;
+            position: relative;
             flex-grow: 1;
             padding: 20px;
         }
@@ -123,29 +125,44 @@
             border-radius: 5px;
         }
 
-        .create-notice-btn, .create-faq-btn, .create-show-btn {
-		    display: none; /* 초기 상태 숨김 */
-		    position: absolute; /* 부모 요소를 기준으로 위치 */
-		    bottom: -100px; /* 부모 요소의 하단에서 20px */
-		    right: 20px; /* 부모 요소의 오른쪽에서 20px */
-		    padding: 15px 30px;
-		    background-color: #27ae60;
-		    color: white;
-		    border-radius: 5px;
-		    text-decoration: none;
-		    font-size: 16px;
-		    z-index: 1000; /* 다른 요소 위로 배치 */
-		}
+        /* 작성 버튼을 #data-container 바로 아래에 배치 */
+        .create-notice-btn,
+        .create-faq-btn,
+        .create-show-btn {
+            display: none; /* 초기 상태 숨김 */
+            position: absolute; /* 부모 요소를 기준으로 위치 */
+            bottom: -230px; /* #data-container의 아래로 20px */
+            left: 96.5%; /* 화면 가운데로 위치 */
+            transform: translateX(-50%); /* 가운데 정렬 */
+            padding: 15px 30px;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 15px;
+            z-index: 1000; /* 다른 요소 위로 배치 */
+        }
 
-		.create-notice-btn:hover, .create-faq-btn:hover, .create-show-btn:hover {
-		    background-color: #2ecc71;
-		}
-		
-		.create-notice-btn[style="display: block;"],
-		.create-faq-btn[style="display: block;"],
-		.creater-show-btn[style="display: block"] {
-		    display: block !important; /* 강제로 표시 */
-		}
+        .create-notice-btn:hover, .create-faq-btn:hover, .create-show-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -154,11 +171,11 @@
         <!-- 사이드바 -->
         <div class="sidebar">
             <h2>관리 사항</h2>
-            <a href="#" id="notice-management-btn">공지사항 관리</a>
-            <a href="#" id="faq-management-btn">FAQ 관리</a>
-            <a href="#" id="user-management-btn">회원 관리</a>
-            <a href="#" id="reservation-management-btn">회원 예매 관리</a>
-            <a href="#" id="show-management-btn">공연 관리</a>
+            <button id="noticeBtn">공지사항 관리</button>
+            <button id="faqBtn">FAQ 관리</button>
+            <button id="userBtn">회원 관리</button>
+            <button id="reservationBtn">회원 예매 관리</button>
+            <button id="showBtn">공연 관리</button>
         </div>
 
         <!-- 메인 콘텐츠 -->
@@ -166,106 +183,206 @@
             <div class="header">
                 <h1>관리 사항</h1>
                 <form action="${contextPath}/managerLogout">
-                	<button class="logout-btn">로그아웃</button>
+                    <button class="logout-btn">로그아웃</button>
                 </form>
             </div>
 
-            <!-- 공지사항 목록 -->
-            <div id="notice-list">
-                <p>공지사항 데이터를 불러오고 있습니다...</p>
+            <!-- 데이터 표시 영역 -->
+            <div id="data-container">
+                <p>데이터를 불러오고 있습니다...</p>
             </div>
         </div>
 
-		<!-- 공지사항 작성 버튼 -->
+        <!-- 공지사항 작성 버튼 -->
         <form action="${contextPath}/noticeInsert" method="GET">
-		    <button type="submit" class="create-notice-btn" id="createNotice">공지사항 작성</button>
-		</form>
-		
-		<!-- FAQ 작성 버튼 -->
-		<form action="${contextPath}/faqInsert" method="GET">
-		    <button type="submit" class="create-faq-btn" id="createFaq">FAQ 작성</button>
-		</form>
-		
-		<!-- 공연 작성 버튼 -->
-		<form action="${contextPath}/showInsert" method="GET">
-		    <button type="submit" class="create-show-btn" id="createShow">공연 작성</button>
-		</form>
+            <button type="submit" class="create-notice-btn" id="createNotice">공지사항 작성</button>
+        </form>
+
+        <!-- FAQ 작성 버튼 -->
+        <form action="${contextPath}/faqInsert" method="GET">
+            <button type="submit" class="create-faq-btn" id="createFaq">FAQ 작성</button>
+        </form>
+
+        <!-- 공연 작성 버튼 -->
+        <form action="${contextPath}/showInsert" method="GET">
+            <button type="submit" class="create-show-btn" id="createShow">공연 작성</button>
+        </form>
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
+        // 초기 상태에서 버튼 숨기기
+        hideCreateButtons();
+
         // 공지사항 관리 버튼 클릭 시
-        document.getElementById('notice-management-btn').addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 동작 방지
-            console.log('공지사항 관리 버튼 클릭됨'); // 디버깅용 메시지
+        document.getElementById('noticeBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideCreateButtons(); // 모든 작성 버튼 숨기기
             document.querySelector('.create-notice-btn').style.display = 'block'; // 공지사항 작성 버튼 표시
-            document.querySelector('.create-faq-btn').style.display = 'none'; // FAQ 작성 버튼 숨기기
-            document.querySelector('.create-show-btn').style.display = 'none';
+            loadData('notice'); // 공지사항 데이터 로드
         });
 
         // FAQ 관리 버튼 클릭 시
-        document.getElementById('faq-management-btn').addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 동작 방지
-            console.log('FAQ 관리 버튼 클릭됨'); // 디버깅용 메시지
+        document.getElementById('faqBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideCreateButtons(); // 모든 작성 버튼 숨기기
             document.querySelector('.create-faq-btn').style.display = 'block'; // FAQ 작성 버튼 표시
-            document.querySelector('.create-show-btn').style.display = 'none';
-            document.querySelector('.create-notice-btn').style.display = 'none'; // 공지사항 작성 버튼 숨기기
+            loadData('faq'); // FAQ 데이터 로드
         });
-        
-	     // 공연 관리 버튼 클릭 시
-	     document.getElementById('show-management-btn').addEventListener('click', function(event) {
-	         event.preventDefault(); // 기본 동작 방지
-	         console.log('공연 관리 버튼 클릭됨'); // 디버깅용 메시지
-	         document.querySelector('.create-show-btn').style.display = 'block';
-	         document.querySelector('.create-faq-btn').style.display = 'none'; // FAQ 작성 버튼 표시
-	         document.querySelector('.create-notice-btn').style.display = 'none'; // 공지사항 작성 버튼 숨기기
-	     });
-	     
-	     document.getElementById('createShow').addEventListener('click', function(event){
-	    	 event.preventDefault();
-	    	 console.log('공연 작성 버튼 클릭됨');
-	    	 window.location.href = '${contextPath}/showInsert';
-	     });
 
-        // 버튼 숨기기 초기화 함수
+        // 공연 관리 버튼 클릭 시
+        document.getElementById('showBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideCreateButtons(); // 모든 작성 버튼 숨기기
+            document.querySelector('.create-show-btn').style.display = 'block'; // 공연 작성 버튼 표시
+            loadData('show'); // 공연 데이터 로드
+        });
+
+        // 회원 관리 버튼 클릭 시
+        document.getElementById('userBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideCreateButtons(); // 모든 작성 버튼 숨기기
+            loadData('member'); // 회원 데이터 로드
+        });
+
+        // 회원 예매 관리 버튼 클릭 시
+        document.getElementById('reservationBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideCreateButtons(); // 모든 작성 버튼 숨기기
+            loadData('reserv'); // 예약 데이터 로드
+        });
+
+        // 작성 버튼 숨기기
         function hideCreateButtons() {
             document.querySelector('.create-notice-btn').style.display = 'none';
             document.querySelector('.create-faq-btn').style.display = 'none';
             document.querySelector('.create-show-btn').style.display = 'none';
         }
+        
+     // 데이터 항목에 맞는 헤더 매핑
+        const headerMappings = {
+            notice: {
+                noticeNo: '공지사항 번호',
+                noticeTitle: '공지사항 제목',
+                createDate: '작성일',
+                count: '조회수'
+            },
+            faq: {
+                faqNo: 'FAQ 번호',
+                faqTitle: 'FAQ 제목',
+                count: '조회수'
+            },
+            show: {
+                showNo: '공연 번호',
+                showName: '공연 제목',
+                showExplain: '공연 설명',
+                status: '공연 상태',
+                hallName: '공연장',
+                genreName: '장르',
+                regionName: '지역',
+                showStart: '공연 시작일',
+                showEnd: '공연 종료일',
+                count: '조회수'
+            },
+            member: {
+                userNo: '회원 번호',
+                userId: '아이디',
+                userName: '이름',
+                userRrn: '주민번호',
+                phone: '연락처',
+                email: '이메일',
+                address: '주소',
+                enrollDate: '가입일',
+                modifyDate: '정보수정일',
+                rank: '회원 등급',
+                subscribe: '구독 여부',
+                status: '계정 상태'
+            },
+            reserv: {
+                reservationId: '예약 번호',
+                showName: '공연 이름',
+                roundId: '회차',
+                userName: '예약 회원 이름',
+                hallName: '공연장 이름',
+                status: '예약 상태',
+                createDate: '예약일'
+            }
+        };
 
-        // 공지사항 목록 로드 함수
-        function loadNoticeList() {
-		    $.ajax({
-		        url: '/noticeList', // 수정된 URL
-		        method: 'GET',
-		        dataType: 'json', // JSON 형식으로 데이터 처리
-		        success: function(data) {
-		            const noticeList = document.getElementById('notice-list');
-		            noticeList.innerHTML = ''; // 기존 내용 비우기
-		            if (data.length > 0) {
-		                data.forEach(notice => {
-		                    const noticeItem = document.createElement('div');
-		                    noticeItem.className = 'notice-item';
-		                    noticeItem.innerHTML = `
-		                        <h3>${notice.title}</h3>
-		                        <p>${notice.content}</p>
-		                        <small>작성일: ${notice.createdDate}</small>
-		                    `;
-		                    noticeList.appendChild(noticeItem);
-		                });
-		            } else {
-		                noticeList.innerHTML = '<p>등록된 공지사항이 없습니다.</p>';
-		            }
-		        },
-		        error: function(xhr, status, error) {
-		            console.error("AJAX 요청 실패:", status, error);
-		            document.getElementById('notice-list').innerHTML = '<p>데이터를 불러오는데 실패하였습니다.</p>';
-		        }
-		    });
-		}
-        // 페이지 로드 시 공지사항 목록 로드
-        loadNoticeList();
+     // 데이터 로드 함수 수정
+        function loadData(type) {
+            const urlMap = {
+                notice: '${contextPath}/noticeList',
+                faq: '${contextPath}/faqList',
+                show: '${contextPath}/showList',
+                member: '${contextPath}/memberList',
+                reserv: '${contextPath}/reservList'
+            };
+            const url = urlMap[type];
+            fetchDataAndDisplay(url, type);
+        }
+
+        // 데이터 가져오기 및 표시 함수
+        function fetchDataAndDisplay(url, type) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('네트워크 응답에 문제가 있습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayData(data, type);
+                })
+                .catch(error => {
+                    console.error('AJAX 요청 실패:', error);
+                    document.getElementById('data-container').innerHTML =
+                        '<p>데이터를 불러오는 중 문제가 발생했습니다.</p>';
+                });
+        }
+
+        // 데이터를 화면에 표시하는 함수
+        function displayData(data, type) {
+            const container = document.getElementById('data-container');
+            container.innerHTML = '';
+
+            if (Array.isArray(data) && data.length > 0) {
+                const table = document.createElement('table');
+                table.classList.add('data-table');
+                const thead = document.createElement('thead');
+                const tbody = document.createElement('tbody');
+
+                // 해당 타입에 맞는 헤더 매핑 가져오기
+                const headers = headerMappings[type] || {};
+                const keys = Object.keys(data[0]);
+                const headerRow = document.createElement('tr');
+
+                keys.forEach(key => {
+                    const th = document.createElement('th');
+                    th.textContent = headers[key] || key;  //
+                    headerRow.appendChild(th);
+                });
+
+                thead.appendChild(headerRow);
+
+                // 테이블 본문 생성
+                data.forEach(row => {
+                    const tableRow = document.createElement('tr');
+                    keys.forEach(key => {
+                        const td = document.createElement('td');
+                        td.textContent = row[key];
+                        tableRow.appendChild(td);
+                    });
+                    tbody.appendChild(tableRow);
+                });
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(table);
+            } else {
+                container.innerHTML = '<p>데이터가 없습니다.</p>';
+            }
+        }
     });
     </script>
     <%@include file="/WEB-INF/views/common/footer.jsp" %>

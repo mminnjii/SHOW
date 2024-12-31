@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="USER_NO" property="userNo" />
 		<result column="RESERVATION_ID" property="reservationId" />
 		<result column="QCATEGORY_NO" property="qcategoryNo" />
-		<result column="Q_TITLE" property="qTitle" />
-		<result column="Q_CONTENT" property="qContent" />
+		<result column="Q_TITLE" property="quTitle" />
+		<result column="Q_CONTENT" property="quContent" />
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="CREATEDATE" property="createDate" />
@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     ,#{userNo}
                     ,SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
                     ,#{qcategoryNo}
-                    ,#{qTitle}
-                    ,#{qContent}
+                    ,#{quTitle}
+                    ,#{quContent}
                     ,#{originName}
                     ,#{changeName})
 	</insert>
@@ -88,8 +88,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				                    ,#{email}
 				                    ,#{qcategoryNo}
 				                    ,#{phone}
-				                    ,#{qTitle}
-				                    ,#{qContent}
+				                    ,#{quTitle}
+				                    ,#{quContent}
 				                    ,#{originName}
 				                    ,#{changeName}
 				                    )
@@ -100,6 +100,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE FAQ
 		SET COUNT = COUNT+1
 		WHERE FAQ_NO = #{faqNo}
+	</update>
+	
+	<select id="selectQna" resultMap="questionResultSet">
+		SELECT QUESTION_NO,
+			   USER_NO,
+			   RESERVATION_ID,
+			   QCATEGORY_NO,
+			   Q_TITLE,
+			   Q_CONTENT,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   CREATEDATE,
+			   ANSWER_CONTENT
+		FROM QUESTION
+		WHERE QUESTION_NO = #{questionNo}
+		AND STATUS = 'Y'
+		
+	</select>
+	
+	<delete id="qnaDelete">
+		DELETE FROM QUESTION
+		WHERE QUESTION_NO = #{questionNo}
+	</delete>
+	
+	<update id="updateQna" parameterType="Question">
+		UPDATE QUESTION
+		SET RESERVATION_ID = SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
+           ,QCATEGORY_NO = #{qcategoryNo}
+           ,Q_TITLE = #{quTitle}
+           ,Q_CONTENT = #{quContent}
+           ,ORIGIN_NAME = #{originName}
+           ,CHANGE_NAME = #{changeName}
+        WHERE QUESTION_NO = #{questionNo}
+        AND STATUS = 'Y'
 	</update>
 	
 	
