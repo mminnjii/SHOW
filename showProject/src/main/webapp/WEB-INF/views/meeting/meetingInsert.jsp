@@ -12,11 +12,11 @@
         text-align: left;
         width: 60%;
         margin: 0px auto;
-        margin-top: 30px;
         background-color: white;
-        padding: 3% 8%;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
+        padding: 3% 5%;
+        border: 1px solid lightgray;
+        border-radius: 0px 0px  10px 10px;
+		border-top : none;
     }
 
     h1 {
@@ -39,6 +39,11 @@
         box-sizing: border-box;
     }
     
+     #showDiv2 select, #showDiv2 input {
+	    width: 100%;
+	    height: 40px;
+	}
+	
     button {
         background-color: #597c9b;
         color: white;
@@ -50,18 +55,18 @@
         background-color: #374f64;
     }
     
-    #showDiv2{
+   .showDiv22{
     	display: inline-block;
     }
     
-    #showDiv2 i {
+    .showDiv22 i {
     	position: absolute;  /* 아이콘 위치 고정 */
 		color: gray;
 		margin-left: 10px;
-		margin-top: 18px;
+		margin-top: 20px;
     }
     
-    #showDiv2 input{
+    .showDiv22 input{
     	width: 100%;
     	padding-left: 35px;
     }
@@ -71,9 +76,7 @@
 <body>
 
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
-<br><br>
 <div class="a">
-
 
     <h1>소모임 생성</h1>
     <form action="meetingInsert" method="POST">
@@ -85,7 +88,7 @@
         <label for="category">공연</label>
         <!-- 공연 정보 불러와서 -->
         <!-- GENRE 테이블 정보 가져오기 -->
-       	<div id="showDiv2" class="showDiv2" style="width: 25%;">
+       	<div id="showDiv1" class="showDiv2 showDiv22" style="width: 25%;">
 	        <select id="category" name="category" required>
 	            <option value="" disabled selected>공연카테고리를 선택하세요</option>
 	            <c:forEach var="g" items="${genreList}">
@@ -93,11 +96,11 @@
 	            </c:forEach>
 	        </select>
        	</div>
-       	<div id="showDiv2" style="width: 30%;">
+       	<div id="showDiv2" class="showDiv22" style="width: 30%;">
 			<i class="fa-solid fa-magnifying-glass"></i>
 			<input type="text" id="keyword" name="keyword" placeholder="카테고리를 선택 후 공연명을 검색하세요.">
        	</div>
-       	<div id="showDiv2" style="width: 495px;"> 
+       	<div id="showDiv3" class="showDiv22" style="width: 495px;"> 
 			<!-- 공연 정보 불러오기 -->        
 			<select id="show" name="showNo">
 				<option disabled selected>카테고리를 선택하면 공연을 선택할 수 있습니다.</option>
@@ -170,7 +173,8 @@
 		
 		
 	</script>
-
 </div>
+<br><br><br>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

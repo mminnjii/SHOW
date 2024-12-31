@@ -5,10 +5,9 @@ import java.util.HashMap;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
-import com.kh.show.showInfo.model.vo.Show;
 
 public interface MemberService {
 	
