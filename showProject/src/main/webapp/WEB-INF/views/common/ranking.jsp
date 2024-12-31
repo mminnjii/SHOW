@@ -95,6 +95,25 @@
     #list{
         height: 70px;
     }
+    
+     #one{
+	  font-family: "Noto Sans KR", sans-serif;
+        font-size: 70px;
+        font-weight: 700;
+        font-style: normal;
+        color: white; 
+        z-index: 20;
+        position: relative;
+        right:190px;
+        display: inline-block;
+        margin:0;
+        padding:0;
+      }
+      
+      #j3{
+      	width:35px;
+      }
+        
   
 </style>
 </head>
@@ -109,72 +128,361 @@
             </td>
             </tr>
             <br><br>
-            <tr>
+            <tr id="btnList">
             <td colspan="9" id="list">
                 <button id="b1">뮤지컬</button>
                 <button id="b2">콘서트</button>
                 <button id="b3">클래식/무용</button>
-                <button id="b4">아동/가족</button>
-                <button id="b5">연극</button>
-                <button id="b6">전시</button>
+                <button id="b4">연극</button>
+                <button id="b5">전시</button>
             </td>
-            
+             
             </tr>
             
             
-            <tr>
+            <tr id="mainRank">
+                <td>
+
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <span id="j1">광화문연가</span><br>
+
+                </td>
                 
                 <td>
-                    <a href="/show/showInfo/detail"><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f1"></a><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
+           <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <span id="j1">글루미 선데이</span><br>
+                    <span id="j2">2024.11.05-2025.01.26</span>
+
                 </td>
-                <td id="oo"></td>
+                
                 <td>
-                    <a href="/show/showInfo/detail"><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f2"></a><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
+
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <span id="j1">클로버</span><br>
+                    <span id="j2">2024.11.05-2025.01.26</span>
+
                 </td>
-                <td id="oo"></td>
+                
                 <td>
-                    <a href="/show/showInfo/detail"><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f3"></a><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
+
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <span id="j1">틱틱붐</span><br>
+                    <span id="j2">2024.12.17-2025.02.02</span>
+
                 </td>
-                <td id="oo"></td>
+                
                 <td>
-                    <a href="/show/showInfo/detail"><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f4"></a><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail"><img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="f5"></a><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
+
+                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <span id="j1">오페라</span><br>
+                    <span id="j2">2024.12.22-2024.12.30</span>
+                </td>        
+                
+
             </tr>
         </table>
 
     </div>
 
     <script>
+    
+    
+    var previousData = $("#mainRank").html();
+    
+    $("#rank2").click(function(){
+    	
+    	$(this).prop('disabled', true);
+    	$("#list").empty();
+    	$("#mainRank").empty();
+    	
+    	 $.ajax({
+             url: "mainRegionRank",
+             success: function(result){
+             	 
+                 var str = "";
+                 for(var i = 0; i < result.length; i++){
+                     
+                     
+                     str += "<td colspan='9' id='list'"
+                     + "<button id='b1'>"+result[i].regionName+"</button>";
+                     
+                 </td>
 
-        $("#b1").click(function(){
-
-            $.ajax({
-                url : "musicalList",
-                success : function(result){
+                 }
+                   
+                 
+                 $("#btnList").append(str);
+                 
+                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
+                 $("#b1").removeAttr("disabled");
+                 
+                 
+             
+             },
+             error: function(){
+                 console.log("통신 오류");
+                
+             }
+           
+             
+         });
+     });
+    	
+    	
+    	
+    });
+    
+    
+    
+    
+    $("#b2").click(function(){
+    	
+    	// 버튼을 클릭했을 때 비활성화
+        $(this).prop('disabled', true);
+    	//console.log($(this));
+    	//prop은 jQuery에서 DOM 요소의 속성(properties)값을 가져오거나 설정하는 데 
+    	//사용되는 메서드 
+    	
+    	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
+    	$("#mainRank").empty();
+    	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
+    	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
+    	
+        $.ajax({
+            url: "concertShow",
+            success: function(result){
+            	 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
                     
-                    var resultStr = "";
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    
+                    str += "<td>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>"
+                          + "<td id='j3'></td>";
 
-                },
-                error : function(){
-                    console.log("통신 오류");
                 }
-            });
-
+                  
+                
+                $("#mainRank").append(str);
+                
+                //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
+                $("#b1").removeAttr("disabled");
+                
+                
+            
+            },
+            error: function(){
+                console.log("통신 오류");
+               
+            }
+          
+            
         });
+    });
+
+    
+    
+ 	// b1 버튼 클릭 시 이전 데이터로 돌아가기
+    $("#b1").click(function(){
+        $(this).prop('disabled', true);  // 버튼 비활성화
+        
+      
+       
+            $("#mainRank").empty();  // b2를 눌렀을 때에 저장된 데이터 삭제 
+            $("#mainRank").append(previousData);  //맨 처음 데이터를 저장시킨 변수를 불러옴
+       
+        
+            //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
+            $("#b2").removeAttr("disabled");
+            $("#b3").removeAttr("disabled");
+            $("#b4").removeAttr("disabled");
+            $("#b5").removeAttr("disabled");
+            $("#b6").removeAttr("disabled");
+            
+    });
+
+    
+ 	
+  //기존데이터를 previousData에 담아둔다. 
+		var previousData = $("#mainRank").html();
+
+
+    $("#b3").click(function(){
+    	
+    	// 버튼을 클릭했을 때 비활성화
+        $(this).prop('disabled', true);
+    	//console.log($(this));
+    	//prop은 jQuery에서 DOM 요소의 속성(properties)값을 가져오거나 설정하는 데 
+    	//사용되는 메서드 
+    	
+    	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
+    	$("#mainRank").empty();
+    	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
+    	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
+    	
+        $.ajax({
+            url: "classicShow",
+            success: function(result){
+            	 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
+                    
+                    
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    str += "<td>"
+                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>"
+                          + "<td id='j3'></td>"
+
+                }
+                  
+                
+                $("#mainRank").append(str);
+                
+                //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
+                $("#b1").removeAttr("disabled");
+                $("#b2").removeAttr("disabled");
+                $("#b3").removeAttr("disabled");
+                $("#b4").removeAttr("disabled");
+                $("#b5").removeAttr("disabled");
+                $("#b6").removeAttr("disabled");
+                
+                
+            
+            },
+            error: function(){
+                console.log("통신 오류");
+               
+            }
+          
+            
+        });
+    });
+
+    
+    
+    var previousData = $("#mainRank").html();
+    
+    
+    $("#b4").click(function(){
+    	
+    	// 버튼을 클릭했을 때 비활성화
+        $(this).prop('disabled', true);
+    	//console.log($(this));
+    	//prop은 jQuery에서 DOM 요소의 속성(properties)값을 가져오거나 설정하는 데 
+    	//사용되는 메서드 
+    	
+    	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
+    	$("#mainRank").empty();
+    	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
+    	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
+    	
+        $.ajax({
+            url: "playShow",
+            success: function(result){
+            	 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
+                    
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    
+                    str += "<td>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>"
+                          + "<td id='j3'></td>"
+
+                }
+                  
+                
+                $("#mainRank").append(str);
+                
+                //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
+                $("#b1").removeAttr("disabled");
+                $("#b2").removeAttr("disabled");
+                $("#b3").removeAttr("disabled");
+                $("#b5").removeAttr("disabled");
+                
+                
+                
+                
+                
+            
+            },
+            error: function(){
+                console.log("통신 오류");
+               
+            }
+          
+            
+        });
+    });
+    
+    
+    var previousData = $("#mainRank").html();
+    
+    
+    $("#b5").click(function(){
+    	
+    	// 버튼을 클릭했을 때 비활성화
+        $(this).prop('disabled', true);
+    	//console.log($(this));
+    	//prop은 jQuery에서 DOM 요소의 속성(properties)값을 가져오거나 설정하는 데 
+    	//사용되는 메서드 
+    	
+    	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
+    	$("#mainRank").empty();
+    	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
+    	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
+    	
+        $.ajax({
+            url: "displayShow",
+            success: function(result){
+            	 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
+                    
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    
+                    str += "<td>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>"
+                          + "<td id='j3'></td>"
+
+                }
+                  
+                
+                $("#mainRank").append(str);
+                
+                //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
+                $("#b1").removeAttr("disabled");
+                $("#b2").removeAttr("disabled");
+                $("#b3").removeAttr("disabled");
+                $("#b4").removeAttr("disabled");
+                
+                
+            
+            },
+            error: function(){
+                console.log("통신 오류");
+               
+            }
+          
+            
+        });
+    });
+
+ 	
+     
     </script>
     
 </body>

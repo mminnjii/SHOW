@@ -415,4 +415,49 @@ public ArrayList<Show> musicalShow() {
 
 
 
+	//뮤지컬 서울 지역 
+	@Override
+	public ArrayList<Show> musicalRegion0() {
+
+		return showInfoDao.musicalRegion0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> playRegion0() {
+
+		return showInfoDao.playRegion0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> concertRegion0() {
+
+		return showInfoDao.concertRegion0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> classicRegion0() {
+
+		return showInfoDao.classicRegion0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> displayRegion0() {
+
+		return showInfoDao.displayRegion0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank() {
+
+		return showInfoDao.mainRegionRank(sqlSession);
+	}
+
+
+
+
 }

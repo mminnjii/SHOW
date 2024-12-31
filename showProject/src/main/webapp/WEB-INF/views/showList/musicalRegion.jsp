@@ -60,7 +60,7 @@
         align-items: center;
     }
     #oo{
-        width: 20px;
+        width: 30px;
     }
     #ooo{
         height: 25px;
@@ -79,12 +79,30 @@
         font-style: normal;
         color: gray;
     }
-    #list{
+    #list11{
         height: 70px;
+        left:390px;
+        position: relative;
+  
+        
+    }
+    #rank11{
+      
+      left:390px;
+		position: relative;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 35px;
+        font-weight: 500;
+        font-style: normal;
+        color: black;
+        
     }
     .mureTable{
+      
+       
+        position: relative;
+        left:390px;
         
-        margin: auto;
     }
   
 </style>
@@ -92,11 +110,10 @@
 <body>
 
     <div>
-        <table class="mureTable" >
-            <tr><td id="rank1">지역</td>  </tr>
+    <span id="rank11">지역</span> 
             <br><br>
-            <tr>
-            <td colspan="9" id="list">
+            <div id="list11">
+           
                 <button id="c1">서울</button>
                 <button id="c2">경기/인천</button>
                 <button id="c3">충청/강원</button>
@@ -105,40 +122,25 @@
                 <button id="c6">광주/전라</button>
                 <button id="c7">제주</button>
                 
-            </td>
+            </div>
             
-            </tr>
+         
+    
+    
+    
+    
+        <table class="mureTable" >
+            
             
             
             <tr id="regionArea">
                 
-                <td>
-                    <a href=""><img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id="r1"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/베르테르.jpg" alt="" id="r2"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/시라노.jpg" alt="" id="r3"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
-                <td>
-                    <a href=""><img src="/show/resources/images/오페라.jpg" alt="" id="r4"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
-                </td>
-                <td id="oo"></td>
+              
+                 </tr>
+                
                 
            
-            </tr>
+            
             
             
             
@@ -147,8 +149,80 @@
     </div>
 
     <script>
+    
+    var seoulRegion = $("#regionArea").html();
 
-        var seoulRegion = $("#regionArea").html();
+    $(document).ready(function(){
+        // 페이지 로드 시 바로 데이터를 불러와서 표시
+        seoulRegionData();
+
+        
+        // #c1 버튼 클릭 시 데이터 로드
+        $("#c1").click(function(){
+        	
+            $(this).prop('disabled', true);  
+            $("#regionArea").empty();
+            loadRegionData();  // 데이터를 불러오는 함수 호출
+        });
+    });
+
+    
+    // 데이터를 불러오는 함수
+    function loadRegionData() {
+        $.ajax({
+            url: "musicalRegion0",  // 서버에서 데이터를 가져오는 URL
+            success: function(result){
+                var str = ""; 
+
+                // 데이터를 4개씩 묶어서 출력하는 부분
+                for (var i = 0; i < result.length; i++) {
+                    if (i % 4 == 0) {  // i가 4의 배수일 때 새로운 행 시작
+                        if (i > 0) {
+                            str += "</tr>"; // 이전 행을 닫음
+                        }
+                        str += "<tr>"; // 새로운 행 시작
+                    }
+
+                    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    //console.log("Image path: " + imgPath);
+
+                    // td 추가
+                    str += "<td>"
+                        + "<img src='" + imgPath + "' alt='Poster Image' id='r1'/><br><br>"
+                        + "<span id='j1'>" + result[i].showName + "</span><br>"
+                        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
+                        + "</td>"
+                        + "<td id='oo'></td>";
+                }
+
+                // 마지막 tr을 닫음
+                str += "</tr>";
+
+                // regionArea에 데이터를 추가
+                $("#regionArea").append(str);
+
+                // 버튼을 다시 활성화
+                $("#c2").removeAttr("disabled");
+                $("#c3").removeAttr("disabled");
+                $("#c4").removeAttr("disabled");
+                $("#c5").removeAttr("disabled");
+                $("#c6").removeAttr("disabled");
+                $("#c7").removeAttr("disabled");
+
+            },
+            error:function(){
+                console.log("통신 오류");
+            }
+        });
+    }
+
+    // 페이지 로드 시 데이터를 불러오기
+    function seoulRegionData() {
+        loadRegionData();  // 페이지 로드 시 데이터를 불러오는 함수 호출
+    }
+
+
+        
         
         $("#c2").click(function(){
         	
@@ -157,12 +231,15 @@
         	
         	$("#regionArea").empty();
         	
+        	
         	$.ajax({
         		
         		url: "musicalRegion1",
         		success: function(result){
         			
         			var str = ""; 
+        			
+        			
 
         			for (var i = 0; i < result.length; i++) {
         			   
@@ -174,12 +251,16 @@
         			      
         			        str += "<tr>";
         			    }
-
+        			    
+        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+        			   
+        			    console.log("Image path: " + imgPath);
+        			    
         			    // td 추가
         			    str += "<td>"
-        			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r1'/><br><br>"
         			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
         			        + "</td>"
         			        + "<td id='oo'></td>";
         			}
@@ -206,23 +287,8 @@
         	});
         });
         
-        $("#c1").click(function(){
-        	
-        	$(this).prop('disabled',true);
-        	
-        	$("#regionArea").empty();
-        	
-        	$("#regionArea").append(seoulRegion);
-        	
-        	$("#c2").removeAttr("disabled");
-        	$("#c3").removeAttr("disabled");
-        	$("#c4").removeAttr("disabled");
-        	$("#c5").removeAttr("disabled");
-        	$("#c6").removeAttr("disabled");
-        	$("#c7").removeAttr("disabled");
-			
-        	
-        });
+        
+       
         
         
 
@@ -251,12 +317,14 @@
 	        			      
 	        			        str += "<tr>";
 	        			    }
+	        			    
+	        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 	
 	        			    // td 추가
-	        			    str += "<td>"
-	        			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+	        			    str += "<td >"
+	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
 	        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 	        			        + "</td>"
 	        			        + "<td id='oo'></td>";
 	        			}
@@ -311,11 +379,12 @@
 			        			        str += "<tr>";
 			        			    }
 			
+			        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 			        			    // td 추가
 			        			    str += "<td>"
-			        			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+			        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
 			        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-			        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+			        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 			        			        + "</td>"
 			        			        + "<td id='oo'></td>";
 			        			}
@@ -371,11 +440,12 @@
         			        str += "<tr>";
         			    }
 
+        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
         			    // td 추가
         			    str += "<td>"
-        			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
         			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
         			        + "</td>"
         			        + "<td id='oo'></td>";
         			}
@@ -431,11 +501,12 @@
 	        			        str += "<tr>";
 	        			    }
 	
+	        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 	        			    // td 추가
 	        			    str += "<td>"
-	        			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
 	        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 	        			        + "</td>"
 	        			        + "<td id='oo'></td>";
 	        			}
@@ -489,11 +560,12 @@
     			        str += "<tr>";
     			    }
 
+    			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
     			    // td 추가
     			    str += "<td>"
-    			        + "<a href=''><img src='/show/resources/images/오페라.jpg' alt='' id='r4'></a><br><br>"
+    			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
     			        + "<span id='j1'>" + result[i].showName + "</span><br>"
-    			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span>"
+    			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
     			        + "</td>"
     			        + "<td id='oo'></td>";
     			}
