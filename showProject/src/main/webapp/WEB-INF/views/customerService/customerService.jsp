@@ -201,6 +201,7 @@
 
 		<div class="outer2">
 			<h3>다른 도움이 필요하신가요?</h3>
+			
 			<div class="oneQ">
 				<a href="${contextPath}/question" class="link">
 					<i class="fa-solid fa-magnifying-glass"></i> 1:1 문의하기
@@ -208,12 +209,11 @@
 				</a>
 			</div>
 
-			<div class="oneQ">
-				<a href="" class="link">
-					<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
-					<p>문의한 내용을 확인해보세요</p>				
-				</a>
-			</div>
+			<a class="oneQ" href="${contextPath}/qna?userNo=${loginUser.userNo}">
+				<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
+				<p>문의한 내용을 확인해보세요</p>
+			</a>
+
 		</div>
 		<br>
 		<br>

@@ -52,4 +52,16 @@ public class CustomerServiceDao {
 		return sqlSession.update("customerMapper.faqCount", faqNo);
 	}
 
+	public Question selectQna(SqlSessionTemplate sqlSession, int qno) {
+		return sqlSession.selectOne("customerMapper.selectQna",qno);
+	}
+
+	public int qnaDelete(SqlSessionTemplate sqlSession, int questionNo) {
+		return sqlSession.delete("customerMapper.qnaDelete",questionNo);
+	}
+
+	public int updateQna(SqlSessionTemplate sqlSession, Question q) {
+		return sqlSession.update("customerMapper.updateQna",q);
+	}
+
 }

@@ -121,7 +121,7 @@
                     <button id="btn1">문의 내역</button>
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <ul class="side-sub-menu"></ul>
-                    </form>
+                </form>
                 </li>
                 <li>
                     <a class="side-title" href="${contextPath}/payment">결제 목록</a>
