@@ -91,6 +91,7 @@
 	}
 	#link>a:hover{
 		font-weight: bolder;
+		cursor: pointer;
 	}
 
 	/*naver*/

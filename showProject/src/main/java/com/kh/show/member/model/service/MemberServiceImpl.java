@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.customer.model.vo.Reservation;
 import com.kh.show.member.model.dao.MemberDao;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.showInfo.model.vo.Review;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -96,6 +98,26 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ArrayList<Question> qnaList( int userNo, PageInfo pi) {
 		return memberDao.qnaList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int rListCount(int userNo) {
+		return memberDao.rListCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Review> reviewList(int userNo, PageInfo pi) {
+		return memberDao.reviewList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int sListCount(int userNo) {
+		return memberDao.sListCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> showList(int userNo, PageInfo pi) {
+		return memberDao.showList(sqlSession,userNo,pi);
 	}
 
 	

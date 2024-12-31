@@ -15,6 +15,7 @@
 	.content{
 		width: 80%;
 		margin: auto;
+		
 	}
 	.inner{
 		width: 100%;
@@ -41,6 +42,7 @@
 	#mypage-body{
 		width: 70%;
 		height: 100%;
+		
 		background-color: rgb(246, 246, 246);
 	}
 
@@ -123,7 +125,46 @@
 		color: red;
 	}
 
-	
+	/*쿠폰 모달*/
+	table{
+		border: 1px solid rgb(232, 232, 232);
+	}
+	#mtotal{
+		width: 500px;
+		height: 350px;
+		
+	}
+
+	table td,th{
+		height: 50px;
+	}
+
+	.modal-body{
+		overflow: auto; 
+	}
+
+	/*링크관련*/
+	.link{
+		font-weight: bold;
+	}
+	.link:hover{
+		cursor: pointer;
+		text-decoration: underline;
+	}
+	.to{
+		background-color: white;
+		border: none;
+		font-weight: lighter;
+	}
+
+	.to:hover{
+		text-decoration: underline;
+	}
+
+	.to:focus{
+        border: none;
+        outline: none;
+    }
 </style>
 </head>
 <body>
@@ -131,6 +172,7 @@
 	
 	<div class="content">
 		<br><br>
+		
 		<div class="inner">
 			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
@@ -165,23 +207,29 @@
 						</div>
 					</div>
 					<div id="my-list">
-						<table style="border: 1px solid lightgray;">
+						<table style="border: 1px solid rgb(234, 234, 234);">
 							<tr>
 								<td>
-									&nbsp;&nbsp;&nbsp;포인트 <br>
+									&nbsp;&nbsp;&nbsp;<b>포인트</b> <br>
 									&nbsp;&nbsp;&nbsp;1000 p
 								</td>
 								<td>
-									&nbsp;&nbsp;&nbsp;<a href="">쿠폰</a><br>
+									&nbsp;&nbsp;&nbsp;<a class="link" data-toggle="modal" data-target="#modal1">쿠폰</a><br>
 									&nbsp;&nbsp;&nbsp;10 장
 								</td>
 								<td>
-									&nbsp;&nbsp;&nbsp;<a href="">후기 작성</a> <br>
-									&nbsp;&nbsp;&nbsp;5 건
+									<form action="${contextPath}/review" method="get">
+										<input type="hidden" name="userNo" value="${loginUser.userNo}">
+										&nbsp;&nbsp;&nbsp;<button class="to">후기 작성</button> <br>
+										&nbsp;&nbsp;&nbsp;5 건
+									</form>
 								</td>
 								<td>
-									&nbsp;&nbsp;&nbsp;<a href="">내 공연</a><br>
+									<form action="${contextPath}/show" method="get">
+										<input type="hidden" name="userNo" value="${loginUser.userNo}">
+									&nbsp;&nbsp;&nbsp;<button class="to">내 공연</button><br>
 									&nbsp;&nbsp;&nbsp;7 개
+									</form>
 								</td>
 							</tr>
 						</table>
@@ -190,6 +238,39 @@
             </div>
 		</div>
 	</div>
+	
+	 <div class="modal fade" id="modal1" >
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content"id="mtotal">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">내 쿠폰</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                   <table>
+                   	<tr>
+						<td width="50px" align="center" style="background-color: rgb(217, 245, 255);">
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-ticket-perforated" viewBox="0 0 16 16">
+								<path d="M4 4.85v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9z"/>
+								<path d="M1.5 3A1.5 1.5 0 0 0 0 4.5V6a.5.5 0 0 0 .5.5 1.5 1.5 0 1 1 0 3 .5.5 0 0 0-.5.5v1.5A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5V10a.5.5 0 0 0-.5-.5 1.5 1.5 0 0 1 0-3A.5.5 0 0 0 16 6V4.5A1.5 1.5 0 0 0 14.5 3zM1 4.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v1.05a2.5 2.5 0 0 0 0 4.9v1.05a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-1.05a2.5 2.5 0 0 0 0-4.9z"/>
+							</svg>
+						</td>
+                   		<th width="300px">
+	                   		&nbsp; 뮤지컬 10% 할인권
+                   		</th>
+                   		<td width="150px" align="center">
+                   			기한 : 20250105
+                   		</td>
+                   	</tr>
+					
+					   
+                   </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<script>
 		// 스크롤 위치 저장
