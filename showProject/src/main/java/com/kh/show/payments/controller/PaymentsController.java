@@ -1,5 +1,7 @@
 package com.kh.show.payments.controller;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
@@ -7,16 +9,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -76,7 +74,7 @@ public class PaymentsController {
 	
 	
 	
-	@PostMapping("/bank")
+	@PostMapping(value = "/bank")
 	@ResponseBody
 	public String paymentComplete(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
@@ -92,38 +90,57 @@ public class PaymentsController {
 		info.put("amount", ((String) paymentData.get("amount")));
 		info.put("method", 2);
 		info.put("status", "N");
+		info.put("methodToget", ((String) paymentData.get("methodToget")));
+		
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(info);
 		
+		String bankName = ((String) paymentData.get("vbank_name"));
+		String bankNum = ((String) paymentData.get("vbank_num"));
+		String name = ((String) paymentData.get("vbank_holder"));
+		String dueDate = ((String) paymentData.get("vbank_date"));
+		String receipt = ((String) paymentData.get("receipt"));
+		
+		info.put("userNo", 2);
+		info.put("bankName",bankName );
+		info.put("bankNum", bankNum);
+		info.put("name", name);
+		info.put("dueDate", dueDate);
+		
+		// 무통장 테이블 생성
+		int result2 = paymentsService.createAccount(info);
+		System.out.println("무통장 테이블 :"+result2);
+		
 		// 좌석별 티켓 생성
-		int result2 = 0;
+		int result3 = 0;
 		Map<String, Object> ticket = new HashMap<>();
 		ticket.put("reservationId", ((String) paymentData.get("reservationId")));
 		ticket.put("payId", payId);
 		ticket.put("roundId", ((String) paymentData.get("roundId"))); 
 		
-		 for(String name : seatArray) {
+		 for(String seats : seatArray) {
 			
 			 // 좌석 별 티켓 생성 
-			ticket.put("name", name);
+			ticket.put("seats", seats);
 			int seatsId = paymentsService.selectId(ticket);
 			ticket.put("seatsId", seatsId);
-		    int result3 = paymentsService.createTicket(ticket);
-	        if (result3 == 0) {
-	        	System.out.println ("좌석 상태 변환에 실패하였습니다. : " + name);
+		    int result4 = paymentsService.createTicket(ticket);
+	        if (result4 == 0) {
+	        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
 	        	return "결제 실패하였습니다";
 	        }
 	        
-	        result2 += result3;
+	        result3 += result4;
 		 }
 		 
-		 if(seatArray.length==result2) {
+		 if(seatArray.length==result3) {
 			 
 			 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
-			 session.setAttribute("vbank_name", ((String) paymentData.get("vbank_name")));
-			 session.setAttribute("vbank_num", ((String) paymentData.get("vbank_num")));
-			 session.setAttribute("vbank_date", ((String) paymentData.get("vbank_date")));
+			 session.setAttribute("bankName", ((String) paymentData.get("vbank_name")));
+			 session.setAttribute("bankNum", ((String) paymentData.get("vbank_num")));
+			 session.setAttribute("dueDate", ((String) paymentData.get("vbank_date")));
+			 session.setAttribute("bankHolder", ((String) paymentData.get("vbank_holder")));
 			 
 			 return "결제 성공하였습니다";
 		 }
@@ -132,21 +149,22 @@ public class PaymentsController {
 	}
 	
 	
-	
+	@ResponseBody
 	@PostMapping("/card")
-	public String card(HttpSession session,String imp_uid, String merchant_uid, 
-			  			String reservationId, String amount, int method) {
+	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
-		String[] impParts = imp_uid.split("_");
+		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
 		
 		
 		Map<String, Object> info = new HashMap<>();
 		info.put("payId", payId);
-		info.put("reservationId", reservationId);
-		info.put("amount", amount);
-		info.put("method", method);
+		info.put("reservationId", ((String) paymentData.get("reservationId")));
+		info.put("amount", ((String) paymentData.get("amount")));
+		info.put("method", 1);
 		info.put("status", "Y");
+		info.put("userNo", 2);
+		info.put("methodToget", ((String) paymentData.get("methodToget")));
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(info);
@@ -155,18 +173,124 @@ public class PaymentsController {
 		String[] seatArray = selectedName.split(",");
 		
 		if(result>0) {
+		
+			// 무통장 테이블 생성
+			int result2 = paymentsService.createCard(info);
+			System.out.println("무통장 테이블 :"+result2);	
 			
-			 for(String name : seatArray) {
-				  // 티켓 생성
+			// 좌석별 티켓 생성
+			int result3 = 0;
+			Map<String, Object> ticket = new HashMap<>();
+			ticket.put("reservationId", ((String) paymentData.get("reservationId")));
+			ticket.put("payId", payId);
+			ticket.put("roundId", ((String) paymentData.get("roundId"))); 
+			
+			 for(String seats : seatArray) {
+				  
+				 // 좌석 별 티켓 생성 
+					ticket.put("seats", seats);
+					int seatsId = paymentsService.selectId(ticket);
+					ticket.put("seatsId", seatsId);
+				    int result4 = paymentsService.createTicket(ticket);
+			        if (result4 == 0) {
+			        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
+			        }
+			        
+			        result3 += result4;
+				 }
+			 
+			 if(seatArray.length==result3) {
 				 
-				 System.out.println(name);
+				 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
+				 System.out.println("티켓 생성 성공..");
+				 return "티켓 생성 성공..";
 			 }
+		
+			}else {
+				System.out.println("결제 생성 실패..");
+				return "결제 생성 실패..";
+			}
 			
-		}
+		
 		
 		return null;
 	}
 	
 	
+	@ResponseBody
+	@PostMapping("/fail")
+	public String paymentFail(HttpSession session, @RequestParam int reservationId, @RequestParam int roundId) {
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("reservationId", reservationId);
+		
+		 // 예약테이블 삭제  
+		int resultReser = paymentsService.deleteReservation(data);
+		
+		if (resultReser>0) {
+			
+			//  좌석상태 Y설정
+			String selectedName = (String) session.getAttribute("selectedName");
+			String[] seatArray = selectedName.split(",");
+			int result = 0;
+			data.put("roundId", roundId);
+			
+			for(String seats : seatArray) {
+				data.put("seats", seats);
+				 int result2 = paymentsService.rollbackSeats(data);
+		        
+				 if (result2 == 0) {
+		        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
+		        	return "결제 실패하였습니다";
+		        }
+		        
+				 result += result2;
+			 }
+			
+			if(seatArray.length==result) {
+				System.out.println("좌석 rollback 성공입니다..");
+				
+			}
+		}else {
+			System.out.println("예약테이블 삭제 실패!!");
+		}
+		
+		return "메인페이지로 돌아갑니다.";
+	} 
+	
+	
+	@PostMapping("/paymentInfo")
+	public String pamentInfo(HttpSession session, @RequestParam("paymentId") String paymentId, @RequestParam("type") String type,
+							Model model) {
+		
+		System.out.println(type);
+		
+		String[] impParts = paymentId.split("_");
+		String payId = impParts[1];
+		
+		String receipt = (String) session.getAttribute("receipt");
+		model.addAttribute("payId",payId);
+		model.addAttribute("receipt",receipt);
+		
+		if(type.equals("bank")) {
+			
+			String bankName = (String) session.getAttribute("bankName");
+			String bankNum = (String) session.getAttribute("bankNum");
+			String dueDate = (String) session.getAttribute("dueDate");
+			String bankHolder = (String) session.getAttribute("bankHolder");
+			
+			model.addAttribute("bankName",bankName);
+			model.addAttribute("bankNum",bankNum);
+			model.addAttribute("dueDate",dueDate);
+			model.addAttribute("bankHolder",bankHolder);
+		}else {
+		    session.removeAttribute("bankName");
+		    session.removeAttribute("bankNum");
+		    session.removeAttribute("dueDate");
+		    session.removeAttribute("bankHolder");
+		}
+		
+		return "payments/paymentInfo";
+	}
 	
 }

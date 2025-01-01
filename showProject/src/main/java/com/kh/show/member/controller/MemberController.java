@@ -28,6 +28,8 @@ import com.kh.show.common.template.Pagenation;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.showInfo.model.vo.Review;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -272,6 +274,7 @@ public class MemberController {
 		return "member/myPayment";
 	}
 	
+	
 	//회원 정보 업데이트 메소드
 	@PostMapping("update.me")
 	public ModelAndView updateMember(Member m,
@@ -452,8 +455,6 @@ public class MemberController {
 		return "member/subscribe";
 	}
 	
-
-	
 	//qna 리스트 메소드
 	@GetMapping("/qna")
 	public String qna(@RequestParam(value="currentPage",defaultValue="1")
@@ -468,20 +469,56 @@ public class MemberController {
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
 		ArrayList<Question> list = memberService.qnaList(userNo,pi);
-		
+
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
-		
-		System.out.println(list);
-		System.out.println(pi);
 		
 		return "member/myQna";
 	}
 	
-	
-	
-	
-	
+	//리뷰 리스트 메소드
+	@GetMapping("/review")
+	public String myReview(@RequestParam(value="currentPage",defaultValue="1")
+					   		int currentPage,
+					   		Model model,
+					   		int userNo) {
+		int listCount = memberService.rListCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+			
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+			
+		ArrayList<Review> rlist = memberService.reviewList(userNo,pi);
+
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+			
+		return "member/myReview";
+	}
+
+	//리뷰 리스트 메소드
+	@GetMapping("/show")
+	public String myShow(@RequestParam(value="currentPage",defaultValue="1")
+						 int currentPage,
+						 Model model,
+						 int userNo) {
+		int listCount = memberService.sListCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+		
+		System.out.println(userNo);
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+				
+		ArrayList<Reservation> slist = memberService.showList(userNo,pi);
+
+		model.addAttribute("slist",slist);
+		model.addAttribute("pi",pi);
+		
+		System.out.println(slist);
+		
+		return "member/myShow";
+	}
 	
 	
 	

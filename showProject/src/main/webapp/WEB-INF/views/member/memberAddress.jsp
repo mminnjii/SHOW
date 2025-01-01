@@ -93,7 +93,7 @@
                             <input type="text" id="sample6_detailAddress" class="ad" placeholder="상세주소">
                             <input type="text" id="sample6_extraAddress" class="ad" style="width: 200px;" placeholder="참고항목">	
                         </div>
-                        <button id="btn1" class="btn btn-primary" onclick="newAddress();">입력 완료</button>
+                        <button id="add" class="btn btn-primary" onclick="newAddress();">입력 완료</button>
 				</div>
             </div>
 		</div>
@@ -172,6 +172,19 @@
 
             form.submit();
         }
+
+        // 스크롤 위치 저장
+		window.addEventListener('beforeunload', function () {
+       	 localStorage.setItem('scrollPosition', window.scrollY);
+    	});
+
+    	// 스크롤 위치 복원
+    	window.addEventListener('load', function () {
+        	const scrollPosition = localStorage.getItem('scrollPosition');
+        	if (scrollPosition) {
+           	 window.scrollTo(0, parseInt(scrollPosition, 10));
+       	 }
+    	});
     </script>
 
     <br><br><br>

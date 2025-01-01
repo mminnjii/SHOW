@@ -337,6 +337,54 @@ public class ShowInfoDao {
 		
 		return sqlSession.selectOne("showInfoMapper.searchListCount",hashMap);
 	}
+
+
+
+
+	public ArrayList<Show> musicalRegion0(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("showInfoMapper.musicalRegion0");
+	}
+
+
+
+
+	public ArrayList<Show> playRegion0(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.playRegion0");
+	}
+
+
+
+
+	public ArrayList<Show> concertRegion0(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.concertRegion0");
+	}
+
+
+
+
+	public ArrayList<Show> classicRegion0(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.classicRegion0");
+	}
+
+
+
+
+	public ArrayList<Show> displayRegion0(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.displayRegion0");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank");
+	}
 	
 	// 리뷰조회
 	public ArrayList<Review> selectReview(SqlSession session) {

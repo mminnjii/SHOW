@@ -45,7 +45,8 @@
             padding: 3%;
             padding-top: 30px;
             border: 1px solid lightgray;
-            border-radius: 10px;
+	        border-radius: 0px 0px  10px 10px;
+			border-top : none;
                 
         }
 
@@ -72,7 +73,6 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/menubar.jsp" %>
-    <br><br>
      <div class="meeting">
       <h1>${meDetail.meetingTitle}</h1> <!-- DB에서 가져와서 보여줘야함. -->
 

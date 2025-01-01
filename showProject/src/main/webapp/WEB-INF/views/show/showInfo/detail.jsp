@@ -185,7 +185,7 @@
     				date : $("#date").val()
     			},
     			success : function(result){
-    				console.log(result);
+    				
     				$("#time").empty();
     				var info = "";
 
@@ -193,7 +193,6 @@
   				        info += "<option data-round-id='" + result[i].roundId + "'>" 
   				        			+result[i].showRound + " 회차,  공연시간 :" + result[i].showTime + "\n"
   				        		 "</option>";
-  				        		 // console.log(result[i].roundId);
   				    }
   				    
   				  	$("#time").append(info);

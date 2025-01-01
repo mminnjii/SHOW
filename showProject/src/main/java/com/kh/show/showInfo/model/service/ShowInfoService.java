@@ -139,4 +139,22 @@ public interface ShowInfoService {
 	//검색 목록 개수 
 	int searchListCount(HashMap<String, String> hashMap);
 
+	//뮤지컬 서울지역 
+	ArrayList<Show> musicalRegion0();
+
+	//연극 서울지역
+	ArrayList<Show> playRegion0();
+
+	//콘서트 서울지역
+	ArrayList<Show> concertRegion0();
+
+	//클래식 서울지역
+	ArrayList<Show> classicRegion0();
+
+	//전시 서울지역
+	ArrayList<Show> displayRegion0();
+
+	//메인 지역별 랭킹 지역이름 가져오기
+	ArrayList<Show> mainRegionRank();
+
 }

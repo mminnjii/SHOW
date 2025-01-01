@@ -21,6 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_START" property="showStart" />
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
+		
+		
+		
 	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultSet">

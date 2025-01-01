@@ -21,6 +21,22 @@ public class PaymentsDao {
 		return session.insert("paymentsMapper.createTicket",ticket);
 	}
 
+	public int createAccount(SqlSession session, Map<String, Object> info) {
+		return session.insert("paymentsMapper.createAccount",info);
+	}
+
+	public int rollbackSeats(SqlSession session, Map<String, Object> data) {
+		return session.update("paymentsMapper.rollbackSeats",data);
+	}
+
+	public int deleteReservation(SqlSession session, Map<String, Object> data) {
+		return session.delete("paymentsMapper.deleteReservation",data);
+	}
+
+	public int createCard(SqlSession session, Map<String, Object> info) {
+		return session.insert("paymentsMapper.createCard",info);
+	}
+
 
 
 	

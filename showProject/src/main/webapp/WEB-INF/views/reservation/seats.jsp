@@ -317,7 +317,6 @@
       				        document.body.appendChild(form);
       				        form.submit();
       						
-      						// window.location.href = "/show/payments/pay?reservationId="+encodeURIComponent(reservationId);
       					}else{
       						alert("요청에 실패하였습니다.");
       					}

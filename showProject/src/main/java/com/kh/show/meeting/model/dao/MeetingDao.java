@@ -88,6 +88,18 @@ public class MeetingDao {
 
 		return (ArrayList)sqlSession.selectList("meetingMapper.searchMeetingList", map, rowBounds);
 	}
+
+	// 검색 목록 개수 
+	public int searchCount(SqlSessionTemplate sqlSession, HashMap<String, Object> hashmap) {
+		return sqlSession.selectOne("meetingMapper.searchCount", hashmap);
+	}
+
+	// 소모임, 채팅 생성시 필요한 공연 검색 목록 
+	public ArrayList<Show> selSearchShow(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		System.out.println(map);
+		
+		return (ArrayList)sqlSession.selectList("meetingMapper.selSearchShow", map);
+	}
 	
 	
 }

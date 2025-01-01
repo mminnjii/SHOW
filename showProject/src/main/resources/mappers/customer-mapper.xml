@@ -102,6 +102,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE FAQ_NO = #{faqNo}
 	</update>
 	
+	<select id="selectQna" resultMap="questionResultSet">
+		SELECT QUESTION_NO,
+			   USER_NO,
+			   RESERVATION_ID,
+			   QCATEGORY_NO,
+			   Q_TITLE,
+			   Q_CONTENT,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   CREATEDATE,
+			   ANSWER_CONTENT
+		FROM QUESTION
+		WHERE QUESTION_NO = #{questionNo}
+		AND STATUS = 'Y'
+		
+	</select>
+	
+	<delete id="qnaDelete">
+		DELETE FROM QUESTION
+		WHERE QUESTION_NO = #{questionNo}
+	</delete>
+	
+	<update id="updateQna" parameterType="Question">
+		UPDATE QUESTION
+		SET RESERVATION_ID = SUBSTR(#{reservationId}, 0, INSTR(#{reservationId} , ' / '))
+           ,QCATEGORY_NO = #{qcategoryNo}
+           ,Q_TITLE = #{quTitle}
+           ,Q_CONTENT = #{quContent}
+           ,ORIGIN_NAME = #{originName}
+           ,CHANGE_NAME = #{changeName}
+        WHERE QUESTION_NO = #{questionNo}
+        AND STATUS = 'Y'
+	</update>
+	
 	
 		
 </mapper>

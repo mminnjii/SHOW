@@ -124,18 +124,6 @@ public class ShowInfoController {
 	}
 	
 
-
-	// 상세정보 이동
-	@GetMapping("/info")
-	public String info() {
-	
-		return "info";
-	}
-	
-
-
-
-	
 	
 	//검색기능
 	@GetMapping("/search")
@@ -169,15 +157,6 @@ public class ShowInfoController {
 			return "common/searchError";
 			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
