@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
@@ -40,31 +41,59 @@ public class ReservationController {
 	@GetMapping("/seats")
 	public String seats(HttpSession session, Model model,int showNo, int roundId, int hallNo) {
 		
-		// reservation 생성
-		// (예약번호 / 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태)
-		Map<String, Object> r = new HashMap<>();
-        r.put("showNo", showNo);
-        r.put("roundId", roundId);
-        r.put("hallNo", hallNo);
-		
-		int result = reservationService.createReservation(r);  
-		
-		if(result>0) {
-			Reservation rInfo = reservationService.selectReservation();
-			model.addAttribute("rInfo",rInfo);
+		// 회원번호 추출
+		Integer userNo = (Integer) session.getAttribute("userNo");
+
+		if (userNo != null) {
 			
-		}else {
-			model.addAttribute("alert","예약이 생성되지 못했습니다. 다시 선택해주세요");
+		    // Integer 값으로 타입 변환이 정상적으로 이루어졌을 때 처리
+			session.setAttribute("userNo", userNo);
+			
+			// reservation 생성
+			// (예약번호 / 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태)
+			Map<String, Object> r = new HashMap<>();
+	        r.put("showNo", showNo);
+	        r.put("roundId", roundId);
+	        r.put("hallNo", hallNo);
+	        r.put("userNo", userNo);
+			
+			int result = reservationService.createReservation(r);  
+			
+			if(result>0) {
+				Reservation rInfo = reservationService.selectReservation();
+				model.addAttribute("rInfo",rInfo);
+				
+			}else {
+				model.addAttribute("errorMsg","예약이 생성되지 못했습니다. 다시 선택해주세요");
+				return "common/errorPage";
+			}
+			
+		} else {
+		    // userNo가 null인 경우 처리
+			model.addAttribute("errorMsg","로그인정보를 가져오지 못했습니다.");
+			return "common/errorPage";
+			
 		}
+		
 		
 		// status "N"인 좌석 조회
 		ArrayList<String> taken= reservationService.selectTakenSeats(roundId);  
-		Gson gson = new Gson();
-		model.addAttribute("taken",gson.toJson(taken));
+		if(taken != null) {
+			Gson gson = new Gson();
+			model.addAttribute("taken",gson.toJson(taken));
+		}else {
+			model.addAttribute("errorMsg","status N인 좌석 조회에 실패했습니다.");
+			return "common/errorPage";
+		}
 		
 		// 등급별 좌석 수 조회
 		ArrayList<SeatsOfRow> num  = reservationService.selectSeatsNum(roundId);  
-		model.addAttribute("num", num);
+		if(num != null) {
+			model.addAttribute("num", num);
+		}else {
+			model.addAttribute("errorMsg","좌석수 조회에 실패했습니다.");
+			return "common/errorPage";
+		}
 		
 		// 좌석 별 가격 조회
 		Object vipPrice= (Object) session.getAttribute("vipPrice");
@@ -96,6 +125,7 @@ public class ReservationController {
 		    int result = reservationService.updateSeatStatus(seats);
 	        if (result == 0) {
 	        	System.out.println ("좌석 상태 변환에 실패하였습니다. : " + name);
+	        	return 0;
 	        }
 	        result2 += result;
 		 }
@@ -107,7 +137,6 @@ public class ReservationController {
 		 }else {
 			 return 0;
 		 }
-		
 	}
 	
 	

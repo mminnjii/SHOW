@@ -130,177 +130,215 @@
         // 결제 요청
         $("#card").on("click", function () {
         	
-        	IMP.request_pay({
-                pg: "html5_inicis", // PG사
-                pay_method: "card", // 결제 수단
-                merchant_uid: "order_" + reservation_uid, // 예약번호
-                name: name, // 상품명
-                amount: "100", // 결제 금액
-                buyer_email: "test@example.com", // 구매자 이메일
-                buyer_name: "홍길동", // 구매자 이름
-                buyer_tel: "01012345678", // 구매자 전화번호
-            }, function (rsp) {
-                
-            	if (rsp.success) {
-            		
-	           	    let paymentData = {
-		    		imp_uid: rsp.imp_uid,
-	                reservationId : reservation_uid,
-	                amount : amount,
-	                roundId : roundId,
-	                receipt : rsp.receipt_url,
-	                methodToget : methodToget
-	    			};	
-	                    
-	               	 $.ajax({
-	                     url: "/show/payments/card",
-	                     type: "POST",
-	                     data: JSON.stringify(paymentData),
-	                     contentType: 'application/json',
-	                     success: function () {
-	                    	 alert("결제 성공하였습니다"); 
-	                    	 // window.location.href = "/show";
-	                    	 
-	                    	 	const form = document.createElement("form");
-	      				        form.method = "POST";
-	      				        form.action = "/show/payments/paymentInfo";
+        	if(methodToget != ""){
+        		
+        		IMP.request_pay({
+                    pg: "html5_inicis", // PG사
+                    pay_method: "card", // 결제 수단
+                    merchant_uid: "order_" + reservation_uid, // 예약번호
+                    name: name, // 상품명
+                    amount: "100", // 결제 금액
+                    buyer_email: "test@example.com", // 구매자 이메일
+                    buyer_name: "홍길동", // 구매자 이름
+                    buyer_tel: "01012345678", // 구매자 전화번호
+                }, function (rsp) {
+                    
+                	if (rsp.success) {
+                		
+    	           	    let paymentData = {
+    		    		imp_uid: rsp.imp_uid,
+    	                reservationId : reservation_uid,
+    	                amount : amount,
+    	                roundId : roundId,
+    	                receipt : rsp.receipt_url,
+    	                methodToget : methodToget
+    	    			};	
+    	                    
+    	               	 $.ajax({
+    	                     url: "/show/payments/card",
+    	                     type: "POST",
+    	                     data: JSON.stringify(paymentData),
+    	                     contentType: 'application/json',
+    	                     success: function (success) {
+    	                    	 alert("결제 성공하였습니다"); 
+    	                    	
+    	                    	 if(success =="NNNNY"){
+    	                    		const form = document.createElement("form");
+     	      				        form.method = "POST";
+     	      				        form.action = "/show/payments/paymentInfo";
 
-	      				        const hiddenField = document.createElement("input");
-	      				        hiddenField.type = "hidden";
-	      				        hiddenField.name = "paymentId";
-	      				        hiddenField.value = rsp.imp_uid;
-	      				        
-	      				    	const hiddenField2 = document.createElement("input");
-	      				        hiddenField2.type = "hidden";
-	      				        hiddenField2.name = "type";
-	      				        hiddenField2.value = "card";
-	      				        
-	      				        form.appendChild(hiddenField);
-	      				        form.appendChild(hiddenField2);
-	      				        document.body.appendChild(form);
-	      				        form.submit();
-	                    	 
-	                     },
-	                     error: function () {
-	                         alert("결제 정보 저장 실패");
-	                     }
-                 });
-                    
-                    
-                } else {
-                    alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-                    
-                    $.ajax({
-	                     url: "/show/payments/fail",
-	                     type: "POST",
-	                     data: {
-	                    	 reservationId : reservation_uid,
-	                    	 roundId : roundId
-	                    	 },
-	                     success: function (success) {
-	                    	 alert(success); 
-	                    	 window.location.href = "/show";
-	                         
-	                     }, 
-	                     error: function () {
-	                         alert("결제 정보 저장 실패");
-	                     }
-	                 }); 
-                    
-                }
-            });
+     	      				        const hiddenField = document.createElement("input");
+     	      				        hiddenField.type = "hidden";
+     	      				        hiddenField.name = "paymentId";
+     	      				        hiddenField.value = rsp.imp_uid;
+     	      				        
+     	      				    	const hiddenField2 = document.createElement("input");
+     	      				        hiddenField2.type = "hidden";
+     	      				        hiddenField2.name = "type";
+     	      				        hiddenField2.value = "card";
+     	      				        
+     	      				        form.appendChild(hiddenField);
+     	      				        form.appendChild(hiddenField2);
+     	      				        document.body.appendChild(form);
+     	      				        form.submit(); 
+    	                    		 
+    	                    	 }else{
+    	                    		 alert("요청에 실패하였습니다.");
+ 		      						window.location.href = '/show/common/errorPage';
+    	                    	 }
+    	                    	 
+    	                     },
+    	                     error: function () {
+    	                         alert("결제 정보 저장 실패");
+    	                         console.log("통신오류");
+    	                     }
+                     });
+                        
+                        
+                    } else {
+                        alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                        
+                        $.ajax({
+    	                     url: "/show/payments/fail",
+    	                     type: "POST",
+    	                     data: {
+    	                    	 reservationId : reservation_uid,
+    	                    	 roundId : roundId
+    	                    	 },
+    	                     success: function (success) {
+    	                    	 alert(success); 
+    	                    	 window.location.href = "/show";
+    	                         
+    	                     }, 
+    	                     error: function () {
+    	                         alert("rollback 실패");
+    	                         console.log("통신오류");
+    	                     }
+    	                 }); 
+                        
+                    }
+                });
+        		
+        	}else{
+        		alert("수령방식을 선택해주세요");
+        	}
+        	
         }); 
         
          
         $("#bank").on("click", function () { 
         	
-        	IMP.init("imp17528612"); // 아임포트 고객사 식별 코드
-	        IMP.request_pay({
-	            pg: "html5_inicis",             // PG사 (예: 이니시스)
-	            pay_method: "vbank",            // 결제 수단 (vbank: 가상계좌)
-	            merchant_uid: "order_" + reservation_uid,   // 주문번호 (고유값)
-	            name: name,             // 상품명
-	            amount: amount,                   // 결제 금액
-	            buyer_email: "test@example.com", // 구매자 이메일
-	            buyer_name: "홍길동",             // 구매자 이름
-	            buyer_tel: "01012345678",        // 구매자 전화번호
-	            vbank_due: "20250116235959",     // 입금 기한 (YYYYMMDDHHmmss 형식)
-	        }, function (rsp) {
-	        	
-	        	if (rsp.success) {
-		        	
-	        		
-	        		
-	       		    let paymentData = {
-		       		    		imp_uid: rsp.imp_uid,
-		                        reservationId : reservation_uid,
-		                        amount : amount,
-		                        roundId : roundId,
-		                        receipt : rsp.receipt_url,
-		                        vbank_name : rsp.vbank_name,
-		                        vbank_num : rsp.vbank_num,
-		                        vbank_holder : rsp.vbank_holder,
-		                        vbank_date : rsp.vbank_date,
-		                        methodToget : methodToget
-	       		    		};	    		
-		        		    		
-		        		
-	 	            	 $.ajax({
-		                     url: "/show/payments/bank",
-		                     type: "POST",
-		                     data: JSON.stringify(paymentData),
-		                     contentType: 'application/json',
-		                     success: function (success) {
-		                    	 alert("결제 성공하였습니다"); 
-		                    	 	
-		                    	 	const form = document.createElement("form");
-		      				        form.method = "POST";
-		      				        form.action = "/show/payments/paymentInfo";
+        	if(methodToget != ""){
+        		
+        		IMP.init("imp17528612"); // 아임포트 고객사 식별 코드
+    	        IMP.request_pay({
+    	            pg: "html5_inicis",             // PG사 (예: 이니시스)
+    	            pay_method: "vbank",            // 결제 수단 (vbank: 가상계좌)
+    	            merchant_uid: "order_" + reservation_uid,   // 주문번호 (고유값)
+    	            name: name,             // 상품명
+    	            amount: amount,                   // 결제 금액
+    	            buyer_email: "test@example.com", // 구매자 이메일
+    	            buyer_name: "홍길동",             // 구매자 이름
+    	            buyer_tel: "01012345678",        // 구매자 전화번호
+    	            vbank_due: "20250116235959",     // 입금 기한 (YYYYMMDDHHmmss 형식)
+    	        }, function (rsp) {
+    	        	
+    	        	if (rsp.success) {
+    		        	
+    	       		    let paymentData = {
+    		       		    		imp_uid: rsp.imp_uid,
+    		                        reservationId : reservation_uid,
+    		                        amount : amount,
+    		                        roundId : roundId,
+    		                        receipt : rsp.receipt_url,
+    		                        vbank_name : rsp.vbank_name,
+    		                        vbank_num : rsp.vbank_num,
+    		                        vbank_holder : rsp.vbank_holder,
+    		                        vbank_date : rsp.vbank_date,
+    		                        methodToget : methodToget
+    	       		    		};	    		
+    		        		
+    	 	            	 $.ajax({
+    		                     url: "/show/payments/bank",
+    		                     type: "POST",
+    		                     data: JSON.stringify(paymentData),
+    		                     contentType: 'application/json',
+    		                     success: function (success) {
+    		                    	 alert("결제 성공하였습니다"); 
+    		                    	 	
+    		                    	if(success =="NNNNY"){
+    		                    		const form = document.createElement("form");
+    		      				        form.method = "POST";
+    		      				        form.action = "/show/payments/paymentInfo";
 
-		      				        const hiddenField = document.createElement("input");
-		      				        hiddenField.type = "hidden";
-		      				        hiddenField.name = "paymentId";
-		      				        hiddenField.value = rsp.imp_uid;
-		      				        
-		      				      	const hiddenField2 = document.createElement("input");
-		      				        hiddenField2.type = "hidden";
-		      				        hiddenField2.name = "type";
-		      				        hiddenField2.value = "bank";
+    		      				        const hiddenField = document.createElement("input");
+    		      				        hiddenField.type = "hidden";
+    		      				        hiddenField.name = "paymentId";
+    		      				        hiddenField.value = rsp.imp_uid;
+    		      				        
+    		      				      	const hiddenField2 = document.createElement("input");
+    		      				        hiddenField2.type = "hidden";
+    		      				        hiddenField2.name = "type";
+    		      				        hiddenField2.value = "bank";
 
-		      				        form.appendChild(hiddenField);
-		      				        form.appendChild(hiddenField2);
-		      				        document.body.appendChild(form);
-		      				        form.submit();
-		                    	 
-		                     }, 
-		                     error: function () {
-		                         alert("결제 정보 저장 실패");
-		                     }
-		                 }); 
-	            	 
-	            } else {
-	                
-	            	alert("가상계좌 발급 실패: " + rsp.error_msg);
-	            	
-	                $.ajax({
-	                     url: "/show/payments/fail",
-	                     type: "POST",
-	                     data: {
-	                    	 reservationId : reservation_uid,
-	                    	 roundId : roundId
-	                    	 },
-	                     success: function (success) {
-	                    	 alert(success); 
-	                    	 window.location.href = "/show";
-	                     }, 
-	                     error: function () {
-	                         alert("결제 정보 저장 실패");
-	                     }
-	                 }); 
-	                
-	            }
-	        });
+    		      				        form.appendChild(hiddenField);
+    		      				        form.appendChild(hiddenField2);
+    		      				        document.body.appendChild(form);
+    		      				        form.submit();
+    		      				        
+    		                    	}else{
+    		                    		alert("요청에 실패하였습니다.");
+    		      						window.location.href = '/show/common/errorPage';
+    		                    	}
+    		                    	 	
+    		                    	 
+    		                     }, 
+    		                     error: function () {
+    		                         alert("결제 정보 저장 실패");
+    		                         console.log("통신오류");
+    		                     }
+    		                 }); 
+    	            	 
+    	            } else {
+    	                
+    	            	alert("가상계좌 발급 실패: " + rsp.error_msg);
+    	            	
+    	                $.ajax({
+    	                     url: "/show/payments/fail",
+    	                     type: "POST",
+    	                     data: {
+    	                    	 reservationId : reservation_uid,
+    	                    	 roundId : roundId
+    	                    	 },
+    	                     success: function (success) {
+    	                    	 if(success =="NNNNY"){
+    	                    		 alert(success); 
+        	                    	 window.location.href = "/show";
+    	                    	 }else{
+    	                    		 alert("요청에 실패하였습니다.");
+ 		      						 window.location.href = '/show/common/errorPage';
+    	                    	 }
+    	                     }, 
+    	                     error: function () {
+    	                         alert("rollback 실패");
+    	                         console.log("통신오류");
+    	                     }
+    	                 }); 
+    	            }
+    	        });
+        		
+        	}else{
+        		
+        		alert("수령방식을 선택해주세요");
+        	}
+        	
         }); 
+        
+        
+        $("#back").on("click", function () { 
+        	history.back();
+        });
+        
     </script>
 </body>
 </html>
