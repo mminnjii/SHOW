@@ -81,27 +81,7 @@
         border-radius: 5px;
     }
 
-    /* 작성 버튼을 #data-container 바로 아래에 배치 */
-    .create-notice-btn,
-    .create-faq-btn,
-    .create-show-btn {
-        display: none; /* 초기 상태 숨김 */
-        position: absolute; /* 부모 요소를 기준으로 위치 */
-        bottom: -230px; /* #data-container의 아래로 20px */
-        left: 96.5%; /* 화면 가운데로 위치 */
-        transform: translateX(-50%); /* 가운데 정렬 */
-        padding: 15px 30px;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        font-size: 15px;
-        z-index: 1000; /* 다른 요소 위로 배치 */
-        color: black;
-    }
-
-    .create-notice-btn:hover, .create-faq-btn:hover, .create-show-btn:hover {
-        cursor: pointer;
-    }
+    
 </style>
 </head>
 <body>
@@ -114,20 +94,5 @@
             <button id="reservationBtn">회원 예매 관리</button>
             <button id="showBtn">공연 관리</button>
         </div>
-        
-        <!-- 공지사항 작성 버튼 -->
-        <form action="${contextPath}/noticeInsert" method="GET">
-            <button type="submit" class="create-notice-btn" id="createNotice">공지사항 작성</button>
-        </form>
-
-        <!-- FAQ 작성 버튼 -->
-        <form action="${contextPath}/faqInsert" method="GET">
-            <button type="submit" class="create-faq-btn" id="createFaq">FAQ 작성</button>
-        </form>
-
-        <!-- 공연 작성 버튼 -->
-        <form action="${contextPath}/showInsert" method="GET">
-            <button type="submit" class="create-show-btn" id="createShow">공연 작성</button>
-        </form>
 </body>
 </html>

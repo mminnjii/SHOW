@@ -113,36 +113,6 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public Notice selectDetailNotice() {
-		
-		return null;
-	}
-
-	@Override
-	public Faq selectDetailFaq() {
-		
-		return null;
-	}
-
-	@Override
-	public Member selectDetailMember() {
-		
-		return null;
-	}
-
-	@Override
-	public Reservation selectDetailReserv() {
-		
-		return null;
-	}
-
-	@Override
-	public Show selectDetailShow() {
-		
-		return null;
-	}
-
-	@Override
 	public List<Notice> updateNoticeInform(Long noticeNo) {
 
 		return dao.updateNoticeInform(sqlSession, noticeNo);
@@ -159,6 +129,11 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public int insertFaq(Faq f) {
 
+		return dao.insertFaq(sqlSession, f);
+}
 	
 }

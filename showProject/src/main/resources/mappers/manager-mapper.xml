@@ -199,6 +199,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE NOTICE_NO = #{noticeNo}
 	</select>
 	
+	<insert id="insertFaq" parameterType="Faq">
+		INSERT INTO FAQ(FAQ_NO,
+						FAQ_TITLE,
+						FAQ_CONTENT,
+						QCATEGORY_NO)
+				 VALUES(FAQ_SEQ.NEXTVAL,
+				 		#{faqTitle},
+				 		#{faqContent},
+				 		#{qcategoryNo})
+	</insert>
+	
 
 
 

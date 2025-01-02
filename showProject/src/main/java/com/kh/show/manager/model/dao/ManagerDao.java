@@ -67,6 +67,11 @@ public class ManagerDao {
 		return sqlSession.selectList("managerMapper.updateNoticeInform", noticeNo);
 	}
 
+	public int insertFaq(SqlSessionTemplate sqlSession, Faq f) {
+
+		return sqlSession.insert("managerMapper.insertFaq", f);
+	}
+
 	
 
 	
