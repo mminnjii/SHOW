@@ -3,14 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-	
-
-	
-	
-	
-
-
-  
 
 	<resultMap type="Member" id="memberResultSet">
 		<result column="USER_NO" property="userNo"/>
@@ -28,6 +20,60 @@
 		<result column="RANK" property="rank"/>
 		<result column="SUBSCRIBE" property="subscribe"/>
 		<result column="STATUS" property="status"/>
+	</resultMap>
+	
+	<resultMap type="Coupon" id="couponResultMap">
+		<result column="COUPON_NO" property="couponNo"/>
+		<result column="COUPON_NAME" property="couponName"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="DISCOUNT" property="discount"/>
+		<result column="EXPIRED_DATE" property="expiredDate"/>
+		<result column="STATUS" property="status"/>
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultSet">
+		<result column="REVIEW_ID" property="reviewId" />
+		<result column="SHOW_NO" property="showNo" />
+		<result column="USER_NO" property="userId" />
+		<result column="REVIEW_SCORE" property="reviewScore" />
+		<result column="REVIEW_TITLE" property="reviewTitle" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+	
+	<resultMap type="Show" id="showResultSet">
+		<result column="SHOW_NO" property="showNo" />
+		<result column="SHOW_NAME" property="showName" />
+		<result column="SHOW_EXPLAIN" property="showExplain" />
+		<result column="PRICE" property="price" />
+		<result column="NOTICE" property="notice" />
+		<result column="PRECAUTION" property="precaution" />
+		<result column="STATUS" property="status" />
+		<result column="HALL_NO" property="hallNo" />
+		<result column="HALL_NAME" property="hallName" />
+		<result column="GENRE_NO" property="genreNo" />
+		<result column="REGION_NO" property="regionNo" />
+		<result column="REGION_NAME" property="regionName" />
+		<result column="SHOW_START" property="showStart" />
+		<result column="SHOW_END" property="showEnd" />
+		<result column="COUNT" property="count" />
+		<result column="POSTER_ORIGINNAME" property="posterOriginName" />
+		<result column="POSTER_CHANGENAME" property="posterChangeName" />
+	</resultMap>
+	
+	<resultMap type="Reservation" id="reservationResult">
+		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="SHOW_NO" property="showNo"/>
+		<result column="SHOW_NAME" property="showName"/>	
+		<result column="ROUND_ID" property="roundId"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="HALL_NO" property="hallNo"/>
+		<result column="HALL_NAME" property="hallName"/>
+		<result column="SHOW_TIME" property="showTime"/>
+		<result column="SHOW_DATE" property="showDate"/>
+		<result column="SHOW_ROUND" property="showRound"/>
+		
+		<collection property="showList" resultMap="showResultSet"/>
 	</resultMap>
 	
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -141,6 +187,43 @@
 		FROM QUESTION
 		WHERE STATUS = 'Y'
 		AND USER_NO = #{userNo}
+	</select>
+	
+	<select id="rListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
+	
+	<select id="reviewList" resultType="Review" >
+		SELECT REVIEW_ID reviewId,
+			   SHOW_NAME showNo,
+			   USER_NO userNo,
+			   REVIEW_SCORE reviewScore,
+			   R.CREATE_DATE createDate
+		FROM REVIEW R
+		JOIN SHOW S USING(SHOW_NO)
+		WHERE R.STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
+	
+	<select id="sListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+		WHERE STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
+	
+	<select id="mshowList" resultMap="reservationResult">
+		SELECT R.SHOW_NO,
+			   SHOW_NAME,
+			   PRICE,
+			   SHOW_START
+		FROM RESERVATION R
+		JOIN SHOW S ON(S.SHOW_NO=R.SHOW_NO)
+		WHERE R.STATUS = 'Y'
+		AND USER_NO = #{userNo} 
 	</select>
 
 </mapper>

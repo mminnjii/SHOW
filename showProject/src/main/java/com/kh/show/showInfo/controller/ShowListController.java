@@ -20,12 +20,33 @@ public class ShowListController {
 	@Autowired
 	private ShowInfoService showInfoService;
 	
+	
+	@RequestMapping(value="mainRegionRank",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank() {
+		
+		ArrayList<Show> mainRegionRank = showInfoService.mainRegionRank();
+		
+		
+		return mainRegionRank;
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	//뮤지컬 리스트 페이지로 이동 
 	@RequestMapping("/musicalList")
 	public String showMusicalList() {
 	    return "/showList/musicalList"; 
 	}
 	
+	
+	
+			
 	
 	@RequestMapping(value="musicalShow",produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -38,6 +59,18 @@ public class ShowListController {
 		return musicalShowList;
 		
 		
+		
+	}
+	
+	@GetMapping(value="musicalRegion0",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> musicalRegion0(){
+		
+		ArrayList<Show> musicalRegionList = showInfoService.musicalRegion0();
+		
+		//System.out.println("music : "+musicalRegionList);
+		
+		return musicalRegionList;
 		
 	}
 	
@@ -132,6 +165,17 @@ public class ShowListController {
 		
 	}
 	
+	@GetMapping(value="playRegion0",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> playRegion0(){
+		
+		ArrayList<Show> playRegionList0 = showInfoService.playRegion0();
+		
+		
+		return playRegionList0;
+		
+	}
+	
 	@GetMapping(value="playRegion1",produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public ArrayList<Show> playRegion1(){
@@ -217,6 +261,17 @@ public class ShowListController {
 			
 			
 		}
+	
+	@GetMapping(value="concertRegion0",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> concertRegion0(){
+		
+		ArrayList<Show> concertRegionList0 = showInfoService.concertRegion0();
+		
+		
+		return concertRegionList0;
+		
+	}
 	
 	@GetMapping(value="concertRegion1",produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -305,6 +360,18 @@ public class ShowListController {
 			
 		}
 	
+	@GetMapping(value="classicRegion0",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> classicRegion0(){
+		
+		ArrayList<Show> classicRegion0 = showInfoService.classicRegion0();
+		
+		//System.out.println(classicRegion1);
+		
+		return classicRegion0;
+		
+	}
+	
 	
 	@GetMapping(value="classicRegion1",produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -312,6 +379,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion1 = showInfoService.classicRegion1();
 		
+		System.out.println(classicRegion1);
 		
 		return classicRegion1;
 		
@@ -323,6 +391,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion2 = showInfoService.classicRegion2();
 		
+		System.out.println(classicRegion2);
 		
 		return classicRegion2;
 		
@@ -392,6 +461,17 @@ public class ShowListController {
 				
 				
 			}
+		
+		@GetMapping(value="displayRegion0",produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public ArrayList<Show> displayRegion0(){
+			
+			ArrayList<Show> displayRegion0 = showInfoService.displayRegion0();
+			
+			
+			return displayRegion0;
+			
+		}
 		
 		
 		@GetMapping(value="displayRegion1",produces = "application/json;charset=UTF-8")

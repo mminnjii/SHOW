@@ -83,9 +83,24 @@ public class MeetingServiceImpl implements MeetingService {
 		return meetingdao.searchJoinUser(sqlSession, mj);
 	}
 
+	// 검색 목록
 	@Override
 	public ArrayList<Meeting> searchMeetingList(PageInfo pi, HashMap<String, Object> map) {
 		return meetingdao.searchMeetingList(sqlSession, pi, map);
+	}
+
+	// 검색 목록 개수 
+	@Override
+	public int searchCount(HashMap<String, Object> hashmap) {
+		return meetingdao.searchCount(sqlSession, hashmap);
+	}
+
+	// 공연 검색 목록 
+	@Override
+	public ArrayList<Show> selSearchShow(HashMap<String, Object>  map) {
+		System.out.println(map);
+		
+		return meetingdao.selSearchShow(sqlSession, map);
 	}
 
 }
