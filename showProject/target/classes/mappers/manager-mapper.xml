@@ -145,87 +145,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY S.SHOW_NO
 	</select>
 	
-	<!--
-	<select id="selectAllShow" resultMap="showResultSet">
-		SELECT SHOW_NO "공연 가격", 
-			   SHOW_NAME "공연 이름",
-			   SHOW_EXPLAIN "공연 설명",
-			   STATUS "공연 상태",
-			   HALL_NO "공연장 이름",
-			   GENRE_NO "장르 이름",
-			   REGION_NO "지역 이름",
-			   SHOW_START "공연 시작일",
-			   SHOW_END "공연 종료일",
-			   COUNT "조회수"
-		FROM SHOW
-	</select>
-
-	<select id="loginManager" resultMap="managerResultSet">
-		SELECT MANAGER_ID, MANAGER_PW
-		FROM MANAGER
-		WHERE MANAGER_ID = #{managerId}
-		AND MANAGER_PW = #{managerPw}
-	</select>
-	
-	<select id="selectAllNotice" resultMap="noticeResultSet">
-		SELECT NOTICE_NO "공지사항 번호",
-			   NOTICE_TITLE "공지사항 제목",
-			   COUNT "조회수",
-			   CREATEDATE "작성일"
-		FROM NOTICE
-	</select>
-	
-	<select id="selectAllFaq" resultMap="faqResultSet">
-		SELECT FAQ_NO "FAQ 번호",
-			   FAQ_TITLE "FAQ 제목",
-			   COUNT "조회수"
-		FROM FAQ
-	</select>
-	
-	<select id="selectAllMember" resultMap="memberResultSet">
-		SELECT USER_NO "사용자 번호",
-			   USER_ID "사용자 아이디",
-			   USER_NAME "사용자 이름",
-			   USER_RRN "사용자 주민번호",
-			   PHONE "사용자 연락처",
-			   EMAIL "사용자 이메일",
-			   ADDRESS "사용자 주소",
-			   ENROLL_DATE "사용자 가입일",
-			   MODIFY_DATE "사용자 정보 수정일",
-			   RANK "사용자 등급",
-			   SUBSCRIBE "사용자 구독 여부",
-			   STATUS "사용자 계정 상태"
-		FROM MEMBER
-	</select>
-	
-	<select id="selectAllReserv" resultMap="reservResultSet">
-        SELECT RESERVATION_ID "예약 번호", 
-        	   SHOW_NAME "공연 이름", 
-        	   ROUND_ID "공연 회차", 
-        	   USER_NAME "예약자 이름", 
-        	   HALL_NAME "예약 공연장 이름", 
-        	   STATUS "예약 상태", 
-        	   CREATEDATE "예약일"
-        FROM RESERVATION R
-        INNER JOIN SHOW S ON R.SHOW_NO = S.SHOW_NO
-        INNER JOIN MEMBER M ON R.USER_NO = M.USER_NO
-        INNER JOIN HALL H ON R.HALL_NO = H.HALL_NO
-	</select>
-	
-	<select id="selectAllShow" resultMap="showResultSet">
-		SELECT SHOW_NO "공연 가격", 
-			   SHOW_NAME "공연 이름",
-			   SHOW_EXPLAIN "공연 설명",
-			   STATUS "공연 상태",
-			   HALL_NO "공연장 이름",
-			   GENRE_NO "장르 이름",
-			   REGION_NO "지역 이름",
-			   SHOW_START "공연 시작일",
-			   SHOW_END "공연 종료일",
-			   COUNT "조회수"
-		FROM SHOW
-	</select>
-	 -->
 	<insert id="showInsert" parameterType="Show">
 		INSERT INTO SHOW(SHOW_NO,
 						 SHOW_NAME,
@@ -273,6 +192,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						   #{noticeContent},
 						   SYSDATE)
 	</insert>
+	
+	<select id="updateNoticeInform" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, CREATEDATE
+		FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+	</select>
 	
 
 

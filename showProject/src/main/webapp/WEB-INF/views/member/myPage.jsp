@@ -126,9 +126,6 @@
 	}
 
 	/*쿠폰 모달*/
-	table{
-		border: 1px solid rgb(232, 232, 232);
-	}
 	#mtotal{
 		width: 500px;
 		height: 350px;
@@ -137,6 +134,7 @@
 
 	table td,th{
 		height: 50px;
+		border: 1px solid lightblue;
 	}
 
 	.modal-body{
@@ -184,7 +182,14 @@
 					<div id="my-profile">
 						<div id="my-info">
 							<div id="my-img" style="border: 2px solid black;">
-								<img src="${contextPath }/resources/profile/${loginUser.changeName}" id="profile">
+								<c:choose>
+									<c:when test="${loginUser.changeName == null}">
+										<img src="${contextPath }/resources/profile/noimg.png" id="profile">
+									</c:when>
+									<c:otherwise>
+										<img src="${contextPath }/resources/profile/${loginUser.changeName}" id="profile">
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div id="my-info-detail">
 								${loginUser.userName} 회원님 &nbsp;&nbsp;
@@ -211,24 +216,24 @@
 							<tr>
 								<td>
 									&nbsp;&nbsp;&nbsp;<b>포인트</b> <br>
-									&nbsp;&nbsp;&nbsp;1000 p
+									&nbsp;&nbsp;&nbsp;<span id="c1">${loginUser.point}</span> p
 								</td>
 								<td>
 									&nbsp;&nbsp;&nbsp;<a class="link" data-toggle="modal" data-target="#modal1">쿠폰</a><br>
-									&nbsp;&nbsp;&nbsp;10 장
+									&nbsp;&nbsp;&nbsp;<span id="c2"></span> 장
 								</td>
 								<td>
 									<form action="${contextPath}/review" method="get">
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 										&nbsp;&nbsp;&nbsp;<button class="to">후기 작성</button> <br>
-										&nbsp;&nbsp;&nbsp;5 건
+										&nbsp;&nbsp;&nbsp;<span id="c3"></span> 건
 									</form>
 								</td>
 								<td>
 									<form action="${contextPath}/show" method="get">
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 									&nbsp;&nbsp;&nbsp;<button class="to">내 공연</button><br>
-									&nbsp;&nbsp;&nbsp;${showNum} 개
+									&nbsp;&nbsp;&nbsp;<span id="c4"></span> 개
 									</form>
 								</td>
 							</tr>
@@ -249,23 +254,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                   <table>
-                   	<tr>
-						<td width="50px" align="center" style="background-color: rgb(217, 245, 255);">
-							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-ticket-perforated" viewBox="0 0 16 16">
-								<path d="M4 4.85v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9z"/>
-								<path d="M1.5 3A1.5 1.5 0 0 0 0 4.5V6a.5.5 0 0 0 .5.5 1.5 1.5 0 1 1 0 3 .5.5 0 0 0-.5.5v1.5A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5V10a.5.5 0 0 0-.5-.5 1.5 1.5 0 0 1 0-3A.5.5 0 0 0 16 6V4.5A1.5 1.5 0 0 0 14.5 3zM1 4.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v1.05a2.5 2.5 0 0 0 0 4.9v1.05a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-1.05a2.5 2.5 0 0 0 0-4.9z"/>
-							</svg>
-						</td>
-                   		<th width="300px">
-	                   		&nbsp; 뮤지컬 10% 할인권
-                   		</th>
-                   		<td width="150px" align="center">
-                   			기한 : 20250105
-                   		</td>
-                   	</tr>
-					
-					   
+                   <table id="coupon-table">
                    </table>
                 </div>
             </div>
@@ -285,6 +274,93 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+
+		$(function(){
+			showCount();
+			couponCount();
+			reviewCount();
+			couponList();
+		});
+
+		function couponCount(){
+			$.ajax({
+				url: "couponCount",
+				data : {
+					userNo : "${loginUser.userNo}"
+				},
+				success : function(cno){
+					$("#c2").text(cno);
+				},
+				error : function(){
+					console.log("error2");
+				}
+			});
+		}
+
+		function reviewCount(){
+			$.ajax({
+				url: "reviewCount",
+				data : {
+					userNo : "${loginUser.userNo}"
+				},
+				success : function(rno){
+					$("#c3").text(rno);
+				},
+				error : function(){
+					console.log("error3");
+				}
+			});
+		}
+
+		
+		function showCount(){
+			$.ajax({
+				url: "showCount",
+				data : {
+					userNo : "${loginUser.userNo}"
+				},
+				success : function(sno){
+					$("#c4").text(sno);
+				},
+				error : function(){
+					console.log("error4");
+				}
+			});
+		}
+
+		function couponList(){
+			$.ajax({
+				url : "couponList",
+				data : {
+					userNo : "${loginUser.userNo}"
+				},
+				success : function(list){
+					var co = "";
+					console.log(list);
+					for(var i=0;i<list.length;i++){
+						co += "<tr>"
+							+ "<td width='50px' align='center' style='background-color: rgb(217, 245, 255);'>"
+							+ "<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-ticket-perforated' viewBox='0 0 16 16'>"
+							+ "<path d='M4 4.85v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9z'/>"
+							+ "<path d='M1.5 3A1.5 1.5 0 0 0 0 4.5V6a.5.5 0 0 0 .5.5 1.5 1.5 0 1 1 0 3 .5.5 0 0 0-.5.5v1.5A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5V10a.5.5 0 0 0-.5-.5 1.5 1.5 0 0 1 0-3A.5.5 0 0 0 16 6V4.5A1.5 1.5 0 0 0 14.5 3zM1 4.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v1.05a2.5 2.5 0 0 0 0 4.9v1.05a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-1.05a2.5 2.5 0 0 0 0-4.9z'/>"
+							+ "</svg>"
+							+ "</td>"
+							+ "<th width='300px'>"
+							+ "&nbsp; "+list[i].genreNo+" "+list[i].couponName+"("+(list[i].discount*100)+"%)"
+							+ "</th>"
+							+ "<td width='150px' style='font-size : 12px;'>"
+							+ "&nbsp 기한 : "+list[i].expiredDate
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr height='10px'></tr>"
+					}
+					$("#coupon-table").html(co);
+				},
+				error : function(){
+					console.log("error");
+				}
+			});
+		}
 	</script>
 	
 

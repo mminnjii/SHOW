@@ -2,9 +2,9 @@ package com.kh.show.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
+import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
@@ -507,18 +509,44 @@ public class MemberController {
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 				
 		ArrayList<Reservation> slist = memberService.showList(userNo,pi);
-
+		System.out.println(slist);
 		model.addAttribute("slist",slist);
 		model.addAttribute("pi",pi);
-		
-		System.out.println(slist);
 		
 		return "member/myShow";
 	}
 	
+	//메인페이지 쿠폰 수, 리뷰 수, 공연 수
+
+	@ResponseBody
+	@RequestMapping(value="couponCount")
+	public int couponCount(int userNo) {
+		int cno = memberService.couponCount(userNo);
+		
+		return cno;
+	}
+	@ResponseBody
+	@RequestMapping(value="reviewCount")
+	public int reviewCount(int userNo) {
+		int rno = memberService.rListCount(userNo);
+		
+		return rno;
+	}
+	@ResponseBody
+	@RequestMapping(value="showCount")
+	public int showCount(int userNo) {
+		int sno = memberService.sListCount(userNo);
+		
+		return sno;
+	}
 	
-	
-	
+	@ResponseBody
+	@RequestMapping(value="couponList",produces="application/json;charset=UTF-8")
+	public String couponList(int userNo) {
+
+		ArrayList<Coupon> clist = memberService.couponList(userNo);
+		return new Gson().toJson(clist);
+	}
 	
 	
 	

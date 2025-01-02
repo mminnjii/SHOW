@@ -124,8 +124,10 @@
 											<tr id="one">
 												<td>${s.showNo}</td>
 												<td>${s.showName}</td>
-												<td>${s.price}</td>
-												<td>${s.showStart}</td>
+												<c:forEach var="w" items="${s.showList }">
+													<td>${w.price}</td>
+													<td>${w.showStart}</td>
+												</c:forEach>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
