@@ -48,22 +48,30 @@ public class PaymentsController {
 		String[] seatArray = selectedName.split(","); 
 		
 		double totalPrice = 0;
-		double sPrice = 55000;
+		
+		// 가격 조회
+		double sPrice = (double)session.getAttribute("Price");
+		
 		String gradeName = "";
+		String gradeName1 = "";
+		String gradeName2 = "";
+		String gradeName3= "";
 		
 		 for(String name : seatArray) {
 			 
 			 if(name.contains("A")||name.contains("B")) {
 				 totalPrice +=sPrice*1.4;
-				 gradeName = "VIP석";
+				 gradeName1 = "VIP석";
 			 }else if(name.contains("C")||name.contains("D")||name.contains("E")||name.contains("F")){
 				 totalPrice +=sPrice*1.2;
-				 gradeName = "R석";
+				 gradeName2 = "R석";
 			 }else{
 				 totalPrice +=sPrice;
-				 gradeName = "S석";
+				 gradeName3 = "S석";
 			 }
 		 }
+		 
+		 gradeName += gradeName1+gradeName2+gradeName3;
 		 
 		 NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
 		 model.addAttribute("totalPrice",formatter.format(totalPrice));
@@ -74,16 +82,16 @@ public class PaymentsController {
 	
 	
 	
-	
 	@PostMapping(value = "/bank")
 	@ResponseBody
-	public String paymentComplete(HttpSession session, @RequestBody Map<String, Object> paymentData) {
+	public String paymentComplete(HttpSession session, Model model ,@RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		System.out.println(loginUser.getUserNo());
-		
+	
+		// 회원번호 추출
+		Integer userNo = (Integer) session.getAttribute("userNo");
+		// 좌석번호 추출
 		String selectedName = (String) session.getAttribute("selectedName");
 		String[] seatArray = selectedName.split(","); 
 		
@@ -95,70 +103,87 @@ public class PaymentsController {
 		info.put("status", "N");
 		info.put("methodToget", ((String) paymentData.get("methodToget")));
 		
-		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(info);
 		
-		String bankName = ((String) paymentData.get("vbank_name"));
-		String bankNum = ((String) paymentData.get("vbank_num"));
-		String name = ((String) paymentData.get("vbank_holder"));
-		String dueDate = ((String) paymentData.get("vbank_date"));
-		String receipt = ((String) paymentData.get("receipt"));
-		
-		info.put("userNo", 4);
-		info.put("bankName",bankName );
-		info.put("bankNum", bankNum);
-		info.put("name", name);
-		info.put("dueDate", dueDate);
-		
-		// 무통장 테이블 생성
-		int result2 = paymentsService.createAccount(info);
-		System.out.println("무통장 테이블 :"+result2);
-		
-		// 좌석별 티켓 생성
-		int result3 = 0;
-		Map<String, Object> ticket = new HashMap<>();
-		ticket.put("reservationId", ((String) paymentData.get("reservationId")));
-		ticket.put("payId", payId);
-		ticket.put("roundId", ((String) paymentData.get("roundId"))); 
-		
-		 for(String seats : seatArray) {
+		if(result>0) {
 			
-			 // 좌석 별 티켓 생성 
-			ticket.put("seats", seats);
-			int seatsId = paymentsService.selectId(ticket);
-			ticket.put("seatsId", seatsId);
-		    int result4 = paymentsService.createTicket(ticket);
-	        if (result4 == 0) {
-	        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-	        	return "결제 실패하였습니다";
-	        }
-	        
-	        result3 += result4;
-		 }
-		 
-		 if(seatArray.length==result3) {
-			 
-			 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
-			 session.setAttribute("bankName", ((String) paymentData.get("vbank_name")));
-			 session.setAttribute("bankNum", ((String) paymentData.get("vbank_num")));
-			 session.setAttribute("dueDate", ((String) paymentData.get("vbank_date")));
-			 session.setAttribute("bankHolder", ((String) paymentData.get("vbank_holder")));
-			 
-			 return "결제 성공하였습니다";
-		 }
-		
-		return "결제 실패하였습니다";
+			String bankName = ((String) paymentData.get("vbank_name"));
+			String bankNum = ((String) paymentData.get("vbank_num"));
+			String name = ((String) paymentData.get("vbank_holder"));
+			String dueDate = ((String) paymentData.get("vbank_date"));
+			String receipt = ((String) paymentData.get("receipt"));
+			
+			info.put("userNo", 4);
+			info.put("bankName",bankName );
+			info.put("bankNum", bankNum);
+			info.put("name", name);
+			info.put("dueDate", dueDate);
+			info.put("userNo", userNo);
+			
+			// 무통장 테이블 생성
+			int result2 = paymentsService.createAccount(info);
+			if(result2>0) {
+				
+				// 좌석별 티켓 생성
+				int result3 = 0;
+				Map<String, Object> ticket = new HashMap<>();
+				ticket.put("reservationId", ((String) paymentData.get("reservationId")));
+				ticket.put("payId", payId);
+				ticket.put("roundId", ((String) paymentData.get("roundId"))); 
+				
+				 for(String seats : seatArray) {
+					
+					 // 좌석 별 티켓 생성 
+					ticket.put("seats", seats);
+					int seatsId = paymentsService.selectId(ticket);
+					ticket.put("seatsId", seatsId);
+				    int result4 = paymentsService.createTicket(ticket);
+			        if (result4 == 0) {
+			        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
+			        	return "NNNNN";
+			        }
+			        
+			        result3 += result4;
+				 }
+				 
+				 if(seatArray.length==result3) {
+					 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
+					 session.setAttribute("bankName", ((String) paymentData.get("vbank_name")));
+					 session.setAttribute("bankNum", ((String) paymentData.get("vbank_num")));
+					 session.setAttribute("dueDate", ((String) paymentData.get("vbank_date")));
+					 session.setAttribute("bankHolder", ((String) paymentData.get("vbank_holder")));
+					 return "NNNNY";
+				 }else {
+					 model.addAttribute("errorMsg","좌석별 티켓 생성에 실패하였습니다.");
+					 return "NNNNN";
+				 }
+			
+			}else {
+				model.addAttribute("errorMsg","통장데이터가 생성되지 못했습니다.");
+				return "NNNNN";
+			}
+			
+		}else {
+			model.addAttribute("errorMsg","결제가 생성되지 못했습니다.");
+			return "NNNNN";
+		}
 	}
 	
 	
 	@ResponseBody
 	@PostMapping("/card")
-	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
+	public String card(HttpSession session,Model model, @RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
 		
+		// 회원번호 추출
+		Integer userNo = (Integer) session.getAttribute("userNo");
+		
+		// 좌석번호 추출
+		String selectedName = (String) session.getAttribute("selectedName");
+		String[] seatArray = selectedName.split(",");
 		
 		Map<String, Object> info = new HashMap<>();
 		info.put("payId", payId);
@@ -166,70 +191,66 @@ public class PaymentsController {
 		info.put("amount", ((String) paymentData.get("amount")));
 		info.put("method", 1);
 		info.put("status", "Y");
-		info.put("userNo", 4);
+		info.put("userNo", userNo);
 		info.put("methodToget", ((String) paymentData.get("methodToget")));
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(info);
-		
-		String selectedName = (String) session.getAttribute("selectedName");
-		String[] seatArray = selectedName.split(",");
-		
 		if(result>0) {
 		
-			// 무통장 테이블 생성
+			// 카드 테이블 생성
 			int result2 = paymentsService.createCard(info);
-			System.out.println("무통장 테이블 :"+result2);	
-			
-			// 좌석별 티켓 생성
-			int result3 = 0;
-			Map<String, Object> ticket = new HashMap<>();
-			ticket.put("reservationId", ((String) paymentData.get("reservationId")));
-			ticket.put("payId", payId);
-			ticket.put("roundId", ((String) paymentData.get("roundId"))); 
-			
-			 for(String seats : seatArray) {
-				  
-				 // 좌석 별 티켓 생성 
-					ticket.put("seats", seats);
-					int seatsId = paymentsService.selectId(ticket);
-					ticket.put("seatsId", seatsId);
-				    int result4 = paymentsService.createTicket(ticket);
-			        if (result4 == 0) {
-			        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-			        }
-			        
-			        result3 += result4;
-				 }
-			 
-			 if(seatArray.length==result3) {
+			if(result2>0) {
+				
+				// 좌석별 티켓 생성
+				int result3 = 0;
+				Map<String, Object> ticket = new HashMap<>();
+				ticket.put("reservationId", ((String) paymentData.get("reservationId")));
+				ticket.put("payId", payId);
+				ticket.put("roundId", ((String) paymentData.get("roundId"))); 
+				
+				 for(String seats : seatArray) {
+					  
+					 // 좌석 별 티켓 생성 
+						ticket.put("seats", seats);
+						int seatsId = paymentsService.selectId(ticket);
+						ticket.put("seatsId", seatsId);
+					    int result4 = paymentsService.createTicket(ticket);
+				        if (result4 == 0) {
+				        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
+				        }
+				        
+				        result3 += result4;
+					 }
 				 
-				 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
-				 System.out.println("티켓 생성 성공..");
-				 return "티켓 생성 성공..";
-			 }
-		
+				 if(seatArray.length==result3) {
+					 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
+					 return "NNNNY";
+				 }else {
+					 model.addAttribute("errorMsg","좌석별 티켓 생성에 실패하였습니다.");
+					 return "NNNNN";
+				 }
 			}else {
-				System.out.println("결제 생성 실패..");
-				return "결제 생성 실패..";
+				model.addAttribute("errorMsg","카드데이터가 생성되지 못했습니다.");
+				return "NNNNN";
 			}
-			
 		
-		
-		return null;
+		}else {
+			model.addAttribute("errorMsg","결제가 생성되지 못했습니다.");
+			return "NNNNN";
+		}
 	}
 	
 	
 	@ResponseBody
 	@PostMapping("/fail")
-	public String paymentFail(HttpSession session, @RequestParam int reservationId, @RequestParam int roundId) {
+	public String paymentFail(HttpSession session,Model model, @RequestParam int reservationId, @RequestParam int roundId) {
 		
 		Map<String, Object> data = new HashMap<>();
 		data.put("reservationId", reservationId);
 		
 		 // 예약테이블 삭제  
 		int resultReser = paymentsService.deleteReservation(data);
-		
 		if (resultReser>0) {
 			
 			//  좌석상태 Y설정
@@ -243,30 +264,41 @@ public class PaymentsController {
 				 int result2 = paymentsService.rollbackSeats(data);
 		        
 				 if (result2 == 0) {
-		        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-		        	return "결제 실패하였습니다";
+		        	System.out.println ("좌석별 티켓 rollback에 실패하였습니다. : " + seats);
 		        }
 		        
 				 result += result2;
 			 }
 			
 			if(seatArray.length==result) {
-				System.out.println("좌석 rollback 성공입니다..");
+				session.removeAttribute("s");
+				session.removeAttribute("vipPrice");
+				session.removeAttribute("rPrice");
+				session.removeAttribute("sPrice");
+				session.removeAttribute("Price");
+				session.removeAttribute("date");
+				session.removeAttribute("num");
+				session.removeAttribute("selectedName");
+				session.removeAttribute("userNo");
+				session.removeAttribute("reviewAvg");
+				session.removeAttribute("avgFloor");
+				return "NNNNY";
 				
+			}else {
+				model.addAttribute("errorMsg","좌석별 티켓 rollback에 실패하였습니다.");
+				return "NNNNN";
 			}
+			
 		}else {
-			System.out.println("예약테이블 삭제 실패!!");
+			model.addAttribute("errorMsg","예약 rollback에 실패하였습니다.");
+			return "NNNNN";
 		}
-		
-		return "메인페이지로 돌아갑니다.";
 	} 
 	
 	
 	@PostMapping("/paymentInfo")
 	public String pamentInfo(HttpSession session, @RequestParam("paymentId") String paymentId, @RequestParam("type") String type,
 							Model model) {
-		
-		System.out.println(type);
 		
 		String[] impParts = paymentId.split("_");
 		String payId = impParts[1];

@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 예약테이블 생성 -->
 	<insert id="createReservation" parameterType="HashMap">
 		INSERT INTO RESERVATION
-		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, 1, #{hallNo},DEFAULT,DEFAULT,NULL)
+		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, #{userNo}, #{hallNo},DEFAULT,DEFAULT,NULL)
 	</insert>
 	
 	<!-- 예약테이블 생성 후 확인데이터 가져오기 -->

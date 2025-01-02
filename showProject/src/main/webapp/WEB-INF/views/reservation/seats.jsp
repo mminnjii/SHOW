@@ -302,28 +302,37 @@
       					roundId : roundId
       				}, 
       				success : function(num){
-      					if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
-      						 
-      					    const form = document.createElement("form");
-      				        form.method = "POST";
-      				        form.action = "/show/payments/pay";
-
-      				        const hiddenField = document.createElement("input");
-      				        hiddenField.type = "hidden";
-      				        hiddenField.name = "reservationId";
-      				        hiddenField.value = reservationId;
-
-      				        form.appendChild(hiddenField);
-      				        document.body.appendChild(form);
-      				        form.submit();
+      					
+	      					if(num!=0){
+	      						
+	      						if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
+	         						 
+	          					    const form = document.createElement("form");
+	          				        form.method = "POST";
+	          				        form.action = "/show/payments/pay";
+	
+	          				        const hiddenField = document.createElement("input");
+	          				        hiddenField.type = "hidden";
+	          				        hiddenField.name = "reservationId";
+	          				        hiddenField.value = reservationId;
+	
+	          				        form.appendChild(hiddenField);
+	          				        document.body.appendChild(form);
+	          				        form.submit();
+	      						
+	      					}else{
+	      						alert("다시 선택해 주세요."); // 에러 메시지 출력
+	      					}
       						
       					}else{
       						alert("요청에 실패하였습니다.");
+      						window.location.href = '/show/common/errorPage';
       					}
       					
       				},
       				error : function(error){
-      					
+      					console.log(error);
+        				console.log("통신오류");
       				}
       			}); 
   	     	});
@@ -333,7 +342,7 @@
   	     		
   	     	 	$('#Modal').modal('show');
   	     		
-  	     		var taken = ${taken}; // JSTL 데이터를 JSON으로 전달
+  	     		var taken = ${taken}; 
   	     	 
   	     	    console.log(${taken});
   	     		
