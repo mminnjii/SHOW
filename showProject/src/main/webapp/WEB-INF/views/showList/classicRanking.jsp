@@ -137,33 +137,33 @@
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
-                    <span id="j1">뉴욕의 거장들</span><br>
-                    <span id="j2">2025.01.10-2025.07.12</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_서울_신카이 마코토 영화음악 콘서트0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <span id="j1">신카이 마코토</span><br>
+                    <span id="j2">2024.11.03-2024.11.03</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/베르테르.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">베르테르</span><br>
-                    <span id="j2">2025.01.17-2025.03.16</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_제주_유키 구라모토 내한 콘서트- 제주0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <span id="j1">유키 구라모토 내한 25주년</span><br>
+                    <span id="j2">2025.03.08-2025.03.08</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">강홍석</span><br>
-                    <span id="j2">2025.02.08-2025.02.09</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_대구/경북_로열 클래식 발레단 내한공연 0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <span id="j1">호두까기 인형</span><br>
+                    <span id="j2">2024.12.28-2024.12.29</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/시라노.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">시라노</span><br>
-                    <span id="j2">2024.12.06-2025.02.23</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_부산/경남_지브리 하우스 콘서트0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <span id="j1">지브리와 사랑에 빠지다</span><br>
+                    <span id="j2">2024.05.24-2025.05.24</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/오페라.jpg" alt="" id='f1'><span id="one">5</span></a><br>
-                    <span id="j1">오페라</span><br>
-                    <span id="j2">2024.12.22-2024.12.30</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_충청/강원_2025 가족뮤지컬 겨울왕국0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <span id="j1">2025 가족뮤지컬 겨울이야기</span><br>
+                    <span id="j2">2025.03.06-2025.03.07</span>
                 </td>           
                 
             </tr>
@@ -199,8 +199,9 @@
                                 for(var i = 0; i < result.length; i++){
                                     
                                     
+                                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     str += "<td>"
-                                          + "<a href=''><img src='/show/resources/images/강홍석.jpg' alt='' id='f1'></a><br><br>"
+                                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"

@@ -205,7 +205,7 @@
 
                         <li id="li1">|</li>
 
-                        <li><a href="">커뮤니티</a></li>
+                        <li><a href="${contextPath}/chat/list">커뮤니티</a></li>
                         <li><a href="${contextPath}/notice/list">공지사항</a></li>
                        
                     </ul>

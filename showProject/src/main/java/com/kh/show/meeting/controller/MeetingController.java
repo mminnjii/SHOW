@@ -74,6 +74,28 @@ public class MeetingController {
 
 		return showList;
 	}
+
+	// 공연 검색 메소드 - insert
+	@ResponseBody
+	@GetMapping("searchShow")
+	public ArrayList<Show> selSearchShow(int genreNo, String keyword){
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("genreNo", genreNo);
+		
+		System.out.println(keyword+"    "+ genreNo);
+		
+		ArrayList<Show> showList = meetingService.selSearchShow(map);
+
+		for(Show s: showList) {
+			System.out.println(s);
+		}
+		
+		return showList;
+	}
+	
+	
 	
 	// 소모임 생성 메소드 
 	@PostMapping("meetingInsert")
@@ -161,22 +183,22 @@ public class MeetingController {
 	public String  searchMeetingList(@RequestParam(value="currentPage", defaultValue = "1") int currentPage, 
 												String condition, String keyword, Model m){
 		
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("keyword", keyword);
-		map.put("condition", condition);
+		HashMap<String, Object> hashmap = new HashMap<>();
+		hashmap.put("keyword", keyword);
+		hashmap.put("condition", condition);
 		
 		// 페이징 처리 
-		int listCount = meetingService.listCount();
+		int listCount = meetingService.searchCount(hashmap);
 		int PageLimit = 10;
 		int boardLimit = 10;
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, PageLimit, boardLimit);
 		
-		ArrayList<Meeting> meList = meetingService.searchMeetingList(pi, map);
+		ArrayList<Meeting> meList = meetingService.searchMeetingList(pi, hashmap);
 		
 		m.addAttribute("meList", meList);
 		m.addAttribute("pi",pi);
-		m.addAttribute("map", map);
+		m.addAttribute("hashmap", hashmap);
 		
 		return "meeting/meeting";
 	}

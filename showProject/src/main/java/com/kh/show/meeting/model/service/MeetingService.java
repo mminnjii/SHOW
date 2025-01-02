@@ -44,4 +44,10 @@ public interface MeetingService {
 	// 검색 내역
 	ArrayList<Meeting> searchMeetingList(PageInfo pi, HashMap<String, Object> map);
 
+	// 검색 목록 개수
+	int searchCount(HashMap<String, Object> hashmap);
+
+	// 공연 검색 목록 
+	ArrayList<Show> selSearchShow(HashMap<String, Object> map);
+
 }

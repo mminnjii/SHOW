@@ -11,8 +11,6 @@
     
     <style>
         
-        #boardList {text-align:center;}
-        #boardList>tbody>tr:hover {cursor:pointer;}
         #pagingArea {width:fit-content; margin:auto;}
         
         #searchForm>* {
@@ -35,17 +33,20 @@
             text-align: left;
             width: 70%;
             margin: 0px auto;
-            margin-top: 30px;
             background-color: white;
-            padding: 3% 5%;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            padding: 3%;
+            border: 1px solid lightgray;
+            border-radius: 0px 0px  10px 10px;
+			border-top : none;
         }
-
+        
         #meetingList tbody>tr:hover{
             background-color: lightgray; /*#597c9b*/
+            cursor: pointer;
         }
-
+		#meetingList{
+        	text-align: center;
+        }
  		.pageBtn{
         	border : 1px solid lightgray;
         	background-color : white;
@@ -59,9 +60,8 @@
 <body>
 
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
-	<br><br>
     <div class="a" style="padding:5% 10%;">
-        <h2>소모임</h2>
+        <h2 align="center">소모임</h2>
         
         <br>
         <form id="searchForm" action="${contextPath}/meeting/search" method="get">
@@ -74,7 +74,7 @@
             </div>
     
             <div class="text">
-                <input type="text" class="form-control" name="keyword" value="${map.keyword}">
+                <input type="text" class="form-control" name="keyword" value="${hashmap.keyword}">
             </div>
     
             <button type="submit" class="searchBtn btn btn-secondary">검색</button>
@@ -105,7 +105,7 @@
 		                   <tr>
 		                      <td>${m.meetingNo}</td>
 		                      <td>${m.meetingTitle}</td>
-		                      <td>${m.memList[0].userId}</td> <!-- 리스트이기 떄문에 객체에 접근해야 한다. -->
+		                      <td>${m.memList[0].userId}</td>  <!-- 리스트이기 떄문에 객체에 접근해야 한다. -->
 		                      <td>현재참여인원/${m.meetingCount}</td>
 		                      <td>${m.startDate} ~ ${m.endDate}</td>
 		                  </tr>
@@ -130,13 +130,13 @@
 	        		<button class="pageBtn" disabled>이전</button>
         		</c:when>
 	        	<c:otherwise>
-	        		<button class="pageBtn" onclick="location.href=location.href='${contextPath}/meeting/list?currentPage=${pi.currentPage - 1}'">이전</button>
+	        		<button class="pageBtn" onclick="location.href='${contextPath}/meeting/list?currentPage=${pi.currentPage - 1}'">이전</button>
 	        	</c:otherwise>
         	</c:choose>
 			
 			<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
 				<c:choose>
-					<c:when test="${empty map}"><%-- 검색이 아니면 --%>
+					<c:when test="${empty hashmap}"><%-- 검색이 아니면 --%>
 						<c:choose>
 							<c:when test="${i != pi.currentPage}">
 								<button class="pageBtn" onclick="location.href='${contextPath}/meeting/list?currentPage=${i}'">${i}</button>
@@ -150,8 +150,8 @@
 					<c:otherwise> <%--검색이라면 --%>
 						<c:url var="searchUrl" value="/meeting/search">
 							<c:param name="currentPage" value="${i}"/>
-							<c:param name="condition" value="${map.condition}"/>
-							<c:param name="keyword" value="${map.keyword}"/>
+							<c:param name="condition" value="${hashmap.condition}"/>
+							<c:param name="keyword" value="${hashmap.keyword}"/>
 						</c:url>
 						<c:choose>
 							<c:when test="${i != pi.currentPage}">
@@ -179,7 +179,7 @@
         
         <script>
         	// 선택한 셀렉트 박스의 값 유지
-            $("option[value='${map.condition}']").attr("selected", true);
+            $("option[value='${hashmap.condition}']").attr("selected", true);
             
         	// 행 선택시 detailView로 이동 
         	$("#meetingList tbody").on("click", "tr", function(){

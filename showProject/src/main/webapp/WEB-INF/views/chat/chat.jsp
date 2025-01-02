@@ -10,17 +10,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <style>
-        .a {
-            width:80%;
-            margin:auto;
-            padding:5% 10%;
-            background-color:white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+         .a {
+            text-align: left;
+            width: 70%;
+            margin: 0px auto;
+            background-color: white;
+            padding: 3% 5%;
+            border: 1px solid lightgray;
+            border-radius: 0px 0px  10px 10px;
+			border-top : none;
         }
 
-        #boardList {text-align:center;}
-        #boardList>tbody>tr:hover {cursor:pointer;}
         #pagingArea {width:fit-content; margin:auto;}
         #searchForm>* {
             float:left;
@@ -30,22 +30,51 @@
         .text {width:53%;}
         
         .searchBtn {
-                width:20%; 
-                background-color: #597c9b;
-            }
+            width:20%; 
+            background-color: #597c9b;
+        }
 
+		#searchForm{
+			width: 50%;
+			margin-left: 51%;
+		}
         
 
-        tbody>tr:hover{
-            background-color: lightgray;
+        
+        
+       	#chatList{
+        	text-align: center;
         }
+        
+        .pageBtn{
+        	border : 1px solid lightgray;
+        	background-color : white;
+        	padding: 5px 10px;
+        	border-radius: 8px;
+        }
+        
+        .joinBtn{
+        	border : 1px solid gray;	
+        	background-color : white;
+        	padding: 3px 10px;
+        	border-radius: 8px;
+        }
+        
+        .joinBtn:hover{
+        	background-color : #597c9b;
+        	padding: 3px 10px;
+			cusor: pointer;
+			border : 1px solid #597c9b;	
+			color: white;
+        }
+        
 
     </style>
 </head>
 <body>
-
+	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
     <div class="a" style="padding:5% 10%;">
-        <h2>채팅방</h2>
+        <h2 align="center">채팅방</h2>
         
         <br>
         <form id="searchForm" action="${contextPath}/" method="get" align="center">
@@ -73,107 +102,92 @@
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>입장인원수</th>
-                    <th>작성일</th>
+                    <th>입장정원수</th>
+                    <th>생성일</th>
+                    <th>입장</th>
                 </tr>
             </thead>
             <tbody>
-                <!--
                 <c:choose>
-                    <c:when test="${empty list}">
-                    <tr>
-                        <td colspan="6">조회된 게시글이 없습니다.</td>
-                    </tr>
+                    <c:when test="${empty chatList}">
+                    	<tr>
+							<td colspan="6" style="text-align: center;" id="noting" >조회된 게시글이 없습니다.</td>	
+                  		</tr>
                     </c:when>
                     <c:otherwise>
-                    <c:forEach var="b" items="${list}">
-                -->
-                        <tr>
-                            <td>1</td>
-                            <td>oo콘서트 갔다오신분 있나요?</td>
-                            <td>user01</td>
-                            <td>1/10</td>
-                            <td>2024-12-31</td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>OO뮤지컬 후기</td>
-                            <td>user01</td>
-                            <td>1/10</td>
-                            <td>2024-12-31</td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>OO뮤지컬 후기</td>
-                            <td>user01</td>
-                            <td>1/10</td>
-                            <td>2024-12-31</td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>OO뮤지컬 후기</td>
-                            <td>user01</td>
-                            <td>1/10</td>
-                            <td>2024-12-31</td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>OO뮤지컬 후기</td>
-                            <td>user01</td>
-                            <td>1/10</td>
-                            <td>2024-12-31</td>
-                        </tr>
-                    <!--</c:forEach>
+	                    <c:forEach var="cl" items="${chatList}">
+	                        <tr>
+	                            <td>${cl.chatNo}</td>
+	                            <td>${cl.chatTitle}</td>
+	                            <td>${cl.memList[0].userId}</td>
+	                            <td>1/${cl.chatUserCount}</td>
+	                            <td>${cl.createDate}</td>
+	                            <td><button type="button" class="joinBtn">입장</button></td>
+	                        </tr>
+	                    </c:forEach>
                     </c:otherwise>
-                    
-                </c:choose> -->
+                </c:choose> 
             </tbody>
         </table>
         <br>
-        <button class="btn btn-secondary" style="float:right; background-color: #597c9b;" href="insert">채팅방 만들기</button>
         
-        <script>
-            // 글을 클릭했을 때 해당 글을 상세보기 할 수 있는 함수 작성 
-            $(function(){
-                $("#boardList>tbody>tr").click(function(){
-                    var bno = $(this).children().first().text();
+        <button type="button" onclick="location.href='${contextPath}/chat/chatView'" class="btn btn-secondary" style="float:right; background-color: #597c9b;">채팅방 만들기</button>
 
-                    location.href='detail?bno='+bno;
-                    
-                })
-            });
-        </script>
-        
-        <!-- <div id="pagingArea">
-            <ul class="pagination">
-                
-                <li class="page-item disabled"><a class="page-link" href="${contextPath}/board/list?currentPage=${pi.currentPage-1}">Previous</a></li>
-                <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-                    <c:choose>
-                        <c:when test="${empty map}"><%-- 검색이 아니라면 --%>
-                            <li class="page-item"><a class="page-link" href="list?currentPage=${i}">${i}</a></li>
-                        </c:when>
-                        <c:otherwise><%-- 검색일 경우 --%>
-                            <c:url var="searchUrl" value="search">
-                                <c:param name="condition" value="${map.condition}"/>
-                                <c:param name="keyword" value="${map.keyword}"/>
-                                <c:param name="currentPage" value="${i}"/>
-                            </c:url>
-                            <li class="page-item">
-                                <a class="page-link" href="${searchUrl}">${i}</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <li class="page-item"><a class="page-link" href="${contextPath}/board/list?currentPage=${pi.currentPage+1}">Next</a></li>
-                
-            </ul>
+       	<div id="pagingArea">
+        	<!-- 이전/다음 버튼 : 현재 페이지에 따라 만든다. 시작/마지막 페이지일때는 비활성화 
+        		 페이지 버튼 
+        		 클릭 했을 때 현재 페이지 버튼은 비활성화 한다.
+        	-->
+        	<c:choose> <%-- 이전버튼 --%>
+        		<c:when test="${pi.currentPage == 1}">
+	        		<button class="pageBtn" disabled>이전</button>
+        		</c:when>
+	        	<c:otherwise>
+	        		<button class="pageBtn" onclick="location.href='${contextPath}/chat/list?currentPage=${pi.currentPage - 1}'">이전</button>
+	        	</c:otherwise>
+        	</c:choose>
+			
+			<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+				<c:choose>
+					<c:when test="${empty hashmap}"><%-- 검색이 아니면 --%>
+						<c:choose>
+							<c:when test="${i != pi.currentPage}">
+								<button class="pageBtn" onclick="location.href='${contextPath}/chat/list?currentPage=${i}'">${i}</button>
+							</c:when>
+							<c:otherwise>
+								<button class="pageBtn" disabled>${i}</button>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					
+					<%-- <c:otherwise> 검색이라면 
+						<c:url var="searchUrl" value="/meeting/search">
+							<c:param name="currentPage" value="${i}"/>
+							<c:param name="condition" value="${hashmap.condition}"/>
+							<c:param name="keyword" value="${hashmap.keyword}"/>
+						</c:url>
+						<c:choose>
+							<c:when test="${i != pi.currentPage}">
+								<button class="pageBtn" onclick="location.href='${searchUrl}'">${i}</button>
+							</c:when>
+							<c:otherwise>
+								<button class="pageBtn" disabled>${i}</button>
+							</c:otherwise>
+						</c:choose>
+					</c:otherwise>--%>
+				</c:choose>
+			</c:forEach>
+		        	
+		    <c:choose> <%-- 다음버튼 --%>
+        		<c:when test="${pi.currentPage == pi.maxPage}">
+	        		<button class="pageBtn" disabled>다음</button>
+        		</c:when>
+	        	<c:otherwise>
+	        		<button class="pageBtn" onclick="location.href='${contextPath}/chat?currentPage=${pi.currentPage + 1}'">다음</button>
+	        	</c:otherwise>
+        	</c:choose>
+        	
         </div>
-        <br clear="both"><br> -->
         
         
         <!-- 
@@ -187,6 +201,11 @@
         
         <script>
             $("option[value='${map.condition}']").attr("selected", true);
+            
+            $("#chatList tbody").on("click", "button", function(){
+				// 채팅방 입장 ? 
+				console.log("입장")
+            });
             
         </script>
         

@@ -93,6 +93,7 @@
                   <!-- 모달 바디 -->
                   <div class="modal-body">
                		<c:if test="${not empty rInfo }">
+               		<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
                		<h4>${rInfo.showName}</h4><br>
                			(${rInfo.showRound} 회차)<br>
                			공연일자 : ${rInfo.showDate} <br>
@@ -167,6 +168,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'VIP' }">
 									<td>VIP석&nbsp;(A-B)</td>
+									<td>${vipPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -176,6 +178,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'R' }">
 									<td>R석&nbsp;(C-F)</td>
+									<td>${rPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -185,6 +188,7 @@
 							<c:forEach var="num" items="${num}">
 								<c:if test="${num.gradeName eq 'S' }">
 									<td>S석 &nbsp;(F-H)</td>
+									<td>${sPrice }원</td>
 									<td>${num.count }개</td>
 								</c:if>
 							</c:forEach>
@@ -217,6 +221,14 @@
 		<p style="margin-top: 800px;"></p>
 		
     <script>
+    	
+    	
+    
+    	$('#back').on('click',function(){
+    		history.back();
+    	});
+    
+    
 
 	     $('.seat').on('click', function() {
 	    	 
@@ -243,7 +255,7 @@
                     			var tr = $("<tr>").append(r).append(num);
                     			$("#select>tbody").append(tr);
                    		}else{
-        	           			var e = $("<td>").text("E석");
+        	           			var e = $("<td>").text("S석");
         	        			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
         	        			var tr = $("<tr>").append(e).append(num);
         	        			$("#select>tbody").append(tr);
@@ -251,8 +263,6 @@
         			}else{
         					console.log($("#select>tbody").find("tr").last());
         					$("#select>tbody").find("tr").last().remove();
-        					// $("#select>tbody").find("td").last().prev().remove();
-        					// $("#select>tbody").find("td").last().remove();
         			}
         			
 	    	});
@@ -272,24 +282,41 @@
   	     	$(".submit").on('click',function(){
   	     		
   	     		var num = $("#select>tbody tr").find("td:nth-child(even)").length;
-  	     		// console.log(num);
   	     		// 짝수요소만 찾아서 ,로 이어서 문자열 만들기
   	     		var selectedName = $("#select>tbody tr").find("td:nth-child(even)").map(function() {
   	     		  return $(this).text();
   	     		}).get().join(",");
 
-  	     		console.log(selectedName);
+  	     		// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
+  	     	 	 var reservationId = ${rInfo.reservationId };
   	     		
+  	     	 	var roundId = $('input[name="roundId"]').val();
+  	     	 	
       			$.ajax({
       				url : "/show/reservation/selectedSeats",
       				type : "POST",
       				data : {
       					num : num,
-      					selectedName : selectedName
+      					selectedName : selectedName,
+      					reservationNo : reservationId,
+      					roundId : roundId
       				}, 
       				success : function(num){
       					if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
-      						 window.location.href = "/show/payments/pay";
+      						 
+      					    const form = document.createElement("form");
+      				        form.method = "POST";
+      				        form.action = "/show/payments/pay";
+
+      				        const hiddenField = document.createElement("input");
+      				        hiddenField.type = "hidden";
+      				        hiddenField.name = "reservationId";
+      				        hiddenField.value = reservationId;
+
+      				        form.appendChild(hiddenField);
+      				        document.body.appendChild(form);
+      				        form.submit();
+      						
       					}else{
       						alert("요청에 실패하였습니다.");
       					}
@@ -306,13 +333,11 @@
   	     		
   	     	 	$('#Modal').modal('show');
   	     		
-  	     		
   	     		var taken = ${taken}; // JSTL 데이터를 JSON으로 전달
   	     	 
   	     	    console.log(${taken});
   	     		
   	     		taken.forEach(function (seatId) {
-  	     			// console.log(seatId)
   	     	        // 테이블 내에서 data-seat 속성을 가진 요소를 선택
   	     	        $("#seats").find("[data-seat='" + seatId + "']")
   	     	            .addClass("blackout") // blackout 클래스 추가

@@ -18,34 +18,6 @@
             display: flex;
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            height: 100vh;
-            color: #fff;
-            padding-top: 20px;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            color: #fff;
-        }
-
-        .sidebar > button {
-            display: block;
-            width: 100%;
-            padding: 40px;
-            background-color: #2c3e50;
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            border-bottom: 1px solid #34495e;
-        }
-
-        .sidebar > button:hover {
-            background-color: #34495e;
-        }
-
         .main-content {
             position: relative;
             flex-grow: 1;
@@ -78,75 +50,6 @@
             background-color: #c0392b;
         }
 
-        .content-buttons {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        .content-buttons a {
-            padding: 15px 30px;
-            background-color: #2980b9;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .content-buttons a:hover {
-            background-color: #3498db;
-        }
-
-        /* 공지사항 목록 스타일 */
-        .notice-list {
-            margin-top: 20px;
-        }
-
-        .notice-item {
-            padding: 15px;
-            background-color: #ecf0f1;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .notice-item:hover {
-            background-color: #bdc3c7;
-        }
-
-        .notice-detail {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-        }
-
-        /* 작성 버튼을 #data-container 바로 아래에 배치 */
-        .create-notice-btn,
-        .create-faq-btn,
-        .create-show-btn {
-            display: none; /* 초기 상태 숨김 */
-            position: absolute; /* 부모 요소를 기준으로 위치 */
-            bottom: -230px; /* #data-container의 아래로 20px */
-            left: 96.5%; /* 화면 가운데로 위치 */
-            transform: translateX(-50%); /* 가운데 정렬 */
-            padding: 15px 30px;
-            background-color: #27ae60;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 15px;
-            z-index: 1000; /* 다른 요소 위로 배치 */
-        }
-
-        .create-notice-btn:hover, .create-faq-btn:hover, .create-show-btn:hover {
-            background-color: #2ecc71;
-        }
-
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -163,21 +66,35 @@
             background-color: #f2f2f2;
             font-weight: bold;
         }
+
+        .action-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .action-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
     <div class="container">
-        <!-- 사이드바 -->
-        <div class="sidebar">
-            <h2>관리 사항</h2>
-            <button id="noticeBtn">공지사항 관리</button>
-            <button id="faqBtn">FAQ 관리</button>
-            <button id="userBtn">회원 관리</button>
-            <button id="reservationBtn">회원 예매 관리</button>
-            <button id="showBtn">공연 관리</button>
-        </div>
-
+		<jsp:include page="managerPageSideBar.jsp"/>
+		
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <div class="header">
@@ -189,27 +106,13 @@
 
             <!-- 데이터 표시 영역 -->
             <div id="data-container">
-                <p>데이터를 불러오고 있습니다...</p>
+                <p>사이드바의 항목을 선택해주세요.</p>
             </div>
         </div>
-
-        <!-- 공지사항 작성 버튼 -->
-        <form action="${contextPath}/noticeInsert" method="GET">
-            <button type="submit" class="create-notice-btn" id="createNotice">공지사항 작성</button>
-        </form>
-
-        <!-- FAQ 작성 버튼 -->
-        <form action="${contextPath}/faqInsert" method="GET">
-            <button type="submit" class="create-faq-btn" id="createFaq">FAQ 작성</button>
-        </form>
-
-        <!-- 공연 작성 버튼 -->
-        <form action="${contextPath}/showInsert" method="GET">
-            <button type="submit" class="create-show-btn" id="createShow">공연 작성</button>
-        </form>
     </div>
-
+	
     <script>
+    var contextPath = '${pageContext.request.contextPath}';
     document.addEventListener("DOMContentLoaded", function () {
         // 초기 상태에서 버튼 숨기기
         hideCreateButtons();
@@ -259,7 +162,7 @@
             document.querySelector('.create-show-btn').style.display = 'none';
         }
         
-     // 데이터 항목에 맞는 헤더 매핑
+        // 데이터 항목에 맞는 헤더 매핑
         const headerMappings = {
             notice: {
                 noticeNo: '공지사항 번호',
@@ -309,7 +212,7 @@
             }
         };
 
-     // 데이터 로드 함수 수정
+        // 데이터 로드 함수 수정
         function loadData(type) {
             const urlMap = {
                 notice: '${contextPath}/noticeList',
@@ -335,7 +238,7 @@
                     displayData(data, type);
                 })
                 .catch(error => {
-                    console.error('AJAX 요청 실패:', error);
+                    console.error('통신 실패', error);
                     document.getElementById('data-container').innerHTML =
                         '<p>데이터를 불러오는 중 문제가 발생했습니다.</p>';
                 });
@@ -362,7 +265,7 @@
                     th.textContent = headers[key] || key;  //
                     headerRow.appendChild(th);
                 });
-
+                headerRow.innerHTML += '<th>수정</th><th>삭제</th>'; // 수정 및 삭제 버튼 컬럼 추가
                 thead.appendChild(headerRow);
 
                 // 테이블 본문 생성
@@ -373,6 +276,26 @@
                         td.textContent = row[key];
                         tableRow.appendChild(td);
                     });
+
+                    // 수정 및 삭제 버튼 추가
+                    const editTd = document.createElement('td');
+                    const deleteTd = document.createElement('td');
+
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = '수정';
+                    editBtn.classList.add('action-btn');
+                    editBtn.addEventListener('click', () => editItem(row)); // 수정 버튼 클릭 시
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '삭제';
+                    deleteBtn.classList.add('action-btn', 'delete-btn');
+                    deleteBtn.addEventListener('click', () => deleteItem(row)); // 삭제 버튼 클릭 시
+
+                    editTd.appendChild(editBtn);
+                    deleteTd.appendChild(deleteBtn);
+
+                    tableRow.appendChild(editTd);
+                    tableRow.appendChild(deleteTd);
                     tbody.appendChild(tableRow);
                 });
 
@@ -382,6 +305,31 @@
             } else {
                 container.innerHTML = '<p>데이터가 없습니다.</p>';
             }
+        }
+
+        // 수정 버튼 클릭 시 동작
+        function editItem(item) {
+		    let url = "";
+		    if (item.noticeNo) {
+		        url = `${contextPath}/noticeUpdate/${item.noticeNo}`;  // 공지사항 수정
+		    } else if (item.faqNo) {
+		        url = `${contextPath}/faqUpdate/${item.faqNo}`;  // FAQ 수정
+		    } else if (item.showNo) {
+		        url = `${contextPath}/showUpdate/${item.showNo}`;  // 공연 수정
+		    } else if (item.userNo) {
+		        url = `${contextPath}/userUpdate/${item.userNo}`;  // 회원 수정
+		    } else if (item.reservationId) {
+		        url = `${contextPath}/reservUpdate/${item.reservationId}`;  // 예매 수정
+		    }
+		
+		    // URL로 이동
+		    if (url) {
+		        window.location.href = url;
+		    }
+		}
+        // 삭제 버튼 클릭 시 동작
+        function deleteItem(item) {
+            alert('삭제할 항목: ' + JSON.stringify(item));
         }
     });
     </script>

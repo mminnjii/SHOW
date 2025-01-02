@@ -61,6 +61,11 @@ public class ManagerDao {
 
 		return sqlSession.selectList("managerMapper.selectAllShow");
 	}
+	
+	public List<Notice> updateNoticeInform(SqlSessionTemplate sqlSession, Long noticeNo) {
+		
+		return sqlSession.selectList("managerMapper.updateNoticeInform", noticeNo);
+	}
 
 	
 

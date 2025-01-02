@@ -98,7 +98,7 @@
         font-weight: 600;
         font-style: normal;
         position: relative;
-        left: 220px;
+        left: 270px;
 
             
     }
@@ -165,8 +165,11 @@
         });
       </script>
       
-      <%@include file="/WEB-INF/views/showList/classicRanking.jsp" %>
-      <%@include file="/WEB-INF/views/showList/classicRegion.jsp" %>
+      <%@include file="/WEB-INF/views/showList/displayRanking.jsp" %>
+      <%@include file="/WEB-INF/views/showList/displayRegion.jsp" %>
+      
+      
+      <br> <br> <br> <br> <br> <br> <br>
       
       <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
