@@ -16,7 +16,7 @@ public class Show {
 	private String rPrice;				//	RPRICE			 VARCHAR2(1000 BYTE)
 	private String sPrice;				//  SPRICE			 VARCHAR2(1000 BYTE)
 	private String vPrice;				//	VPRICE			 VARCHAR2(1000 BYTE)
-	private String Price;				//	PRICE			 VARCHAR2(1000 BYTE)
+	private String price;				//	PRICE			 VARCHAR2(1000 BYTE)
 	private String notice;				//	NOTICE			 VARCHAR2(2000 BYTE)
 	private String precaution;			//	PRECAUTION		 VARCHAR2(2000 BYTE)
 	private String status;				//	STATUS			 VARCHAR2(1 BYTE)

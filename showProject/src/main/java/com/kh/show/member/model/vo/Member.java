@@ -27,4 +27,5 @@ public class Member {
 	private String rank;//	RANK	VARCHAR2(5 BYTE)
 	private String subscribe;//	SUBSCRIBE	VARCHAR2(1 BYTE)
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
+	private int point;
 }
