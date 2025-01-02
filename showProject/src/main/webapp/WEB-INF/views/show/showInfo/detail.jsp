@@ -104,8 +104,12 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+		
 		<div class="detail">
 	        <div class="fixed-section">
+	        <c:if test="${not empty userNo }">
+	        	<input type="hidden" name="userNo" value="${userNo} "></input>
+	        </c:if>
 	        <h2>예약하기</h2>
 	        <br><br>
 	        <c:if test="${not empty date }">
@@ -177,8 +181,6 @@
     	
     	function selectDate(){
     		
-    			// console.log($("#date").val());
-    		
      		$.ajax({
     			url : "selectDate",
     			data: {
@@ -205,22 +207,27 @@
     	}
     	
     	function reservation(){
+    		
     		// 로그인 유저 조건걸어주기
+    		var userNo = $('input[name="userNo"]').val(); 
     		
-    		// console.log($("#time").html()); // #time의 전체 HTML을 출력
-    		
-    		// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
-    	     var selectedOption = $("#time").find(":selected");
-    	     var roundId = selectedOption.data("round-id");
-    	     console.log("Selected Round ID:", roundId);
-    		 
-    	     location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
-    		
-
+    		if(userNo){
+    			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
+	       	     var selectedOption = $("#time").find(":selected");
+	       	     var roundId = selectedOption.data("round-id");
+	       	     
+	       	     if(selectedOption && roundId){
+	       	    	location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
+	       	     }else{
+	       	    	 alert("공연날짜 및 시간을 선택하세요");
+	       	     }
+	       	     
+    		}else{
+    			alert("로그인 후 이용하세요")
+    			location.href= '/show/toLogin';
+    		}
     	}
     	
-    	
-    
     </script>
     
     

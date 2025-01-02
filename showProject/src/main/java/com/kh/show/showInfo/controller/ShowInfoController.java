@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.service.ShowInfoService;
 import com.kh.show.showInfo.model.vo.Review;
 import com.kh.show.showInfo.model.vo.Show;
@@ -45,6 +46,7 @@ public class ShowInfoController {
 		session.setAttribute("vipPrice", formatter.format(vipPrice));
 		session.setAttribute("rPrice", formatter.format(rPrice));
 		session.setAttribute("sPrice", s.getPrice());
+		session.setAttribute("Price", sPrice);
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
@@ -53,6 +55,12 @@ public class ShowInfoController {
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
 		
+		// 회원 번호 담기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser!=null) {
+			session.setAttribute("userNo", loginUser.getUserNo());
+		}
+	
 		return "show/showInfo/detailInfo";
 	}
 	
@@ -157,9 +165,6 @@ public class ShowInfoController {
 			return "common/searchError";
 			
 		}
-		
-		
-		
 	}
 	
 	
