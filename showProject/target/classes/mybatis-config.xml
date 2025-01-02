@@ -6,9 +6,6 @@
  	<settings>
  		<setting name="jdbcTypeForNull" value="NULL"/>
  	</settings>
- 	
- 	
- 	
  	<typeAliases>
  		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
@@ -35,8 +32,4 @@
 		<typeAlias type="com.kh.show.chat.model.vo.Chat" alias="Chat"/> 		
 		<typeAlias type="com.kh.show.member.model.vo.Coupon" alias="Coupon"/> 		
  	</typeAliases>
-
- 	
- 
- 	
 </configuration>
