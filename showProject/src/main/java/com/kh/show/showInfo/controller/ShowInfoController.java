@@ -168,4 +168,11 @@ public class ShowInfoController {
 	}
 	
 	
+	// 리뷰 등록하기
+	@GetMapping("/enroll")
+	public String enrollReview() {
+		return "show/showInfo/reviewEnroll";
+	}
+	
+	
 }
