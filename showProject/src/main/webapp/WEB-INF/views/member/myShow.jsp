@@ -122,10 +122,10 @@
 									<c:otherwise>
 										<c:forEach var="s" items="${slist }">
 											<tr id="one">
-												<td>1</td>
-												<td>1</td>
-												<td>1</td>
-												<td>1</td>
+												<td>${s.showNo}</td>
+												<td>${s.showName}</td>
+												<td>${s.price}</td>
+												<td>${s.showStart}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>

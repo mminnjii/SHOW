@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.customer.model.vo.Question;
-import com.kh.show.customer.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.vo.Review;
@@ -227,8 +227,6 @@ public class MemberController {
 	//마이페이지로 이동
 	@GetMapping("/myPage")
 	public String myPage() {
-		
-		log.info("마이페이지");
 		
 		return "member/myPage";
 	}
@@ -505,8 +503,6 @@ public class MemberController {
 		int listCount = memberService.sListCount(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-		
-		System.out.println(userNo);
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 				

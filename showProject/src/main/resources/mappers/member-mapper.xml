@@ -216,14 +216,11 @@
 	</select>
 	
 	<select id="mshowList" resultMap="reservationResult">
-		SELECT R.SHOW_NO,
-			   SHOW_NAME,
-			   PRICE,
-			   SHOW_START
+		SELECT R.SHOW_NO, SHOW_NAME, PRICE, SHOW_START
 		FROM RESERVATION R
-		JOIN SHOW S ON(S.SHOW_NO=R.SHOW_NO)
-		WHERE R.STATUS = 'Y'
-		AND USER_NO = #{userNo} 
+		JOIN SHOW S ON R.SHOW_NO = S.SHOW_NO
+		WHERE R.STATUS='Y'
+		AND USER_NO=#{userNo} 
 	</select>
 
 </mapper>

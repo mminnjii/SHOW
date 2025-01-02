@@ -228,7 +228,7 @@
 									<form action="${contextPath}/show" method="get">
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 									&nbsp;&nbsp;&nbsp;<button class="to">내 공연</button><br>
-									&nbsp;&nbsp;&nbsp;7 개
+									&nbsp;&nbsp;&nbsp;${showNum} 개
 									</form>
 								</td>
 							</tr>
