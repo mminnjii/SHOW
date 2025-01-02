@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.payments.model.service.PaymentsService;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
@@ -80,6 +81,8 @@ public class PaymentsController {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		System.out.println(loginUser.getUserNo());
 		
 		String selectedName = (String) session.getAttribute("selectedName");
 		String[] seatArray = selectedName.split(","); 
@@ -102,7 +105,7 @@ public class PaymentsController {
 		String dueDate = ((String) paymentData.get("vbank_date"));
 		String receipt = ((String) paymentData.get("receipt"));
 		
-		info.put("userNo", 2);
+		info.put("userNo", 4);
 		info.put("bankName",bankName );
 		info.put("bankNum", bankNum);
 		info.put("name", name);
@@ -163,7 +166,7 @@ public class PaymentsController {
 		info.put("amount", ((String) paymentData.get("amount")));
 		info.put("method", 1);
 		info.put("status", "Y");
-		info.put("userNo", 2);
+		info.put("userNo", 4);
 		info.put("methodToget", ((String) paymentData.get("methodToget")));
 		
 		// 결제 테이블 생성

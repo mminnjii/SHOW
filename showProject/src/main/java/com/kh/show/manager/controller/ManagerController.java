@@ -9,8 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,86 +85,90 @@ public class ManagerController {
 	    @RequestParam("detailImage") MultipartFile detailFile,
 	    HttpServletRequest request,
 	    HttpSession session) {
-		
-		String genreName = "";
-		switch (show.getGenreNo()) {
-		    case 1: genreName = "뮤지컬"; break;
-		    case 2: genreName = "연극"; break;
-		    case 3: genreName = "콘서트"; break;
-		    case 4: genreName = "클래식"; break;
-		    case 5: genreName = "전시"; break;
-		    default: genreName = "기타"; break;
-		}
-
-		String regionName = "";
-		switch (show.getRegionNo()) {
-		    case 1: regionName = "서울"; break;
-		    case 2: regionName = "경기/인천"; break;
-		    case 3: regionName = "충청/강원"; break;
-		    case 4: regionName = "대구/경북"; break;
-		    case 5: regionName = "부산/경남"; break;
-		    case 6: regionName = "광주/전라"; break;
-		    case 7: regionName = "제주"; break;
-		    default: regionName = "기타"; break;
-		}
-
-	    // 1. 파일 처리
+	    
+	    String genreNameArr[] = {"뮤지컬", "연극", "콘서트", "클래식", "전시"};
+	    String regionNameArr[] = {"서울", "경기/인천", "충청/강원", "대구/경북", "부산/경남", "광주/전라", "제주"};
+	    
+	    String genreName = genreNameArr[show.getGenreNo()-1];
+	    String regionName = regionNameArr[show.getRegionNo()-1];
+	    
 	    if (!posterFile.isEmpty()) {
+	        
 	        String posterOriginName = posterFile.getOriginalFilename();
 	        String detailOriginName = detailFile.getOriginalFilename();
 	        String extension = posterOriginName.substring(posterOriginName.lastIndexOf("."));
-
-	        // 2. 파일명 처리
-	        String changeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + extension;
-	        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/")+changeName;
-	        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/")+changeName;
-
-	        File poster = new File(posterSavePath);
-	        if (!poster.exists()) {
-	            poster.mkdirs();
-	        }
+	        String startDate = show.getShowStart().replace("-", "");
+	        String endDate = show.getShowEnd().replace("-", "");
+	        String posterChangeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
+	        String detailChangeName = genreName + "_" + regionName + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
 	        
-	        File detail = new File(detailSavePath);
-	        if (!detail.exists()) {
-	        	detail.mkdirs();
+
+	        // 경로 지정
+	        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/");
+	        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/");
+	        
+	        // 폴더 생성 (이미 존재하지 않으면)
+	        File posterDir = new File(posterSavePath);
+	        if (!posterDir.exists()) {
+	            posterDir.mkdirs();
 	        }
 
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String posterSubDirPath = posterSavePath + File.separator + genreName + "_" + regionName;
+	        File posterSubDir = new File(posterSubDirPath);
+	        if (!posterSubDir.exists()) {
+	            posterSubDir.mkdirs();
+	        }
+
+	        File detailDir = new File(detailSavePath);
+	        if (!detailDir.exists()) {
+	            detailDir.mkdirs();
+	        }
+
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String detailSubDirPath = detailSavePath + File.separator + genreName + "_" + regionName;
+	        File detailSubDir = new File(detailSubDirPath);
+	        if (!detailSubDir.exists()) {
+	            detailSubDir.mkdirs();
+	        }
+
+	        // 파일 저장
+	        File savePosterFile = new File(posterSubDirPath + File.separator + posterChangeName); // 경로 + 파일명
 	        try {
-	            posterFile.transferTo(poster);
-	        } catch (IOException e) {
+	            posterFile.transferTo(savePosterFile);
+	        } catch (IllegalStateException | IOException e) {
 	            e.printStackTrace();
 	        }
 	        
-	        try {
-	        	detailFile.transferTo(detail);
-	        } catch (IOException e) {
-	        	e.printStackTrace();
+	        if (!detailFile.isEmpty()) {
+	            File saveDetailFile = new File(detailSubDirPath + File.separator + detailChangeName); // 경로 + 파일명
+	            try {
+	                detailFile.transferTo(saveDetailFile);
+	            } catch (IllegalStateException | IOException e) {
+	                e.printStackTrace();
+	            }
 	        }
 
-	        // 3. VO에 값 세팅
+	        // VO에 값 세팅
 	        show.setGenreNo(show.getGenreNo());
 	        show.setRegionNo(show.getRegionNo());
 	        show.setHallNo(show.getHallNo());
 	        show.setPosterOriginName(posterOriginName);
-	        show.setPosterChangeName(changeName);
+	        show.setPosterChangeName(posterChangeName);
 	        show.setDetailOriginName(detailOriginName);
-	        show.setDetailChangeName(changeName);
+	        show.setDetailChangeName(detailChangeName);
 
-	        // 4. 서비스 호출
+	        // 서비스 호출
 	        int result = service.showInsert(show);
 
 	        if (result > 0) {
-	        	session.setAttribute("alertMsg", "공연 생성 완료");
-	            return "redirect:/";
+	            session.setAttribute("alertMsg", "공연 생성 완료");
 	        } else {
-	        	session.setAttribute("alertMsg", "공연 생성 실패");
-	            return "redirect:/";
+	            session.setAttribute("alertMsg", "공연 생성 실패");
 	        }
 	    }
-
-	    return "redirect:/showList";
+	    return "redirect:/managerPage";
 	}
-	
 	
 	@PostMapping("/noticeInsert")
 	public String noticeInsert(@ModelAttribute Notice n,
@@ -209,19 +215,77 @@ public class ManagerController {
 		return service.selectAllShow();
 	}
 	
-	/*
-	@RequestMapping("/noticeUpdate")
-	public String noticeList(@ModelAttribute Notice n)
-		notice n = service.updateNotice(n);
-		
-		return n;
-	*/
+//	이하로는 상세내용 보는 페이지
+	@GetMapping("/detailNotice")
+	@ResponseBody
+	public Notice selectDetailNotice() {
+		return service.selectDetailNotice();
+	}
 	
-	/*
-	@RequestMapping("/noticeDelete")
-	public String noticeDelete(@ModelAttribute Notice n)
-		notice n = service.deleteNotice(n);
+	@GetMapping("/detailFaq")
+	@ResponseBody
+	public Faq selectDetailFaq() {
+		return service.selectDetailFaq();
+	}
+	
+	@GetMapping("/detailMember")
+	@ResponseBody
+	public Member selectDetailMember() {
+		return service.selectDetailMember();
+	}
+	
+	@GetMapping("/detailReserv")
+	@ResponseBody
+	public Reservation selectDetailReserv() {
+		return service.selectDetailReserv();
+	}
+	
+	@GetMapping("/detailShow")
+	@ResponseBody
+	public Show selectDetailShow() {
+		return service.selectDetailShow();
+	}
+	
+//	이하 내용은 업데이트(수정)
+	
+	@RequestMapping("/noticeUpdate/{noticeNo}")
+	public List<Notice> updateNotice(@PathVariable("noticeNo") Long noticeNo, Model model) {
+  
+	System.out.println(noticeNo);	
+	System.out.println(service.updateNoticeInform(noticeNo));
 		
-		return n;
+    return service.updateNoticeInform(noticeNo);
+	}
+	/*
+	@RequestMapping("/faqUpdate/{faqNo}")
+	public String updateFaq(@PathVariable("faqNo") Long faqNo, Model model){
+	Faq faq = service.getFaqById(faqNo);
+	model.addAttribute("faq", faq);
+	return "faqUpdateForm";
+	
+	@RequestMapping("/memberUpdate/{userNo}")
+	public String updateFaq(@PathVariable("userNo") Long userNo, Model model){
+	Member member = service.getUserById(userNo);
+	model.addAttribute("member", member);
+	return "userUpdateForm";
+	
+	@RequestMapping("/reservUpdate/{reservNo}")
+	public String updateFaq(@PathVariable("reservNo") Long reservNo, Model model){
+	Reservation reserv = service.getReservById(reservNo);
+	model.addAttribute("reserv", reserv);
+	return "reservUpdateForm";
+	
+	@RequestMapping("/showUpdate/{showNo}")
+	public String updateFaq(@PathVariable("showNo") Long showNo, Model model){
+	Show show = service.getShowById(showNo);
+	model.addAttribute("show", show);
+	return "faqUpdateForm";
+	}
+	 */
+	
+//	이하 내용은 삭제
+	/*
+	 
+	 * 
 	 */
 }

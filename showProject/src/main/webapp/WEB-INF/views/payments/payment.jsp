@@ -291,6 +291,7 @@
 	                    	 },
 	                     success: function (success) {
 	                    	 alert(success); 
+	                    	 window.location.href = "/show";
 	                     }, 
 	                     error: function () {
 	                         alert("결제 정보 저장 실패");
