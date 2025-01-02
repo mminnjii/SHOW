@@ -159,7 +159,7 @@
             <tr id="tr1">
 
                 <td id="td1"></td>
-                <td id="td4"><a href="${contextPath}"><img src="/show/resources/images/로고2.png" alt="로고" id="logo"></a></td>
+                <td id="td4"><a href="${contextPath}"><img src="${contextPath }/resources/images/로고2.png" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
                     <ul>
@@ -205,7 +205,7 @@
 
                         <li id="li1">|</li>
 
-                        <li><a href="">커뮤니티</a></li>
+                        <li><a href="${contextPath}/chat/list">커뮤니티</a></li>
                         <li><a href="${contextPath}/notice/list">공지사항</a></li>
                        
                     </ul>

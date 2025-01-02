@@ -8,13 +8,11 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -218,6 +216,80 @@ public class CustomerController {
 
 	}
 	
+
+	//qna 상세 페이지
+	@GetMapping("qDetail")
+	public ModelAndView selectQna(Question q,
+								  int qno,
+								  ModelAndView mv) {
+		q = customerService.selectQna(qno);
+		mv.addObject("q",q).setViewName("member/myQnaDetail");
+		
+		return mv;
+	}
+	
+	//qna 수정
+	@GetMapping("qUpdate")
+	public String quPage(int qno,
+						  Model model) {
+		Question q = customerService.selectQna(qno);
+		
+		model.addAttribute("q", q);
+		
+		return "customerService/questionUpdate";
+	}
+	
+	//qna 수정 처리
+	@PostMapping("qUpdate")
+	public String updateQna(Question q,
+							MultipartFile reUpfile,
+							HttpSession session) {
+		String deleteFile = null;
+		
+		if(!reUpfile.getOriginalFilename().equals("")) {
+			if(q.getOriginName()!=null) {
+				deleteFile = q.getChangeName();
+			}
+			
+			String changeName = saveFile(reUpfile,session);
+			
+			q.setOriginName(reUpfile.getOriginalFilename());
+			q.setChangeName(changeName);
+		}
+		System.out.println(q);
+		int result = customerService.updateQna(q);
+		
+		if(result>0) {
+			if(deleteFile != null) {
+				new File(session.getServletContext().getRealPath(deleteFile)).delete();
+			}
+			session.setAttribute("alertMsg", "문의 내역 수정 성공!");
+		}else{
+			session.setAttribute("alertMsg", "문의 내역 수정 실패!");
+		}
+		
+		return "redirect:/qna?userNo="+q.getUserNo();
+	}
+	
+	//qna 삭제
+	@PostMapping("qnaDelete")
+	public String qnaDelete(int questionNo,
+							String userNo,
+							String filePath,
+							HttpSession session) {
+		int result = customerService.qnaDelete(questionNo);
+		
+		if(result>0) {
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			session.setAttribute("alertMsg", "문의 내용 삭제 성공!");
+			return "redirect:/qna?userNo="+userNo;
+		}else {
+			session.setAttribute("alertMsg", "문의 내용 삭제 실패!");
+			return "redirect:/qna?userNo="+userNo;
+		}
+	}
 
 	
 }

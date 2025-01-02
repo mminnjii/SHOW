@@ -32,9 +32,9 @@
             margin: 0px auto;
             background-color: white;
             padding: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-
+            border: 1px solid lightgray;
+            border-radius: 0px 0px  10px 10px;
+			border-top : none;
         }
         
         .a h1{
@@ -133,7 +133,6 @@
 
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 
-	<br><br><br><br>
     <div class="a">
         <br>
         &nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>

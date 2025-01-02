@@ -137,33 +137,33 @@
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/전시_충청/강원_르스페이스0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <span id="j1">Le Space</span><br>
+                    <span id="j2">2024.04.18-2025.02.28</span>
+                </td>
+                
+                <td>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/전시_서울_초현실주의,100년의 환상0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <span id="j1">초현실주의</span><br>
+                    <span id="j2">2024.12.24-2025.05.11</span>
+                </td>
+                
+                <td>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/전시_경기/인천_뉴욕의 거장들0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
                     <span id="j1">뉴욕의 거장들</span><br>
                     <span id="j2">2025.01.10-2025.07.12</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/베르테르.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">베르테르</span><br>
-                    <span id="j2">2025.01.17-2025.03.16</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/전시_대구/경북_베르메르부터0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <span id="j1">베르메르부터</span><br>
+                    <span id="j2">2025.01.01-2025.01.31</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">강홍석</span><br>
-                    <span id="j2">2025.02.08-2025.02.09</span>
-                </td>
-                
-                <td>
-                    <a href=""><img src="/show/resources/images/시라노.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">시라노</span><br>
-                    <span id="j2">2024.12.06-2025.02.23</span>
-                </td>
-                
-                <td>
-                    <a href=""><img src="/show/resources/images/오페라.jpg" alt="" id='f1'><span id="one">5</span></a><br>
-                    <span id="j1">오페라</span><br>
-                    <span id="j2">2024.12.22-2024.12.30</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/전시_부산/경남_모나리자0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <span id="j1">모나리자</span><br>
+                    <span id="j2">2024.10.01-2024.10.31</span>
                 </td>           
                 
             </tr>
@@ -198,9 +198,10 @@
                                 var str = "";
                                 for(var i = 0; i < result.length; i++){
                                     
+                                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     
                                     str += "<td>"
-                                          + "<a href=''><img src='/show/resources/images/강홍석.jpg' alt='' id='f1'></a><br><br>"
+                                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"

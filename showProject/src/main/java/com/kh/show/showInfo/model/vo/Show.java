@@ -36,6 +36,7 @@ public class Show {
 	private String detailChangeName;	//	DETAILCHANGENAME VARCHAR2(1000 BYTE)
 	private int count;					//	COUNT			 NUMBER
 
+	private Genre genre;
 	
 	
 	//Hall VO 만들고 mapper에도 추가했음

@@ -137,33 +137,33 @@
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/images/뉴욕의거장들.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
-                    <span id="j1">뉴욕의 거장들</span><br>
-                    <span id="j2">2025.01.10-2025.07.12</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/콘서트_서울_YUURI0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <span id="j1">YUURI ARENA LIVE</span><br>
+                    <span id="j2">2025.05.03-2025.05.04</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/베르테르.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">베르테르</span><br>
-                    <span id="j2">2025.01.17-2025.03.16</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/콘서트_서울_스테이지파이터 0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <span id="j1">스테이지 파이터</span><br>
+                    <span id="j2">2025.01.26-2025.01.26</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/강홍석.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">강홍석</span><br>
-                    <span id="j2">2025.02.08-2025.02.09</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/콘서트_충청/강원_2025 어반자카파 콘서트0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <span id="j1">2024 어반자카파 전국투어</span><br>
+                    <span id="j2">2025.12.24-2024.12.25</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/시라노.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">시라노</span><br>
-                    <span id="j2">2024.12.06-2025.02.23</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/콘서트_충청/강원_이승환 35주년 콘서트 - 충청0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <span id="j1">이승환 35주년 콘서트</span><br>
+                    <span id="j2">2024.03.08-2025.03.08</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/images/오페라.jpg" alt="" id='f1'><span id="one">5</span></a><br>
-                    <span id="j1">오페라</span><br>
-                    <span id="j2">2024.12.22-2024.12.30</span>
+                    <a href=""><img src="/show/resources/PosterUploadFiles/콘서트_서울_LOVEFNC0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <span id="j1">2024 LOVE FNC</span><br>
+                    <span id="j2">2024.12.31-2024.12.31</span>
                 </td>           
                 
             </tr>
@@ -198,9 +198,10 @@
                                 var str = "";
                                 for(var i = 0; i < result.length; i++){
                                     
+                                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     
                                     str += "<td>"
-                                          + "<a href=''><img src='/show/resources/images/강홍석.jpg' alt='' id='f1'></a><br><br>"
+                                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"
