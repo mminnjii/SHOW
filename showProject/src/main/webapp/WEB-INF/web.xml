@@ -31,8 +31,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-
+	
 	<!-- 
 		필터
 		요청 처리전에 필요로 하는 기능이 있다면 필터 등록

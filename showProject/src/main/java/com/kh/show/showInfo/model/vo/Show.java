@@ -24,6 +24,7 @@ public class Show {
 	private int hallNo;					//	HALL_NO			 NUMBER
 	private String hallName;			// 사용하기 위해 추가		
 	private int genreNo;				//	GENRE_NO		 NUMBER
+	private String genreName;				// 사용하기 위해 추가	
 	private int regionNo;				//	REGION_NO		 NUMBER
 	private String regionName;			// 사용하기 위해 추가	
 
