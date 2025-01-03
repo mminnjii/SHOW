@@ -2,9 +2,9 @@ package com.kh.show.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
@@ -30,6 +30,7 @@ import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
 
@@ -268,11 +269,7 @@ public class MemberController {
 		return "member/myChat";
 	}
 	
-	@GetMapping("/payment")
-	public String payment() {
-		
-		return "member/myPayment";
-	}
+	
 	
 	
 	//회원 정보 업데이트 메소드
@@ -437,19 +434,18 @@ public class MemberController {
 	//구독 시작 메소드
 	@PostMapping("/subscribe.me")
 	public String startSub(String userId,
+						   int userNo,
 						   Member m,
 			  			   HttpSession session) {	
 		
 		int result = memberService.startSub(userId);
 		
-		System.out.println(m);
-		
-		System.out.println(result);
-		
 		if(result>0) {
 			Member loginUser = memberService.loginMember(m);
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "구독 시작!");
+		}else {
+			session.setAttribute("alertMsg", "결제 오류");
 		}
 		
 		return "member/subscribe";
@@ -516,6 +512,26 @@ public class MemberController {
 		return "member/myShow";
 	}
 	
+	//리뷰 리스트 메소드
+	@GetMapping("/payment")
+	public String payment(@RequestParam(value="currentPage",defaultValue="1")
+						  int currentPage,
+						  Model model,
+						  int userNo) {
+		int listCount = memberService.pListCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+			
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+					
+		ArrayList<Reservation> plist = memberService.payList(userNo,pi);
+
+		model.addAttribute("plist",plist);
+		model.addAttribute("pi",pi);
+			
+		return "member/myPayment";
+	}
+	
 	//메인페이지 쿠폰 수, 리뷰 수, 공연 수
 
 	@ResponseBody
@@ -548,7 +564,25 @@ public class MemberController {
 		return new Gson().toJson(clist);
 	}
 	
-	
+	//예약 확인/취소 페이지로 이동
+	@RequestMapping("reserve")
+	public String reserve(@RequestParam(value="currentPage",defaultValue="1")
+						  int currentPage,
+						  Model model,
+						  int userNo) {
+		int listCount = memberService.reserveCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 10;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		ArrayList<Reservation> rlist = memberService.reserveList(userNo,pi);
+		
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+		
+		return "reservation/reservePage";
+	}
 	
 	
 	

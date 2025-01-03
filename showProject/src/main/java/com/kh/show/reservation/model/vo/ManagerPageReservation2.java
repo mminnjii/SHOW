@@ -7,12 +7,11 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ManagerPageReservation {
+public class ManagerPageReservation2 {
 	private int reservationId;
     private String showName;
     private int roundId;
     private String userName;
-    private String status;
     private String hallName;
     private Date createDate;
 }

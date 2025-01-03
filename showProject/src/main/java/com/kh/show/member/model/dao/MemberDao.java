@@ -117,4 +117,29 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.couponList",userNo);
 	}
 
+	public int pListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.pListCount",userNo);
+	}
+
+	public ArrayList<Reservation> payList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.payList",userNo,rowbounds);
+	}
+
+	public int reserveCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.reserveCount",userNo);
+	}
+
+	public ArrayList<Reservation> reserveList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.reserveList",userNo,rowbounds);
+	}
+
+
 }

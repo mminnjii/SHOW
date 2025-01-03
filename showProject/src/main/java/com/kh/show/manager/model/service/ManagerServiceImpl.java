@@ -160,5 +160,11 @@ public class ManagerServiceImpl implements ManagerService {
 		return null;
 	}
 
+	@Override
+	public int insertFaq(Faq f) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

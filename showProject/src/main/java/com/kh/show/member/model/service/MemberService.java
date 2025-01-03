@@ -7,6 +7,7 @@ import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
 
@@ -53,4 +54,12 @@ public interface MemberService {
 	int couponCount(int userNo);
 	//쿠폰 리스트 추출
 	ArrayList<Coupon> couponList(int userNo);
+	//결제 수 조회
+	int pListCount(int userNo);
+	//결제 리스트 추출
+	ArrayList<Reservation> payList(int userNo, PageInfo pi);
+	//예약 수 조회
+	int reserveCount(int userNo);
+	//예약 리스트 추출
+	ArrayList<Reservation> reserveList(int userNo, PageInfo pi);
 }

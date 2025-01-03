@@ -74,6 +74,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="STATUS" property="status"></result>
 		<result column="CREATEDATE" property="createDate"></result>
 	</resultMap>
+	<resultMap type="ManagerReservation2" id="reservResultSet2">
+		<result column="RESERVATION_ID" property="reservationId"></result>
+		<result column="SHOW_NAME" property="showName"></result>
+		<result column="ROUND_ID" property="roundId"></result>
+		<result column="USER_NAME" property="userName"></result>
+		<result column="HALL_NAME" property="hallName"></result>
+		<result column="CREATEDATE" property="createDate"></result>
+	</resultMap>
 	
 	<select id="loginManager" resultMap="managerResultSet">
 		SELECT MANAGER_ID, MANAGER_PW
@@ -149,9 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO SHOW(SHOW_NO,
 						 SHOW_NAME,
 						 SHOW_EXPLAIN,
-						 RPRICE,
-						 SPRICE,
-						 VPRICE,
+						 PRICE,
 						 NOTICE,
 						 HALL_NO,
 						 GENRE_NO,
@@ -167,8 +173,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					   #{showName},
 					   #{showExplain},
 					   #{rPrice},
-					   #{sPrice},
-					   #{vPrice},
 					   #{notice},
 					   #{hallNo},
 					   #{genreNo},
@@ -199,7 +203,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE NOTICE_NO = #{noticeNo}
 	</select>
 	
-
+	<insert id="insertFaq" parameterType="Faq">
+		INSERT INTO FAQ(FAQ_NO,
+						FAQ_TITLE,
+						FAQ_CONTENT,
+						QCATEGORY_NO)
+				 VALUES(FAQ_SEQ.NEXTVAL,
+				 		#{faqTitle},
+				 		#{faqContent},
+				 		#{qcategoryNo})
+	</insert>
+	
+	<select id="noticeDetail" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, CREATEDATE, COUNT
+		FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+	</select>
+	
+	<select id="faqDetail" resultMap="faqResultSet">
+		SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, COUNT
+		FROM FAQ
+		WHERE FAQ_NO = #{faqNo}
+	</select>
+	
+	<select id="showDetail" resultMap="showResultSet">
+		SELECT S.SHOW_NO, S.SHOW_NAME, S.SHOW_EXPLAIN, S.PRICE, S.NOTICE, H.HALL_NAME, G.GENRE_NAME, R.REGION_NAME, S.SHOW_START, S.SHOW_END
+		FROM SHOW S
+		INNER JOIN HALL H ON S.HALL_NO = H.HALL_NO
+		INNER JOIN GENRE G ON S.GENRE_NO = G.GENRE_NO
+		INNER JOIN REGION R ON S.REGION_NO = R.REGION_NO
+		WHERE S.SHOW_NO = #{showNo}
+	</select>
+	
+	<select id="reservDetail" resultMap="reservResultSet2">
+		SELECT R.RESERVATION_ID, S.SHOW_NAME, R.ROUND_ID, M.USER_NAME, H.HALL_NAME, R.CREATEDATE
+		FROM RESERVATION R
+		INNER JOIN SHOW S ON R.SHOW_NO = S.SHOW_NO
+		INNER JOIN MEMBER M ON R.USER_NO = M.USER_NO
+		INNER JOIN HALL H ON H.HALL_NO = R.HALL_NO
+		WHERE RESERVATION_ID = #{reservNo}
+	</select>
+	
+	
 
 
 </mapper>

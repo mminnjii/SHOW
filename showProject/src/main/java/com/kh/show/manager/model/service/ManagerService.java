@@ -59,6 +59,8 @@ public interface ManagerService {
 //	공연 수정하기
 	Show updateShow();
 
+	int insertFaq(Faq f);
+
 	
 	
 }
