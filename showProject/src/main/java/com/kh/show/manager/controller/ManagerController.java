@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -234,8 +236,34 @@ public class ManagerController {
 	
 	@GetMapping("/managerPage/notice")
 	@ResponseBody
-	public void noticeDetail(@RequestParam(value="noticeNo", required=true) String noticeNo) {
-	    System.out.println("NoticeNo: " + noticeNo);  // Integer로 받기
+	public Notice noticeDetail(@RequestParam(value = "noticeNo") int noticeNo, Model model) {
+	    Notice n = service.noticeDetail(noticeNo);  // service에서 해당 데이터를 가져옵니다.
+	    model.addAttribute("notice", n);
+	    return n;  // 반환된 데이터를 프론트엔드에 전송
+	}
+
+	@GetMapping("/managerPage/faq")
+	@ResponseBody
+	public Faq faqDetail(@RequestParam(value = "faqNo") int faqNo, Model model) {
+		Faq f = service.faqDetail(faqNo);
+		model.addAttribute("faq", f);
+		return f;
+	}
+
+	@GetMapping("/managerPage/show")
+	@ResponseBody
+	public Show showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
+		Show s = service.showDetail(showNo);
+		model.addAttribute("show", s);
+	    return s;
+	}
+	
+	@GetMapping("/managerPage/reserv")
+	@ResponseBody
+	public ManagerPageReservation2 reservDetail(@RequestParam(value = "reservId") int reservNo, Model model) {
+		ManagerPageReservation2 r = service.reservDetail(reservNo);
+		model.addAttribute("reserv", r);
+		return r;
 	}
 	
 }

@@ -6,6 +6,7 @@ import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -45,6 +46,14 @@ public interface ManagerService {
 	Show updateShow();
 
 	int insertFaq(Faq f);
+
+	Notice noticeDetail(int noticeNo);
+
+	Faq faqDetail(int faqNo);
+
+	Show showDetail(int showNo);
+
+	ManagerPageReservation2 reservDetail(int reservNo);
 
 	
 	

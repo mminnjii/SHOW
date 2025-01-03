@@ -104,7 +104,7 @@
         .create-notice-btn,
         .create-faq-btn,
         .create-show-btn {
-            display: none; /* 초기 상태에서 숨김 */
+            display: none;
             padding: 10px 20px;
             background-color: #3498db;
             color: white;
@@ -120,7 +120,6 @@
             background-color: #2980b9;
         }
 
-        /* 슬라이드다운 스타일 */
         .detail-row {
             background-color: #f9f9f9;
             display: none;
@@ -187,10 +186,8 @@
 	var contextPath = '${pageContext.request.contextPath}';
     
     document.addEventListener("DOMContentLoaded", function () {
-        // 초기 상태에서 버튼 숨기기
         hideCreateButtons();
 
-        // 관리 버튼 클릭 이벤트 설정
         document.getElementById('noticeBtn').addEventListener('click', function(event) {
             event.preventDefault();
             hideCreateButtons();
@@ -224,14 +221,14 @@
             loadData('reserv');
         });
 
-        // 작성 버튼 숨기기
+
         function hideCreateButtons() {
             document.querySelector('.create-notice-btn').style.display = 'none';
             document.querySelector('.create-faq-btn').style.display = 'none';
             document.querySelector('.create-show-btn').style.display = 'none';
         }
 
-        // 데이터 항목에 맞는 헤더 매핑
+
         const headerMappings = {
             notice: {
                 noticeNo: '공지사항 번호',
@@ -281,9 +278,9 @@
             }
         };
 
-        // 데이터 로드 함수 수정
+
         function loadData(type) {
-            // URL 설정
+
             const urlMap = {
                 notice: `${contextPath}/managerPage/noticeList`,
                 faq: `${contextPath}/managerPage/faqList`,
@@ -292,11 +289,10 @@
                 reserv: `${contextPath}/managerPage/reservList`
             };
             const url = urlMap[type];
-            
             fetchDataAndDisplay(url, type);  // URL로 데이터 요청
         }
 
-        // 데이터 가져오기 및 표시 함수
+
         function fetchDataAndDisplay(url, type) {
             fetch(url)
                 .then(response => {
@@ -315,10 +311,10 @@
                 });
         }
 
-        // 데이터를 화면에 표시하는 함수
+
         function displayData(data, type) {
             const container = document.getElementById('data-container');
-            container.innerHTML = '';  // 기존 내용 지우기
+            container.innerHTML = '';
 
             if (Array.isArray(data) && data.length > 0) {
                 const table = document.createElement('table');
@@ -333,15 +329,13 @@
 
                 keys.forEach(key => {
                     const th = document.createElement('th');
-                    th.textContent = headers[key] || key;  // headerMappings에서 가져오기
+                    th.textContent = headers[key] || key;
                     headerRow.appendChild(th);
                 });
 
-                // 수정 및 삭제 버튼 컬럼 추가
                 headerRow.innerHTML += '<th>수정</th><th>삭제</th>';
                 thead.appendChild(headerRow);
 
-                // 테이블 본문 생성
                 data.forEach(row => {
                     const tableRow = document.createElement('tr');
                     keys.forEach((key, index) => {
@@ -349,11 +343,10 @@
                         td.textContent = row[key];
                         tableRow.appendChild(td);
 
-                        // 두 번째 td 클릭 시 상세 내용 슬라이드
-                        if (index === 1) {  // 두 번째 td
-                            td.style.cursor = 'pointer';  // 클릭 가능하게 스타일 지정
+                        if (index === 1) {
+                            td.style.cursor = 'pointer';
                             td.addEventListener('click', () => {
-                                toggleDetailRow(tableRow, row);  // 해당 행의 상세 내용 토글
+                                toggleDetailRow(tableRow, row);
                             });
                         }
                     });
@@ -365,12 +358,12 @@
                     const editBtn = document.createElement('button');
                     editBtn.textContent = '수정';
                     editBtn.classList.add('action-btn');
-                    editBtn.addEventListener('click', () => editItem(row));  // 수정 버튼 클릭 시
+                    editBtn.addEventListener('click', () => editItem(row));
 
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = '삭제';
                     deleteBtn.classList.add('action-btn', 'delete-btn');
-                    deleteBtn.addEventListener('click', () => deleteItem(row));  // 삭제 버튼 클릭 시
+                    deleteBtn.addEventListener('click', () => deleteItem(row));
 
                     editTd.appendChild(editBtn);
                     deleteTd.appendChild(deleteBtn);
@@ -379,15 +372,14 @@
                     tableRow.appendChild(deleteTd);
                     tbody.appendChild(tableRow);
 
-                    // 상세 내용 (슬라이드 다운 영역) 추가
                     const detailRow = document.createElement('tr');
                     detailRow.classList.add('detail-row');
                     const detailTd = document.createElement('td');
-                    detailTd.setAttribute('colspan', keys.length + 2);  // 전체 열 너비를 차지하도록 colspan 설정
+                    detailTd.setAttribute('colspan', keys.length + 2);
                     detailTd.innerHTML = `
-                        <div>
+                        <div class="detail-content">
                             <p><strong>상세 내용:</strong></p>
-                            <p>${row.detail || '상세 내용이 없습니다.'}</p>
+                            <p>상세 내용이 없습니다.</p>
                         </div>
                     `;
                     detailRow.appendChild(detailTd);
@@ -401,39 +393,35 @@
                 container.innerHTML = '<p>데이터가 없습니다.</p>';
             }
         }
-
-     // 상세 내용 토글 함수 수정
         function toggleDetailRow(tableRow, row) {
-            const detailRow = tableRow.nextElementSibling;  // 해당 행의 다음 행이 상세 내용 행
-            const isVisible = detailRow.style.display === 'table-row';
-            
-            // 상세 정보를 가져올 ID (예: faqNo, noticeNo, showNo)
-            const itemId = row.noticeNo || row.faqNo || row.showNo;
-            // 상세 내용이 아직 로드되지 않았을 경우에만 fetch 요청
+            var detailRow = tableRow.nextElementSibling;
+            var isVisible = detailRow.style.display === 'table-row';
+            var itemId = row.noticeNo || row.faqNo || row.showNo || row.reservationId;
+
             if (!detailRow.hasAttribute('data-loaded')) {
-                // 서버에서 상세 내용 요청 (fetch 예시)
                 var url = '';
-				if (row.noticeNo) {
-					url = `${contextPath}/managerPage/notice?noticeNo=${itemId}`;
-				} else if (row.faqNo) {
-					url = `${contextPath}/managerPage/faq?faqNo=${itemId}`;
-				} else if (row.showNo) {
-					url = `${contextPath}/managerPage/show?showNo=${itemId}`;
-				}
-				console.log("내가 요청하는 url : "+url);
-                // AJAX 요청 (fetch 사용)
+                if (row.noticeNo) {
+                    url = `${contextPath}/managerPage/notice?noticeNo=` + itemId;  // Notice 상세 요청
+                } else if (row.faqNo) {
+                    url = `${contextPath}/managerPage/faq?faqNo=` + itemId;  // FAQ 상세 요청
+                } else if (row.showNo) {
+                    url = `${contextPath}/managerPage/show?showNo=` + itemId;  // Show 상세 요청
+                } else if (row.reservationId) {
+                    url = `${contextPath}/managerPage/reserv?reservId=` + itemId;  // Reservation 상세 요청
+                }
+                
+                // AJAX 요청으로 상세 내용 가져오기
                 fetch(url)
-                    .then(response => response.json())  // 서버에서 JSON 응답을 받음
+                    .then(response => response.json())
                     .then(data => {
-                        // 상세 내용을 detailRow에 삽입
+                        console.log('상세 내용 데이터:', data);
                         const detailContent = detailRow.querySelector('.detail-content');
                         if (detailContent) {
                             detailContent.innerHTML = `
                                 <p><strong>상세 내용:</strong></p>
-                                <p>${data.detail || '상세 내용이 없습니다.'}</p>
+                                <p>${data.noticeContent || data.faqContent || data.showExplain || data.reservStatus || '상세 내용이 없습니다.'}</p>
                             `;
                         }
-                        // 데이터 로드 완료 후 'data-loaded' 속성 추가
                         detailRow.setAttribute('data-loaded', true);
                     })
                     .catch(error => {
@@ -441,14 +429,14 @@
                     });
             }
 
-            // 상세 내용 표시/숨김
+            // 상세 내용 표시 토글
             if (isVisible) {
-                $(detailRow).slideUp();  // 슬라이드 업 (닫기)
+                $(detailRow).slideUp();
             } else {
-                $(detailRow).slideDown();  // 슬라이드 다운 (열기)
+                $(detailRow).slideDown();
             }
         }
-    }); // DOMContentLoaded 이벤트 종료
+    });
 </script>
 </body>
 </html>

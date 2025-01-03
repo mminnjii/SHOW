@@ -106,7 +106,7 @@
                         </tr>
             </p>
                  </tr>
-            <p id="p2">Copyright © 1998-2024 TicketPal Institute All Right Reserved</p>
+            <p id="p2">Copyright © 1998-2025 TicketPal Institute All Right Reserved</p>
             </table>
             <a href="${contextPath}/managerLogin" ><p id="managerLogin">관리자 로그인</p></a>
             <a href="${contextPath}/managerPage/managerLogout"><p id="managerLogout">관리자 로그아웃</p></a>
