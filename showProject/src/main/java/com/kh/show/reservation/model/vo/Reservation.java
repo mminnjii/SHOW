@@ -24,9 +24,11 @@ public class Reservation {
 	private int showRound;		// 사용을 위해 추가
 	private int userNo;			//	USER_NO
 	private int hallNo;			//	HALL_NO
+	private int price;
 	private String hallName;    // 사용을 위해 추가
 	private String status;		//	STATUS
 	private String showTime;	// 사용을 위해 추가	
+	private String showStart;
 	private Date showDate;	// 사용을 위해 추가	
 	private Date createDate;	//	CREATEDATE
 	private String precaution;	//	PRECAUTION

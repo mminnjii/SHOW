@@ -104,8 +104,12 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+		
 		<div class="detail">
 	        <div class="fixed-section">
+	        <c:if test="${not empty userNo }">
+	        	<input type="hidden" name="userNo" value="${userNo} "></input>
+	        </c:if>
 	        <h2>예약하기</h2>
 	        <br><br>
 	        <c:if test="${not empty date }">
@@ -132,7 +136,6 @@
 
 	        <br>
 			<button onclick="reservation();">예약하기</button>
-			<!--  <button onclick="location.href='/show/reservation/seats'">예약하기</button> -->
 	    </div>
 	    
 	    
@@ -144,12 +147,15 @@
 	                <c:choose>
 						<c:when test="${not empty s }">
 					      	 <h2>${s.showName }</h2> <br>
-			                <p>장르 : ${s.genreNo }</p> 
+			                <p>장르 : ${s.genreName }</p> 
 			                <p>소개 : ${s.showExplain }</p> 
-			                <p>장소 : ${s.hallNo }</p> 
+			                <p>장소 : ${s.hallName }</p> 
 			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
 			                <p>공연시간 : 120분</p>
-			                <p>가격 : ${s.price }</p>
+			                <p>VIP석 : ${vipPrice } &nbsp;||&nbsp; 
+				                R석 : ${rPrice } &nbsp;||&nbsp; 
+				                S석 : ${s.price }
+			                </p>
 						</c:when>                
 		                <c:otherwise>
 		                	<h2>상세정보를 불러올 수 없습니다.</h2>
@@ -175,15 +181,13 @@
     	
     	function selectDate(){
     		
-    			// console.log($("#date").val());
-    		
      		$.ajax({
     			url : "selectDate",
     			data: {
     				date : $("#date").val()
     			},
     			success : function(result){
-    				console.log(result);
+    				
     				$("#time").empty();
     				var info = "";
 
@@ -191,7 +195,6 @@
   				        info += "<option data-round-id='" + result[i].roundId + "'>" 
   				        			+result[i].showRound + " 회차,  공연시간 :" + result[i].showTime + "\n"
   				        		 "</option>";
-  				        		 // console.log(result[i].roundId);
   				    }
   				    
   				  	$("#time").append(info);
@@ -204,22 +207,27 @@
     	}
     	
     	function reservation(){
+    		
     		// 로그인 유저 조건걸어주기
+    		var userNo = $('input[name="userNo"]').val(); 
     		
-    		// console.log($("#time").html()); // #time의 전체 HTML을 출력
-    		
-    		// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
-    	     var selectedOption = $("#time").find(":selected");
-    	     var roundId = selectedOption.data("round-id");
-    	     console.log("Selected Round ID:", roundId);
-    		 
-    	     location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
-    		
-
+    		if(userNo){
+    			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
+	       	     var selectedOption = $("#time").find(":selected");
+	       	     var roundId = selectedOption.data("round-id");
+	       	     
+	       	     if(selectedOption && roundId){
+	       	    	location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
+	       	     }else{
+	       	    	 alert("공연날짜 및 시간을 선택하세요");
+	       	     }
+	       	     
+    		}else{
+    			alert("로그인 후 이용하세요")
+    			location.href= '/show/toLogin';
+    		}
     	}
     	
-    	
-    
     </script>
     
     
