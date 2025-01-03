@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -166,6 +167,27 @@ public class ShowInfoController {
 			
 		}
 	}
+	
+	
+	// 리뷰 등록하기 이동
+	@GetMapping("/enroll")
+	public String enrollReview() {
+		return "show/showInfo/reviewEnroll";
+	}
+	
+	// 리뷰 등록하기
+	@ResponseBody
+	@PostMapping(value = "/enroll", produces = "application/json;charset=UTF-8")
+	public String enrollReview(String rating,String title,String writer,String content) {
+		
+		System.out.println(rating);
+		System.out.println(title);
+		System.out.println(writer);
+		System.out.println(content);
+		
+		return "success";
+	}
+	
 	
 	
 }

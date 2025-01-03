@@ -160,9 +160,9 @@
     	                     data: JSON.stringify(paymentData),
     	                     contentType: 'application/json',
     	                     success: function (success) {
-    	                    	 alert("결제 성공하였습니다"); 
-    	                    	
-    	                    	 if(success =="NNNNY"){
+    	                    	 
+    	                    	 if(success =="success"){
+    	                    		 alert("결제 성공하였습니다"); 
     	                    		const form = document.createElement("form");
      	      				        form.method = "POST";
      	      				        form.action = "/show/payments/paymentInfo";
@@ -183,7 +183,7 @@
      	      				        form.submit(); 
     	                    		 
     	                    	 }else{
-    	                    		 alert("요청에 실패하였습니다.");
+    	                    		 alert("요청에 실패하였습니다. : "+success);
  		      						window.location.href = '/show/common/errorPage';
     	                    	 }
     	                    	 
@@ -206,8 +206,14 @@
     	                    	 roundId : roundId
     	                    	 },
     	                     success: function (success) {
-    	                    	 alert(success); 
-    	                    	 window.location.href = "/show";
+    	                    	 if(success =="success"){
+    	                    		 alert(success); 
+        	                    	 window.location.href = "/show";
+    	                    	 }else{
+    	                    		alert("요청에 실패하였습니다. : "+success);
+  		      						window.location.href = '/show/common/errorPage'; 
+    	                    	 }
+    	                    	 
     	                         
     	                     }, 
     	                     error: function () {
@@ -264,9 +270,9 @@
     		                     data: JSON.stringify(paymentData),
     		                     contentType: 'application/json',
     		                     success: function (success) {
-    		                    	 alert("결제 성공하였습니다"); 
     		                    	 	
-    		                    	if(success =="NNNNY"){
+    		                    	if(success =="success"){
+    		                    		alert("결제 성공하였습니다");
     		                    		const form = document.createElement("form");
     		      				        form.method = "POST";
     		      				        form.action = "/show/payments/paymentInfo";
@@ -287,7 +293,7 @@
     		      				        form.submit();
     		      				        
     		                    	}else{
-    		                    		alert("요청에 실패하였습니다.");
+    		                    		alert("요청에 실패하였습니다. : "+success);
     		      						window.location.href = '/show/common/errorPage';
     		                    	}
     		                    	 	
@@ -311,11 +317,11 @@
     	                    	 roundId : roundId
     	                    	 },
     	                     success: function (success) {
-    	                    	 if(success =="NNNNY"){
-    	                    		 alert(success); 
+    	                    	 if(success =="success"){
+    	                    		 alert("다시 결제해주세요"); 
         	                    	 window.location.href = "/show";
     	                    	 }else{
-    	                    		 alert("요청에 실패하였습니다.");
+    	                    		 alert("요청에 실패하였습니다. : "+success);
  		      						 window.location.href = '/show/common/errorPage';
     	                    	 }
     	                     }, 
@@ -340,5 +346,6 @@
         });
         
     </script>
+    
 </body>
 </html>

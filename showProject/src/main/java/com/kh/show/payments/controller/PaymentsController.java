@@ -82,9 +82,9 @@ public class PaymentsController {
 	
 	
 	
-	@PostMapping(value = "/bank")
+	@PostMapping(value = "/bank",produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String paymentComplete(HttpSession session, Model model ,@RequestBody Map<String, Object> paymentData) {
+	public String paymentComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
@@ -114,7 +114,7 @@ public class PaymentsController {
 			String dueDate = ((String) paymentData.get("vbank_date"));
 			String receipt = ((String) paymentData.get("receipt"));
 			
-			info.put("userNo", 4);
+			info.put("userNo", userNo);
 			info.put("bankName",bankName );
 			info.put("bankNum", bankNum);
 			info.put("name", name);
@@ -141,7 +141,6 @@ public class PaymentsController {
 				    int result4 = paymentsService.createTicket(ticket);
 			        if (result4 == 0) {
 			        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-			        	return "NNNNN";
 			        }
 			        
 			        result3 += result4;
@@ -153,27 +152,24 @@ public class PaymentsController {
 					 session.setAttribute("bankNum", ((String) paymentData.get("vbank_num")));
 					 session.setAttribute("dueDate", ((String) paymentData.get("vbank_date")));
 					 session.setAttribute("bankHolder", ((String) paymentData.get("vbank_holder")));
-					 return "NNNNY";
+					 return "success";
 				 }else {
-					 model.addAttribute("errorMsg","좌석별 티켓 생성에 실패하였습니다.");
-					 return "NNNNN";
+					 return "좌석별 티켓 생성에 실패하였습니다.";
 				 }
 			
 			}else {
-				model.addAttribute("errorMsg","통장데이터가 생성되지 못했습니다.");
-				return "NNNNN";
+				return "통장데이터가 생성되지 못했습니다.";
 			}
 			
 		}else {
-			model.addAttribute("errorMsg","결제가 생성되지 못했습니다.");
-			return "NNNNN";
+			return "결제가 생성되지 못했습니다.";
 		}
 	}
 	
 	
 	@ResponseBody
-	@PostMapping("/card")
-	public String card(HttpSession session,Model model, @RequestBody Map<String, Object> paymentData) {
+	@PostMapping(value = "/card",produces ="application/json;charset=UTF-8")
+	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
@@ -225,26 +221,23 @@ public class PaymentsController {
 				 
 				 if(seatArray.length==result3) {
 					 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
-					 return "NNNNY";
+					 return "success";
 				 }else {
-					 model.addAttribute("errorMsg","좌석별 티켓 생성에 실패하였습니다.");
-					 return "NNNNN";
+					 return "카드데이터가 생성되지 못했습니다.";
 				 }
 			}else {
-				model.addAttribute("errorMsg","카드데이터가 생성되지 못했습니다.");
-				return "NNNNN";
+				return "결제가 생성되지 못했습니다.";
 			}
 		
 		}else {
-			model.addAttribute("errorMsg","결제가 생성되지 못했습니다.");
-			return "NNNNN";
+			return "결제가 생성되지 못했습니다.";
 		}
 	}
 	
 	
 	@ResponseBody
-	@PostMapping("/fail")
-	public String paymentFail(HttpSession session,Model model, @RequestParam int reservationId, @RequestParam int roundId) {
+	@PostMapping(value = "/fail",produces = "application/json;charset=UTF-8")
+	public String paymentFail(HttpSession session, @RequestParam int reservationId, @RequestParam int roundId) {
 		
 		Map<String, Object> data = new HashMap<>();
 		data.put("reservationId", reservationId);
@@ -282,16 +275,14 @@ public class PaymentsController {
 				session.removeAttribute("userNo");
 				session.removeAttribute("reviewAvg");
 				session.removeAttribute("avgFloor");
-				return "NNNNY";
+				return "success";
 				
 			}else {
-				model.addAttribute("errorMsg","좌석별 티켓 rollback에 실패하였습니다.");
-				return "NNNNN";
+				return "좌석별 티켓 rollback에 실패하였습니다.";
 			}
 			
 		}else {
-			model.addAttribute("errorMsg","예약 rollback에 실패하였습니다.");
-			return "NNNNN";
+			return "예약 rollback에 실패하였습니다.";
 		}
 	} 
 	
