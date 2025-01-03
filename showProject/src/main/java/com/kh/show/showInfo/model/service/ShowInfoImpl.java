@@ -458,6 +458,12 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+	@Override
+	public int enrollReview(HashMap<String, String> hashMap) {
+		return showInfoDao.enrollReview(sqlSession,hashMap);
+	}
+
+
 
 
 }

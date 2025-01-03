@@ -67,6 +67,7 @@
         <div class="innerOuter">
             <h2>후기 작성하기</h2>
             <br>
+   <!--          <form action=""> -->
             	<input type="hidden" id="writer" class="form-control" value="${loginUser.userNo }" name="boardWriter" readonly>
                 <table align="center" id="enrollForm">
                 	<tr>
@@ -84,23 +85,24 @@
                     </tr>
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" required></td>
+                        <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text"  class="form-control" value="${loginUser.userId }" readonly></td>
+                        <td><input type="text"  class="form-control" value="${loginUser.userId }" name="boardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" required></textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
                     </tr>
                 </table>
                 <br>
 
                 <div align="center">
-                    <button id="submit">등록하기</button>
+                    <button id="submit">수정하기</button>
                     <button id="reset">취소하기</button>
                 </div>
+<!--                 </form> -->
         </div>
         <br><br>
 
@@ -149,52 +151,7 @@
 	        $('.star').off('mouseover').off('mouseout').off('click');  // 이벤트 비활성화
   
 	    });
-	    
-	    
-	    
-	    
-	    $('#submit').on('click',function(){     
-	        var title = $("#title").val();
-	        var writer = $("#writer").val();
-	        var content = $("#content").val();
-
-	        if(rating != ""){
-	        	if(title != ""){
-	        		if(content != ""){
-	        			$.ajax({
-			 	        	
-			 	        	url : "/show/showInfo/enrollReview",
-			 	        	data : {
-			 	        		
-			 	        		rating : rating,
-			 	        		title : title,
-			 	        		writer : writer,
-			 	        		content : content
-			 	        	},
-			 	        	
-			 	        	type: 'POST',  
-			 	        	success : function(success){
-			 	        		alert(success);
-			 	        		window.location.href = '/show/showInfo/review';
-			 	        	},
-			 	        	error : function(fail){
-			 	        		alert(fail);
-			                     console.log("통신오류");
-			 	        	}
-			 	        }); 
-
-	        		}else{
-	        			alert("내용을 입력해 주세요");
-	        		}
-	        	}else{
-	        		alert("제목을 입력해 주세요");
-	        	}
-	        }else{
-	        	alert("평점을 선택해 주세요");
-	        }
-	    	
-	    });
-	    
+   
 	    
 	    $('#reset').on('click',function(){
 	    	history.back();

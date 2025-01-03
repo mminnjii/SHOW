@@ -29,7 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Review" id="reviewResultSet">
 		<result column="REVIEW_ID" property="reviewId" />
 		<result column="SHOW_NO" property="showNo" />
-		<result column="USER_NO" property="userId" />
+		<result column="USER_ID" property="userId" />
+		<result column="USER_NO" property="userNo" />
 		<result column="REVIEW_SCORE" property="reviewScore" />
 		<result column="REVIEW_TITLE" property="reviewTitle" />
 		<result column="REVIEW_CONTENT" property="reviewContent" />
@@ -527,13 +528,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 조회 -->
 	<select id="selectReview" resultMap="reviewResultSet">
 		SELECT REVIEW_ID,
-		       USER_ID USER_NO,
+		       USER_ID,
+		       R.USER_NO USER_NO,
 		       REVIEW_SCORE,
 		       REVIEW_TITLE,
 		       REVIEW_CONTENT,
 		       CREATE_DATE
 		FROM REVIEW R
-		JOIN MEMBER USING(USER_NO)
+		JOIN MEMBER M ON (R.USER_NO=M.USER_NO)
 		WHERE R.STATUS = 'Y'
 		AND SHOW_NO = 1
 		ORDER BY CREATE_DATE DESC
@@ -573,7 +575,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	WHERE STATUS = 'Y'
 	  	AND SHOW_NAME LIKE '%' || #{keyword} || '%'
 	  	
-	  	
 	  </select>
 	  
 	  <!-- 검색 목록 -->
@@ -599,7 +600,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 리뷰 작성 -->
+	<insert id="enrollReview" parameterType="Hashmap">
+		INSERT INTO REVIEW 
+		VALUES (REVIEW_SEQ.NEXTVAL, 1, #{writer}, #{rating}, #{title}, #{content},SYSDATE, 'Y')
+	</insert>
+
+	<!-- 리뷰 수정 전 조회 -->
+<!-- 	<select id="">
+		SELECT * 
+		FROM REVIEW
+		WHERE REVIEW_ID = #{replyNo};
+	</select> -->
+	
 	<!-- 리뷰 수정 -->
+	
+	
+	
 	<!-- 리뷰 삭제 -->
 	  
 </mapper>

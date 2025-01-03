@@ -157,4 +157,7 @@ public interface ShowInfoService {
 	//메인 지역별 랭킹 지역이름 가져오기
 	ArrayList<Show> mainRegionRank();
 
+	// 리뷰 등록하기
+	int enrollReview(HashMap<String, String> hashMap);
+
 }

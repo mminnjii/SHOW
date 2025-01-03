@@ -408,10 +408,8 @@ public class ShowInfoDao {
 
 
 
-
-
-
-	
-	
+	public int enrollReview(SqlSession session, HashMap<String, String> hashMap) {
+		return session.insert("showInfoMapper.enrollReview",hashMap);
+	}
 
 }
