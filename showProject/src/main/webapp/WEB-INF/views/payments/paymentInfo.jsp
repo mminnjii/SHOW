@@ -17,6 +17,7 @@
 </style>    
 </head>
 <body>
+	
 		<div align="center">
 			<br>
 	     		<table align="center">
@@ -66,6 +67,6 @@
 				window.location.href = "/show";
 			});
 		</script>
-
+		
 </body>
 </html>
