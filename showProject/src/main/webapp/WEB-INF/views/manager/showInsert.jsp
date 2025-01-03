@@ -108,7 +108,7 @@
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	    <div class="container">
 		        <h1>공연 등록</h1>
-		<form action="${contextPath}/showInsert" method="POST" enctype="multipart/form-data">
+		<form action="${contextPath}/managerPage/showInsert" method="POST" enctype="multipart/form-data">
 		    <!-- 제목 -->
 		    <div class="form-group">
 		        <label for="showTitle">공연 제목</label>
@@ -127,18 +127,8 @@
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="price">R석 가격</label>
+		        <label for="price">R석 가격 * S석은 R석 가격의 1.2배, VIP석은 R석 가격의 1.4배로 책정됩니다.</label>
 		        <input type="text" id="price" name="rPrice" required>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="price">S석 가격</label>
-		        <input type="text" id="price" name="sPrice" required>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="price">VIP석 가격</label>
-		        <input type="text" id="price" name="vPrice" required>
 		    </div>
 		    
 		    <div class="form-group">
