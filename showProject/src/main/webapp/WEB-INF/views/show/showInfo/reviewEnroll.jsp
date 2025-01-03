@@ -35,15 +35,15 @@
 		    cursor: pointer;  /* 클릭 가능하게 설정 */
 		    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);  /* 별 모양을 만들기 위한 clip-path */
 
-		}
+		} 
 		
 		.star.filled {
 		    background: gold; /* 채워진 별 */
 		}
 		
-		.star.partially-filled {
+ 		.star.half {
 		    background: linear-gradient(to right, gold 50%, gray 50%); /* 부분적으로 채워진 별 */
-		}
+		} 
         
     </style>
 </head>
@@ -62,14 +62,14 @@
                 	<tr>
                         <th><label for="rank">평점</label></th>
                         <td>
-                        	<c:forEach var="i" begin="1" end="5">
-						        <!-- 평점에 따라 별을 채우거나 비움 (초기값은 비어있는 상태) -->
-						        <div class="star" 
-						             data-value="${i}" 
-						             class="empty" 
-						             style="--percent: 0%;"> <!-- 초기값은 0% -->
-						        </div>
-						    </c:forEach>
+	                      	<c:forEach var="i" begin="1" end="5">
+							        <!-- 평점에 따라 별을 채우거나 비움 (초기값은 비어있는 상태) -->
+							        <div class="star" 
+							             data-value="${i}" 
+							             class="empty" 
+							             style="--percent: 0%;"> <!-- 초기값은 0% -->
+							        </div>
+							</c:forEach> 
                         </td>
                     </tr>
                     <tr>
@@ -88,8 +88,8 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit">등록하기</button>
-                    <button type="reset">취소하기</button>
+                    <button id="submit">등록하기</button>
+                    <button id="reset">취소하기</button>
                 </div>
             </form>
         </div>
@@ -99,30 +99,92 @@
     
     <script>
     
-    let selectedRating = 0;  // 선택된 평점 초기화
+	    $('.star').on('mouseover', function() {
+	        const rating = $(this).data('value');  // 현재 hover된 별의 data-value 값
+	        const allStars = $('.star');  // 모든 별을 선택
+	
+	        allStars.removeClass('filled').addClass('empty');  // 모든 별을 비운 상태로 초기화
+	
+	        // 마우스오버한 별까지 전체를 채움
+	        for (let i = 0; i < rating; i++) {
+	            $(allStars[i]).addClass('filled').removeClass('empty');
+	        }
+	    });
+	
+	    // 마우스 아웃 시 원래 상태로 돌아감
+	    $('.star').on('mouseout', function() {
+	        const rating = $(this).data('value');  // hover된 별의 data-value 값
+	        const allStars = $('.star');  // 모든 별을 선택
+	        allStars.removeClass('filled').addClass('empty');  // 모든 별을 비운 상태로 초기화
+	
+	        // 클릭된 별이 있다면 해당 값까지 전체 별을 채움
+	        const currentRating = parseInt($('.star.filled').last().data('value')) || 0;
+	        for (let i = 0; i < currentRating; i++) {
+	            $(allStars[i]).addClass('filled').removeClass('empty');
+	        }
+	    });
+	    
+	    
+	    var rating = "";
+	    
+	    // 클릭 시 선택된 값을 저장
+	    $('.star').on('click', function() {
+	        rating = $(this).data('value');  // 현재 hover된 별의 data-value 값
+	        const allStars = $('.star');  // 모든 별을 선택
+	
+	        // 마우스오버한 별까지 전체를 채움
+	        for (let i = 0; i < rating; i++) {
+	            $(allStars[i]).addClass('filled');
+	        }
+	        
+	        $('.star').off('mouseover').off('mouseout').off('click');  // 이벤트 비활성화
+  
+	    });
+	    
+	    
+	    
+	    
+	    $('#submit').on('click',function(){     
+	        var title = $("#title").val();
+	        var writer = $("#writer").val();
+	        var content = $("#content").val();
+
+	        if(rating != ""){
+	        	if(title != ""){
+	        		if(content != ""){
+	        			$.ajax({
+			 	        	
+			 	        	url : "/show/showInfo/enroll",
+			 	        	type : "POST",
+			 	        	data : {
+			 	        		rating : rating,
+			 	        		title : title,
+			 	        		writer : writer,
+			 	        		content : content
+			 	        	},
+			 	        	success : function(sucess){
+			 	        		alert(sucess);
+			 	        	},
+			 	        	error : function(){
+			 	        		alert("게시글 등록 실패");
+			                     console.log("통신오류");
+			 	        	}
+			 	        }); 
+
+	        		}else{
+	        			alert("내용을 입력해 주세요");
+	        		}
+	        	}else{
+	        		alert("제목을 입력해 주세요");
+	        	}
+	        }else{
+	        	alert("평점을 선택해 주세요");
+	        }
+	    	
+	    });
+	    
+
     
-    $('.star').on('mouseover', function() {
-        const rating = $(this).data('value');  // 현재 hover된 별의 data-value 값 가져오기
-        console.log('Hovered over star with value:', rating);  // 확인용 출력
-       //  highlightStars(rating);  // 해당 rating 값으로 별을 하이라이트
-    });
-    
-     // 별에서 마우스가 벗어났을 때 하이라이트 초기화
-    $('.star').on('mouseout', function() {
-     //   highlightStars(0);  // 평점을 0으로 리셋
-    });
-    
-    // 선택된 평점에 맞게 별들을 하이라이트하는 함수
-    function highlightStars(rating) {
-        $('.star').each(function() {
-            const value = $(this).data('value');  // 각 별의 data-value
-            if (value <= rating) {
-                $(this).addClass('filled').removeClass('empty');
-            } else {
-                $(this).removeClass('filled').addClass('empty');
-            }
-        });
-    } 
     
     </script>
     
