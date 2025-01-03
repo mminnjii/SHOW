@@ -6,6 +6,7 @@ import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -35,21 +36,6 @@ public interface ManagerService {
 //	공연 불러오기
     List<Show> selectAllShow();
 
-//  공지사항 불러오기
-	Notice selectDetailNotice();
-
-//  FAQ 불러오기
-	Faq selectDetailFaq();
-
-//	유저 불러오기
-	Member selectDetailMember();
-
-//	예약 불러오기
-	Reservation selectDetailReserv();
-
-//	공연 불러오기
-	Show selectDetailShow();
-
 //	공지사항 수정하기
 	List<Notice> updateNoticeInform(Long noticeNo);
 	
@@ -58,6 +44,16 @@ public interface ManagerService {
 	
 //	공연 수정하기
 	Show updateShow();
+
+	int insertFaq(Faq f);
+
+	Notice noticeDetail(int noticeNo);
+
+	Faq faqDetail(int faqNo);
+
+	Show showDetail(int showNo);
+
+	ManagerPageReservation2 reservDetail(int reservNo);
 
 	
 	
