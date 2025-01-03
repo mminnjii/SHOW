@@ -89,8 +89,9 @@
                     <th>번호</th>
                     <th>모임명</th>
                     <th>모임장</th>
-                    <th>모집인원</th>
-                    <th>모집기간</th>
+                    <th>모집 인원</th>
+                    <th>모집 기간</th>
+                    <th>모집 현황</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,8 +107,20 @@
 		                      <td>${m.meetingNo}</td>
 		                      <td>${m.meetingTitle}</td>
 		                      <td>${m.memList[0].userId}</td>  <!-- 리스트이기 떄문에 객체에 접근해야 한다. -->
-		                      <td>현재참여인원/${m.meetingCount}</td>
+		                      <td>${m.joinNo} / ${m.meetingCount}</td>
 		                      <td>${m.startDate} ~ ${m.endDate}</td>
+		                      <c:choose>
+		                      	<c:when test="${m.joinNo >= m.meetingCount }">
+		                      		<td>
+		                      			<p style="color: red;">모집 마감</p>
+		                      		</td>
+		                      	</c:when>
+		                      	<c:otherwise>
+		                      		<td>
+		                      			<p style="color: green;">모집중</p>
+		                      		</td>
+		                      	</c:otherwise>
+		                      </c:choose>
 		                  </tr>
             			</c:forEach>
             		</c:otherwise>
@@ -188,16 +201,12 @@
         		
         		location.href = 'meetingDetail?mno=' + mno;
     			
-        		
         	});
         	
         	// 소모임이 없는 경우 클릭이벤트 제거
-        	
-        	
+			        	
         	
         </script>
-        
-        
         
         <br><br>
     </div>

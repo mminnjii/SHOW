@@ -28,4 +28,9 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.chatList", null, rowBounds);
 	}
 
+	// 채팅방 생성 
+	public int chatInsert(SqlSessionTemplate sqlSession, Chat c) {
+		return sqlSession.insert("chatMapper.chatInsert", c);
+	}
+
 }

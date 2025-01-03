@@ -24,5 +24,7 @@ public class Chat {
 	private Date createDate;	//	CREATEDATE	DATE
 	private String status;		//	STATUS	VARCHAR2(1 BYTE)
 	
+	private int joinCount; // 참여중인 인원 tabel에는 없다.
+	
 	ArrayList<Member> memList; 
 }

@@ -31,5 +31,11 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.chatList(sqlSession, pi);
 	}
 
+	// 채팅방 생성
+	@Override
+	public int chatInsert(Chat c) {
+		return chatDao.chatInsert(sqlSession, c);
+	}
+
 
 }

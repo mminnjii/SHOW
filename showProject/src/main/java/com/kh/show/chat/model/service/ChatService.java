@@ -13,4 +13,7 @@ public interface ChatService {
 	// 채팅방 목록 
 	ArrayList<Chat> chatList(PageInfo pi);
 
+	// 채팅방 생성
+	int chatInsert(Chat c);
+
 }

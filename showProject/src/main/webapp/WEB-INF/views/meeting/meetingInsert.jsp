@@ -92,7 +92,7 @@
 	        <select id="category" name="category" required>
 	            <option value="" disabled selected>공연카테고리를 선택하세요</option>
 	            <c:forEach var="g" items="${genreList}">
-		            <option value="${g.genreNo}">${g.genreName}</option>
+		            <option value="${g.genreNo}" id="genreNo">${g.genreName}</option>
 	            </c:forEach>
 	        </select>
        	</div>
@@ -134,7 +134,7 @@
 	
 	<script>
 		
-	// 오늘 이전 날짜 선택불가능  
+		// 오늘 이전 날짜 선택불가능  
 		var endDate = $("#endDate")
 		var d = new Date();  
 		
@@ -145,9 +145,9 @@
 		endDate.attr("min", stDate);
 		
 		// 카테고리 클릭 시 해당 카테고리에 해당하는 show 목록 불러오기 (동적으로 생성된 카테고리 option을 선택하는 것이기 때문에 .on 메소드 사용)
-		$(".showDiv2").on("change", "#category", function(){
-			$.ajax({
-				url: "selectShow",
+		$("#showDiv1").on("change", "#category", function(){
+			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
+				url: "${contextPath}/meeting/selectShow",
 				data: {
 					genreNo : $("#category").val()
 				}, 
@@ -164,13 +164,40 @@
 					// 기존에 있던 리스트 지우고 생성
 					$("#show").empty();
 					$("#show").html(str);
-					
 				}
 			});
 		});
 		
-		
-		
+		// 검색 input 박스 안의 내용 변경시 검색어가 포함된 리스트 생성 
+		$("#showDiv2").on("input", "#keyword", function(){
+			
+			console.log($("#genreNo").val());
+			console.log($("#keyword").val());
+			
+			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
+				url: "${contextPath}/meeting/searchShow",
+				data: {
+					genreNo : $("#genreNo").val(),
+					keyword : $("#keyword").val()
+				}, 
+				success : function(showList){
+					console.log(showList);
+					
+					var str = "";
+					
+					var str = "";
+					if(showList != null){
+						for(var i=0; i<showList.length; i++){
+							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>';							
+						}
+					}
+					
+					// 기존에 있던 리스트 지우고 생성
+					$("#show").empty();
+					$("#show").html(str);
+				}
+			});
+		});
 		
 	</script>
 </div>

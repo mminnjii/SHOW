@@ -29,6 +29,8 @@ public class Meeting {
 	private String infomation;		//INFOMATION	VARCHAR2(2000 BYTE)
 	private String status;			//STATUS	VARCHAR2(1 BYTE)
 
+	private int joinNo;   // 참여중인 회원
+	
 	private ArrayList<Member> memList;
 	
 	private Show show;

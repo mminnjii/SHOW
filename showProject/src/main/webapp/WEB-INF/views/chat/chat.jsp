@@ -120,9 +120,9 @@
 	                            <td>${cl.chatNo}</td>
 	                            <td>${cl.chatTitle}</td>
 	                            <td>${cl.memList[0].userId}</td>
-	                            <td>1/${cl.chatUserCount}</td>
+	                            <td>${cl.joinCount}/${cl.chatUserCount}</td>
 	                            <td>${cl.createDate}</td>
-	                            <td><button type="button" class="joinBtn">입장</button></td>
+	                            <td><button type="button" class="joinBtn" value="${cl.chatNo}">입장</button></td>
 	                        </tr>
 	                    </c:forEach>
                     </c:otherwise>
@@ -202,9 +202,55 @@
         <script>
             $("option[value='${map.condition}']").attr("selected", true);
             
+            
+	            console.log(${chatList[0].joinCount});
+	            console.log(${chatList[0].chatUserCount});
+            
+	  			
             $("#chatList tbody").on("click", "button", function(){
-				// 채팅방 입장 ? 
-				console.log("입장")
+	            // 해당 chatNo에 해당하는 joinCount, chatUserCount만 가져와야 한다. chatList
+            	// button.parent() 만하면 button의 td만 가져오기 때문에 tr을 찾고 td를 찾아야 tr에 있는 모든 td 값을 가져올 수 있다.
+            	// eq() == 인덱스 
+            	// td에서 /를 기준으로 잘라 값을 가져와야 한다. 해당 값은 index로 나눠진다.    split : 문자열을 나누어 배열로 반환 
+	            var button = $(this);
+				
+	            var tr = button.parent().parent();
+	            var td = tr.children();
+	            
+	            var join = td.eq(3).text().split("/");
+	  			console.log(join);
+	            
+	  			var joinCount = join[0];
+	  			console.log(joinCount);
+	            
+	  			var chatUserCount = join[1];
+	  			console.log(chatUserCount);
+	            
+	  			// 입장 인원 수 >= 참여 인원 수인 경우에만 채팅방 참여 가능 
+	  			// 회원 id, 채팅방 번호  => count는 리스트에서만 확인 가능하면 된다. (오라클 sql 구문 작성해둠)
+	  			var chatNo = td.eq(0).text();
+	  			console.log(chatNo);
+	  			
+	            // 백틱이 없는 경우 undifind가 뜬다. 왜? 확인 필요함. 이전에는 문제 없었음. 
+	            // var meetingCount= ${meDetail.meetingCount}; 해당값은 가져와짐. int라 그런건가? 문자열이여서 안되는건가? 
+	            var userId = `${loginUser.userId}`;
+	  			console.log(userId);
+	  			
+	  			
+	  			if(chatUserCount >= joinCount){
+		  			location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+                    alert("채팅방입장");
+	                 
+	              }else{
+	                 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능 
+                     alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
+	                 
+	              }
+	  			
+	            
+	  			
+	  			
+	            
             });
             
         </script>

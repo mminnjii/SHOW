@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHAT_USER_COUNT" property="chatUserCount"/>
 		<result column="CREATEDATE" property="createDate"/>
 		<result column="STATUS" property="status"/>
+		<result column="JOIN_COUNT" property="joinCount" jdbcType="INTEGER"/>
 		
 		<collection property="memList" ofType="Member">
 			<result column="USER_NO" property="userNo"/>
@@ -28,11 +29,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 채팅방 목록 -->
 	<select id="chatList" resultMap="chatResultMap">
-		SELECT *
+		SELECT C.CHAT_NO
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+		      ,COUNT(CJ.USER_NO) AS JOIN_COUNT
 		FROM CHAT C
-		JOIN MEMBER USING(USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=C.USER_NO)
+		LEFT JOIN CHAT_JOIN CJ ON (CJ.CHAT_NO=C.CHAT_NO) 
 		WHERE C.STATUS = 'Y'
+		GROUP BY C.CHAT_NO
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+		ORDER BY CREATEDATE DESC
 	</select>
 
+	
+	<insert id="chatInsert" parameterType="Chat">
+		INSERT INTO CHAT (CHAT_NO
+		                 ,CHAT_TITLE
+		                 ,SHOW_NO
+		                 ,USER_NO
+		                 ,CHAT_USER_COUNT
+		                 )
+				  VALUES (CHAT_SEQ.NEXTVAL
+					  	 ,#{chatTitle}
+						 ,#{showNo}
+						 ,#{userNo}
+						 ,#{chatUserCount}
+						 )
+	</insert>
 
 </mapper>

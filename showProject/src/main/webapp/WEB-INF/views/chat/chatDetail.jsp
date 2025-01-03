@@ -18,11 +18,12 @@
             margin: 50px auto;
             background-color: white;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid lightgray;
+            
             display: flex;
             justify-content: space-between;
             border-radius: 8px;
-            height: 500px;
+            height: 550px;
         }
 
         .join {
@@ -61,7 +62,7 @@
             background-color: #f9f9f9;
             padding: 15px;
             border-radius: 8px;
-            height: 400px;
+            height: 440px;
             margin-bottom: 20px;
             
         }
@@ -70,7 +71,7 @@
             margin-bottom: 15px;
             font-size: 14px;
             height: 80%;
-            overflow-y: auto;  /* 세로 스크롤바 생성 */
+            overflow: auto;  /* 세로 스크롤바 생성 */
         }
 
         .info p {
@@ -112,7 +113,7 @@
         }
 
         .chat button:hover {
-            background-color: #45a049;
+            background-color: #597c9b;
         }
 
         .chatArea .message {
@@ -174,11 +175,18 @@
                 <hr>
                 <div class="chat">
                     <input type="text" class="form-control" placeholder="메시지를 입력해 주세요."> 
-                    <button class="btn btn-light">전송</button>
+                    <button class="btn btn-secondary">전송</button>
                 </div>
             </div>
         </div>
     </div>
+	
+	<script>
+		// 스크롤 제일 하단 보기 => 어떤 원리인지 공부하기 
+		var $info = $(".info");
+		$info.scrollTop($info[0].scrollHeight);
+	
+	</script>
 
 <br><br>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
