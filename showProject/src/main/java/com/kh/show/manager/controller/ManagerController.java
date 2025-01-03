@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +23,7 @@ import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -54,7 +54,7 @@ public class ManagerController {
 	    }
 	}
 	
-	@RequestMapping("/managerLogout")
+	@RequestMapping("/managerPage/managerLogout")
 	public String logoutManager(HttpSession session) {
 		
 		session.removeAttribute("loginManager");
@@ -68,17 +68,17 @@ public class ManagerController {
 		return "manager/managerPage";
 	}
 	
-	@GetMapping("/noticeInsert")
+	@GetMapping("/managerPage/noticeInsert")
 	public String moveNoticeInsert() {
 		return "manager/noticeInsert";
 	}
 	
-	@GetMapping("/showInsert")
+	@GetMapping("/managerPage/showInsert")
 	public String moveShowInsert() {
 		return "manager/showInsert";
 	}
 	
-	@PostMapping("/showInsert")
+	@PostMapping("/managerPage/showInsert")
 	public String showInsert(
 	    @ModelAttribute Show show,
 	    @RequestParam("posterImage") MultipartFile posterFile,
@@ -170,122 +170,100 @@ public class ManagerController {
 	    return "redirect:/managerPage";
 	}
 	
-	@PostMapping("/noticeInsert")
+	@PostMapping("/managerPage/noticeInsert")
 	public String noticeInsert(@ModelAttribute Notice n,
 							   HttpSession session) {
 		
-		int noticeInsert = service.noticeInsert(n);
+		int noticeInsertResult = service.noticeInsert(n);
 		
-		if(noticeInsert>0) {
+		if(noticeInsertResult>0) {
 			session.setAttribute("alertMsg", "공지사항 등록이 완료되었습니다.");
-			return "redirect:/";
+			return "redirect:/managerPage";
 		} else {
 			session.setAttribute("alertMsg", "공지사항 등록에 실패하였습니다.");
-			return "redirect:/";
+			return "redirect:/managerPage";
 		}
 	}
 	
-	@GetMapping("/noticeList")
+	@GetMapping("/managerPage/noticeList")
 	@ResponseBody
 	public List<Notice> selectAllNotice(){
 		return service.selectAllNotice();
 	}
 	
-	@GetMapping("/faqList")
+	@GetMapping("/managerPage/faqList")
 	@ResponseBody
 	public List<Faq> selectAllFaq(){
 		return service.selectAllFaq();
 	}
 	
-	@GetMapping("/memberList")
+	@GetMapping("/managerPage/memberList")
 	@ResponseBody
 	public List<Member> selectAllMember(){
 		return service.selectAllMember();
 	}
 	
-	@GetMapping("/reservList")
+	@GetMapping("/managerPage/reservList")
 	@ResponseBody
 	public List<Reservation> selectAllReserv(){
 		return service.selectAllReserv();
 	}
 	
-	@GetMapping("/showList")
+	@GetMapping("/managerPage/showList")
 	@ResponseBody
 	public List<Show> selectAllShow(){
 		return service.selectAllShow();
 	}
 	
-//	이하로는 상세내용 보는 페이지
-	@GetMapping("/detailNotice")
-	@ResponseBody
-	public Notice selectDetailNotice() {
-		return service.selectDetailNotice();
+	@GetMapping("/managerPage/faqInsert")
+	public String insertFaq() {
+		return "manager/faqInsert";
 	}
 	
-	@GetMapping("/detailFaq")
-	@ResponseBody
-	public Faq selectDetailFaq() {
-		return service.selectDetailFaq();
-	}
-	
-	@GetMapping("/detailMember")
-	@ResponseBody
-	public Member selectDetailMember() {
-		return service.selectDetailMember();
-	}
-	
-	@GetMapping("/detailReserv")
-	@ResponseBody
-	public Reservation selectDetailReserv() {
-		return service.selectDetailReserv();
-	}
-	
-	@GetMapping("/detailShow")
-	@ResponseBody
-	public Show selectDetailShow() {
-		return service.selectDetailShow();
-	}
-	
-//	이하 내용은 업데이트(수정)
-	
-	@RequestMapping("/noticeUpdate/{noticeNo}")
-	public List<Notice> updateNotice(@PathVariable("noticeNo") Long noticeNo, Model model) {
-  
-	System.out.println(noticeNo);	
-	System.out.println(service.updateNoticeInform(noticeNo));
+	@PostMapping("/managerPage/faqInsert")
+	public String insertFaq(@ModelAttribute Faq f, HttpSession session) {
 		
-    return service.updateNoticeInform(noticeNo);
+		int insertFaqResult = service.insertFaq(f);
+		
+		if(insertFaqResult>0) {
+			session.setAttribute("alertMsg", "FAQ 등록이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "FAQ 등록에 실패하였습니다.");
+		}
+		
+		return "redirect:/managerPage";
 	}
-	/*
-	@RequestMapping("/faqUpdate/{faqNo}")
-	public String updateFaq(@PathVariable("faqNo") Long faqNo, Model model){
-	Faq faq = service.getFaqById(faqNo);
-	model.addAttribute("faq", faq);
-	return "faqUpdateForm";
 	
-	@RequestMapping("/memberUpdate/{userNo}")
-	public String updateFaq(@PathVariable("userNo") Long userNo, Model model){
-	Member member = service.getUserById(userNo);
-	model.addAttribute("member", member);
-	return "userUpdateForm";
-	
-	@RequestMapping("/reservUpdate/{reservNo}")
-	public String updateFaq(@PathVariable("reservNo") Long reservNo, Model model){
-	Reservation reserv = service.getReservById(reservNo);
-	model.addAttribute("reserv", reserv);
-	return "reservUpdateForm";
-	
-	@RequestMapping("/showUpdate/{showNo}")
-	public String updateFaq(@PathVariable("showNo") Long showNo, Model model){
-	Show show = service.getShowById(showNo);
-	model.addAttribute("show", show);
-	return "faqUpdateForm";
+	@GetMapping("/managerPage/notice")
+	@ResponseBody
+	public Notice noticeDetail(@RequestParam(value = "noticeNo") int noticeNo, Model model) {
+	    Notice n = service.noticeDetail(noticeNo);  // service에서 해당 데이터를 가져옵니다.
+	    model.addAttribute("notice", n);
+	    return n;  // 반환된 데이터를 프론트엔드에 전송
 	}
-	 */
+
+	@GetMapping("/managerPage/faq")
+	@ResponseBody
+	public Faq faqDetail(@RequestParam(value = "faqNo") int faqNo, Model model) {
+		Faq f = service.faqDetail(faqNo);
+		model.addAttribute("faq", f);
+		return f;
+	}
+
+	@GetMapping("/managerPage/show")
+	@ResponseBody
+	public Show showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
+		Show s = service.showDetail(showNo);
+		model.addAttribute("show", s);
+	    return s;
+	}
 	
-//	이하 내용은 삭제
-	/*
-	 
-	 * 
-	 */
+	@GetMapping("/managerPage/reserv")
+	@ResponseBody
+	public ManagerPageReservation2 reservDetail(@RequestParam(value = "reservId") int reservNo, Model model) {
+		ManagerPageReservation2 r = service.reservDetail(reservNo);
+		model.addAttribute("reserv", r);
+		return r;
+	}
+	
 }

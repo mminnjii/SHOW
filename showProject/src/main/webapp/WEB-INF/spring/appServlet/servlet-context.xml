@@ -27,15 +27,7 @@
 	
 	<mvc:interceptors>
 	    <mvc:interceptor>
-	        <mvc:mapping path="/managerPage" />
-	        <beans:bean class="com.kh.show.common.interceptor.ManagerInterceptor" />
-	    </mvc:interceptor>
-	    <mvc:interceptor>
-	        <mvc:mapping path="/showInsert" />
-	        <beans:bean class="com.kh.show.common.interceptor.ManagerInterceptor" />
-	    </mvc:interceptor>
-	    <mvc:interceptor>
-	        <mvc:mapping path="/noticeInsert" />
+	        <mvc:mapping path="/managerPage/**" />
 	        <beans:bean class="com.kh.show.common.interceptor.ManagerInterceptor" />
 	    </mvc:interceptor>
 	</mvc:interceptors>
