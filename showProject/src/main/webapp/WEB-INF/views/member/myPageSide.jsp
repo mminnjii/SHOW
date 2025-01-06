@@ -74,17 +74,17 @@
         background-color: rgb(250, 250, 255);
     }
     
-    #btn1{
+    .side-btn{
     	border:none;
     	background-color: white;
         font-weight: bold;
         font-size: 14px;
     }
-    #btn1:focus{
+    .side-btn:focus{
         border: none;
         outline: none;
     }
-    #btn1:hover{
+    .side-btn:hover{
         color:rgb(47, 47, 174);
     }
 </style>
@@ -92,6 +92,7 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
     <div id="side-body">
+        <input type="hidden" name="userNo" value="${loginUser.userNo}">
         <div id="side-menu" align="center">
             <ul id="side-list">
                 <li>
@@ -117,15 +118,17 @@
                 </li>
                 <li>
                 <form action="${contextPath}/qna" method="GET">
-                    <!-- <a class="side-title">문의 내역</a> -->
-                    <button id="btn1">문의 내역</button>
+                    <button class="side-btn">문의 내역</button>
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <ul class="side-sub-menu"></ul>
                 </form>
                 </li>
                 <li>
-                    <a class="side-title" href="${contextPath}/payment">결제 목록</a>
-                    <ul class="side-sub-menu"></ul>
+                    <form action="${contextPath}/payment">
+                        <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                        <button class="side-btn">결제 목록</button>
+                        <ul class="side-sub-menu"></ul>
+                    </form>
                 </li>
             </ul>
         </div>

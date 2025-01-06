@@ -1,6 +1,9 @@
 package com.kh.show.payments.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
+
+import com.kh.show.reservation.model.vo.Reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +17,11 @@ import lombok.NoArgsConstructor;
 public class Payments {
 	private int paymentId;	//	PAYMENT_ID
 	private int reservationId;	//	RESERVATION_ID
-	private int price;	//	PRICE
+	private String price;	//	PRICE
 	private int paymentMethod;	//	PAYMENT_METHOD
 	private Date paymentDate;	//	PAYMENT_DATE
 	private String status;	//	STATUS
 	private int method;	//	METHOD
+	
+	private ArrayList<Reservation> r;
 }

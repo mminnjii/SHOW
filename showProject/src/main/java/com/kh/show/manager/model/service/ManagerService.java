@@ -55,6 +55,7 @@ public interface ManagerService {
 
 	ManagerPageReservation2 reservDetail(int reservNo);
 
+
 	
 	
 }

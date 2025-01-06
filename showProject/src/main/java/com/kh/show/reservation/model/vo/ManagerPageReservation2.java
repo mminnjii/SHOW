@@ -15,3 +15,4 @@ public class ManagerPageReservation2 {
     private String hallName;
     private Date createDate;
 }
+

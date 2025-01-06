@@ -12,6 +12,7 @@ import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.dao.MemberDao;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
 
@@ -137,6 +138,47 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Coupon> couponList(int userNo) {
 		return memberDao.couponList(sqlSession,userNo);
 	}
+
+	@Override
+	public int pListCount(int userNo) {
+		return memberDao.pListCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> payList(int userNo, PageInfo pi) {
+		return memberDao.payList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int reserveCount(int userNo) {
+		return memberDao.reserveCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> reserveList(int userNo, PageInfo pi) {
+		return memberDao.reserveList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int cancelRes(String reservationId) {
+		return memberDao.cancelRes(sqlSession,reservationId);
+	}
+
+	@Override
+	public int cancelTicket(String reservationId) {
+		return memberDao.cancelTicket(sqlSession,reservationId);
+	}
+
+	@Override
+	public int cancelPay(String reservationId) {
+		return memberDao.cancelPay(sqlSession,reservationId);
+	}
+
+	@Override
+	public int rollbackSeats(int seatId) {
+		return memberDao.rollbackSeats(sqlSession,seatId);
+	}
+
 
 	
 
