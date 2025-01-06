@@ -27,6 +27,8 @@
 		<typeAlias type="com.kh.show.meeting.model.vo.MeetingJoin" alias="MeetingJoin"/> 		
 		<typeAlias type="com.kh.show.chat.model.vo.Chat" alias="Chat"/> 		
 		<typeAlias type="com.kh.show.member.model.vo.Coupon" alias="Coupon"/>
-		<typeAlias type="com.kh.show.showInfo.model.vo.Genre" alias="Genre"/> 	 		
+		<typeAlias type="com.kh.show.showInfo.model.vo.Genre" alias="Genre"/>
+		<typeAlias type="com.kh.show.customer.model.vo.ManagerQuestion" alias="ManagerQuestion"/>
+		<typeAlias type="com.kh.show.customer.model.vo.ManagerQuestion2" alias="ManagerQuestion2"/> 		
  	</typeAliases>
 </configuration>
