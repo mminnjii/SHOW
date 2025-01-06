@@ -108,19 +108,17 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.mshowList",userNo,rowbounds);
 	}
 
-<<<<<<< HEAD
 	// chat회원 정보 및 프로필 조회 - 전수민 
 	public Member selectChatMem(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("memberMapper.selectChatMem", userNo);
-=======
-
+	}
+	
 	public int couponCount(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("memberMapper.couponCount",userNo);
 	}
 
 	public ArrayList<Coupon> couponList(SqlSessionTemplate sqlSession, int userNo) {
 		return (ArrayList)sqlSession.selectList("memberMapper.couponList",userNo);
->>>>>>> refs/remotes/origin/main
 	}
 
 }
