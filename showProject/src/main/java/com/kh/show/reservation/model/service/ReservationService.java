@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
+import com.kh.show.reservation.model.vo.Ticket;
 
 public interface ReservationService {
 	
@@ -26,6 +27,9 @@ public interface ReservationService {
 	
 	// 결제 전 예약정보 확인
 	Reservation confirmReservation(String reservationId);
+	
+	// 티켓 내역 확인
+	ArrayList<Ticket> confirmTicket(String reservationId);
 
 
 	

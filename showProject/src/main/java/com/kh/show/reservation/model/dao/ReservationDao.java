@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
+import com.kh.show.reservation.model.vo.Ticket;
 
 @Repository
 public class ReservationDao {
@@ -38,6 +39,9 @@ public class ReservationDao {
 		return session.selectOne("reservationMapper.confirmReservation",reservationId);
 	}
 
+	public ArrayList<Ticket> confirmTicket(SqlSession session, String reservationId) {
+		return (ArrayList)session.selectList("reservationMapper.confirmTicket",reservationId);
+	}
 
 
 }

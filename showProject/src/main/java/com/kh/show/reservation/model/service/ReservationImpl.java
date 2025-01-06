@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.show.reservation.model.dao.ReservationDao;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
+import com.kh.show.reservation.model.vo.Ticket;
 
 @Service
 public class ReservationImpl implements ReservationService {
@@ -48,6 +49,11 @@ public class ReservationImpl implements ReservationService {
 	@Override
 	public Reservation confirmReservation(String reservationId) {
 		return reservationDao.confirmReservation(sqlSession,reservationId);
+	}
+
+	@Override
+	public ArrayList<Ticket> confirmTicket(String reservationId) {
+		return reservationDao.confirmTicket(sqlSession,reservationId);
 	}
 
 

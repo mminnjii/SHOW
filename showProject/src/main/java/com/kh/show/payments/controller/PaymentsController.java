@@ -2,6 +2,7 @@ package com.kh.show.payments.controller;
 
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.kh.show.member.model.vo.Member;
 import com.kh.show.payments.model.service.PaymentsService;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Ticket;
 
 @Controller
 @RequestMapping("/payments") 
@@ -287,7 +289,7 @@ public class PaymentsController {
 	
 	
 	@PostMapping("/paymentInfo")
-	public String pamentInfo(HttpSession session, @RequestParam("paymentId") String paymentId, @RequestParam("type") String type,
+	public String pamentInfo(HttpSession session,String paymentId, String type, String reservationId,
 							Model model) {
 		
 		String[] impParts = paymentId.split("_");
@@ -296,6 +298,22 @@ public class PaymentsController {
 		String receipt = (String) session.getAttribute("receipt");
 		model.addAttribute("payId",payId);
 		model.addAttribute("receipt",receipt);
+		
+		System.out.println(type);
+		
+		// 예약정보 조회
+		Reservation rInfo = reservationService.confirmReservation(reservationId);
+		model.addAttribute("rInfo",rInfo);
+		System.out.println(rInfo);
+		
+		// 티켓정보 조회
+		ArrayList <Ticket> t = reservationService.confirmTicket(reservationId);
+		
+		for(Ticket tkt : t) {
+			System.out.println(t);
+		}
+		
+		
 		
 		if(type.equals("bank")) {
 			
@@ -314,6 +332,9 @@ public class PaymentsController {
 		    session.removeAttribute("dueDate");
 		    session.removeAttribute("bankHolder");
 		}
+		
+		
+
 		
 		return "payments/paymentInfo";
 	}

@@ -112,6 +112,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE RESERVATION_ID = #{reservationId}
 	</select>
 	
+	<!-- 티켓정보 확인 -->
+	<select id="confirmTicket" resultType="com.kh.show.reservation.model.vo.Ticket">
+	     SELECT TICKET_ID AS ticketId
+                ,ROW_NAME || COL_NO AS seatId 
+        FROM TICKET T
+        JOIN SEATS S USING(SEAT_ID)
+        WHERE RESERVATION_ID = #{reservationId}
+        AND T.STATUS = 'Y'
+	</select>
+	
 	
 </mapper>
 

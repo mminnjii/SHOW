@@ -177,8 +177,14 @@
      	      				        hiddenField2.name = "type";
      	      				        hiddenField2.value = "card";
      	      				        
+	     	      				    const hiddenField3 = document.createElement("input");
+	  	      				        hiddenField2.type = "hidden";
+	  	      				        hiddenField2.name = "reservationId";
+	  	      				        hiddenField2.value = reservation_uid;
+     	      				        
      	      				        form.appendChild(hiddenField);
      	      				        form.appendChild(hiddenField2);
+     	      				        form.appendChild(hiddenField3);
      	      				        document.body.appendChild(form);
      	      				        form.submit(); 
     	                    		 
@@ -286,9 +292,17 @@
     		      				        hiddenField2.type = "hidden";
     		      				        hiddenField2.name = "type";
     		      				        hiddenField2.value = "bank";
+    		      				        
+    		      				        console.log(hiddenField2);
+    		      				        
+    		      				      	const hiddenField3 = document.createElement("input");
+	  	  	      				        hiddenField2.type = "hidden";
+	  	  	      				        hiddenField2.name = "reservationId";
+	  	  	      				        hiddenField2.value = reservation_uid;
 
     		      				        form.appendChild(hiddenField);
     		      				        form.appendChild(hiddenField2);
+    		      				        form.appendChild(hiddenField3);
     		      				        document.body.appendChild(form);
     		      				        form.submit();
     		      				        
