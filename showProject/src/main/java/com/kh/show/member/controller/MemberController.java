@@ -584,7 +584,47 @@ public class MemberController {
 		return "reservation/reservePage";
 	}
 	
-	
+	//예약 취소
+//	@ResponseBody
+//	@RequestMapping(value="cancelRes", produces="text/html;charset=UTF-8")
+//	public String cancleRes(String reservationId,
+//							HttpSession session) {
+//		System.out.println(reservationId);
+//		System.out.println("오류");
+//		int result = memberService.cancelRes(reservationId);
+//		System.out.println(result);
+//		System.out.println("오류1");
+//		
+//		String var = "";
+//		if(result>0) {
+//			var = "YYY";
+//		}else {
+//			var = "NNN";
+//		}
+//		System.out.println("오류2");
+//		return var;
+//	}
+//	
+	@PostMapping("cancelRes")
+	public String cancleRes(String reservationId,
+							int userNo,
+							int seatId,
+							HttpSession session) {
+		System.out.println("예약 번호 : "+reservationId);
+		int result = memberService.cancelRes(reservationId);
+		int result2 = memberService.cancelTicket(reservationId);
+		int result3 = memberService.cancelPay(reservationId);
+		int result4 = memberService.rollbackSeats(seatId);
+		
+		System.out.println(result);
+		
+		if(result>0 && result2>0 && result3>0 && result4>0) {
+			session.setAttribute("alertMsg", "예약 취소 성공!");
+		}else {
+			session.setAttribute("alertMsg", "예약 취소 실패!");
+		}
+		return "redirect:/reserve?userNo="+userNo;
+	}
 	
 	
 	

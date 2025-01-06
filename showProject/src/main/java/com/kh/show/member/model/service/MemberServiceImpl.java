@@ -153,6 +153,26 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.reserveList(sqlSession,userNo,pi);
 	}
 
+	@Override
+	public int cancelRes(String reservationId) {
+		return memberDao.cancelRes(sqlSession,reservationId);
+	}
+
+	@Override
+	public int cancelTicket(String reservationId) {
+		return memberDao.cancelTicket(sqlSession,reservationId);
+	}
+
+	@Override
+	public int cancelPay(String reservationId) {
+		return memberDao.cancelPay(sqlSession,reservationId);
+	}
+
+	@Override
+	public int rollbackSeats(int seatId) {
+		return memberDao.rollbackSeats(sqlSession,seatId);
+	}
+
 
 	
 

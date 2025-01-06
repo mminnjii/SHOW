@@ -62,4 +62,12 @@ public interface MemberService {
 	int reserveCount(int userNo);
 	//예약 리스트 추출
 	ArrayList<Reservation> reserveList(int userNo, PageInfo pi);
+	//예약 취소 
+	int cancelRes(String reservationId);
+	//x티켓 취소
+	int cancelTicket(String reservationId);
+	//결제 취소
+	int cancelPay(String reservationId);
+	//빈좌석 표시
+	int rollbackSeats(int seatId);
 }

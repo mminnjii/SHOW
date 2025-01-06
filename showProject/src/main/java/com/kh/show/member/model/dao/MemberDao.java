@@ -141,5 +141,21 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.reserveList",userNo,rowbounds);
 	}
 
+	public int cancelRes(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelRes",reservationId);
+	}
+
+	public int cancelTicket(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelTicket",reservationId);
+	}
+
+	public int cancelPay(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelPay", reservationId);
+	}
+
+	public int rollbackSeats(SqlSessionTemplate sqlSession, int seatId) {
+		return sqlSession.update("memberMapper.rollbackSeats",seatId);
+	}
+
 
 }

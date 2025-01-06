@@ -124,6 +124,8 @@
 	
 	<resultMap type="Reserveshow" id="reserveshowR">
 		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="TICKET_ID" property="ticketId"/>
+		<result column="SEAT_ID" property="seatId"/>
 		<result column="SHOW_NAME" property="showName"/>
 		<result column="ROUND_ID" property="roundId"/>
 		<result column="HALL_NAME" property="hallName"/>
@@ -132,6 +134,8 @@
 		<result column="PRICE" property="price"/>
 		<result column="CREATEDATE" property="createDate"/>
 		<result column="POSTER_ORIGINNAME" property="posterOriginName"/>
+		<result column="ROW_NAME" property="rowName"/>
+		<result column="COL_NO" property="colNo"/>
 	</resultMap>
 	
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -333,8 +337,12 @@
 	
 	<select id="reserveList" resultMap="reserveshowR">
 		SELECT RESERVATION_ID,
+			   TICKET_ID,
+			   SE.SEAT_ID,
 	           SHOW_NAME,
-	           ROUND_ID,
+	           R.ROUND_ID,
+	           ROW_NAME,
+	           COL_NO,
 	           H.HALL_NAME,
 	           RE.REGION_NAME,
 	           G.GENRE_NAME,
@@ -346,9 +354,35 @@
 		JOIN HALL H ON(H.HALL_NO=S.HALL_NO)
 		JOIN REGION RE USING(REGION_NO)
 		JOIN GENRE G USING(GENRE_NO)
+		JOIN TICKET T USING(RESERVATION_ID)
+		JOIN SEATS SE ON(SE.SEAT_ID=T.SEAT_ID)
 		WHERE USER_NO = #{userNo}
 		AND R.STATUS = 'Y'
 	</select>
+	
+	<update id="cancelRes">
+		UPDATE RESERVATION
+		SET STATUS = 'N'
+		WHERE RESERVATION_ID = #{reservationId}
+	</update>
+	
+	<update id="cancelTicket">
+		UPDATE TICKET
+		SET STATUS = 'N'
+		WHERE RESERVATION_ID = #{reservationId}
+	</update>
+	
+	<update id="cancelPay">
+		UPDATE PAYMENTS
+		SET STATUS = 'N'
+		WHERE RESERVATION_ID = #{reservationId}
+	</update>
+	
+	<update id="rollbackSeats">
+		UPDATE SEATS
+		SET STATUS = 'Y'
+		WHERE SEAT_ID = #{seatId}
+	</update>
 	
 
 </mapper>
