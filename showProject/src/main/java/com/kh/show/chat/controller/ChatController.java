@@ -134,9 +134,12 @@ public class ChatController {
 	    
 	    session.setAttribute("chatNo", chatNo);
 	    
+	    // 채팅방 상세 정보 
 	    Chat chatInfo = chatService.selectChatInfo(chatNo);
 	    session.setAttribute("chatInfo", chatInfo);
+	    
 	    System.out.println(chatInfo);
+	    
 	    return "chat/chatDetail";
 	}
 	

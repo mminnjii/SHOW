@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.chat.model.vo.ChatMessage;
 import com.kh.show.common.template.PageInfo;
 
@@ -27,6 +28,10 @@ public interface ChatService {
 	ArrayList<Chat> searchChatList(HashMap<String, String> map, PageInfo pi);
 
 	Chat selectChatInfo(int chatNo);
+
+	// 채팅방 참여자 insert 
+	int insertJoin(HashMap<String, Object> join);
+
 
 
 }

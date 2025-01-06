@@ -15,9 +15,10 @@
  		<typeAlias type="com.kh.show.manager.model.vo.Manager" alias="Manager"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.Show" alias="Show"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.ManagerShowInfo" alias="ShowInfo"/>
-		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
 		<typeAlias type="com.kh.show.showInfo.model.vo.Region" alias="Region"/>
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		
+
 		<typeAlias type="com.kh.show.reservation.model.vo.ManagerPageReservation" alias="ManagerReservation"/>
 		<typeAlias type="com.kh.show.reservation.model.vo.ManagerPageReservation2" alias="ManagerReservation2"/>		
 
@@ -28,10 +29,9 @@
 		<typeAlias type="com.kh.show.showInfo.model.vo.ShowRound" alias="ShowRound"/> 		
 		<typeAlias type="com.kh.show.meeting.model.vo.MeetingJoin" alias="MeetingJoin"/> 		
 		<typeAlias type="com.kh.show.chat.model.vo.Chat" alias="Chat"/> 		
-
 		<typeAlias type="com.kh.show.chat.model.vo.ChatJoin" alias="ChatJoin"/> 		
 		<typeAlias type="com.kh.show.chat.model.vo.ChatMessage" alias="ChatMessage"/> 		
-
+		<typeAlias type="com.kh.show.member.model.vo.Coupon" alias="Coupon"/> 		
 		<typeAlias type="com.kh.show.member.model.vo.Coupon" alias="Coupon"/>
 		<typeAlias type="com.kh.show.showInfo.model.vo.Genre" alias="Genre"/> 	 		
  	</typeAliases>

@@ -33,6 +33,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CREATEDATE" property="createDate"/>
 	</resultMap>
 	
+	<resultMap type="ChatJoin" id="chatJoinResultMap">
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="USER_NO" property="userNo"/>
+		
+		<collection property="member" ofType="Member">
+			<result column="USER_NO" property="userNo"/>
+			<result column="USER_ID" property="userId"/>
+			<result column="USER_PWD" property="userPwd"/>
+			<result column="USER_NAME" property="userName"/>
+			<result column="USER_RRN" property="userRrn"/>
+			<result column="PHONE" property="phone"/>
+			<result column="EMAIL" property="email"/>
+			<result column="ADDRESS" property="address"/>
+			<result column="ENROLL_DATE" property="enrollDate"/>
+			<result column="MODIFY_DATE" property="modifyDate"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+			<result column="RANK" property="rank"/>
+			<result column="SUBSCRIBE" property="subscribe"/>
+			<result column="STATUS" property="status"/>
+		</collection>
+		
+	</resultMap>
 
 	<!-- 채팅방 목록 개수 -->
 	<select id="listCount" resultType="_int">
@@ -139,6 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY CREATEDATE DESC
 	</select>
 	
+	<!-- 채팅방 상세 정보 -->
 	<select id="selectChatInfo" parameterType="_int" resultMap="chatResultMap">
 		SELECT C.CHAT_NO
 		        ,C.CHAT_TITLE
@@ -152,5 +176,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN SHOW S ON (C.SHOW_NO=S.SHOW_NO)
 		WHERE CHAT_NO = #{chatNo}
 	</select>
+	
+	<!-- 참여 인원 insert -->
+	<insert id="insertJoin">
+		INSERT INTO CHAT_JOIN 
+			VALUES(#{chatNo}, #{userNo})
+	</insert>
+	
+	
 
 </mapper>
