@@ -1,7 +1,9 @@
 package com.kh.show.showInfo.controller;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.service.ShowInfoService;
 import com.kh.show.showInfo.model.vo.Review;
 import com.kh.show.showInfo.model.vo.Show;
@@ -30,22 +32,51 @@ public class ShowInfoController {
 	
 	//공연상세이동
 	@GetMapping("/detail")
-	public String detail(HttpSession session) {
+	public String detail(HttpSession session,String showName) {
+		//System.out.println(showName);
+		
+		int result = showInfoService.increaseCount(showName);
+		
+		
+		if(result>0) {
 		
 		// 공연정보조회
-		Show s = showInfoService.selectShow();
+		Show s = showInfoService.selectShow(showName);
 		session.setAttribute("s", s);
+		
+		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
+		double vipPrice = sPrice*1.4;
+		double rPrice = sPrice*1.2;
+		
+		NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+		session.setAttribute("vipPrice", formatter.format(vipPrice));
+		session.setAttribute("rPrice", formatter.format(rPrice));
+		session.setAttribute("sPrice", s.getPrice());
+		session.setAttribute("Price", sPrice);
+		
+		//System.out.println(showName);
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
-		int result2 = showInfoService.updateShowRound();
-		
+
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
 		
-		return "show/showInfo/detailInfo";
+		// 회원 번호 담기
+	    Member loginUser = (Member)session.getAttribute("loginUser");
+			if(loginUser!=null) {
+			session.setAttribute("userNo", loginUser.getUserNo());
+			}
+			
+		
 	}
+		
+		return "show/showInfo/detailInfo";
+	
+	}
+	
+	
 	
 	@ResponseBody
 	@GetMapping(value = "selectDate")
@@ -59,13 +90,13 @@ public class ShowInfoController {
 	
 	// 리뷰이동
 	@GetMapping("/review")
-	public String review(HttpSession session, Model model) {
+	public String review(String showName,HttpSession session, Model model) {
 		
 			Show s = (Show)session.getAttribute("s");
 
 		    // 세션에 데이터가 없으면 DB에서 다시 조회
 		    if (s == null) {
-		        s = showInfoService.selectShow();
+		        s = showInfoService.selectShow(showName);
 		        session.setAttribute("s", s); // 다시 세션에 저장
 		    }
 		    model.addAttribute("s", s);
@@ -172,15 +203,19 @@ public class ShowInfoController {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
+	
+	@GetMapping(value="rankShowList",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String rankShowList() {
+		
+		ArrayList<Show> rankShowList = showInfoService.rankShowList();
+		
+		System.out.println(rankShowList);
+		
+		return "rankShowList";
+	}
+	
 	
 	
 }

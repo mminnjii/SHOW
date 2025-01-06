@@ -379,7 +379,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion1 = showInfoService.classicRegion1();
 		
-		System.out.println(classicRegion1);
+		//System.out.println(classicRegion1);
 		
 		return classicRegion1;
 		
@@ -391,7 +391,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion2 = showInfoService.classicRegion2();
 		
-		System.out.println(classicRegion2);
+		//System.out.println(classicRegion2);
 		
 		return classicRegion2;
 		

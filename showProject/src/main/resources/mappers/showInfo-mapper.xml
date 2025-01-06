@@ -67,9 +67,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 
 		FROM (
-		SELECT SHOW_NAME
-		,SHOW_START
-		,SHOW_END
+		SELECT SHOW_NO
+	  		   ,SHOW_NAME
+				,SHOW_START
+				,SHOW_END
+				,POSTER_CHANGENAME
+		        ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		ORDER BY COUNT DESC
@@ -80,7 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 뮤지컬 서울 지역 리스트 -->
 	  <select id="musicalRegion0" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -94,7 +98,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 뮤지컬 경기/인천 지역 리스트 -->
 
 	  <select id="InchMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -110,7 +115,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 뮤지컬 충청/강원 지역 리스트 -->
 	  <select id="chMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -123,7 +129,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 뮤지컬 대구/경북 지역 리스트 -->
 	  <select id="deguMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -136,7 +143,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 뮤지컬 부산/경남 지역 리스트 -->
 	  <select id="busanMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -149,7 +157,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 뮤지컬 광주/전라 지역 리스트 -->
 	  <select id="kwMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -162,7 +171,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 뮤지컬 제주 지역 리스트 -->
 	  <select id="jejMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -178,7 +188,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="playShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
 	  	       		 ,POSTER_CHANGENAME
@@ -192,7 +203,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 연극 서울 지역 리스트 -->
 	  <select id="playRegion0" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -205,7 +217,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 연극 경기/인천 지역 리스트 -->
 	  <select id="InchPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -218,7 +231,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 연극 충청/강원 지역 리스트 -->
 	  <select id="chPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -231,7 +245,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 연극 대구/경북 지역 리스트 -->
 	  <select id="deguPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -244,7 +259,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 연극 부산/경남 지역 리스트 -->
 	  <select id="busanPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -257,7 +273,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 연극 광주/전라 지역 리스트 -->
 	  <select id="kwPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -270,7 +287,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 연극 제주 지역 리스트 -->
 	  <select id="jejPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -285,7 +303,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="concertShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
 	  	       		 ,POSTER_CHANGENAME
@@ -299,7 +318,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 콘서트 서울 지역 리스트 -->
 	  <select id="concertRegion0" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -313,7 +333,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 콘서트 경기/인천 지역 리스트 -->
 	  <select id="concertRegionList1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -326,7 +347,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 콘서트 충청/강원 지역 리스트 -->
 	  <select id="concertRegionList2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -339,7 +361,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 콘서트 대구/경북 지역 리스트 -->
 	  <select id="concertRegionList3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -352,7 +375,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 콘서트 부산/경남 지역 리스트 -->
 	  <select id="concertRegionList4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -365,7 +389,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 콘서트 광주/전라 지역 리스트 -->
 	  <select id="concertRegionList5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -378,7 +403,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 콘서트 제주 지역 리스트 -->
 	  <select id="concertRegionList6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -393,7 +419,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="classicShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
 	  	       		 ,POSTER_CHANGENAME
@@ -407,7 +434,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 클래식 서울 지역 리스트 -->
 	  <select id="classicRegion0" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -420,7 +448,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 클래식 경기/인천 지역 리스트 -->
 	  <select id="classicRegion1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -433,7 +462,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 클래식 충청/강원 지역 리스트 -->
 	  <select id="classicRegion2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -446,7 +476,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 클래식 대구/경북 지역 리스트 -->
 	  <select id="classicRegion3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -459,7 +490,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 클래식 부산/경남 지역 리스트 -->
 	  <select id="classicRegion4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -472,7 +504,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 클래식 광주/전라 지역 리스트 -->
 	  <select id="classicRegion5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -485,7 +518,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 클래식 제주 지역 리스트 -->
 	  <select id="classicRegion6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -500,7 +534,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="displayShow" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		 ,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
 	  	       		 ,POSTER_CHANGENAME
@@ -515,7 +550,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 전시 서울 지역 리스트 -->
 	  <select id="displayRegion0" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -528,7 +564,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 전시 경기/인천 지역 리스트 -->
 	  <select id="displayRegion1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -541,7 +578,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 전시 충청/강원 지역 리스트 -->
 	  <select id="displayRegion2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -554,7 +592,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 전시 대구/경북 지역 리스트 -->
 	  <select id="displayRegion3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -567,7 +606,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 전시 부산/경남 지역 리스트 -->
 	  <select id="displayRegion4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -580,7 +620,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 전시 광주/전라 지역 리스트 -->
 	  <select id="displayRegion5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -593,7 +634,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 전시 제주 지역 리스트 -->
 	  <select id="displayRegion6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT  SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
                ,POSTER_CHANGENAME
@@ -626,7 +668,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	           REGION_NAME,
 	           COUNT,
                SHOW_START,
-               SHOW_END
+               SHOW_END,
+               POSTER_CHANGENAME,
+               POSTER_ORIGINNAME
 	    FROM SHOW S
 	    JOIN GENRE USING(GENRE_NO)
 	    JOIN REGION USING(REGION_NO)
@@ -679,21 +723,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT S.SHOW_NO,
 		SHOW_NAME,
 		SHOW_EXPLAIN,
-		SPRICE,
+		PRICE,
 		NOTICE,
 		HALL_NAME,
 		S.HALL_NO HALL_NO,
 		GENRE_NAME,
 		REGION_NAME,
 		SHOW_START,
-		SHOW_END
+		SHOW_END,
+		POSTER_ORIGINNAME,
+		POSTER_CHANGENAME
 		FROM SHOW S
 		JOIN HALL H ON (S.HALL_NO = H.HALL_NO)
 		JOIN GENRE G ON
 		(S.GENRE_NO = G.GENRE_NO)
 		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
 		WHERE S.STATUS = 'Y'
-		AND S.SHOW_NO = 1
+		AND SHOW_NAME = #{showName}
 	</select>
 
 	<!-- 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) -->
@@ -794,8 +840,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY CREATE_DATE DESC
 	</select>
 
+	<!-- 조회수 증가 -->
+	<update id="increaseCount">
+		UPDATE SHOW
+		SET COUNT = COUNT+1
+		WHERE SHOW_NAME = #{showName}
+		AND STATUS = 'Y'
+	</update>
 
-	
+
+	<!-- 메인페이지 실시간 공연 랭킹 리스트 -->
+	<select id="rankShowList" resultMap="showResultSet">
+		SELECT *
+	  	FROM (
+	  		  SELECT SHOW_NAME
+	  	       		 ,COUNT
+	  	      FROM SHOW
+	  	      ORDER BY COUNT DESC
+	  	      )
+	  	WHERE ROWNUM BETWEEN 1 AND 8
+	</select>	
 
 	<!-- 리뷰 작성 -->
 	<!-- 리뷰 수정 -->

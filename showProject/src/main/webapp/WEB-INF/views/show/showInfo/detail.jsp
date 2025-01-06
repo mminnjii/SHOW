@@ -139,7 +139,9 @@
 	    <div class="content">
 	        <!-- 본문 상단 영역 -->
 	        <div class="top-section">
-	            <img src="/show/resources/images/꽃의비밀.jpg">
+	        
+	            <img src='/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg' />
+
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
@@ -213,6 +215,7 @@
     	     var roundId = selectedOption.data("round-id");
     	     console.log("Selected Round ID:", roundId);
     		 
+    	     
     	     location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
     		
 

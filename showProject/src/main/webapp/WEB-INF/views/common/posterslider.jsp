@@ -158,7 +158,7 @@
         #uuu{
             height: 10px;
         }
-        #u1{
+        .u1{
         width: 30px;
         height: 30px;
         position: relative;
@@ -171,7 +171,7 @@
             top: 10px;
             
         }
-        #u3{
+        .u3{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 20px;
         font-weight: 400;
@@ -231,46 +231,52 @@
                 </td>
             </tr> 
             <tr id="uuu"></tr>
-            <tr>
-                <td><img src="/show/resources/images/images2/1.png" alt="" id="u1"><a href=""><span id="u3">뉴욕의 거장들</span></a></td>
+            <tr class="rankShow">
+            
             </tr>
             
-            <tr>
-                <td><img src="/show/resources/images/images2/2.png" alt=""  id="u1"><a href=""><span id="u3">꾳의 비밀</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/3.png" alt=""  id="u1"><a href=""><span id="u3">틱틱붐</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/4.png" alt=""  id="u1"><a href=""><span id="u3">퍼스트 맨</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/5.png" alt=""  id="u1"><a href=""><span id="u3">클로버</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/6.png" alt=""  id="u1"><a href=""><span id="u3">르 스페이스</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/7.png" alt=""  id="u1"><a href=""><span id="u3">글루미 선데이</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/8.png" alt=""  id="u1"><a href=""><span id="u3">김연우 콘서트</span></a></td>
-            </tr>
-            
-            
-				
-				
-            
-          
 
         </table>
     </div>
+    
+    <script>
+     var rankShow = $(".rankShow").html();
+     
+      $(document).ready(function(){
+    	 
+    	 rankShowData(); 
+      });
+      
+      function loadShowData(){
+    	  
+    	  $.ajax({
+    		 url: "rankShowList",
+    		 success: function(result) {
+    	            var str = "";  
+    	            
+    	            for (var i = 1; i <= 8; i++) {
+    	                str += "<tr>"
+    	                     + "<td><img src='/show/resources/images/images2/" + i + ".png' alt='' class='u1'>"
+    	                     + "<a href=''><span class='u3'>"+ result[i].showName +"</span></a></td>"
+    	                     + "</tr>";
+    	            }
+    	            // 생성된 HTML을 .rankShow 요소에 삽입
+    	            $(".rankShow").html(str);
+    	        },
+    		 error:function(){
+    			 console.log("통신 오류");
+    		 }
+    	  });
+      }
+      
+      function rankShowData(){
+    	  loadShowData();
+      }
+      
+    
+    
+    
+    </script>
     
    
 	    

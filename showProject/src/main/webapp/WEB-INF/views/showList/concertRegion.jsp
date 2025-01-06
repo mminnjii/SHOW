@@ -127,6 +127,21 @@
         </table>
 
     </div>
+    
+    <script>
+   
+		$(document).on('click','#regionArea td',function(){
+			
+			//var showName = $('#regionArea td').eq(1).text();
+			var showName = $(this).find('span#j1').text();
+			console.log(showName); 
+			location.href = "/show/showInfo/detail?showName="+ showName;
+			
+		});
+    
+		
+     
+     </script>
 
     <script>
 
@@ -182,12 +197,7 @@
                     $("#regionArea").append(str);
 
                     // 버튼을 다시 활성화
-                    $("#c2").removeAttr("disabled");
-                    $("#c3").removeAttr("disabled");
-                    $("#c4").removeAttr("disabled");
-                    $("#c5").removeAttr("disabled");
-                    $("#c6").removeAttr("disabled");
-                    $("#c7").removeAttr("disabled");
+                    $("#list11 > button").removeAttr("disabled");
 
                 },
                 error:function(){
@@ -245,12 +255,7 @@
         			
         			
         			
-        			$("#c1").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c5").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -307,12 +312,7 @@
 	        			
 	        			
 	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c6").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -366,13 +366,7 @@
 			
 			        			
 			        			
-			        			
-			        			$("#c1").removeAttr("disabled");
-			                	$("#c2").removeAttr("disabled");
-			                	$("#c3").removeAttr("disabled");
-			                	$("#c5").removeAttr("disabled");
-			                	$("#c6").removeAttr("disabled");
-			                	$("#c7").removeAttr("disabled");
+			        			$("#list11 > button").removeAttr("disabled");
 			        			
 			        		},
 			        		error:function(){
@@ -428,12 +422,7 @@
         			
         			
         			
-        			$("#c1").removeAttr("disabled");
-                	$("#c2").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -489,12 +478,7 @@
 	        			
 	        			
 	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c3").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -548,12 +532,7 @@
     			
     			
     			
-    			$("#c1").removeAttr("disabled");
-            	$("#c2").removeAttr("disabled");
-            	$("#c3").removeAttr("disabled");
-            	$("#c4").removeAttr("disabled");
-            	$("#c5").removeAttr("disabled");
-            	$("#c6").removeAttr("disabled");
+    			$("#list11 > button").removeAttr("disabled");
     			
     		},
     		error:function(){

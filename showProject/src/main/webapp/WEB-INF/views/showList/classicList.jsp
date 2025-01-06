@@ -142,6 +142,8 @@
 
     </div>
     
+    
+    
       <!-- Swiper JS -->
       <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
@@ -164,6 +166,8 @@
           }
         });
       </script>
+      
+     
       
       <%@include file="/WEB-INF/views/showList/classicRanking.jsp" %>
       <%@include file="/WEB-INF/views/showList/classicRegion.jsp" %>

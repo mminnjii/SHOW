@@ -129,6 +129,21 @@
         </table>
 
     </div>
+    
+    <script>
+   
+		$(document).on('click','#regionArea td',function(){
+			
+			//var showName = $('#regionArea td').eq(1).text();
+			var showName = $(this).find('span#j1').text();
+			console.log(showName); 
+			location.href = "/show/showInfo/detail?showName="+ showName;
+			
+		});
+    
+		
+     
+     </script>
 
     <script>
 
@@ -147,12 +162,15 @@
                 loadRegionData();  // 데이터를 불러오는 함수 호출
             });
         });
-
+        
+        
+        
+      
         
         // 데이터를 불러오는 함수
         function loadRegionData() {
             $.ajax({
-                url: "classicRegion0",  // 서버에서 데이터를 가져오는 URL
+                url: "classicRegion0",  
                 success: function(result){
                     var str = ""; 
 
@@ -184,12 +202,8 @@
                     $("#regionArea").append(str);
 
                     // 버튼을 다시 활성화
-                    $("#c2").removeAttr("disabled");
-                    $("#c3").removeAttr("disabled");
-                    $("#c4").removeAttr("disabled");
-                    $("#c5").removeAttr("disabled");
-                    $("#c6").removeAttr("disabled");
-                    $("#c7").removeAttr("disabled");
+                    $("#list11 > button").removeAttr("disabled");
+                    
 
                 },
                 error:function(){
@@ -255,12 +269,7 @@
         			
         			
         			
-        			$("#c1").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c5").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -318,12 +327,7 @@
 	        			
 	        			
 	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c6").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -377,13 +381,7 @@
 			
 			        			
 			        			
-			        			
-			        			$("#c1").removeAttr("disabled");
-			                	$("#c2").removeAttr("disabled");
-			                	$("#c3").removeAttr("disabled");
-			                	$("#c5").removeAttr("disabled");
-			                	$("#c6").removeAttr("disabled");
-			                	$("#c7").removeAttr("disabled");
+			        			$("#list11 > button").removeAttr("disabled");
 			        			
 			        		},
 			        		error:function(){
@@ -439,12 +437,7 @@
         			
         			
         			
-        			$("#c1").removeAttr("disabled");
-                	$("#c2").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -500,12 +493,7 @@
 	        			
 	        			
 	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c3").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -559,12 +547,7 @@
     			
     			
     			
-    			$("#c1").removeAttr("disabled");
-            	$("#c2").removeAttr("disabled");
-            	$("#c3").removeAttr("disabled");
-            	$("#c4").removeAttr("disabled");
-            	$("#c5").removeAttr("disabled");
-            	$("#c6").removeAttr("disabled");
+    			$("#list11 > button").removeAttr("disabled");
     			
     		},
     		error:function(){

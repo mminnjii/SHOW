@@ -145,6 +145,7 @@
 
                     <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
                     <span id="j1">광화문연가</span><br>
+                    <span id="j2">2025.02.08-2025.02.09</span>
 
                 </td>
                 
@@ -183,10 +184,14 @@
         </table>
 
     </div>
+    
+    			<form action="increase" method="post">
+                	<input type="hidden" name="sno" value="${showNo}">
+                </form>
 
     <script>
     
-    
+   /*
     var previousData = $("#mainRank").html();
     
     $("#rank2").click(function(){
@@ -232,7 +237,7 @@
     	
     });
     
-    
+    */
     
     
     $("#b2").click(function(){

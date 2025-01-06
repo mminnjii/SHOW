@@ -24,8 +24,8 @@ public class ShowInfoDao {
 	
 	
 	// 공연상세정보조회
-	public Show selectShow(SqlSession session) {
-		Show s = session.selectOne("showInfoMapper.selectShow");
+	public Show selectShow(SqlSession session,String showName) {
+		Show s = session.selectOne("showInfoMapper.selectShow",showName);
 		return s;
 	}
 
@@ -403,6 +403,31 @@ public class ShowInfoDao {
 
 	public int searchRcount(SqlSession session, String keyword) {
 		return session.selectOne("showInfoMapper.searchRcount",keyword);
+	}
+
+
+
+
+	public int increaseCount(SqlSessionTemplate sqlSession, String showName) {
+		
+		
+		return sqlSession.update("showInfoMapper.increaseCount",showName);
+	}
+
+
+
+
+	public Show selectShowInfo(SqlSessionTemplate sqlSession, int sno) {
+
+		return sqlSession.selectOne("showInfoMapper.selectShowInfo",sno);
+	}
+
+
+
+
+	public ArrayList<Show> rankShowList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("showInfoMapper.rankShowList");
 	}
 
 
