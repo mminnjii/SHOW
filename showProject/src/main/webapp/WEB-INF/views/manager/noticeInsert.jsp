@@ -84,7 +84,7 @@
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	    <div class="container">
 		        <h1>공지사항 등록</h1>
-		<form action="${contextPath}/noticeInsert" method="POST" enctype="multipart/form-data">
+		<form action="${contextPath}/managerPage/noticeInsert" method="POST">
 		    <!-- 제목 -->
 		    <div class="form-group">
 		        <label for="noticeTitle">공지사항 제목</label>

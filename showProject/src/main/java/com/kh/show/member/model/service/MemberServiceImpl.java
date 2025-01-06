@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.dao.MemberDao;
+import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
@@ -124,6 +125,17 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member selectChatMem(int userNo) {
 		return memberDao.selectChatMem(sqlSession, userNo);
+	}
+	
+
+	@Override
+	public int couponCount(int userNo) {
+		return memberDao.couponCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Coupon> couponList(int userNo) {
+		return memberDao.couponList(sqlSession,userNo);
 	}
 
 	

@@ -16,7 +16,7 @@ public class Show {
 	private String rPrice;				//	RPRICE			 VARCHAR2(1000 BYTE)
 	private String sPrice;				//  SPRICE			 VARCHAR2(1000 BYTE)
 	private String vPrice;				//	VPRICE			 VARCHAR2(1000 BYTE)
-	private String Price;				//	PRICE			 VARCHAR2(1000 BYTE)
+	private String price;				//	PRICE			 VARCHAR2(1000 BYTE)
 	private String notice;				//	NOTICE			 VARCHAR2(2000 BYTE)
 	private String precaution;			//	PRECAUTION		 VARCHAR2(2000 BYTE)
 	private String status;				//	STATUS			 VARCHAR2(1 BYTE)
@@ -24,6 +24,7 @@ public class Show {
 	private int hallNo;					//	HALL_NO			 NUMBER
 	private String hallName;			// 사용하기 위해 추가		
 	private int genreNo;				//	GENRE_NO		 NUMBER
+	private String genreName;				// 사용하기 위해 추가	
 	private int regionNo;				//	REGION_NO		 NUMBER
 	private String regionName;			// 사용하기 위해 추가	
 

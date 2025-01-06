@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paymentsMapper">
+
+	
+	<!-- 결제 테이블 생성 -->
+	<insert id="createPay" parameterType="HashMap">
+		INSERT INTO PAYMENTS
+		VALUES(#{payId},#{reservationId},#{amount},#{method},SYSDATE,#{status},#{methodToget})
+	</insert>
+	
+	
+	<!-- 티켓 테이블 생성을 위한 좌석번호 -->
+	<select id="selectId" resultType="_int" parameterType="HashMap">
+		 SELECT SEAT_ID
+		 FROM SEATS
+		 WHERE ROW_NAME || COL_NO = #{seats}
+		 AND ROUND_ID = #{roundId}
+	</select>
+	
+	<!-- 티켓 테이블 생성 -->
+	<insert id="createTicket" parameterType="HashMap">
+		 INSERT INTO TICKET
+			VALUES(TICKET_SEQ.NEXTVAL, #{reservationId}, #{seatsId}, #{payId}, DEFAULT)   
+	</insert>
+	
+	
+	<!-- 통장테이블 생성 -->
+	<insert id="createAccount" parameterType="HashMap">
+		 INSERT INTO ACCOUNT
+		 VALUES(#{payId}, #{userNo}, #{bankName}, #{bankNum}, #{name},TO_DATE(SUBSTR(#{dueDate}, 1, 10), 'YYYY-MM-DD')) 
+	</insert>
+	
+	
+	<!-- 카드테이블 생성 -->
+	<insert id="createCard" parameterType="HashMap">
+		 INSERT INTO CREDITCARD
+		 VALUES(#{payId}, #{userNo}) 
+	</insert>
+	
+	
+	<!-- 예약테이블 삭제 -->
+	<delete id="deleteReservation" parameterType="HashMap">
+		DELETE RESERVATION
+		WHERE RESERVATION_ID = #{reservationId}
+	</delete>
+	
+	
+	<!-- 좌석 상태 y 설정 (rollback.) -->
+	<update id="rollbackSeats" parameterType="HashMap">
+		UPDATE SEATS
+		SET STATUS = 'Y'
+		WHERE ROW_NAME || COL_NO = #{seats}
+		AND ROUND_ID = #{roundId}
+	</update>
+	
+	
+	
+</mapper>

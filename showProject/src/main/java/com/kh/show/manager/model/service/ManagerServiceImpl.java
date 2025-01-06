@@ -11,6 +11,7 @@ import com.kh.show.manager.model.dao.ManagerDao;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -112,5 +113,52 @@ public class ManagerServiceImpl implements ManagerService {
 		return dao.selectAllShow(sqlSession);
 	}
 
+	@Override
+	public List<Notice> updateNoticeInform(Long noticeNo) {
+
+		return dao.updateNoticeInform(sqlSession, noticeNo);
+	}
+
+	@Override
+	public Faq updateFaq() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Show updateShow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public int insertFaq(Faq f) {
+
+		return dao.insertFaq(sqlSession, f);
+}
+
+	@Override
+	public Notice noticeDetail(int noticeNo) {
+
+		return dao.noticeDetail(sqlSession, noticeNo);
+	}
+
+	@Override
+	public Faq faqDetail(int faqNo) {
+
+		return dao.faqDetail(sqlSession, faqNo);
+	}
+
+	@Override
+	public Show showDetail(int showNo) {
+
+		return dao.showDetail(sqlSession, showNo);
+	}
+
+	@Override
+	public ManagerPageReservation2 reservDetail(int reservNo) {
+
+		return dao.reservDetail(sqlSession, reservNo);
+	}
 	
 }

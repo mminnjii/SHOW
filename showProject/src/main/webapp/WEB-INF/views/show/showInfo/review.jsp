@@ -70,7 +70,6 @@
 		<h2 align="left">관람후기</h2>
 		<br><br><br>
 		
-	
 			<pre>
 				* 작성전 유의사항 *
 				
@@ -106,6 +105,11 @@
 		<div>
 			<br><br><br>
 			이 공연에 남긴 후기 :&nbsp; ${count } <br><br><br>  
+			
+			<c:if test="${not empty userNo }">
+				<button class="enroll">작성하기</button>
+			</c:if>
+		
 		</div>
 		<div class=comment>
 			<c:choose>
@@ -130,19 +134,41 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-	<%-- 		<c:if test="${r.userNo eq loginUser.userId}">
-				<br>
-				<button class="modify" data-rno="${r.replyNo }">수정하기</button>
-				<button class="delete" data-rno="${r.replyNo }">삭제하기</button>
-				<button id="back2">뒤로가기</button>
-			</c:if> --%>
-	
+			
 		
+			
+<%-- 	 		<c:if test="${r.userNo eq loginUser.userId}">
+				<br>
+
+				<button class="modify" >수정하기</button>
+				<button class="delete" >삭제하기</button>
+			</c:if>  --%>
 	
 			<button id="submit" style="display: none;">작성하기</button>
 			<button id="back" style="display: none;">뒤로가기</button>
 			<p style="margin-top: 10000px;"></p>
 	</div>
+	
+	<script>
+		$(".enroll").on("click",(function(){
+			
+	 			var userNo = $(userNo);
+				const form = document.createElement("form");
+		        form.action = "/show/showInfo/enroll";
+
+		        const hiddenField = document.createElement("input");
+		        hiddenField.type = "hidden";
+		        hiddenField.name = "userNo";
+		        hiddenField.value = userNo;
+		        
+		        form.appendChild(hiddenField);
+		        document.body.appendChild(form);
+		        form.submit();
+		}));
+	
+	
+	</script>
+	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

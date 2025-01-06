@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
@@ -107,9 +108,19 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.mshowList",userNo,rowbounds);
 	}
 
+<<<<<<< HEAD
 	// chat회원 정보 및 프로필 조회 - 전수민 
 	public Member selectChatMem(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("memberMapper.selectChatMem", userNo);
+=======
+
+	public int couponCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.couponCount",userNo);
+	}
+
+	public ArrayList<Coupon> couponList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.couponList",userNo);
+>>>>>>> refs/remotes/origin/main
 	}
 
 }

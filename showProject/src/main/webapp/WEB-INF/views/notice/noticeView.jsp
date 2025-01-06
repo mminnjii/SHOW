@@ -107,6 +107,10 @@
             float: right;
         }
         
+        #noticeTbody td:hover{
+        	cursor: pointer;
+        }
+        
 
     </style>
 </head>
