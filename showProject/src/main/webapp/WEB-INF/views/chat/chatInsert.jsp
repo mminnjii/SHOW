@@ -87,6 +87,11 @@
     	padding-left: 35px;
     }
     
+    .colorSt{
+    	color: gray;
+    	font-size: 12px;
+    }
+    
 </style>
 </head>
 <body>
@@ -97,10 +102,13 @@
 
     <h1>채팅방 생성</h1>
     <form action="chatInsert" method="POST">
-    
-        <label for="chatTitle">채팅 제목</label>
+    <br><br>
+        <label for="chatTitle">채팅방 제목</label>
         <input type="text" id="chatTitle" name="chatTitle" placeholder="채팅방 제목을 입력하세요" required>
-        
+        <br>
+		<br><br>
+		<hr>
+		
         <label for="category">공연</label>
         <!-- 공연 정보 불러와서 -->
         <!-- GENRE 테이블 정보 가져오기 -->
@@ -124,12 +132,18 @@
 				<option disabled selected>카테고리를 선택하면 공연을 선택할 수 있습니다.</option>
 			</select>
        	</div>
-
+		<br>
+		<br><br>
+		<hr>
+		
         <label for="userNo">회원 ID</label>
         <input type="text" id="userId" name="userId" value="${loginUser.userId}" readonly>
 		<input type="hidden" name="userNo" value="${loginUser.userNo}">
         
-        <label for="chatUserCount">채팅방 정원</label>
+        <br>
+		<br><br>
+		<hr>
+        <label for="chatUserCount">채팅방 정원 <span class="colorSt">(채팅방 입장 정원은 최대 50명 입니다)</span></label>
         <select name="chatUserCount" id="chatUserCount" required>
         	<option value="" style="color: lightgray;" disabled selected>채팅 입장 정원을 선택해 주세요.</option>
         	<c:forEach var="mc" begin="1" end="50">
@@ -143,7 +157,6 @@
     </form>
 	
 	<script>
-		
 		// 카테고리 클릭 시 해당 카테고리에 해당하는 show 목록 불러오기 (동적으로 생성된 카테고리 option을 선택하는 것이기 때문에 .on 메소드 사용)
 		$("#showDiv1").on("change", "#category", function(){
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
@@ -164,7 +177,6 @@
 					// 기존에 있던 리스트 지우고 생성
 					$("#show").empty();
 					$("#show").html(str);
-					
 				}
 			});
 		});
