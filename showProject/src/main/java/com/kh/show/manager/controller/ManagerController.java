@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
+import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Show;
 
@@ -52,7 +54,7 @@ public class ManagerController {
 	    }
 	}
 	
-	@RequestMapping("/managerLogout")
+	@RequestMapping("/managerPage/managerLogout")
 	public String logoutManager(HttpSession session) {
 		
 		session.removeAttribute("loginManager");
@@ -66,162 +68,202 @@ public class ManagerController {
 		return "manager/managerPage";
 	}
 	
-	@GetMapping("/noticeInsert")
+	@GetMapping("/managerPage/noticeInsert")
 	public String moveNoticeInsert() {
 		return "manager/noticeInsert";
 	}
 	
-	@GetMapping("/showInsert")
+	@GetMapping("/managerPage/showInsert")
 	public String moveShowInsert() {
 		return "manager/showInsert";
 	}
 	
-	@PostMapping("/showInsert")
+	@PostMapping("/managerPage/showInsert")
 	public String showInsert(
 	    @ModelAttribute Show show,
 	    @RequestParam("posterImage") MultipartFile posterFile,
 	    @RequestParam("detailImage") MultipartFile detailFile,
 	    HttpServletRequest request,
 	    HttpSession session) {
-		
-		String genreName = "";
-		switch (show.getGenreNo()) {
-		    case 1: genreName = "뮤지컬"; break;
-		    case 2: genreName = "연극"; break;
-		    case 3: genreName = "콘서트"; break;
-		    case 4: genreName = "클래식"; break;
-		    case 5: genreName = "전시"; break;
-		    default: genreName = "기타"; break;
-		}
-
-		String regionName = "";
-		switch (show.getRegionNo()) {
-		    case 1: regionName = "서울"; break;
-		    case 2: regionName = "경기/인천"; break;
-		    case 3: regionName = "충청/강원"; break;
-		    case 4: regionName = "대구/경북"; break;
-		    case 5: regionName = "부산/경남"; break;
-		    case 6: regionName = "광주/전라"; break;
-		    case 7: regionName = "제주"; break;
-		    default: regionName = "기타"; break;
-		}
-
-	    // 1. 파일 처리
+	    
+	    String genreNameArr[] = {"뮤지컬", "연극", "콘서트", "클래식", "전시"};
+	    String regionNameArr[] = {"서울", "경기/인천", "충청/강원", "대구/경북", "부산/경남", "광주/전라", "제주"};
+	    
+	    String genreName = genreNameArr[show.getGenreNo()-1];
+	    String regionName = regionNameArr[show.getRegionNo()-1];
+	    
 	    if (!posterFile.isEmpty()) {
+	        
 	        String posterOriginName = posterFile.getOriginalFilename();
 	        String detailOriginName = detailFile.getOriginalFilename();
 	        String extension = posterOriginName.substring(posterOriginName.lastIndexOf("."));
-
-	        // 2. 파일명 처리
-	        String changeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + extension;
-	        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/")+changeName;
-	        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/")+changeName;
-
-	        File poster = new File(posterSavePath);
-	        if (!poster.exists()) {
-	            poster.mkdirs();
-	        }
+	        String startDate = show.getShowStart().replace("-", "");
+	        String endDate = show.getShowEnd().replace("-", "");
+	        String posterChangeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
+	        String detailChangeName = genreName + "_" + regionName + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
 	        
-	        File detail = new File(detailSavePath);
-	        if (!detail.exists()) {
-	        	detail.mkdirs();
+
+	        // 경로 지정
+	        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/");
+	        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/");
+	        
+	        // 폴더 생성 (이미 존재하지 않으면)
+	        File posterDir = new File(posterSavePath);
+	        if (!posterDir.exists()) {
+	            posterDir.mkdirs();
 	        }
 
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String posterSubDirPath = posterSavePath + File.separator + genreName + "_" + regionName;
+	        File posterSubDir = new File(posterSubDirPath);
+	        if (!posterSubDir.exists()) {
+	            posterSubDir.mkdirs();
+	        }
+
+	        File detailDir = new File(detailSavePath);
+	        if (!detailDir.exists()) {
+	            detailDir.mkdirs();
+	        }
+
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String detailSubDirPath = detailSavePath + File.separator + genreName + "_" + regionName;
+	        File detailSubDir = new File(detailSubDirPath);
+	        if (!detailSubDir.exists()) {
+	            detailSubDir.mkdirs();
+	        }
+
+	        // 파일 저장
+	        File savePosterFile = new File(posterSubDirPath + File.separator + posterChangeName); // 경로 + 파일명
 	        try {
-	            posterFile.transferTo(poster);
-	        } catch (IOException e) {
+	            posterFile.transferTo(savePosterFile);
+	        } catch (IllegalStateException | IOException e) {
 	            e.printStackTrace();
 	        }
 	        
-	        try {
-	        	detailFile.transferTo(detail);
-	        } catch (IOException e) {
-	        	e.printStackTrace();
+	        if (!detailFile.isEmpty()) {
+	            File saveDetailFile = new File(detailSubDirPath + File.separator + detailChangeName); // 경로 + 파일명
+	            try {
+	                detailFile.transferTo(saveDetailFile);
+	            } catch (IllegalStateException | IOException e) {
+	                e.printStackTrace();
+	            }
 	        }
 
-	        // 3. VO에 값 세팅
+	        // VO에 값 세팅
 	        show.setGenreNo(show.getGenreNo());
 	        show.setRegionNo(show.getRegionNo());
 	        show.setHallNo(show.getHallNo());
 	        show.setPosterOriginName(posterOriginName);
-	        show.setPosterChangeName(changeName);
+	        show.setPosterChangeName(posterChangeName);
 	        show.setDetailOriginName(detailOriginName);
-	        show.setDetailChangeName(changeName);
+	        show.setDetailChangeName(detailChangeName);
 
-	        // 4. 서비스 호출
+	        // 서비스 호출
 	        int result = service.showInsert(show);
 
 	        if (result > 0) {
-	        	session.setAttribute("alertMsg", "공연 생성 완료");
-	            return "redirect:/";
+	            session.setAttribute("alertMsg", "공연 생성 완료");
 	        } else {
-	        	session.setAttribute("alertMsg", "공연 생성 실패");
-	            return "redirect:/";
+	            session.setAttribute("alertMsg", "공연 생성 실패");
 	        }
 	    }
-
-	    return "redirect:/showList";
+	    return "redirect:/managerPage";
 	}
 	
-	
-	@PostMapping("/noticeInsert")
+	@PostMapping("/managerPage/noticeInsert")
 	public String noticeInsert(@ModelAttribute Notice n,
 							   HttpSession session) {
 		
-		int noticeInsert = service.noticeInsert(n);
+		int noticeInsertResult = service.noticeInsert(n);
 		
-		if(noticeInsert>0) {
+		if(noticeInsertResult>0) {
 			session.setAttribute("alertMsg", "공지사항 등록이 완료되었습니다.");
-			return "redirect:/";
+			return "redirect:/managerPage";
 		} else {
 			session.setAttribute("alertMsg", "공지사항 등록에 실패하였습니다.");
-			return "redirect:/";
+			return "redirect:/managerPage";
 		}
 	}
 	
-	@GetMapping("/noticeList")
+	@GetMapping("/managerPage/noticeList")
 	@ResponseBody
 	public List<Notice> selectAllNotice(){
 		return service.selectAllNotice();
 	}
 	
-	@GetMapping("/faqList")
+	@GetMapping("/managerPage/faqList")
 	@ResponseBody
 	public List<Faq> selectAllFaq(){
 		return service.selectAllFaq();
 	}
 	
-	@GetMapping("/memberList")
+	@GetMapping("/managerPage/memberList")
 	@ResponseBody
 	public List<Member> selectAllMember(){
 		return service.selectAllMember();
 	}
 	
-	@GetMapping("/reservList")
+	@GetMapping("/managerPage/reservList")
 	@ResponseBody
 	public List<Reservation> selectAllReserv(){
 		return service.selectAllReserv();
 	}
 	
-	@GetMapping("/showList")
+	@GetMapping("/managerPage/showList")
 	@ResponseBody
 	public List<Show> selectAllShow(){
 		return service.selectAllShow();
 	}
 	
-	/*
-	@RequestMapping("/noticeUpdate")
-	public String noticeList(@ModelAttribute Notice n)
-		notice n = service.updateNotice(n);
-		
-		return n;
-	*/
+	@GetMapping("/managerPage/faqInsert")
+	public String insertFaq() {
+		return "manager/faqInsert";
+	}
 	
-	/*
-	@RequestMapping("/noticeDelete")
-	public String noticeDelete(@ModelAttribute Notice n)
-		notice n = service.deleteNotice(n);
+	@PostMapping("/managerPage/faqInsert")
+	public String insertFaq(@ModelAttribute Faq f, HttpSession session) {
 		
-		return n;
-	 */
+		int insertFaqResult = service.insertFaq(f);
+		
+		if(insertFaqResult>0) {
+			session.setAttribute("alertMsg", "FAQ 등록이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "FAQ 등록에 실패하였습니다.");
+		}
+		
+		return "redirect:/managerPage";
+	}
+	
+	@GetMapping("/managerPage/notice")
+	@ResponseBody
+	public Notice noticeDetail(@RequestParam(value = "noticeNo") int noticeNo, Model model) {
+	    Notice n = service.noticeDetail(noticeNo);  // service에서 해당 데이터를 가져옵니다.
+	    model.addAttribute("notice", n);
+	    return n;  // 반환된 데이터를 프론트엔드에 전송
+	}
+
+	@GetMapping("/managerPage/faq")
+	@ResponseBody
+	public Faq faqDetail(@RequestParam(value = "faqNo") int faqNo, Model model) {
+		Faq f = service.faqDetail(faqNo);
+		model.addAttribute("faq", f);
+		return f;
+	}
+
+	@GetMapping("/managerPage/show")
+	@ResponseBody
+	public Show showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
+		Show s = service.showDetail(showNo);
+		model.addAttribute("show", s);
+	    return s;
+	}
+	
+	@GetMapping("/managerPage/reserv")
+	@ResponseBody
+	public ManagerPageReservation2 reservDetail(@RequestParam(value = "reservId") int reservNo, Model model) {
+		ManagerPageReservation2 r = service.reservDetail(reservNo);
+		model.addAttribute("reserv", r);
+		return r;
+	}
+	
 }
