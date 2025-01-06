@@ -48,6 +48,9 @@ public class MeetingController {
 		// 소모임 리스트 
 		ArrayList<Meeting> meList = meetingService.meetingList(pi);
 
+		for (Meeting ml : meList) {
+			System.out.println(ml);
+		}
 		m.addAttribute("meList", meList);
 		m.addAttribute("pi",pi);
 		
@@ -88,10 +91,6 @@ public class MeetingController {
 		
 		ArrayList<Show> showList = meetingService.selSearchShow(map);
 
-		for(Show s: showList) {
-			System.out.println(s);
-		}
-		
 		return showList;
 	}
 	
@@ -141,8 +140,6 @@ public class MeetingController {
 		// 하나의 소모임에 한번만 참여할 수 있도록 제한.
 		// 1. 회원 참여 이력이 있는지 확인 
 		boolean sjUser = meetingService.searchJoinUser(mj); 
-		
-		System.out.println(sjUser);
 		
 		if(sjUser) {
 			result = 0;
