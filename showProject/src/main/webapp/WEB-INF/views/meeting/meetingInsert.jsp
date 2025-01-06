@@ -105,6 +105,9 @@
 			<select id="show" name="showNo">
 				<option disabled selected>카테고리를 선택하면 공연을 선택할 수 있습니다.</option>
 			</select>
+			
+			<div id="dateStr"></div>
+			
        	</div>
         
         <!-- 모임 장소 입력 시 어떻게 입력받을지 생각하기 : 지도 API에서 필요한 지역 정보가 있어야 상세보기 페이지에서 지도 API 기능 구현 가능 -->
@@ -122,8 +125,8 @@
         <label for="meetingDate">모임 날짜</label>
         <input type="date" id="meetingDate" name="meetingDate" required>
         
-        <label for="endDate">모집 마감일</label>
-        <input type="date" id="endDate" name="endDate" required>  <!-- 오늘날짜 이전은 선택 불가능하게 조건처리 -->
+        <label for="joinEndDate">모집 마감일</label>
+        <input type="date" id="joinEndDate" name="endDate" required>  <!-- 오늘날짜 이전은 선택 불가능하게 조건처리 -->
         
         <!-- wrap="hard" 데이터가 서버로 제출될 때, 입력된 텍스트를 줄바꿈한다. hard 속성값을 사용할 경우에는 cols 속성이 명시되어 있어야 한다. -->
         <label for="infomation">소모임 안내사항</label>
@@ -134,45 +137,56 @@
 	
 	<script>
 		
-		// 오늘 이전 날짜 선택불가능  
-		var endDate = $("#endDate")
+		// 오늘 이전 날짜 선택불가능 하도록 조건 처리
+		// 모집 마감일
+		var joinEndDate = $("#joinEndDate");
+		console.log("joinEndDate : " + joinEndDate);
+		
 		var d = new Date();  
 		
-		var meetingDate = $("#meetingDate")
+		// 모임 날짜
+		var meetingDate = $("#meetingDate");
+		
+		// 선택 min 일자 
 		var stDate = (d.getFullYear()+"-"+(d.getMonth()+1).toString().padStart(2, '0')+"-"+d.getDate().toString().padStart(2, '0'));
-
+		console.log(stDate);
+		// 선택 max 일자 
+		
+		
+		// showEnd
+		var maxDate = "";
+		
 		meetingDate.attr("min", stDate);
-		endDate.attr("min", stDate);
+		joinEndDate.attr("min", stDate);
 		
 		// 카테고리 클릭 시 해당 카테고리에 해당하는 show 목록 불러오기 (동적으로 생성된 카테고리 option을 선택하는 것이기 때문에 .on 메소드 사용)
 		$("#showDiv1").on("change", "#category", function(){
+			
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/selectShow",
 				data: {
 					genreNo : $("#category").val()
 				}, 
 				success : function(showList){
-					console.log(showList);
-					
 					var str = "";
+					var dateStr = "";
 					if(showList != null){
 						for(var i=0; i<showList.length; i++){
-							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>';							
+							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>'
+							dateStr += '<input type="hidden" id="maxDate-'+ showList[i].showNo +'" value="'+ showList[i].showEnd +'">';
 						}
 					}
 					
 					// 기존에 있던 리스트 지우고 생성
 					$("#show").empty();
 					$("#show").html(str);
+					$("#dateStr").empty().html(dateStr);
 				}
 			});
 		});
 		
 		// 검색 input 박스 안의 내용 변경시 검색어가 포함된 리스트 생성 
 		$("#showDiv2").on("input", "#keyword", function(){
-			
-			console.log($("#genreNo").val());
-			console.log($("#keyword").val());
 			
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/searchShow",
@@ -181,22 +195,51 @@
 					keyword : $("#keyword").val()
 				}, 
 				success : function(showList){
-					console.log(showList);
-					
 					var str = "";
-					
-					var str = "";
+					var dateStr = "";
 					if(showList != null){
 						for(var i=0; i<showList.length; i++){
-							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>';							
+							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>';
+							dateStr += '<input type="hidden" id="maxDate-'+ showList[i].showNo +'" value="'+ showList[i].showEnd +'">';
 						}
 					}
 					
 					// 기존에 있던 리스트 지우고 생성
 					$("#show").empty();
 					$("#show").html(str);
+					$("#dateStr").empty().html(dateStr);
 				}
 			});
+		});
+		
+		// 공연 종료 날짜까지만 선택할 수 있도록 조건 처리 	
+		$("#showDiv3").on("click", "#show", function(){ 
+			
+			var selectNo = $(this).val();
+			
+			var maxDate = $("#maxDate-"+selectNo).val();
+			
+			// 정규식 활용하여 모두 치환 
+			var maxDate2 = maxDate.replaceAll('/', "-");
+			var max = maxDate2.split('-');
+			var maxDate3 = '20' + max[0] + '-' + max[1] + '-' + max[2]
+			
+			meetingDate.attr("max", maxDate3);
+			
+		});
+		
+		// 모임날짜 2일 전까지만 마감할 수 있도록 조건 처리 
+		$("#meetingDate").on("change", function(){
+						
+			var date = $(this).val();
+			console.log(date);
+			
+			var mDate = new Date(date);
+			mDate.setDate(mDate.getDate() -2);
+			mDate = (mDate.getFullYear()+"-"+(mDate.getMonth()+1).toString().padStart(2, '0')+"-"+mDate.getDate().toString().padStart(2, '0'));
+			console.log(mDate);
+			
+			joinEndDate.attr("max", mDate);
 		});
 		
 	</script>

@@ -32,6 +32,12 @@ public interface ChatService {
 	// 채팅방 참여자 insert 
 	int insertJoin(HashMap<String, Object> join);
 
+	// chat_join User 정보 확인 메소드 
+	int selectJoinUser(HashMap<String, Object> join);
+
+	// chat_join 회원 데이터 삭제 
+	int joinDelete(ChatJoin cj);
+
 
 
 }
