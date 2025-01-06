@@ -13,7 +13,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
 import com.kh.show.chat.model.service.ChatService;
-import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.chat.model.vo.ChatMessage;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
@@ -68,7 +67,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 		// 회원의 정보와 입장한 채팅방 번호를 가져온다. 
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		int chatNo = (int)session.getAttributes().get("chatNo");
-		System.out.println(chatNo);
 
 		// 채팅방 번호와 user 세션 정보 저장
 		Set<WebSocketSession> users = new CopyOnWriteArraySet<>();
@@ -80,6 +78,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 			users = new CopyOnWriteArraySet<>();
 			chatUser.put(chatNo, users);
 		}
+		
 		// 현재 접속한 사용자의 세션 추가
 		users.add(session);
 		
@@ -90,7 +89,14 @@ public class WebSocketServer extends TextWebSocketHandler{
 		join.put("userNo", loginUser.getUserNo());
 		join.put("chatNo", chatNo);
 		
-		int result = chatService.insertJoin(join);
+		int result1 = chatService.selectJoinUser(join);
+		System.out.println("result1 : " + result1);
+		
+		if(result1>0){
+			log.debug("저장되어 있는 회원");
+		}else {
+			int result = chatService.insertJoin(join);
+		}
 		
 		// 접속자 전달하기 위한 리스트
 		ArrayList<Member> userList = new ArrayList<>();
@@ -150,7 +156,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 		if(result>0) {
 			log.debug("메시지 저장 성공");
 			
-			
 			Member mem = memberService.selectChatMem(userNo);
 			
 			// 메시지를 보낸 사용자와 메시지 정보를 담아 전달
@@ -158,11 +163,9 @@ public class WebSocketServer extends TextWebSocketHandler{
 			infoMap.put("mem", mem);
 			infoMap.put("cm", cm);
 			
-			System.out.println(infoMap);
-			
 			// 메시지 정보 VO를 JSON 문자열로 변환하여 전달. 
 			String responseMsg = new Gson().toJson(infoMap);
-
+			// 메시지 객체 생성 
 			TextMessage tm = new TextMessage(responseMsg);
 			
 			// 채팅방의 모든 사용자에게 메시지 전달

@@ -67,6 +67,16 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.insertJoin", join);
 	}
 
+	// chat_join User 정보 확인 메소드 
+	public int selectJoinUser(SqlSessionTemplate sqlSession, HashMap<String, Object> join) {
+		return sqlSession.selectOne("chatMapper.selectJoinUser", join);
+	}
+
+	// chat_join 회원 데이터 삭제
+	public int joinDelete(SqlSessionTemplate sqlSession, ChatJoin cj) {
+		return sqlSession.delete("chatMapper.joinDelete", cj);
+	}
+
 
 	
 	

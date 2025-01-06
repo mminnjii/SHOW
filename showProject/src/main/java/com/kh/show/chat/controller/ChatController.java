@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.show.chat.model.service.ChatService;
 import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.meeting.model.service.MeetingService;
@@ -142,6 +143,16 @@ public class ChatController {
 	    
 	    return "chat/chatDetail";
 	}
+	
+	@PostMapping("joinDelete")
+	public String joinDelete(ChatJoin cj) {
+		
+		// chat_join 회원 데이터 삭제
+		int result = chatService.joinDelete(cj);
+		
+		return "chat/chat";
+	}
+
 	
 		
 }
