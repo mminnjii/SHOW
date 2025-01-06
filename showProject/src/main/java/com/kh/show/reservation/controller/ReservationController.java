@@ -39,7 +39,7 @@ public class ReservationController {
 	
 	// 좌석이동
 	@GetMapping("/seats")
-	public String seats(HttpSession session, Model model,int showNo, int roundId, int hallNo) {
+	public String seats(HttpSession session, Model model, Reservation r) {
 		
 		// 회원번호 추출
 		Integer userNo = (Integer) session.getAttribute("userNo");
@@ -50,12 +50,7 @@ public class ReservationController {
 			session.setAttribute("userNo", userNo);
 			
 			// reservation 생성
-			// (예약번호 / 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태)
-			Map<String, Object> r = new HashMap<>();
-	        r.put("showNo", showNo);
-	        r.put("roundId", roundId);
-	        r.put("hallNo", hallNo);
-	        r.put("userNo", userNo);
+	        r.setUserNo(userNo);
 			
 			int result = reservationService.createReservation(r);  
 			
@@ -75,6 +70,7 @@ public class ReservationController {
 			
 		}
 		
+		int roundId = r.getRoundId();
 		
 		// status "N"인 좌석 조회
 		ArrayList<String> taken= reservationService.selectTakenSeats(roundId);  

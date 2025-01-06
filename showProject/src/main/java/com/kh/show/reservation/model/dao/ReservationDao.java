@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.reservation.model.vo.Ticket;
 
@@ -27,7 +28,7 @@ public class ReservationDao {
 		return session.update("reservationMapper.updateSeatStatus",seats);
 	}
 
-	public int createReservation(SqlSession session, Map<String, Object> r) {
+	public int createReservation(SqlSession session, Reservation r) {
 		return session.insert("reservationMapper.createReservation",r);
 	}
 

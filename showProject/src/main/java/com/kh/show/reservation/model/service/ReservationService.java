@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.reservation.model.vo.Ticket;
 
@@ -20,7 +21,7 @@ public interface ReservationService {
 	int updateSeatStatus(Map<String, Object> seats);
 	
 	// reservation 생성
-	int createReservation(Map<String, Object> r);
+	int createReservation(Reservation r);
 	
 	// 생성된 reservation 읽어오기
 	Reservation selectReservation();

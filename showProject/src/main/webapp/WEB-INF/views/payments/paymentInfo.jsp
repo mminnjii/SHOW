@@ -9,13 +9,15 @@
 	#container{
 		margin-top: 100px;
 		margin-bottom: 300px;
+		margin-left: 200px;
 	}
 	
   table {
-	    width: 70%;
-	    margin-bottom: 50px;  /* 테이블 간의 간격을 20px로 설정 */
+	    width: 60%;
+	    margin-bottom: 50px; 
 	    table-layout: fixed;
-	    margin-left: 100px;
+	    margin-left: 10px;
+	    border-collapse: collapse;
   }
 	
 	tbody {
@@ -33,17 +35,15 @@
 	
   th, td {
     text-align: left;
+    padding-left: 8px; 
   }
   
-  tbody>tr>td:first-child  {
-  	 padding-right: 20px;
-  }
 	
 </style>    
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
-		<div id="container" align="center">
+		<div id="container" align="left">
 			<input type="hidden" name="receiptUrl" value="${receipt} "></input>
 			<br>
 	     		<table>
@@ -55,15 +55,19 @@
 	     			<tbody>
 	     				<tr>
 	     					<td><h4>결제번호 :</h4></td>
-	     					<td>${payId}</td>
+	     					<td>${paymentId}</td>
+	     				</tr>
+	     				<tr>
+	     					<td><h4>결제금액 :</h4></td>
+	     					<td>${price}</td>
 	     				</tr>
 	     				<tr>
 	     					<td><h4>결제방식 :</h4></td>
-	     					<td>무통장 입금</td>
+	     					<td>${methodToget }</td>
 	     				</tr>
 	     				<tr>
 	     					<td><h4>결제상태 :</h4></td>
-	     					<td>확정</td>
+	     					<td>Y</td>
 	     				</tr>
 	     			<c:if test="${not empty bankName && not empty bankNum && not empty bankHolder && not empty dueDate }">	
 	     				<tr>
@@ -97,27 +101,30 @@
 	     				</tr>
 	     			</thead>
 	     			<tbody>
-	     				<tr>
-	     					<td><h4>예약번호 :</h4></td>
-	     					<td>${payId}</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>공연명 :</h4></td>
-	     					<td>${payId}</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>(N회차) 공연시간 :</h4></td>
-	     					<td>${bankName}</td>
-	     				</tr>
-     					<tr>
-     						<td><h4>공연일자 :</h4></td>
-	     					<td>${bankNum}</td>
-	     				</tr>
-     					<tr>
-     						<td><h4>공연장소 :</h4></td>
-	     					<td>${bankHolder}</td>
-	     				</tr>
+	     				<c:if test="${not empty rInfo }" >
+		     				<tr>
+		     					<td><h4>예약번호 :</h4></td>
+		     					<td>${rInfo.reservationId}</td>
+		     				</tr>
+		     				<tr>
+		     					<td><h4>공연명 :</h4></td>
+		     					<td>${rInfo.showName}</td>
+		     				</tr>
+		     				<tr>
+	     						<td><h4>공연일자 :</h4></td>
+		     					<td>${rInfo.showDate}</td>
+		     				</tr>
+		     				<tr>
+		     					<td><h4>(${rInfo.roundId} 회차) 공연시간 :</h4></td>
+		     					<td>${rInfo.showTime}</td>
+		     				</tr>
+	     					<tr>
+	     						<td><h4>공연장소 :</h4></td>
+		     					<td>${rInfo.hallName}</td>
+		     				</tr>
+     					</c:if>
 	     			</tbody>
+	     		
 	     		</table>
 	     	<br><br>
 	        <br><br><br>
@@ -128,22 +135,25 @@
 	     				</tr>
 	     			</thead>
 	     			<tbody>
-	     				<tr>
-	     					<td><h4>수령방식 :</h4></td>
-	     					<td>현장수령</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>매수 :</h4></td>
-	     					<td>5매</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>좌석명 :</h4></td>
-	     					<td>VIP석</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>좌석번호 :</h4></td>
-	     					<td>A1,A2</td>
-	     				</tr>
+		     			<c:if test="${not empty methodToget }" >
+		     				<tr>
+		     					<td><h4>수령방식 :</h4></td>
+		     					<td>${methodToget }</td>
+		     				</tr>
+		     			</c:if >	
+		     			<c:if test="${not empty t }" >	
+		     				<tr>
+		     					<td><h4>매수 :</h4></td>
+		     					<td>${t.size() }</td>
+		     				</tr>
+			     				<tr>
+			     					<td><h4>좌석번호(좌석명) :</h4></td>
+			     			<c:forEach items="${t }" var="t">		
+			     					<td>${t.seatId }(${t.seatName }석)</td>
+			     			</c:forEach>
+			     				</tr>
+			     				
+	     				</c:if >
 	     			</tbody>
 	     		</table>
         </div>

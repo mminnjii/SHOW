@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.show.reservation.model.dao.ReservationDao;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.reservation.model.vo.Ticket;
 
@@ -37,7 +38,7 @@ public class ReservationImpl implements ReservationService {
 	}
 
 	@Override
-	public int createReservation(Map<String, Object> r) {
+	public int createReservation(Reservation r) {
 		return reservationDao.createReservation(sqlSession,r);
 	}
 
