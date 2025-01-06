@@ -458,6 +458,30 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+	@Override
+	public int enrollReview(Review r) {
+		return showInfoDao.enrollReview(sqlSession,r);
+	}
+
+
+	@Override
+	public Review searchReview(int replyNo) {
+		return showInfoDao.searchReview(sqlSession,replyNo);
+	}
+
+
+	@Override
+	public int updateReview(Review r) {
+		return showInfoDao.updateReview(sqlSession,r);
+	}
+
+
+	@Override
+	public int deleteReview(int replyNo) {
+		return showInfoDao.deleteReview(sqlSession,replyNo);
+	}
+
+
 
 
 }

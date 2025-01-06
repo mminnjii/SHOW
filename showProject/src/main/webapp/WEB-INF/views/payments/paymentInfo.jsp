@@ -14,11 +14,22 @@
 		border-radius: 5px;
 		cursor: pointer;
 	}
+	
+	th{
+		padding-bottom: 50px;
+	}
+	
+	td {
+	    height: 40px; /* select의 높이에 맞추기 */
+	    vertical-align: middle; /* 세로 가운데 정렬 */
+	    padding: 0; /* 기본 padding 제거 (필요한 경우만 사용) */
+	}
 </style>    
 </head>
 <body>
 	
 		<div align="center">
+			<input type="hidden" name="receiptUrl" value="${receipt} "></input>
 			<br>
 	     		<table align="center">
 	     			<thead>
@@ -45,13 +56,13 @@
 	     					<td>${bankHolder}</td>
 	     				</tr>
 	     				<tr>
-	     					<td>입금예정일 :</td>
+	     					<td>입금예정일 : </td>
 	     					<td>${dueDate} 까지</td>
 	     				</tr>
 	     			</c:if>		
 	     				<tr>
-	     					<td>영수증 :</td>
-	     					<td><a href="#">${receipt}</a></td>
+	     					<td>영수증 : </td>
+	     					<td><button id="receipt">영수증</button></td>
 	     				</tr>
 	     			</tbody>
 	     		</table>
@@ -63,9 +74,20 @@
         </div>
 		
 		<script>
+			
+		 	var receiptUrl = $('input[name="receiptUrl"]').val();
+			
 			$("#main").on("click", function () {
 				window.location.href = "/show";
 			});
+			
+			
+			$("#receipt").on("click",function(){
+				
+				window.open(receiptUrl);
+				
+			}); 
+			
 		</script>
 		
 </body>

@@ -20,7 +20,16 @@
 		<result column="RANK" property="rank"/>
 		<result column="SUBSCRIBE" property="subscribe"/>
 		<result column="STATUS" property="status"/>
+				
 		<result column="POINT" property="point"/>
+
+		<collection property="profile" ofType="Profile">
+			<result column="PROFILE_NO" property="profileNo"/>
+			<result column="USER_NO" property="userNo"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+			<result column="PROFILE_PATH" property="profilePath"/>
+		</collection>
 	</resultMap>
 	
 	<resultMap type="Coupon" id="couponResultMap">
@@ -385,5 +394,22 @@
 	</update>
 	
 
+
+	
+	<!-- 채팅방 MEMBER 정보 불러오기 - 전수민 -->
+	<select id="selectChatMem" resultMap="memberResultSet">
+		SELECT M.USER_NO
+		      ,M.USER_ID
+		      ,P.PROFILE_NO
+		      ,P.ORIGIN_NAME
+		      ,P.CHANGE_NAME
+		      ,P.PROFILE_PATH
+		      ,P.STATUS           
+		FROM MEMBER M
+		LEFT JOIN PROFILE P ON (M.USER_NO=P.USER_NO)
+		WHERE M.USER_NO = #{userNo}
+	</select>
+
+	
 </mapper>
 
