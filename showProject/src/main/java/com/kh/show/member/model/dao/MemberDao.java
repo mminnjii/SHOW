@@ -121,4 +121,45 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.couponList",userNo);
 	}
 
+	public int pListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.pListCount",userNo);
+	}
+
+	public ArrayList<Reservation> payList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.payList",userNo,rowbounds);
+	}
+
+	public int reserveCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.reserveCount",userNo);
+	}
+
+	public ArrayList<Reservation> reserveList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.reserveList",userNo,rowbounds);
+	}
+
+	public int cancelRes(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelRes",reservationId);
+	}
+
+	public int cancelTicket(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelTicket",reservationId);
+	}
+
+	public int cancelPay(SqlSessionTemplate sqlSession, String reservationId) {
+		return sqlSession.update("memberMapper.cancelPay", reservationId);
+	}
+
+	public int rollbackSeats(SqlSessionTemplate sqlSession, int seatId) {
+		return sqlSession.update("memberMapper.rollbackSeats",seatId);
+	}
+
+
 }

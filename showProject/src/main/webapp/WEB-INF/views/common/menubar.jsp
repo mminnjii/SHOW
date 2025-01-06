@@ -125,6 +125,18 @@
             text-decoration: none;
             color: black;
         }
+
+        #re{
+            border: none;
+            outline: none;
+            background-color: white;
+            color: black;
+            font-size: 13px;
+            font-weight: 510;
+        }
+        #re:hover{
+            cursor: pointer;
+        }
         
     </style>
 </head>
@@ -176,7 +188,12 @@
 		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
 		                   </c:otherwise>
 		                </c:choose>
-                        <li id="li4"><a href="">예매확인/취소</a></li>
+                        <li id="li4">
+                            <form action="${contextPath}/reserve">
+                                <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                                <button id="re">예매확인/취소</button>
+                            </form>
+                        </li>
                         <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
                 </td>

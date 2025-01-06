@@ -1,8 +1,10 @@
 package com.kh.show.reservation.model.vo;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
 
+import com.kh.show.showInfo.model.vo.Genre;
+import com.kh.show.showInfo.model.vo.Hall;
+import com.kh.show.showInfo.model.vo.Region;
 import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +25,10 @@ public class Reservation {
 	private int roundId;		//	ROUND_ID
 	private int showRound;		// 사용을 위해 추가
 	private int userNo;			//	USER_NO
-	private int hallNo;			//	HALL_NO
-	private int price;
+	private String hallNo;			//	HALL_NO
+//	private String regionName;
+	private String price;
+//	private String posterOriginName;
 	private String hallName;    // 사용을 위해 추가
 	private String status;		//	STATUS
 	private String showTime;	// 사용을 위해 추가	
@@ -35,5 +39,7 @@ public class Reservation {
 
 	// mapper에서 collection 이용하기 위해 사용.
 	private ArrayList<Show> showList;
-	
+	private ArrayList<Hall> hallList;
+	private ArrayList<Region> regionList;
+	private ArrayList<Genre> genreList;
 }

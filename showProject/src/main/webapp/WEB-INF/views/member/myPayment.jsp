@@ -47,7 +47,7 @@
 
 	/*qna body*/
 	#pay-body{
-		width: 80%;
+		width: 90%;
 		height: 80%;
 		margin: auto;
 	}
@@ -55,14 +55,18 @@
 	#payList{
 		text-align: center;
 	}
-	#payList>tbody>tr:hover{
+	/* #payList>tbody>tr:hover{
 		cursor: pointer;
 		background-color: white;
-	}
+	} */
 
 	#pagingArea{
 		width: fit-content;
 		margin: auto;
+	}
+	
+	#sub>td{
+		background-color: light-blue;
 	}
 
 	
@@ -92,26 +96,57 @@
 						<table id="payList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>결제번호</th>
+									<th width="100px">결제번호</th>
 									<th>결제내용</th>
-									<th>결제금액</th>
+									<th width="100px">결제방식</th>
+									<th width="100px">결제금액</th>
 									<th>결제일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty list }">
-										<tr>
-											<td colspan="4">조회된 결제 목록이 없습니다.</td>
-										</tr>
+									<c:when test="${empty plist }">
+										<c:choose>
+											<c:when test="${loginUser.subscribe == 'Y' }">
+												<tr id="sub">
+													<td>0</td>
+													<td>멤버십 구독</td>
+													<td>/</td>
+													<td>9,900 원</td>
+													<td>매월 10일</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="5">조회된 결제 목록이 없습니다.</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="p" items="${list }">
+										<c:if test="${loginUser.subscribe == 'Y' }">
+											<tr id="sub">
+												<td>0</td>
+												<td>멤버십 구독</td>
+												<td>/</td>
+												<td>9,900 원</td>
+												<td>매월 10일</td>
+											</tr>
+										</c:if>
+										<c:forEach var="p" items="${plist }">
 											<tr>
-												<td>1</td>
-												<td>월 정기 구독</td>
-												<td>2024-12-30</td>
-												<td>9,900원</td>
+												<td>${p.paymentId}</td>
+												<c:forEach var="s" items="${p.r}">
+													<td>${s.showName}</td>
+												</c:forEach>
+												<c:if test="${p.paymentMethod == 1}">
+													<td>카드</td>
+												</c:if>
+												<c:if test="${p.paymentMethod == 2}">
+													<td>무통장 입금</td>
+												</c:if>
+												<td>${p.price} 원</td>
+												<td>${p.paymentDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -119,15 +154,7 @@
 							</tbody>
 						</table>
 						<br>
-						<script>
-            	
-							$("#qnaList>tbody>tr").click(function(){
-								var bno = $(this).children().first().text();
-								
-								//location.href = "detail?bno="+bno;
-							});
-							
-						</script>
+
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
@@ -135,18 +162,18 @@
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<c:url var="pay" value="pay">
+									<c:url var="payment" value="payment">
 										<c:param name="userNo" value="${loginUser.userNo }"/>
 										<c:param name="currentPage" value="${i }"/>
 									</c:url>
 									<li class="page-item">
-										<a class="page-link" href="${pay }">${i}</a>
+										<a class="page-link" href="${payment }">${i}</a>
 									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty list }">
+										<c:when test="${empty plist }">
 										</c:when>
 										<c:otherwise>
 											<li class="page-item"><a class="page-link" href="pay?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
