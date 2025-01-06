@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.show.customer.model.vo.Faq;
+import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.manager.model.dao.ManagerDao;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
@@ -112,6 +113,12 @@ public class ManagerServiceImpl implements ManagerService {
 
 		return dao.selectAllShow(sqlSession);
 	}
+	
+	@Override
+	public List<ManagerQuestion> selectAllQuestion() {
+		
+		return dao.selectAllQuestion(sqlSession);
+	}
 
 	@Override
 	public List<Notice> updateNoticeInform(Long noticeNo) {
@@ -135,7 +142,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public int insertFaq(Faq f) {
 
 		return dao.insertFaq(sqlSession, f);
-}
+	}
 
 	@Override
 	public Notice noticeDetail(int noticeNo) {
@@ -160,5 +167,4 @@ public class ManagerServiceImpl implements ManagerService {
 
 		return dao.reservDetail(sqlSession, reservNo);
 	}
-	
 }
