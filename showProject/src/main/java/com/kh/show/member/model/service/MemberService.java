@@ -49,8 +49,12 @@ public interface MemberService {
 	int sListCount(int userNo);
 	//공연 목록 조회
 	ArrayList<Reservation> showList(int userNo, PageInfo pi);
+	
 	//쿠폰 수 조회
 	int couponCount(int userNo);
 	//쿠폰 리스트 추출
 	ArrayList<Coupon> couponList(int userNo);
+
+	// chat회원 정보 및 프로필 조회 - 전수민 
+	Member selectChatMem(int userNo);
 }

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,8 @@ public class Chat {
 	private Date createDate;	//	CREATEDATE	DATE
 	private String status;		//	STATUS	VARCHAR2(1 BYTE)
 	
-	ArrayList<Member> memList; 
+	private int joinCount; // 참여중인 인원 tabel에는 없다.
+	
+	private ArrayList<Member> memList; 
+	private Show show;
 }
