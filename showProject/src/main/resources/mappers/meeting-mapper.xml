@@ -181,10 +181,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN MEMBER USING(USER_NO)
 		WHERE ME.STATUS='Y'
 			<choose>
-				<when test="condition == title">
+				<when test="condition == 'title'">
 					MEETING_TITLE LIKE '%' || #{keyword} || '%'
 				</when>
-				<when test="condition == writer">
+				<when test="condition == 'writer'">
 					USER_ID LIKE '%' || #{keyword} || '%'
 				</when>
 				<otherwise>
@@ -202,10 +202,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN MEMBER USING(USER_NO)
 		WHERE ME.STATUS='Y'
 		<choose>
-			<when test="condition == title">
+			<when test="condition == 'title'">
 				MEETING_TITLE LIKE '%' || #{keyword} || '%'
 			</when>
-			<when test="condition == writer">
+			<when test="condition == 'writer'">
 				USER_ID LIKE '%' || #{keyword} || '%'
 			</when>
 			<otherwise>

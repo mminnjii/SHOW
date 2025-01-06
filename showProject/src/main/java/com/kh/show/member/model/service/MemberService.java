@@ -48,4 +48,8 @@ public interface MemberService {
 	int sListCount(int userNo);
 	//공연 목록 조회
 	ArrayList<Reservation> showList(int userNo, PageInfo pi);
+	
+	
+	// chat회원 정보 및 프로필 조회 - 전수민 
+	Member selectChatMem(int userNo);
 }

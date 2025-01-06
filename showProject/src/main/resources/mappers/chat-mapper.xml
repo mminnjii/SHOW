@@ -18,7 +18,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="USER_NO" property="userNo"/>
 			<result column="USER_ID" property="userId"/>
 		</collection>
+
+		<collection property="show" ofType="Show">
+			<result column="SHOW_NAME" property="showName"/>
+		</collection>
+		
 	</resultMap>
+	
+	<resultMap type="ChatMessage" id="chatMessageResultMap">
+		<result column="MESSAGE_NO" property="messageNo"/>
+		<result column="CHAT_CONTENT" property="chatContent"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="CREATEDATE" property="createDate"/>
+	</resultMap>
+	
 
 	<!-- 채팅방 목록 개수 -->
 	<select id="listCount" resultType="_int">
@@ -68,5 +82,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						 ,#{chatUserCount}
 						 )
 	</insert>
+
+	
+	<insert id="chatMessage" parameterType="ChatMessage">
+		INSERT INTO CHAT_MESSAGE
+			VALUES (MSA_SEQ.NEXTVAL
+	               ,#{chatContent}
+	               ,#{userNo}
+	               ,#{chatNo}
+	               ,SYSDATE)
+	</insert>
+	
+	<select id="searchListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHAT C
+		JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		<choose>
+			<when test="condition == 'writer'">
+				WHERE USER_ID LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<when test="condition == 'title'">
+				WHERE CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<otherwise>
+				WHERE (CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+					OR USER_ID LIKE LOWER('%'|| #{keyword} ||'%'))
+			</otherwise>
+		</choose>
+			AND C.STATUS = 'Y'
+	</select>
+
+	<select id="searchChatList" resultMap="chatResultMap">
+		SELECT C.CHAT_NO
+				,C.CHAT_TITLE
+				,C.SHOW_NO
+				,C.USER_NO
+				,C.CHAT_USER_COUNT
+				,C.CREATEDATE
+				,C.STATUS
+				,M.USER_ID
+		FROM CHAT C
+		JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		<choose>
+			<when test="condition == 'writer'">
+				WHERE USER_ID LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<when test="condition == 'title'">
+				WHERE CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<otherwise>
+				WHERE (CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+					OR USER_ID LIKE LOWER('%'|| #{keyword} ||'%'))
+			</otherwise>
+		</choose>
+			AND C.STATUS = 'Y'
+			ORDER BY CREATEDATE DESC
+	</select>
+	
+	<select id="selectChatInfo" parameterType="_int" resultMap="chatResultMap">
+		SELECT C.CHAT_NO
+		        ,C.CHAT_TITLE
+		        ,C.SHOW_NO
+		        ,C.USER_NO
+		        ,C.CHAT_USER_COUNT
+		        ,C.CREATEDATE
+		        ,C.STATUS  
+		        ,S.SHOW_NAME
+		FROM CHAT C
+		JOIN SHOW S ON (C.SHOW_NO=S.SHOW_NO)
+		WHERE CHAT_NO = #{chatNo}
+	</select>
 
 </mapper>

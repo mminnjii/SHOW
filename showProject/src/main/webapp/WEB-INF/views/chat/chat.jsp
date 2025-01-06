@@ -77,7 +77,7 @@
         <h2 align="center">채팅방</h2>
         
         <br>
-        <form id="searchForm" action="${contextPath}/" method="get" align="center">
+        <form id="searchForm" action="${contextPath}/chat/chatSearch" method="get" align="center">
             <div class="select">
                 <select class="custom-select" name="condition">
                     <option value="total">전체</option>
@@ -138,7 +138,7 @@
         		 페이지 버튼 
         		 클릭 했을 때 현재 페이지 버튼은 비활성화 한다.
         	-->
-        	<c:choose> <%-- 이전버튼 --%>
+        	<c:choose> 
         		<c:when test="${pi.currentPage == 1}">
 	        		<button class="pageBtn" disabled>이전</button>
         		</c:when>
@@ -149,7 +149,7 @@
 			
 			<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
 				<c:choose>
-					<c:when test="${empty hashmap}"><%-- 검색이 아니면 --%>
+					<c:when test="${empty map}"> 
 						<c:choose>
 							<c:when test="${i != pi.currentPage}">
 								<button class="pageBtn" onclick="location.href='${contextPath}/chat/list?currentPage=${i}'">${i}</button>
@@ -160,11 +160,11 @@
 						</c:choose>
 					</c:when>
 					
-					<%-- <c:otherwise> 검색이라면 
-						<c:url var="searchUrl" value="/meeting/search">
+					<c:otherwise>
+						<c:url var="searchUrl" value="/chat/list">
 							<c:param name="currentPage" value="${i}"/>
-							<c:param name="condition" value="${hashmap.condition}"/>
-							<c:param name="keyword" value="${hashmap.keyword}"/>
+							<c:param name="condition" value="${map.condition}"/>
+							<c:param name="keyword" value="${map.keyword}"/>
 						</c:url>
 						<c:choose>
 							<c:when test="${i != pi.currentPage}">
@@ -174,11 +174,11 @@
 								<button class="pageBtn" disabled>${i}</button>
 							</c:otherwise>
 						</c:choose>
-					</c:otherwise>--%>
+					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		        	
-		    <c:choose> <%-- 다음버튼 --%>
+		    <c:choose> 
         		<c:when test="${pi.currentPage == pi.maxPage}">
 	        		<button class="pageBtn" disabled>다음</button>
         		</c:when>
@@ -189,13 +189,7 @@
         	
         </div>
         
-        
-        <!-- 
-            searchList() 메소드명으로 작성
-            키워드랑 카테고리 유지될 수 있도록 처리해보기 
-            동적 sql 사용해보기 
-        -->
-        
+  
         
         
         
@@ -237,14 +231,23 @@
 	  			console.log(userId);
 	  			
 	  			
-	  			if(chatUserCount >= joinCount){
-		  			location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+	  			if(chatUserCount > joinCount){ // 입장이 가능할 때
+		  			$.ajax({
+		  				url: "chatting",
+		  				data :{
+		  					chatNo: chatNo,
+		  					userId : userId
+		  				},
+		  				success : function(data){
+			  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+		  				}
+		  			});
+	  				
                     alert("채팅방입장");
 	                 
 	              }else{
 	                 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능 
                      alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
-	                 
 	              }
 	  			
 	            

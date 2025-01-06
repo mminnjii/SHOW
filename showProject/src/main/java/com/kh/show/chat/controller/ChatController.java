@@ -1,6 +1,7 @@
 package com.kh.show.chat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.show.chat.model.service.ChatService;
 import com.kh.show.chat.model.vo.Chat;
@@ -91,14 +91,52 @@ public class ChatController {
 		return "chat/chat";
 	}
 	
+	// 채팅방 검색
+	@GetMapping("chatSearch")
+	public String chatSearch(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+									  String condition , String keyword, Model m ){
 		
+		HashMap<String,String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		
+		System.out.println(condition);
+		
+		// 채팅방 검색 개수 
+		int listCount = chatService.searchListCount(map);
+		int pageLimit = 10;
+		int voardLimit = 10;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, voardLimit); 
+		
+		// 채팅방 검색 목록 
+		ArrayList<Chat> chatList = chatService.searchChatList(map, pi);
+		
+		System.out.println("listCount : " + listCount);
+
+		for(Chat c : chatList) {
+			System.out.println(c);
+		}
+
+		m.addAttribute("pi", pi);
+		m.addAttribute("map", map);
+		m.addAttribute("chatList", chatList);
+		
+		return "chat/chat";
+	}
+	
 	// 채팅 페이지 
 	@GetMapping("chatting")
-	public String chattingDetail(String userId, int chatNo, ModelAndView mv) {
+	public String chattingDetail(String userId, int chatNo, HttpSession session) {
 	 
 		System.out.println("userId : " + userId);
 	    System.out.println("chatNo : " + chatNo);
 	    
+	    session.setAttribute("chatNo", chatNo);
+	    
+	    Chat chatInfo = chatService.selectChatInfo(chatNo);
+	    session.setAttribute("chatInfo", chatInfo);
+	    System.out.println(chatInfo);
 	    return "chat/chatDetail";
 	}
 	

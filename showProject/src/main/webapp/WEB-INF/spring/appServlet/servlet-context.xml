@@ -4,10 +4,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
-						http://www.springframework.org/schema/mvc/spring-mvc.xsd
-						http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -50,5 +51,22 @@
 		</interceptor>
 	</interceptors>
 	-->
+	<!-- 소켓 서버 등록 -->
+	<beans:bean id="chatServer" class="com.kh.show.common.websocket.server.WebSocketServer"/>
+	
+	<!-- 접속받을 대상 지정 -->
+	<websocket:handlers allowed-origins="http://localhost:8888/show">
+		<!-- 어떤 서버가 요청을 받아줄 것인지 설정 handler -->
+		<!-- 웹소켓에 요청 : view에서 요청  -->
+		<websocket:mapping handler="chatServer" path="/chat/chattings"/>
+		
+		<!-- Http통신으로 요청되어진 HttpSession 정보를 가지고 오기 위한 설정 -->
+		<!-- 웹소켓 연결을 설정할 때 HTTP 세션 정보를 함께 전달하기 위한 설정 -->
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></beans:bean>
+		</websocket:handshake-interceptors>
+		
+	</websocket:handlers>
+		
 	
 </beans:beans>
