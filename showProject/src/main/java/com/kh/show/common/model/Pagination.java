@@ -3,14 +3,14 @@ package com.kh.show.common.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kh.show.common.model.vo.PageInfo;
+import com.kh.show.common.template.PageInfo;
 
 public class Pagination {
 	public static List<Integer> getPageList(PageInfo pageInfo){
 		List<Integer> pageList = new ArrayList<>();
 
 		int currentPage = pageInfo.getCurrentPage();
-		int totalPage = pageInfo.getTotalPage();
+		int totalPage = pageInfo.getEndPage(); // *** 원래 gettotalpage 로작성되어있었다
 		int startPage = (currentPage / 5) * 5 + 1;
 		// 5페이지씩 보여주고 싶으면 (currentPage / 5) * 5 + 1
 		// 10페이지씩 보여주고 싶으면 (currentPage / 10) * 10 + 1
