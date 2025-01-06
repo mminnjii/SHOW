@@ -267,6 +267,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN QCATEGORY QC ON Q.QCATEGORY_NO = QC.QCATEGORY_NO
 		WHERE QUESTION_NO = #{questionNo}
 	</select>
-
-
 </mapper>

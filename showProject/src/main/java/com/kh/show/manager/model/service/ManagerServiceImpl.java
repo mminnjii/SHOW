@@ -142,7 +142,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public int insertFaq(Faq f) {
 
 		return dao.insertFaq(sqlSession, f);
-}
+	}
 
 	@Override
 	public Notice noticeDetail(int noticeNo) {
@@ -167,7 +167,4 @@ public class ManagerServiceImpl implements ManagerService {
 
 		return dao.reservDetail(sqlSession, reservNo);
 	}
-
-	
-	
 }
