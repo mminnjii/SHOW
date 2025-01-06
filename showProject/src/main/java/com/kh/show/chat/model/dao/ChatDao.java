@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.chat.model.vo.ChatMessage;
 import com.kh.show.common.template.PageInfo;
 
@@ -60,6 +61,12 @@ public class ChatDao {
 		System.out.println("dao : "+chatNo);
 		return sqlSession.selectOne("chatMapper.selectChatInfo", chatNo);
 	}
+	
+	// 참여자 insert
+	public int insertJoin(SqlSessionTemplate sqlSession, HashMap<String, Object> join) {
+		return sqlSession.insert("chatMapper.insertJoin", join);
+	}
+
 
 	
 	

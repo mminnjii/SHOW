@@ -215,12 +215,12 @@
 	  			console.log(join);
 	            
 	  			var joinCount = join[0];
-	  			console.log(joinCount);
+	  			console.log("joinCount : " + joinCount);
 	            
 	  			var chatUserCount = join[1];
-	  			console.log(chatUserCount);
+	  			console.log("chatUserCount : " + chatUserCount);
 	            
-	  			// 입장 인원 수 >= 참여 인원 수인 경우에만 채팅방 참여 가능 
+	  			// 입장 인원 수 > 참여 인원 수인 경우에만 채팅방 참여 가능 
 	  			// 회원 id, 채팅방 번호  => count는 리스트에서만 확인 가능하면 된다. (오라클 sql 구문 작성해둠)
 	  			var chatNo = td.eq(0).text();
 	  			console.log(chatNo);

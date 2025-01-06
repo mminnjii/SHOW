@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.show.chat.model.dao.ChatDao;
 import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.chat.model.vo.ChatMessage;
 import com.kh.show.common.template.PageInfo;
 
@@ -61,6 +62,13 @@ public class ChatServiceImpl implements ChatService{
 	public Chat selectChatInfo(int chatNo) {
 		return chatDao.selectChatInfo(sqlSession, chatNo);
 	}
+
+	// 채팅방 참여자 insert 
+	@Override
+	public int insertJoin(HashMap<String, Object> join) {
+		return chatDao.insertJoin(sqlSession, join);
+	}
+
 
 	
 
