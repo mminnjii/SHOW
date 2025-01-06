@@ -165,14 +165,14 @@
                     <ul>
 		                <c:choose>
 		                   <c:when test="${empty loginUser}">
-		                   		<!-- 로그인 전 -->
-		                        <li id="li2"><a href="${contextPath }/toLogin">로그인</a></li>
-		                        <li id="li3"><a href="${contextPath}/toEnroll">회원가입</a></li>
-		                   </c:when>
-		                   <c:otherwise>
-		                   		<!-- 로그인 후 -->
-		                   		<label>${loginUser.userName }님</label> &nbsp;&nbsp;
-		                   		<li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
+                               <!-- 로그인 전 -->
+                               <li id="li2"><a href="${contextPath }/toLogin">로그인</a></li>
+                               <li id="li3"><a href="${contextPath}/toEnroll">회원가입</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- 로그인 후 -->
+                                <label>${loginUser.userName }님</label> &nbsp;&nbsp;
+                                <li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
 		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
 		                   </c:otherwise>
 		                </c:choose>

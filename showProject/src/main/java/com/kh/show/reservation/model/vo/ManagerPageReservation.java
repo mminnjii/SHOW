@@ -12,7 +12,7 @@ public class ManagerPageReservation {
     private String showName;
     private int roundId;
     private String userName;
-    private String hallName;
     private String status;
+    private String hallName;
     private Date createDate;
 }

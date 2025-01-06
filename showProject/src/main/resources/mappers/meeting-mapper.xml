@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="END_DATE" property="endDate"/>
 		<result column="INFOMATION" property="infomation"/>
 		<result column="STATUS" property="status"/>
+		<result column="JOIN_NO" property="joinNo"/>
 		
 		<!-- collection으로 member 값 가져오기 -->
 		<collection property="memList" ofType="Member">
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="SHOW_NO" property="showNo"/>
 			<result column="SHOW_NAME" property="showName"/>
 		</collection>
+		
 	</resultMap>
 	
 	<resultMap type="MeetingJoin" id="MeetingResultMap">
@@ -48,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 소모임 목록 -->
 	<select id="meetingList" resultMap="meetingResult">
-		SELECT MEETING_NO
-		        ,USER_NO
+		SELECT ME.MEETING_NO
+		        ,ME.USER_NO
 		        ,MEETING_TITLE
 		        ,SHOW_NO
 		        ,MEETING_PLACE
@@ -60,9 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,INFOMATION
 		        ,ME.STATUS
 		        ,USER_ID 
+		        ,COUNT(MJ.USER_NO) JOIN_NO 
 		FROM MEETING ME
-		JOIN MEMBER USING(USER_NO)
+		JOIN MEMBER M ON ME.USER_NO = M.USER_NO
+		LEFT JOIN MEETING_JOIN MJ ON(ME.MEETING_NO=MJ.MEETING_NO)
 		WHERE ME.STATUS='Y'
+		GROUP BY 
+		    ME.MEETING_NO, ME.USER_NO, MEETING_TITLE,SHOW_NO,MEETING_PLACE, MEETING_COUNT, 
+		    MEETING_DATE, START_DATE, END_DATE, INFOMATION, ME.STATUS, USER_ID
 		ORDER BY MEETING_NO DESC
 	</select>
 	
@@ -174,10 +181,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN MEMBER USING(USER_NO)
 		WHERE ME.STATUS='Y'
 			<choose>
-				<when test="condition == title">
+				<when test="condition == 'title'">
 					MEETING_TITLE LIKE '%' || #{keyword} || '%'
 				</when>
-				<when test="condition == writer">
+				<when test="condition == 'writer'">
 					USER_ID LIKE '%' || #{keyword} || '%'
 				</when>
 				<otherwise>
@@ -195,10 +202,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN MEMBER USING(USER_NO)
 		WHERE ME.STATUS='Y'
 		<choose>
-			<when test="condition == title">
+			<when test="condition == 'title'">
 				MEETING_TITLE LIKE '%' || #{keyword} || '%'
 			</when>
-			<when test="condition == writer">
+			<when test="condition == 'writer'">
 				USER_ID LIKE '%' || #{keyword} || '%'
 			</when>
 			<otherwise>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,30 +47,35 @@ public class ShowInfoController {
 		
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
-		double rPrice = sPrice*1.2;
+
+		double rPrice = sPrice*1.2; 
 		
 		NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
 		session.setAttribute("vipPrice", formatter.format(vipPrice));
 		session.setAttribute("rPrice", formatter.format(rPrice));
 		session.setAttribute("sPrice", s.getPrice());
 		session.setAttribute("Price", sPrice);
-		
-		//System.out.println(showName);
+
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
+
+
+
+		
 
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
 		
 		// 회원 번호 담기
-	    Member loginUser = (Member)session.getAttribute("loginUser");
-			if(loginUser!=null) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser!=null) {
 			session.setAttribute("userNo", loginUser.getUserNo());
-			}
-			
+		}
+	
 		
+
 	}
 		
 		return "show/showInfo/detailInfo";
@@ -146,25 +152,11 @@ public class ShowInfoController {
 	}
 	
 
-
-	// 상세정보 이동
-	@GetMapping("/info")
-	public String info() {
-	
-		return "info";
-	}
-	
-
-
-
-	
 	
 	//검색기능
 	@GetMapping("/search")
 	public String searchBox(@RequestParam String keyword
 							,Model model) {
-		
-		
 		
 		//전달받은 검색 조건 맵에 담기
 		HashMap<String,String> hashMap = new HashMap<>();
@@ -180,29 +172,25 @@ public class ShowInfoController {
 	    //String.valueOf를 사용해준다.
 	    
 		if(searchListCount>0) {
-			
 					
 		    ArrayList<Show> searchBox = showInfoService.searchBox(hashMap);
 		    
-		    System.out.println(searchBox);
-		    
 		    model.addAttribute("hashMap",hashMap);
 			model.addAttribute("list",searchBox);
-			
 			return "common/searchPage";
 					
 		}else {
 			
 			model.addAttribute("hashMap",hashMap);
-			
-			
 			return "common/searchError";
 			
 		}
+
 		
 		
 		
 		
+
 	}
 	
 	@GetMapping(value="rankShowList",produces = "application/json;charset=UTF-8")
@@ -214,6 +202,27 @@ public class ShowInfoController {
 		System.out.println(rankShowList);
 		
 		return "rankShowList";
+	}
+	
+	
+	
+	// 리뷰 등록하기 이동
+	@GetMapping("/enroll")
+	public String enrollReview() {
+		return "show/showInfo/reviewEnroll";
+	}
+	
+	// 리뷰 등록하기
+	@ResponseBody
+	@PostMapping(value = "/enroll", produces = "application/json;charset=UTF-8")
+	public String enrollReview(String rating,String title,String writer,String content) {
+		
+		System.out.println(rating);
+		System.out.println(title);
+		System.out.println(writer);
+		System.out.println(content);
+		
+		return "success";
 	}
 	
 	
