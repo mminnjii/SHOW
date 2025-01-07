@@ -162,7 +162,6 @@ public class ShowInfoController {
 		HashMap<String,String> hashMap = new HashMap<>();
 		hashMap.put("keyword", keyword);
 		
-		
 		int searchListCount = showInfoService.searchListCount(hashMap);
 		
 		// searchListCount 값을 hashMap에 추가
@@ -199,23 +198,72 @@ public class ShowInfoController {
 	
 	// 리뷰 등록하기 이동
 	@GetMapping("/enroll")
-	public String enrollReview() {
+	public String enroll() {
 		return "show/showInfo/reviewEnroll";
 	}
 	
+	
 	// 리뷰 등록하기
 	@ResponseBody
-	@PostMapping(value = "/enroll", produces = "application/json;charset=UTF-8")
-	public String enrollReview(String rating,String title,String writer,String content) {
+	@PostMapping(value = "/enrollReview",produces = "text/html; charset=UTF-8")
+	public String enrollReview(Review r) {
 		
-		System.out.println(rating);
-		System.out.println(title);
-		System.out.println(writer);
-		System.out.println(content);
+		r.getUserNo();
+		int enrollReview = showInfoService.enrollReview(r);
 		
-		return "success";
+
+		if(enrollReview>0) {
+			return "NNNNY";
+		}else {
+			return "NNNNN";
+		}
 	}
 	
+	
+	// 리뷰 수정하기 이동
+	@GetMapping("/update")
+	public String updateSearch (Model model, int replyNo) {
+		
+		 Review r = showInfoService.searchReview(replyNo);
+		 model.addAttribute("r",r);
+		 
+		 int rank = (int)r.getReviewScore()*20;
+		 model.addAttribute("rank",rank);
+		 
+		
+		return "show/showInfo/reviewUpdate";
+	}
+	
+	
+	// 리뷰 수정하기
+	@ResponseBody
+	@PostMapping(value = "/updateReview",produces = "text/html; charset=UTF-8")
+	public String updateReview(Review r) {
+		
+		int enrollReview = showInfoService.updateReview(r);
+
+		if(enrollReview>0) {
+			return "NNNNY";
+		}else {
+			return "NNNNN";
+		}
+	}
+	
+	
+	// 리뷰 삭제하기
+	@ResponseBody
+	@PostMapping(value = "/deleteReview",produces = "text/html; charset=UTF-8")
+	public String deleteReview(int replyNo) {
+		
+		int deleteReview = showInfoService.deleteReview(replyNo);
+
+		if(deleteReview>0) {
+			return "NNNNY";
+		}else {
+			return "NNNNN";
+		}
+		
+	}
 	
 	
 }

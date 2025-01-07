@@ -1,6 +1,5 @@
 package com.kh.show.payments.controller;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -82,7 +81,7 @@ public class PaymentsController {
 	
 	
 	
-	@PostMapping(value = "/bank",produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/bank",produces ="text/html; charset=UTF-8")
 	@ResponseBody
 	public String paymentComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
 		
@@ -168,7 +167,7 @@ public class PaymentsController {
 	
 	
 	@ResponseBody
-	@PostMapping(value = "/card",produces ="application/json;charset=UTF-8")
+	@PostMapping(value = "/card",produces ="text/html; charset=UTF-8")
 	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
@@ -236,7 +235,7 @@ public class PaymentsController {
 	
 	
 	@ResponseBody
-	@PostMapping(value = "/fail",produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/fail",produces ="text/html; charset=UTF-8")
 	public String paymentFail(HttpSession session, @RequestParam int reservationId, @RequestParam int roundId) {
 		
 		Map<String, Object> data = new HashMap<>();
