@@ -183,6 +183,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			VALUES(#{chatNo}, #{userNo})
 	</insert>
 	
+	<!-- chat_join User 정보 확인 메소드 -->
+	<select id="selectJoinUser" resultType="_int">
+		SELECT count(*)
+		FROM CHAT_JOIN
+		WHERE CHAT_NO = #{chatNo}
+		    AND USER_NO = #{userNo}
+	</select>
 	
-
+	<!-- chat_join 회원 데이터 삭제 -->
+	<delete id="joinDelete" parameterType="ChatJoin">
+		DELETE FROM CHAT_JOIN 
+		WHERE CHAT_NO = #{chatNo}
+		   AND USER_NO = #{userNo}
+	</delete>
+	
 </mapper>
