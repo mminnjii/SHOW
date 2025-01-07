@@ -22,4 +22,5 @@ public class Joinchat {
 	private String userId;
 	private int chatUserCount;
 	private Date createDate;
+	private int joinCount;
 }

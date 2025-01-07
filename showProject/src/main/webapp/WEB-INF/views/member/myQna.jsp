@@ -103,7 +103,7 @@
 								<c:choose>
 									<c:when test="${empty list }">
 										<tr>
-											<td colspan="4">조회된 게시글이 없습니다.</td>
+											<td colspan="4">조회된 문의 내역이 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>

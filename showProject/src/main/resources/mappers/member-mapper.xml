@@ -425,16 +425,52 @@
 	
 	<select id="chatList" resultType="Joinchat" >
 		SELECT J.CHAT_NO chatNo,
-			   CHAT_TITLE chatTitle,
-			   C.USER_NO userNo,
-			   M.USER_ID userId,
-			   CHAT_USER_COUNT chatUserCount,
-			   CREATEDATE createDate
+	           CHAT_TITLE chatTitle,
+	           C.USER_NO userNo,
+	           M.USER_ID userId,
+	           CHAT_USER_COUNT chatUserCount,
+	           CREATEDATE createDate,
+	           COUNT(J.USER_NO) joinCount
 		FROM CHAT_JOIN J
-		JOIN CHAT C ON(J.CHAT_NO=C.CHAT_NO)
+		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
 		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
 		WHERE C.STATUS = 'Y'
 		AND J.USER_NO = #{userNo}
+		GROUP BY J.CHAT_NO,
+		         CHAT_TITLE,
+		         C.USER_NO,
+		         M.USER_ID,
+		         CHAT_USER_COUNT,
+		         CREATEDATE
+		ORDER BY CREATEDATE
+	</select>
+	
+	<select id="chatCount2" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHAT
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="chatList2" resultType="Joinchat" >
+		SELECT C.CHAT_NO chatNo,
+	           CHAT_TITLE chatTitle,
+	           C.USER_NO userNo,
+	           M.USER_ID userId,
+	           CHAT_USER_COUNT chatUserCount,
+	           CREATEDATE createDate,
+	           COUNT(J.USER_NO) joinCount
+		FROM CHAT_JOIN J
+		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
+		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+		WHERE C.STATUS = 'Y'
+		AND C.USER_NO = #{userNo}
+		GROUP BY C.CHAT_NO,
+		         CHAT_TITLE,
+		         C.USER_NO,
+		         M.USER_ID,
+		         CHAT_USER_COUNT,
+		         CREATEDATE
+		ORDER BY CREATEDATE
 	</select>
 
 	

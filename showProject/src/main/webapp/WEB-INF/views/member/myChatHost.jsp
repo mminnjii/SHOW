@@ -55,7 +55,7 @@
 	#chatList{
 		text-align: center;
 	}
-	#chatList>tbody>tr:hover{
+	#c-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -98,18 +98,18 @@
 				<div id="mypage-body">
 					<br>
 					<h5>내 채팅방</h5>
-					<div id="btn-area">
-						<button id="switch">가입한 채팅방</button>
-					</div>
 					<br>
 					<div id="chat-body">
+						<div id="btn-area">
+							<button id="switch">가입한 채팅방</button>
+						</div>
 						<br>
 						<table id="chatList" class="table table-hover" align="center">
 							<thead>
 								<tr>
 									<th>번호</th>
-									<th>호스트 ID</th>
 									<th>채팅방 이름</th>
+									<th>호스트 ID</th>
 									<th>인원 수</th>
 									<th>생성일</th>
 								</tr>
@@ -118,16 +118,16 @@
 								<c:choose>
 									<c:when test="${empty clist }">
 										<tr>
-											<td colspan="5">조회된 채팅방이 없습니다.</td>
+											<td colspan="5">내 채팅방은 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="c" items="${clist }">
+										<c:forEach var="c" items="${c2list }">
 											<tr id="c-main">
 												<td>${c.chatNo}</td>
-												<td>${c.userId}</td>
 												<td>${c.chatTitle}</td>
-												<td>${c.chatUserCount}</td>
+												<td>${c.userId}</td>
+												<td>${c.joinCount}/${c.chatUserCount}</td>
 												<td>${c.createDate}</td>
 											</tr>
 										</c:forEach>
@@ -149,25 +149,25 @@
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="chat?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<c:url var="chat" value="chat">
+									<c:url var="chat2" value="chat2">
 										<c:param name="userNo" value="${loginUser.userNo }"/>
 										<c:param name="currentPage" value="${i }"/>
 									</c:url>
 									<li class="page-item">
-										<a class="page-link" href="${chat }">${i}</a>
+										<a class="page-link" href="${chat2 }">${i}</a>
 									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty clist }">
+										<c:when test="${empty c2list }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="chat?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -192,6 +192,9 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+		$("#switch").click(function(){
+			location.href = "${contextPath}/chat?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 

@@ -55,7 +55,7 @@
 	#chatList{
 		text-align: center;
 	}
-	#chatList>tbody>tr:hover{
+	#c-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -110,8 +110,8 @@
 							<thead>
 								<tr>
 									<th>번호</th>
-									<th>호스트 ID</th>
 									<th>채팅방 이름</th>
+									<th>호스트 ID</th>
 									<th>인원 수</th>
 									<th>생성일</th>
 								</tr>
@@ -120,16 +120,16 @@
 								<c:choose>
 									<c:when test="${empty clist }">
 										<tr>
-											<td colspan="5">조회된 채팅방이 없습니다.</td>
+											<td colspan="5">가입된 채팅방이 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="c" items="${clist }">
 											<tr id="c-main">
 												<td>${c.chatNo}</td>
-												<td>${c.userId}</td>
 												<td>${c.chatTitle}</td>
-												<td>${c.chatUserCount}</td>
+												<td>${c.userId}</td>
+												<td>${c.joinCount}/${c.chatUserCount}</td>
 												<td>${c.createDate}</td>
 											</tr>
 										</c:forEach>
@@ -194,6 +194,10 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+
+		$("#switch").click(function(){
+			location.href = "${contextPath}/chat2?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 

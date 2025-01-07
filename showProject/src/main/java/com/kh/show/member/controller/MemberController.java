@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
@@ -616,7 +617,7 @@ public class MemberController {
 		return "redirect:/reserve?userNo="+userNo;
 	}
 	
-	//내 채팅방 목록
+	//내가 가입한 채팅방
 	@GetMapping("/chat")
 	public String chat(@RequestParam(value="currentPage",defaultValue="1")
 					  int currentPage,
@@ -634,6 +635,26 @@ public class MemberController {
 		model.addAttribute("pi",pi);
 		
 		return "member/myChatJoin";
+	}
+	
+	//내가 생성한 채팅방
+	@GetMapping("/chat2")
+	public String chat2(@RequestParam(value="currentPage",defaultValue="1")
+					    int currentPage,
+					    Model model,
+					    int userNo) {
+		int listCount = memberService.chatCount2(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		ArrayList<Chat> c2list = memberService.chatList2(userNo,pi);
+		
+		model.addAttribute("c2list",c2list);
+		model.addAttribute("pi",pi);
+		
+		return "member/myChatHost";
 	}
 		
 

@@ -77,8 +77,12 @@ public interface MemberService {
 	Member selectChatMem(int userNo);
 	//휴대폰 중복 체크
 	int phoneCheck(String phone);
-	//내 채팅방 리스트 수
+	//내가 가입한 채팅방 리스트 수
 	int chatCount(int userNo);
-	//내 채팅방 리스트 출력
+	//내가 가입한 채팅방 리스트 출력
 	ArrayList<ChatJoin> chatList(int userNo, PageInfo pi);
+	//내 채팅방 수
+	int chatCount2(int userNo);
+	//내가 가입한 채팅방 수
+	ArrayList<Chat> chatList2(int userNo, PageInfo pi);
 }

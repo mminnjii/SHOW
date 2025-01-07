@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
@@ -193,6 +194,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ArrayList<ChatJoin> chatList(int userNo, PageInfo pi) {
 		return memberDao.chatList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int chatCount2(int userNo) {
+		return  memberDao.chatCount2(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Chat> chatList2(int userNo, PageInfo pi) {
+		return memberDao.chatList2(sqlSession,userNo,pi);
 	}
 
 
