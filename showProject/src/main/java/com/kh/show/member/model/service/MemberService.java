@@ -85,4 +85,5 @@ public interface MemberService {
 	int chatCount2(int userNo);
 	//내가 가입한 채팅방 수
 	ArrayList<Chat> chatList2(int userNo, PageInfo pi);
+
 }

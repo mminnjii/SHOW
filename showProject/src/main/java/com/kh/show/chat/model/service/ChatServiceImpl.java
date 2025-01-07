@@ -69,6 +69,18 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.insertJoin(sqlSession, join);
 	}
 
+	// chat_join User 정보 확인 메소드 
+	@Override
+	public int selectJoinUser(HashMap<String, Object> join) {
+		return chatDao.selectJoinUser(sqlSession, join);
+	}
+
+	// chat_join 회원 데이터 삭제
+	@Override
+	public int joinDelete(ChatJoin cj) {
+		return chatDao.joinDelete(sqlSession, cj);
+	}
+
 
 	
 

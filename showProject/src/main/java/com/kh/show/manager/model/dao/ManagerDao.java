@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.show.customer.model.vo.Faq;
+import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
@@ -63,6 +64,11 @@ public class ManagerDao {
 		return sqlSession.selectList("managerMapper.selectAllShow");
 	}
 	
+	public List<ManagerQuestion> selectAllQuestion(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("managerMapper.selectAllQuestion");
+	}
+	
 	public List<Notice> updateNoticeInform(SqlSessionTemplate sqlSession, Long noticeNo) {
 		
 		return sqlSession.selectList("managerMapper.updateNoticeInform", noticeNo);
@@ -92,6 +98,10 @@ public class ManagerDao {
 
 		return sqlSession.selectOne("managerMapper.reservDetail", reservNo);
 	}
+
+	
+
+	
 
 	
 

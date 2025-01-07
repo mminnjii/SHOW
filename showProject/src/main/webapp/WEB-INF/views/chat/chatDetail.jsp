@@ -333,9 +333,23 @@
 		// 접속 종료 
 		function disconnect(){
 			// 커뮤니티 페이지로 이동하고(이전페이지?), 데이터 삭제 
-			// 뒤로가기 버튼과 나가기 버튼 구분해서 
-			// 뒤로가기 : 접속 종료만 
+			// 뒤로가기 : 접속 종료만 history.back() 사용해서 조건 처리 필요 없음
 			// 나가기 : 접속종료 및 DB 데이터 삭제 
+			$.ajax({
+				url: "joinDelete",
+				type : "POST",
+				data : {
+					chatNo : ${chatInfo.chatNo},
+					userNo : ${loginUser.userNo}
+				},
+				success : function(){
+					
+				},
+				error : function(){
+					console.log("오류발생")	
+				}
+			});
+			
 			
 			socket.close();
 			

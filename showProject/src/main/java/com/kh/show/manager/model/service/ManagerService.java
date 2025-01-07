@@ -3,6 +3,7 @@ package com.kh.show.manager.model.service;
 import java.util.List;
 
 import com.kh.show.customer.model.vo.Faq;
+import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
@@ -35,6 +36,9 @@ public interface ManagerService {
     
 //	공연 불러오기
     List<Show> selectAllShow();
+    
+//  1:1 문의 불러오기
+    List<ManagerQuestion> selectAllQuestion();
 
 //	공지사항 수정하기
 	List<Notice> updateNoticeInform(Long noticeNo);
@@ -55,6 +59,8 @@ public interface ManagerService {
 
 	ManagerPageReservation2 reservDetail(int reservNo);
 
+
+	
 
 	
 	

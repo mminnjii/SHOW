@@ -220,6 +220,12 @@
             hideCreateButtons();
             loadData('reserv');
         });
+        
+        document.getElementById('questionBtn').addEventListener('click', function(event){
+        	event.preventDefault();
+        	hideCreateButtons();
+        	loadData('question');
+        })
 
 
         function hideCreateButtons() {
@@ -275,6 +281,13 @@
                 hallName: '공연장 이름',
                 status: '예약 상태',
                 createDate: '예약일'
+            },
+            question: {
+            	questionNo: '문의 번호',
+            	userNo: '문의한 유저 번호',
+            	qcategoryNo: '문의 카테고리',
+            	quTitle: '문의 제목',
+            	createDate: '문의 날짜'
             }
         };
 
@@ -286,7 +299,8 @@
                 faq: `${contextPath}/managerPage/faqList`,
                 show: `${contextPath}/managerPage/showList`,
                 member: `${contextPath}/managerPage/memberList`,
-                reserv: `${contextPath}/managerPage/reservList`
+                reserv: `${contextPath}/managerPage/reservList`,
+                question: `${contextPath}/managerPage/questionList`
             };
             const url = urlMap[type];
             fetchDataAndDisplay(url, type);  // URL로 데이터 요청
@@ -378,14 +392,14 @@
                     detailTd.setAttribute('colspan', keys.length + 2);
                     detailTd.innerHTML = `
                         <div class="detail-content">
-                            <p><strong>상세 내용:</strong></p>
+                            <p><strong>상세 내용</strong></p>
                             <p>상세 내용이 없습니다.</p>
                         </div>
                     `;
                     detailRow.appendChild(detailTd);
                     tbody.appendChild(detailRow);
                 });
-
+				console.log('table 생성 중...');
                 table.appendChild(thead);
                 table.appendChild(tbody);
                 container.appendChild(table);
@@ -396,7 +410,7 @@
         function toggleDetailRow(tableRow, row) {
             var detailRow = tableRow.nextElementSibling;
             var isVisible = detailRow.style.display === 'table-row';
-            var itemId = row.noticeNo || row.faqNo || row.showNo || row.reservationId;
+            var itemId = row.noticeNo || row.faqNo || row.showNo || row.reservationId || row.questionNo;
 
             if (!detailRow.hasAttribute('data-loaded')) {
                 var url = '';
@@ -408,32 +422,62 @@
                     url = `${contextPath}/managerPage/show?showNo=` + itemId;  // Show 상세 요청
                 } else if (row.reservationId) {
                     url = `${contextPath}/managerPage/reserv?reservId=` + itemId;  // Reservation 상세 요청
+                } else if (row.questionNo){
+                    url = `${contextPath}/managerPage/question?questionNo=` + itemId;	// Question 상세 요청
                 }
-                
+
                 // AJAX 요청으로 상세 내용 가져오기
                 fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('상세 내용 데이터:', data);
-                        const detailContent = detailRow.querySelector('.detail-content');
-                        if (detailContent) {
-                            detailContent.innerHTML = `
-                                <p><strong>상세 내용:</strong></p>
-                                <p>${data.noticeContent || data.faqContent || data.showExplain || data.reservStatus || '상세 내용이 없습니다.'}</p>
-                            `;
+                .then(response => response.json())
+                .then(data => {
+                    const detailContent = detailRow.querySelector('.detail-content');
+                    const contentNo = data.noticeNo || data.faqNo || data.showNo || '';
+                    const contentTitle = data.noticeTitle || data.faqTitle || data.showName || '';
+                    const contentContent = data.noticeContent || data.faqContent || data.showExplain || '';
+                    const showEx = data.showStart || data.showEnd || '';
+                    const contentCreateDate = data.createDate || '';
+
+                    console.log('data : ', data);
+                    console.log('contentNo : ', contentNo);
+                    console.log('contentTitle : ', contentTitle);
+                    console.log('contentContent : ', contentContent);
+                    console.log('contentCreateDate : ', contentCreateDate);
+                    console.log('showEx : ', showEx);
+                    
+
+                    if (detailContent) {
+                        detailContent.innerHTML = `
+                            <p><strong>상세 내용:</strong></p>
+                            <p>번호: ${contentNo}</p>
+                            <p>제목: ${contentTitle}</p>
+                            <p>내용: ${contentContent}</p>
+                            <p>작성일: ${contentCreateDate}</p>
+                            <p>${showEx}</p>
+                        `;
+                        detailRow.setAttribute('data-loaded', 'true');
+                        // display 상태가 'none'일 경우 직접 수정하여 표시
+                        if (detailRow.style.display === 'none' || !detailRow.style.display) {
+                            detailRow.style.display = 'table-row';
                         }
-                        detailRow.setAttribute('data-loaded', true);
-                    })
-                    .catch(error => {
-                        console.error('상세 내용 불러오기 실패', error);
-                    });
+
+                        // 슬라이드 애니메이션 사용
+                        setTimeout(() => {
+                            $(detailRow).slideDown();
+                        }, 100); // 약간의 시간 지연 후 실행
+                    } else {
+                        console.error("detailContent 요소를 찾을 수 없습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('상세 내용 불러오기 실패', error);
+                });
             }
 
             // 상세 내용 표시 토글
             if (isVisible) {
-                $(detailRow).slideUp();
+                detailRow.style.display = 'none';
             } else {
-                $(detailRow).slideDown();
+                detailRow.style.display = 'table-row';
             }
         }
     });
