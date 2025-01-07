@@ -85,7 +85,7 @@ public class PaymentsController {
 	
 	@PostMapping(value = "/bank",produces ="text/html; charset=UTF-8")
 	@ResponseBody
-	public String paymentComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
+	public String bankComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
 		
 		// payment식별자와 결제번호와 연동
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
@@ -172,7 +172,7 @@ public class PaymentsController {
 	
 	@ResponseBody
 	@PostMapping(value = "/card",produces ="text/html; charset=UTF-8")
-	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
+	public String cardComplete(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];

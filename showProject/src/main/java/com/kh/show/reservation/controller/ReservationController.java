@@ -25,7 +25,7 @@ import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
