@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Show" id="ShowResult">
 		<result column="SHOW_NO" property="showNo" />
 		<result column="SHOW_NAME" property="showName" />
+		<result column="SHOW_END" property="showEnd" />
 		
 		<collection property="genre" ofType="com.kh.show.showInfo.model.vo.Genre">
 			<result column="GENRE_NO" property="genreNo"/>
@@ -217,7 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="selSearchShow" resultMap="ShowResult">
-		SELECT SHOW_NO, SHOW_NAME
+		SELECT SHOW_NO, SHOW_NAME, SHOW_END
 		FROM SHOW 
 		JOIN GENRE USING(GENRE_NO)
 		WHERE GENRE_NO = #{genreNo}

@@ -408,10 +408,29 @@ public class ShowInfoDao {
 
 
 
+	public int enrollReview(SqlSession session, Review r) {
+		return session.insert("showInfoMapper.enrollReview",r);
+	}
 
 
 
-	
-	
+
+	public Review searchReview(SqlSession session, int replyNo) {
+		return (Review)session.selectOne("showInfoMapper.searchReview",replyNo);
+	}
+
+
+
+
+	public int updateReview(SqlSession session, Review r) {
+		return session.update("showInfoMapper.updateReview",r);
+	}
+
+
+
+
+	public int deleteReview(SqlSession session, int replyNo) {
+		return session.update("showInfoMapper.deleteReview",replyNo);
+	}
 
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cerditcard {
+public class Creditcard {
 	private int paymentId;//	PAYMENT_ID
 	private int userNo; //	USER_NO
 }

@@ -3,12 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
+<% 
+	Member loginMember = (Member)session.getAttribute("loginUser");
+%>
 <head>
 <meta charset="UTF-8">
 	<style>
 		.review{
 			margin-left: 150px;
 		}
+		.box{
+			display: inline-block; 
+			margin-right: 50px;
+		}
+		
 		pre {
             font-family: "Noto Sans KR", sans-serif;
             font-size: 15px;
@@ -19,9 +27,7 @@
 		}
 		.comment{
 				width: 800px;
-				height: 200px;
-				background-color: #f4f4f4;
-				border-radius: 40px;
+				height: 300px;
 				padding-top: 50px;
 				padding-left: 50px;
 				text-align: left;
@@ -115,18 +121,30 @@
 			<c:choose>
 				<c:when test="${not empty r }" >
 					<c:forEach items="${r }" var="r">
-					
-						NO :&nbsp;&nbsp;${r.reviewId}&nbsp; |&nbsp;&nbsp; 
-						작성자 :&nbsp;&nbsp;${r.userId} &nbsp; |&nbsp;&nbsp; 
-						작성일 :&nbsp;&nbsp;${r.createDate}&nbsp;| &nbsp; 
-						평점 :&nbsp;&nbsp;${r.reviewScore}&nbsp; 
+						<div class="box" id="con">
+						<input type="hidden" id="writer" value="${r.userNo }">
+						<input type="hidden" id="reviewId" value="${r.reviewId }">
+						<hr> <br><br>
+							NO :&nbsp;&nbsp;${r.reviewId}&nbsp; |&nbsp;&nbsp; 
+							작성자 :&nbsp;&nbsp;${r.userId} &nbsp; |&nbsp;&nbsp; 
+							작성일 :&nbsp;&nbsp;${r.createDate}&nbsp;| &nbsp; 
+							평점 :&nbsp;&nbsp;${r.reviewScore}&nbsp; 
+						</div>
+						<c:if test="${not empty loginUser and r.userNo eq loginUser.userNo}">
+							<div class="box">
+								<button class="modify" data-rno="${r.reviewId }">수정하기</button>
+								<button class="delete" data-rno="${r.reviewId }">삭제하기</button>
+							</div>
+						</c:if> 
+						
 						<br>
 						<h3 class="title" data-content="${r.reviewTitle}">
 							${r.reviewTitle}
 						</h3>
 						<h5 class="origin" data-content="${r.reviewContent}">
 							${r.reviewContent}
-						</h5> <br><br><br><br><br>
+						</h5> <br><br><br><br><br><br>
+					
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -134,37 +152,64 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-			
-		
-			
-<%-- 	 		<c:if test="${r.userNo eq loginUser.userId}">
-				<br>
 
-				<button class="modify" >수정하기</button>
-				<button class="delete" >삭제하기</button>
-			</c:if>  --%>
-	
-			<button id="submit" style="display: none;">작성하기</button>
-			<button id="back" style="display: none;">뒤로가기</button>
 			<p style="margin-top: 10000px;"></p>
 	</div>
 	
-	<script>
-		$(".enroll").on("click",(function(){
+	<script>	
+		
+		$(".enroll").on("click",function(){
+			location.href = '/show/showInfo/enroll'; 
+		});
+		
+	
+	
+		$(".modify").on("click",(function(){
 			
-	 			var userNo = $(userNo);
+ 	 			var replyNo = $(this).attr("data-rno");
+ 	 			
 				const form = document.createElement("form");
-		        form.action = "/show/showInfo/enroll";
-
+		        form.action = "/show/showInfo/update";
+		
 		        const hiddenField = document.createElement("input");
 		        hiddenField.type = "hidden";
-		        hiddenField.name = "userNo";
-		        hiddenField.value = userNo;
+		        hiddenField.name = "replyNo";
+		        hiddenField.value = replyNo;
 		        
 		        form.appendChild(hiddenField);
 		        document.body.appendChild(form);
-		        form.submit();
-		}));
+		        form.submit(); 
+
+		})); 
+		
+		
+			$(".delete").on("click",(function(){
+
+ 	 			var replyNo = $(this).attr("data-rno");
+ 	 			
+ 	 			$.ajax({
+ 	 			 	url : "/show/showInfo/deleteReview",
+	 	        	data : {
+	 	        		
+	 	        		replyNo : replyNo
+	 	        	},
+	 	        	
+	 	        	type : "POST",
+	 	        	
+		 	       	success : function(result){
+		 	       		if(result=="NNNNY"){
+		 	        		alert("리뷰삭제에 성공했습니다");
+		 	        		window.location.href = '/show/showInfo/review';
+	 	        		}else{
+	 	        			alert("리뷰삭제에 실패했습니다");
+	 	        		}
+	 	        	},
+	 	        	error : function(fail){
+	                     console.log("통신오류");
+	 	        	}
+ 	 				
+ 	 			});
+		})); 
 	
 	
 	</script>

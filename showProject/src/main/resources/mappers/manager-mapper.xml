@@ -82,6 +82,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="HALL_NAME" property="hallName"></result>
 		<result column="CREATEDATE" property="createDate"></result>
 	</resultMap>
+	<resultMap type="ManagerQuestion" id="questionResultSet">
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="QCATEGORY_NO" property="qcategoryNo"/>
+		<result column="Q_TITLE" property="quTitle"/>
+		<result column="CREATEDATE" property="createDate"/>
+	</resultMap>
+	<resultMap type="ManagerQuestion2" id="questionResultSet2">
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="QCATEGORY_NO" property="qcategoryNo"/>
+		<result column="Q_TITLE" property="quTitle"/>
+		<result column="Q_CONTENT" property="quContent"/>
+		<result column="CREATEDATE" property="createDate"/>
+	</resultMap>
 	
 	<select id="loginManager" resultMap="managerResultSet">
 		SELECT MANAGER_ID, MANAGER_PW
@@ -157,9 +174,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO SHOW(SHOW_NO,
 						 SHOW_NAME,
 						 SHOW_EXPLAIN,
-						 RPRICE,
-						 SPRICE,
-						 VPRICE,
+						 PRICE,
 						 NOTICE,
 						 HALL_NO,
 						 GENRE_NO,
@@ -175,8 +190,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					   #{showName},
 					   #{showExplain},
 					   #{rPrice},
-					   #{sPrice},
-					   #{vPrice},
 					   #{notice},
 					   #{hallNo},
 					   #{genreNo},
@@ -248,7 +261,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE RESERVATION_ID = #{reservNo}
 	</select>
 	
-	
-
-
+	<select id="selectAllQuestion" resultMap="questionResultSet">
+		SELECT QUESTION_NO, USER_NO, RESERVATION_ID, QC.QCATEGORY_NAME, Q_TITLE, CREATEDATE
+		FROM QUESTION Q
+		INNER JOIN QCATEGORY QC ON Q.QCATEGORY_NO = QC.QCATEGORY_NO
+		WHERE QUESTION_NO = #{questionNo}
+	</select>
 </mapper>

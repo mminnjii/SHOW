@@ -76,14 +76,17 @@
         }
 
         .info p {
-            border: 1px solid gray;
+            border: 1px solid rgb(197,196,170);
             border-radius: 10px;
             max-width: 50%;
             padding: 10px;
             margin-left: 40px;
+			background-color: rgb(248,247,211);            
         }
-        .info p.my{
-            align-self: flex-end;
+        
+        .my p{
+       		background-color: rgb(208,227,236);
+       		border: 1px solid rgb(170,189,197);
         }
 
         .chat {
@@ -179,6 +182,7 @@
 	           	<span>채팅방 참여자</span>
 	           	<span id="joinCount">채팅방 참여자</span>
 	        </div>
+        	<p style="color: gray; font-size: 12px;">&nbsp;&nbsp;(현재 접속한 참여자)</p>
            	<div id="joinUser"><ul></ul></div>
         </div>
 
@@ -253,6 +257,7 @@
 				var data = JSON.parse(message.data);
 				console.log(data);
 			
+				// 참여 했을 때와 대화를 할 때 전달받는 메시지의 Object 객체 명이 다르기 때문에 해당 객체의 key 값으로 조건처리해서 데이터를 뿌려준다.
 				// 참여자 영역
 				if(data.userList){
 					var userList = data.userList;
@@ -273,8 +278,8 @@
 					console.log("userStr : " + userStr);
 					
 				    $(".join ul").html(userStr);
-				    
 				}
+				
 			    
 			    if(data.mem){
 					// 채팅 영역 
@@ -288,7 +293,7 @@
 						
 					var newMessage = "";
 					if(loginUserId == chatUserId){
-						newMessage += "<div align='right'>"
+						newMessage += "<div align='right' class='my'>"
 									+ "<p>"
 									+ data.cm.chatContent
 									+ "</p></div>";
@@ -328,9 +333,23 @@
 		// 접속 종료 
 		function disconnect(){
 			// 커뮤니티 페이지로 이동하고(이전페이지?), 데이터 삭제 
-			// 뒤로가기 버튼과 나가기 버튼 구분해서 
-			// 뒤로가기 : 접속 종료만 
+			// 뒤로가기 : 접속 종료만 history.back() 사용해서 조건 처리 필요 없음
 			// 나가기 : 접속종료 및 DB 데이터 삭제 
+			$.ajax({
+				url: "joinDelete",
+				type : "POST",
+				data : {
+					chatNo : ${chatInfo.chatNo},
+					userNo : ${loginUser.userNo}
+				},
+				success : function(){
+					
+				},
+				error : function(){
+					console.log("오류발생")	
+				}
+			});
+			
 			
 			socket.close();
 			

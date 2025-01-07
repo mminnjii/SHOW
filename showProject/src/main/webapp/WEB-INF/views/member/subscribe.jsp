@@ -169,8 +169,9 @@
 									<button id="btn2" style="background-color: #8fc4f2;" disabled>이미 구독 중이십니다</button>
 								</c:when>
 								<c:otherwise>
-									<input type="hidden" value="${loginUser.userId}" name="userId">
 									<form action="subscribe.me" method="post">
+										<input type="hidden" value="${loginUser.userId}" name="userId">
+										<input type="hidden" value="${loginUser.userNo}" name="userNo">
 										<button id="btn2" onclick="startSub();" disabled>월 9,900원으로 구독</button>
 									</form>
 								</c:otherwise>
