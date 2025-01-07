@@ -144,40 +144,13 @@
 			</div>
 
 		</div>
-
 		<br>
 		<br>
 	</div>
 
 
 	<script>
-
-		// $("#cancel").click(function(){
-		// 	var resNo = $(this).parent().siblings("input[name='reservationId']").val();
-		// 	console.log(resNo);
-		// 	if(confirm("예약을 취소 하시겠습니까?")){
-		// 		$.ajax({
-		// 			url : "cancelRes",
-		// 			method : "POST",
-		// 			data : {
-		// 				resNO : resNo,
-		// 				userNo : "${loginUser.userNo}"
-		// 			},
-		// 			success : function(result){
-		// 				if(result=="YYY"){
-		// 					alert("예약 취소 성공!");
-		// 					$(this).parent().siblings().remove();
-		// 					$(this).parent().remove();
-		// 				}else{
-		// 					alert("예약 취소 실패");
-		// 				}
-		// 			},
-		// 			error : function(e){
-		// 				console.log(e);
-		// 			} 
-		// 		});
-		// 	}
-		// });
+		
 
 		$(function(){
 			$("button[id=cc]").click(function(){

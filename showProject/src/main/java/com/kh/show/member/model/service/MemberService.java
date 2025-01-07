@@ -3,6 +3,8 @@ package com.kh.show.member.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Coupon;
@@ -71,7 +73,12 @@ public interface MemberService {
 	int cancelPay(String reservationId);
 	//빈좌석 표시
 	int rollbackSeats(int seatId);
-
 	// chat회원 정보 및 프로필 조회 - 전수민 
 	Member selectChatMem(int userNo);
+	//휴대폰 중복 체크
+	int phoneCheck(String phone);
+	//내 채팅방 리스트 수
+	int chatCount(int userNo);
+	//내 채팅방 리스트 출력
+	ArrayList<ChatJoin> chatList(int userNo, PageInfo pi);
 }

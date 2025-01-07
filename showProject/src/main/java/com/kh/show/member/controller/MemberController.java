@@ -24,13 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
-import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
 
@@ -227,6 +227,24 @@ public class MemberController {
 		return val;
 	}
 	
+	//전화번호 중복 확인
+	@ResponseBody
+	@RequestMapping(value="/phoneCheck", produces="text/html;charset=UTF-8")
+	public String phoneCheck(String phone) {
+			
+		int result = memberService.phoneCheck(phone);
+		System.out.println(phone);
+		String val = "";
+		System.out.println(result);
+		if(result>0) {
+			val = "NNN";
+		}else {
+			val = "YYY";
+		}
+		System.out.println(val);
+		return val;
+	}
+	
 	//마이페이지로 이동
 	@GetMapping("/myPage")
 	public String myPage() {
@@ -263,11 +281,7 @@ public class MemberController {
 		
 		return "member/myGroup";
 	}
-	@GetMapping("/chat")
-	public String chat() {
-		
-		return "member/myChat";
-	}
+	
 	
 	
 	
@@ -505,7 +519,6 @@ public class MemberController {
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 				
 		ArrayList<Reservation> slist = memberService.showList(userNo,pi);
-		System.out.println(slist);
 		model.addAttribute("slist",slist);
 		model.addAttribute("pi",pi);
 		
@@ -572,7 +585,7 @@ public class MemberController {
 						  int userNo) {
 		int listCount = memberService.reserveCount(userNo);
 		int pageLimit = 10;
-		int listLimit = 10;
+		int listLimit = 5;
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
@@ -585,38 +598,15 @@ public class MemberController {
 	}
 	
 	//예약 취소
-//	@ResponseBody
-//	@RequestMapping(value="cancelRes", produces="text/html;charset=UTF-8")
-//	public String cancleRes(String reservationId,
-//							HttpSession session) {
-//		System.out.println(reservationId);
-//		System.out.println("오류");
-//		int result = memberService.cancelRes(reservationId);
-//		System.out.println(result);
-//		System.out.println("오류1");
-//		
-//		String var = "";
-//		if(result>0) {
-//			var = "YYY";
-//		}else {
-//			var = "NNN";
-//		}
-//		System.out.println("오류2");
-//		return var;
-//	}
-//	
 	@PostMapping("cancelRes")
 	public String cancleRes(String reservationId,
 							int userNo,
 							int seatId,
 							HttpSession session) {
-		System.out.println("예약 번호 : "+reservationId);
 		int result = memberService.cancelRes(reservationId);
 		int result2 = memberService.cancelTicket(reservationId);
 		int result3 = memberService.cancelPay(reservationId);
 		int result4 = memberService.rollbackSeats(seatId);
-		
-		System.out.println(result);
 		
 		if(result>0 && result2>0 && result3>0 && result4>0) {
 			session.setAttribute("alertMsg", "예약 취소 성공!");
@@ -625,6 +615,28 @@ public class MemberController {
 		}
 		return "redirect:/reserve?userNo="+userNo;
 	}
+	
+	//내 채팅방 목록
+	@GetMapping("/chat")
+	public String chat(@RequestParam(value="currentPage",defaultValue="1")
+					  int currentPage,
+					  Model model,
+					  int userNo) {
+		int listCount = memberService.chatCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+		
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+		
+		ArrayList<ChatJoin> clist = memberService.chatList(userNo,pi);
+		
+		model.addAttribute("clist",clist);
+		model.addAttribute("pi",pi);
+		
+		return "member/myChatJoin";
+	}
+		
+
 	
 	
 	

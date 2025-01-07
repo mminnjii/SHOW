@@ -285,16 +285,45 @@
 			});
 
 			//휴대폰 형식
-			$("input[name='phone']").blur(function(){
-				var phoneForm = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
-				var phone = $("#phone").val();
+			$(function(){
+				var checkPhone = $("input[name='phone']");
 
-				if(!phoneForm.test(phone)){
-					$("#phoneCorrect").text("올바른 휴대폰 형식을 입력해주세요");
-				}else{
-					$("#phoneCorrect").text("");
-				}
+				$("#phone").blur(function(){
+					console.log(checkPhone.val());
+					if(checkPhone.val().length=11){
+						$.ajax({
+							url : "phoneCheck",
+							data : {
+								phone : checkPhone.val()
+							},
+							success : function(val){
+								if(val=="YYY"){
+									$("input[name='phone']").blur(function(){
+										var phoneForm = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+										var phoneVal = $("#phone").val();
+
+										if(!phoneForm.test(phoneVal)){
+											$("#phoneCorrect").text("올바른 휴대폰 형식을 입력해주세요");
+										}else{
+											$("#phoneCorrect").text("");
+											$("button[type=submit]").attr("disabled",false);
+										}
+									});
+								}else{
+									$("#phoneCorrect").text("중복된 번호입니다");
+									$("button[type=submit]").attr("disabled",true);
+								}
+							},
+							error : function(e){
+								console.log(e);
+							}
+						});
+					}else{
+						$("button[type=submit]").attr("disabled",true);
+					}
+				});
 			});
+		
 
 			//이메일 형식
 			$("input[name='email']").blur(function(){

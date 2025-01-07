@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Coupon;
@@ -159,6 +160,22 @@ public class MemberDao {
 
 	public int rollbackSeats(SqlSessionTemplate sqlSession, int seatId) {
 		return sqlSession.update("memberMapper.rollbackSeats",seatId);
+	}
+
+	public int phoneCheck(SqlSessionTemplate sqlSession, String phone) {
+		return sqlSession.selectOne("memberMapper.phoneCheck",phone);
+	}
+
+	public int chatCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.chatCount",userNo);
+	}
+
+	public ArrayList<ChatJoin> chatList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.chatList",userNo,rowbounds);
 	}
 
 

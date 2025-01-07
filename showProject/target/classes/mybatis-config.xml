@@ -36,5 +36,6 @@
 		<typeAlias type="com.kh.show.reservation.model.vo.Ticket" alias="Ticket"/>
 		<typeAlias type="com.kh.show.reservation.model.vo.Seats" alias="Seats"/>
 		<typeAlias type="com.kh.show.member.model.vo.Reserveshow" alias="Reserveshow"/>
+		<typeAlias type="com.kh.show.member.model.vo.Joinchat" alias="Joinchat"/>
  	</typeAliases>
 </configuration>
