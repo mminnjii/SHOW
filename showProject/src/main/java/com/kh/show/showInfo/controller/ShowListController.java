@@ -3,6 +3,7 @@ package com.kh.show.showInfo.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -541,5 +542,16 @@ public class ShowListController {
 			
 		}
 	
+		@Scheduled
+		@GetMapping(value="rankShowList",produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public ArrayList<Show> rankShowList() {
+			
+			ArrayList<Show> rankShowList = showInfoService.rankShowList();
+			
+			//System.out.println("Rank Show List: " + rankShowList);
+			
+			return rankShowList;
+		}
 
 }

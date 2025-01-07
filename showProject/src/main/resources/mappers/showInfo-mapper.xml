@@ -858,7 +858,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	      FROM SHOW
 	  	      ORDER BY COUNT DESC
 	  	      )
-	  	WHERE ROWNUM BETWEEN 1 AND 8
+	  	WHERE ROWNUM BETWEEN 1 AND 9
 	</select>	
 
 	<!-- 리뷰 작성 -->

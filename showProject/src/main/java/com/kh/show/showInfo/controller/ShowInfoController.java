@@ -193,16 +193,7 @@ public class ShowInfoController {
 
 	}
 	
-	@GetMapping(value="rankShowList",produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String rankShowList() {
-		
-		ArrayList<Show> rankShowList = showInfoService.rankShowList();
-		
-		System.out.println(rankShowList);
-		
-		return "rankShowList";
-	}
+	
 	
 	
 	

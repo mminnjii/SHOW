@@ -22,7 +22,7 @@
         font-style: normal;
         color: black;
         position:relative;
-        left : 410px;
+        left : 350px;
         
        
     }
@@ -33,8 +33,8 @@
         border-radius: 10px;
         align-items: center;
     }
-    #oo{
-        width: 20px;
+    .oo{
+        width: 38px;
     }
     #ooo{
         height: 25px;
@@ -53,50 +53,59 @@
         font-style: normal;
         color: red;
     }
+    .op{
+    position:relative;
+    left : 305px;
+    
+    }
+    
+    
     
 </style>
 </head>
 <body>
 
     <div>
-        <table align="center">
+        <table  class="op">
             <tr ><span id="open">티켓오픈</span></tr>
             <tr id="ooo"></tr>
             <tr>
+            <td class="oo"></td>
                 <td>
                     <a href="/show/showInfo/detail">
                     <img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="s1"></a><br><br>
                     <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">12.23(월) 18:00</span>
+                    <span id="j2">2.24(월) 18:00</span>
                 </td>
-                <td id="oo"></td>
+                <td class="oo"></td>
                 <td>
                     <a href="/show/showInfo/detail">
                     <img src="${contextPath }/resources/images/sll.jpg" alt="" id="s2"></a><br><br>
-                    <span id="j1">[단독판매] KB리브모바일</span><br>
-                    <span id="j2">12.19(목) 17:00</span>
+                    <span id="j1">[단독판매] KB리브</span><br>
+                    <span id="j2">3.19(수) 17:00</span>
                 </td>
-                <td id="oo"></td>
+                <td class="oo"></td>
                 <td>
                     <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/꽃의비밀.jpg" alt="" id="s3"></a><br><br>
-                    <span id="j1">[연극] 꽃의 비밀</span><br>
-                    <span id="j2">12.20(금) 11:00</span>
+                    <img src="${contextPath }/resources/images/오페라.jpg" alt="" id="s3"></a><br><br>
+                    <span id="j1">[단독판매] 오페라</span><br>
+                    <span id="j2">2.20(목) 11:00</span>
                 </td>
-                <td id="oo"></td>
+                <td class="oo"></td>
                 <td>
                     <a href="/show/showInfo/detail">
                     <img src="${contextPath }/resources/images/시라노.jpg" alt="" id="s4"></a><br><br>
-                    <span id="j1">[뮤지컬] 시라노</span><br>
-                    <span id="j2">12.19(목) 14:00</span>
+                    <span id="j1">[단독판매] 시라노</span><br>
+                    <span id="j2">2.19(수) 14:00</span>
                 </td>
-                <td id="oo"></td>
+                <td class="oo"></td>
                 <td>
                     <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/해적.jpg" alt="" id="s5"></a><br><br>
-                    <span id="j1">[단독판매] 해적</span><br>
-                    <span id="j2">12.20(금) 15:00</span>
+                    <img src="${contextPath }/resources/images/베르테르.jpg" alt="" id="s5"></a><br><br>
+                    <span id="j1">[단독판매] 베르테르</span><br>
+                    <span id="j2">2.20(목) 15:00</span>
                 </td>
+                <td class="oo"></td>
             </tr>
         </table>
     </div>

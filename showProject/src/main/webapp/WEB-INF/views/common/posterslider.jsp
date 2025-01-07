@@ -184,6 +184,10 @@
         #mainDiv{
         display: flex; /*div의 table을 2개 사용하면서 나란히 놓고 싶을 때 사용하는 css*/
         }
+        
+        #ccc{
+       	height : 10px;
+        }
     
  
    
@@ -231,6 +235,7 @@
                 </td>
             </tr> 
             <tr id="uuu"></tr>
+            <tr id="uuu"></tr>
             <tr class="rankShow">
             
             </tr>
@@ -245,6 +250,10 @@
       $(document).ready(function(){
     	 
     	 rankShowData(); 
+    	 
+    	 //1시간마다 데이터를 자동으로 갱신하기 위함 -- 랭킹 
+    	 setInterval(loadShowData, 120000);
+    	 
       });
       
       function loadShowData(){
@@ -252,13 +261,15 @@
     	  $.ajax({
     		 url: "rankShowList",
     		 success: function(result) {
+    			 console.log(result);
     	            var str = "";  
     	            
-    	            for (var i = 1; i <= 8; i++) {
+    	            for (var i = 0; i < result.length; i++) {
     	                str += "<tr>"
-    	                     + "<td><img src='/show/resources/images/images2/" + i + ".png' alt='' class='u1'>"
+    	                     + "<td><img src='/show/resources/images/images2/" +(i+1) + ".png' alt='' class='u1'>"
     	                     + "<a href=''><span class='u3'>"+ result[i].showName +"</span></a></td>"
-    	                     + "</tr>";
+    	                     + "</tr>"
+    	                     + "<tr id='ccc'></tr>";
     	            }
     	            // 생성된 HTML을 .rankShow 요소에 삽입
     	            $(".rankShow").html(str);
@@ -269,9 +280,13 @@
     	  });
       }
       
+     
+      
       function rankShowData(){
     	  loadShowData();
       }
+      
+      
       
     
     
