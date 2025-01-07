@@ -132,7 +132,7 @@
             background-color: white;
             color: black;
             font-size: 13px;
-            font-weight: 510;
+            font-weight: 500;
         }
         #re:hover{
             cursor: pointer;
@@ -189,10 +189,7 @@
 		                   </c:otherwise>
 		                </c:choose>
                         <li id="li4">
-                            <form action="${contextPath}/reserve">
-                                <input type="hidden" name="userNo" value="${loginUser.userNo}">
-                                <button id="re">예매확인/취소</button>
-                            </form>
+                            <a href="${contextPath}/reserve?userNo=${loginUser.userNo}">예매확인/취소</a>
                         </li>
                         <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
