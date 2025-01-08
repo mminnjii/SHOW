@@ -101,40 +101,41 @@
 					<br>
 					<div id="group-body">
 						<div id="btn-area">
-							<button id="switch">가입한 채팅방</button>
+							<button id="switch">가입한 소모임</button>
 						</div>
 						<br>
 						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>번호</th>
-									<th>소모임 이름</th>
-									<th>호스트 ID</th>
-									<th>인원 수</th>
+									<th width="50px">번호</th>
+									<th>모임명</th>
+									<th>모집 인원</th>
+									<th>모집 기간</th>
+									<th>모임 날짜</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty g2list }">
+									<c:when test="${empty m2list }">
 										<tr>
-											<td colspan="4">내 소모임이 없습니다</td>
+											<td colspan="5">내 소모임이 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="g" items="${g2list }">
+										<c:forEach var="m" items="${m2list }">
 											<tr id="c-main">
-												<td>${g.chatNo}</td>
-												<td>${g.chatTitle}</td>
-												<td>${g.userId}</td>
+												<td>${m.meetingNo}</td>
+												<td>${m.meetingTitle}</td>
 												<c:choose>
-													<c:when test="${g.joinCount == g.chatUserCount}">
-														<td style="color: red;">${g.joinCount}/${g.chatUserCount}</td>
+													<c:when test="${m.joinCount == m.meetingCount}">
+														<td style="color: red;">${m.joinCount}/${m.meetingCount}</td>
 													</c:when>
 													<c:otherwise>
-														<td>${g.joinCount}/${g.chatUserCount}</td>
+														<td>${m.joinCount}/${m.meetingCount}</td>
 													</c:otherwise>
 												</c:choose>
-												<td>${g.createDate}</td>
+												<td>${m.startDate}~${m.endDate}</td>
+												<td>${m.meetingDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -170,7 +171,7 @@
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty g2list }">
+										<c:when test="${empty m2list }">
 										</c:when>
 										<c:otherwise>
 											<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>

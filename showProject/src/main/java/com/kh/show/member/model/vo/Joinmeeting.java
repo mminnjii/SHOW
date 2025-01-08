@@ -19,10 +19,13 @@ public class Joinmeeting {
 	private int meetingNo;
 	private String meetingTitle;	
 	private int userNo;
+	private int showNo;
+	private String showName;
 	private String userId;
 	private int meetingCount;
 	private Date meetingDate;//	MEETING_DATE
 	private Date startDate;//	START_DATE
 	private Date endDate;//	END_DATE
 	private int joinCount;
+	private String status;
 }

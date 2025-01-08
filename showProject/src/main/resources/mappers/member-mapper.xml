@@ -456,8 +456,32 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<select id="meetingCount" resultType="Joinmeeting" >
-		
+	<select id="meetingList" resultType="Joinmeeting" >
+		SELECT M.MEETING_NO,
+	           M.USER_NO,
+	           MEETING_TITLE,
+	           SHOW_NAME,
+	           MEETING_PLACE,
+	           MEETING_COUNT,
+	           MEETING_DATE,
+	           START_DATE,
+	           END_DATE,
+	           COUNT(J.USER_NO) joinCount
+		FROM MEETING_JOIN J
+		JOIN MEETING M ON(M.MEETING_NO=J.MEETING_NO)
+		JOIN SHOW S ON(S.SHOW_NO = M.SHOW_NO)
+		WHERE M.STATUS = 'Y'
+		AND J.USER_NO = #{userNo}
+		GROUP BY M.MEETING_NO,
+		                M.USER_NO,
+		                MEETING_TITLE,
+		                SHOW_NAME,
+		                MEETING_PLACE,
+		                MEETING_COUNT,
+		                MEETING_DATE,
+		                START_DATE,
+		                END_DATE
+		ORDER BY MEETING_DATE;
 	</select>
 	
 	<select id="meetingCount2" resultType="_int">
@@ -466,8 +490,32 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<select id="meetingCount2" resultType="Joinmeeting" >
-	
+	<select id="meetingList2" resultType="Joinmeeting" >
+		SELECT M.MEETING_NO,
+	           M.USER_NO,
+	           MEETING_TITLE,
+	           SHOW_NAME,
+	           MEETING_PLACE,
+	           MEETING_COUNT,
+	           MEETING_DATE,
+	           START_DATE,
+	           END_DATE,
+	           COUNT(J.USER_NO) joinCount
+		FROM MEETING M
+		JOIN MEETING_JOIN J ON(M.MEETING_NO=J.MEETING_NO)
+		JOIN SHOW S ON(S.SHOW_NO = M.SHOW_NO)
+		WHERE M.STATUS = 'Y'
+		AND M.USER_NO = #{userNo}
+		GROUP BY M.MEETING_NO,
+		                M.USER_NO,
+		                MEETING_TITLE,
+		                SHOW_NAME,
+		                MEETING_PLACE,
+		                MEETING_COUNT,
+		                MEETING_DATE,
+		                START_DATE,
+		                END_DATE
+		ORDER BY MEETING_DATE;
 	</select>
 
 	
