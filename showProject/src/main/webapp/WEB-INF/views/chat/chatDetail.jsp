@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,9 +71,26 @@
         .info {
             margin-bottom: 15px;
             font-size: 14px;
-            height: 85%;
-            overflow: auto;  /* 세로 스크롤바 생성 */
+            height: 78%;
+            overflow-y: scroll;  /* 세로 스크롤바 생성 */
         }
+        
+        /* 스크롤바 영역에 대한 설정 */
+        .info::-webkit-scrollbar{
+        	width: 12px;
+        	border-radius: 5px; 
+        }
+        /* 스크롤바 막대 설정 */
+        .info::-webkit-scrollbar-thumb {
+		    height: 30%; /* 스크롤바의 길이 */
+		    background: #597c9b; /* 스크롤바의 색상 */
+		    
+		    border-radius: 10px;
+		}
+        /* 스크롤바 배경 설정 */
+		.info::-webkit-scrollbar-track {
+		    background: #e2ecf6;  /*스크롤바 뒷 배경 색상*/
+		}
 
         .info p {
             border: 1px solid rgb(197,196,170);
@@ -87,6 +104,9 @@
         .my p{
        		background-color: rgb(208,227,236);
        		border: 1px solid rgb(170,189,197);
+       		margin-right: 10px;
+       		max-width: 50%;
+       		word-break: break-all;  /* 띄어쓰기가 없어도 줄바꿈을 할 수 있도록 한다. => 띄어쓰기 없이 문자를 이어서 보낼 경우 width를 넘겨버린다. */
         }
 
         .chat {
@@ -188,13 +208,22 @@
 
         <div class="contnet">
             <div class="header">
-                <i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
+            	<!-- 채팅방 생성 후 바로 페이지 이동이 될 경우 채팅방 생성 페이지로 이동됨. => list 페이지로 이동될 수 있도록 경로로 설정 -->
+                <i id="back" class="fa-solid fa-angles-left" onclick="location.href='${contextPath}/chat/list'"></i>
                 <span>${chatInfo.chatTitle}</span>&nbsp;
                 <span>${chatInfo.show.showName}</span>
-                <span><button type="button" class="outBtn" onclick="disconnect();">나가기</button></span>
+                <c:choose>
+                	<c:when test="${chatInfo.userNo == loginUser.userNo}">
+                		<span><button type="button" class="outBtn" onclick="disconnect();" value="deleteChat"> 채팅방 삭제</button></span>
+                	</c:when>
+                	<c:otherwise>
+		                <span><button type="button" class="outBtn" onclick="disconnect();" value="deleteJoin">나가기</button></span>
+                	</c:otherwise>
+                </c:choose>
             </div>
             <hr>
             <div class="chatArea">
+            	<p style="color: red; font-size: 12px;">* 나가기 버튼을 클릭하시면 채팅방 참여자에서 삭제 됩니다.</p>
                 <div class="info">
                     <!-- 내 메세지인 경우에는 오른쪽에 표시되도록 조건 처리 필요 -->
 					
@@ -209,6 +238,9 @@
     </div>  
 	
 	<script>
+		console.log(${chatInfo.userNo});
+		console.log(${loginUser.userNo});
+	
 		// 스크롤 제일 하단 보기 => 어떤 원리인지 공부하기 
 		var $info = $(".info");
 		$info.scrollTop($info[0].scrollHeight);
@@ -272,7 +304,9 @@
 				    var userStr = "";
 				    	
 					for(var i=0; i < userList.length; i++){
-						userStr +=  "<li>" + userList[i].userId + "</li>";
+						userStr += "<li>"
+								 + '<img alt="" src="${contextPath}/resources/profile/' + userList[i].changeName + '" id="profile">' 
+								 + "&nbsp;&nbsp;" + userList[i].userId + "</li>";
 				    }
 					
 					console.log("userStr : " + userStr);
@@ -280,7 +314,7 @@
 				    $(".join ul").html(userStr);
 				}
 				
-			    
+				
 			    if(data.mem){
 					// 채팅 영역 
 					var div = $(".info");
@@ -335,21 +369,43 @@
 			// 커뮤니티 페이지로 이동하고(이전페이지?), 데이터 삭제 
 			// 뒤로가기 : 접속 종료만 history.back() 사용해서 조건 처리 필요 없음
 			// 나가기 : 접속종료 및 DB 데이터 삭제 
-			$.ajax({
-				url: "joinDelete",
-				type : "POST",
-				data : {
-					chatNo : ${chatInfo.chatNo},
-					userNo : ${loginUser.userNo}
-				},
-				success : function(){
-					
-				},
-				error : function(){
-					console.log("오류발생")	
-				}
-			});
 			
+			var deleteVal = $(".outBtn").val()
+			console.log(deleteVal);
+			
+			// 나가기 / 채팅방 삭제  버튼 value 값을 가져와 각 버튼 기능 처리 
+			if(deleteVal == 'deleteChat'){ // 채팅방 삭제 
+				$.ajax({
+					url: "deleteChat",
+					type : "POST",
+					data : {
+						chatNo : ${chatInfo.chatNo}
+					},
+					success : function(){
+						alert("채팅방이 삭제되었습니다.");
+						location.href='${contextPath}/chat/list';
+					},
+					error : function(){
+						console.log("오류발생")	
+					}
+				});
+			}else if(deleteVal == 'deleteJoin'){ // 참여자에서 삭제 
+				$.ajax({
+					url: "joinDelete",
+					type : "POST",
+					data : {
+						chatNo : ${chatInfo.chatNo},
+						userNo : ${loginUser.userNo}
+					},
+					success : function(){
+						
+					},
+					error : function(){
+						console.log("오류발생")	
+					}
+				});
+				
+			}
 			
 			socket.close();
 			
@@ -363,3 +419,6 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
+
+
+

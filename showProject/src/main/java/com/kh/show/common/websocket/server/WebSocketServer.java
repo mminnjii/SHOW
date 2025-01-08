@@ -24,6 +24,10 @@ public class WebSocketServer extends TextWebSocketHandler{
 
 	// 사용자가 접속 버튼을 누르면 session정보가 생긴다
 	/*
+	 * socket은 사용자와 Http의 양방향 통신을 위한 연결 통로이다. 
+	 *   => 요청이 있을 때 마다 새로운 socket을 생성하는 것이 아니다. 사용하는 용도에 따라 socket을 여러개 생성하는 것. 
+	 *   => 하나의 socket으로도 여러개의 채팅방을 생성할 수 있다. 
+	 * 
 	 * 각 세션 정보를 저장하여 사용자 구문, 그룹화 시켜서 메시지 전달. 
 	 * 각 세션은 구분되어야 한다.
 	 * 
@@ -36,6 +40,10 @@ public class WebSocketServer extends TextWebSocketHandler{
 	 * 		 - Integer, Set<WebSocketSession>
 	 *    3. 메시지 전달
 	 *    	 - 채팅방에 접속해 있는 회원에게만 메시지 전달
+	 * 	  4. 세션 삭제 
+	 * 		 - 해당 채팅방 번호에 해당하는 Set<WebSocketSession> 리스트에서 session 삭제 
+	 * 
+	 * ** Set<WebSocketSession>을 전역 변수로 사용하면 session에 
 	 * 
 	 * */
 	
@@ -136,7 +144,13 @@ public class WebSocketServer extends TextWebSocketHandler{
 		
 		// 사용자에게 입력받은 메시지를 접속해 있는 모든 사용자에게 전달해야 한다.  : getPayload() : 메시지 본문 반환 
 		log.debug("메시지 수신 : {}", message.getPayload());
-
+		String changeMessage = message.getPayload();
+		
+		if((changeMessage.equals(null)) || (changeMessage.equals(""))) {
+			changeMessage = " ";
+		}
+		
+		System.out.println("changeMessage : " + changeMessage);
 		log.debug("Textmessage : {}", message);
 		
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
@@ -145,12 +159,12 @@ public class WebSocketServer extends TextWebSocketHandler{
 		System.out.println(loginUser);
 		
 		ChatMessage cm = ChatMessage.builder()
-									.chatContent(message.getPayload())
+									.chatContent(changeMessage)
 									.userNo(userNo)
 									.chatNo(chatNo)
 									.build();
 		
-		
+		System.out.println("cm : " + cm);
 		// 전달받은 메시지를 DB에 저장한다. 
 		int result = chatService.chatMessage(cm);
 		
@@ -158,7 +172,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 			log.debug("메시지 저장 성공");
 			
 			// member쪽 삭제 필요. vo에도 profile 관련 코드 삭제 
-			//Member mem = memberService.selectChatMem(userNo);
+			// Member mem = memberService.selectChatMem(userNo);
 			
 			// 메시지를 보낸 사용자와 메시지 정보를 담아 전달
 			HashMap<String, Object> infoMap = new HashMap<>();
@@ -195,13 +209,37 @@ public class WebSocketServer extends TextWebSocketHandler{
 		
 		// 해당 채팅방의 회원 session 삭제
 		int chatNo = (int)session.getAttributes().get("chatNo");
-		Set<WebSocketSession> users  = chatUser.get(chatNo);
+		Set<WebSocketSession> users = chatUser.get(chatNo);
 		users.remove(session);
 
+		// 사용자가 나간 경우 해당 세션 정보를 다시 보내서 실시간으로 반영 
+		
+		ArrayList<Member> userList = new ArrayList<>();
+		
+		// 접속자들의 정보를 리스트 생성 (socket 저장소에 저장된 회원들)
+		for(WebSocketSession s: users) {
+			Member loginUser = (Member)s.getAttributes().get("loginUser");
+			userList.add(loginUser);
+		}
+		
+		
+		// 채팅방에 들어온 회원의 정보와 명수를 전달한다.
+		HashMap<String, Object> joinUser = new HashMap<>();
+		joinUser.put("userList", userList);
+		joinUser.put("joinSize", users.size());
+		
+		String responseMsg = new Gson().toJson(joinUser);
+		TextMessage tm = new TextMessage(responseMsg);
+		
+		// 채팅방의 모든 사용자에게 메시지 전달. 
+		for(WebSocketSession ws : users) {
+			ws.sendMessage(tm); 
+		}
+		
+		
 		log.debug("Websocket session : {}",session);
 		log.debug("CloseStatus : {}",status);
 		log.debug("현재 접속자수 : {}", users.size());
-		
 		
 	}
 	

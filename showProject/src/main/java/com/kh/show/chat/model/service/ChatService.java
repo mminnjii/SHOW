@@ -38,6 +38,12 @@ public interface ChatService {
 	// chat_join 회원 데이터 삭제 
 	int joinDelete(ChatJoin cj);
 
+	// 채팅방 번호 뽑기 
+	int selectChatNo();
+
+	// 채팅방 삭제 
+	int deleteChat(int chatNo);
+
 
 
 }

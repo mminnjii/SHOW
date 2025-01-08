@@ -19,6 +19,7 @@ import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.meeting.model.service.MeetingService;
+import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.vo.Genre;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class ChatController {
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, voardLimit);
 		
-		// 소모임 리스트 
+		// 채팅방 리스트 
 		ArrayList<Chat> chatList = chatService.chatList(pi);
 		
 		for(Chat c : chatList) {
@@ -77,19 +78,22 @@ public class ChatController {
 	public String chatInsert(Chat c, HttpSession session) {
 		
 		System.out.println(c);
-		
+		int chatNo = chatService.selectChatNo();
+		c.setChatNo(chatNo);
 		int result = chatService.chatInsert(c);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		
 		// 채팅방 생성이 완료되면 해당 채팅방으로 바로 이동 및 alert 메시지 
 		if(result>0) {
 			session.setAttribute("alertMsg", "채팅방 생성이 완료되었습니다. 채팅방으로 이동됩니다.");
-			return "redirect:list";  // 채팅방 경로로 수정해야 한다.
+			return "redirect:/chat/chatting?chatNo="+chatNo+"&userId="+userId;  // 채팅방 경로로 수정해야 한다.
 			
 		}else { // 생성되지 않으면 커뮤니티 리스트 페이지로 이동 및 alert 메시지 
 			session.setAttribute("alertMsg", "채팅방 생성이 불가능합니다. 다시 생성해 주세요.");
 		}
 		
-		return "chat/chat";
+		return "chat/list";
 	}
 	
 	// 채팅방 검색
@@ -144,11 +148,22 @@ public class ChatController {
 	    return "chat/chatDetail";
 	}
 	
+	// 나가기 버튼 클릭시 join테이블의 데이터 삭제 
 	@PostMapping("joinDelete")
 	public String joinDelete(ChatJoin cj) {
 		
 		// chat_join 회원 데이터 삭제
 		int result = chatService.joinDelete(cj);
+		
+		return "chat/chat";
+	}
+	
+	// 채팅방 삭제 
+	@PostMapping("deleteChat")
+	public String deleteChat(int chatNo) {
+		
+		// chat_join 회원 데이터 삭제
+		int result = chatService.deleteChat(chatNo);
 		
 		return "chat/chat";
 	}

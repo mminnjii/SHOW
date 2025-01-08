@@ -81,6 +81,18 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.joinDelete(sqlSession, cj);
 	}
 
+	// 채팅방 번호 뽑기 
+	@Override
+	public int selectChatNo() {
+		return chatDao.selectChatNo(sqlSession);
+	}
+
+	// 채팅방 삭제 
+	@Override
+	public int deleteChat(int chatNo) {
+		return chatDao.deleteChat(sqlSession, chatNo);
+	}
+
 
 	
 

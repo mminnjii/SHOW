@@ -50,4 +50,7 @@ public interface MeetingService {
 	// 공연 검색 목록 
 	ArrayList<Show> selSearchShow(HashMap<String, Object> map);
 
+	//<!-- 소모임 번호 가져오기 -->
+	int selectMeetingNo();
+
 }

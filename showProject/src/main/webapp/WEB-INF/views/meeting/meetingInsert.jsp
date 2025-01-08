@@ -115,6 +115,7 @@
         <input type="text" id="meetingPlace" name="meetingPlace" placeholder="ex) 서울 영등포 타임스퀘어" required>
         
         <label for="meetingCount">모집 인원</label>
+        <span style="color: red; font-size: 10px;">* 본인 포함 인원으로 선택해 주세요</span>
         <select name="meetingCount" id="meetingCount" required>
         	<option value="" style="color: lightgray;" disabled selected>모집 인원을 선택해 주세요</option>
         	<c:forEach var="mc" begin="1" end="15">
