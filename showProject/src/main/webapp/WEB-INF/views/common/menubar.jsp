@@ -178,18 +178,18 @@
 		                <c:choose>
 		                   <c:when test="${empty loginUser}">
                                <!-- 로그인 전 -->
-                               <li id="li2"><a href="${contextPath }/toLogin">로그인</a></li>
-                               <li id="li3"><a href="${contextPath}/toEnroll">회원가입</a></li>
+                               <li id="li2"><a href="${contextPath }/member/toLogin">로그인</a></li>
+                               <li id="li3"><a href="${contextPath}/member/toEnroll">회원가입</a></li>
                             </c:when>
                             <c:otherwise>
                                 <!-- 로그인 후 -->
                                 <label>${loginUser.userName }님</label> &nbsp;&nbsp;
-                                <li id="li2"><a href="${contextPath }/logout.me">로그아웃</a></li>
-		                        <li id="li3"><a href="${contextPath}/myPage">마이페이지</a></li>
+                                <li id="li2"><a href="${contextPath }/member/logout.me">로그아웃</a></li>
+		                        <li id="li3"><a href="${contextPath}/member/myPage">마이페이지</a></li>
 		                   </c:otherwise>
 		                </c:choose>
                         <li id="li4">
-                            <a href="${contextPath}/reserve?userNo=${loginUser.userNo}">예매확인/취소</a>
+                            <a href="${contextPath}/member/reserve?userNo=${loginUser.userNo}">예매확인/취소</a>
                         </li>
                         <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>

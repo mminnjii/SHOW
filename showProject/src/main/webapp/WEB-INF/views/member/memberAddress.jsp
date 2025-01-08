@@ -73,7 +73,7 @@
 	<div class="content">
 		<br><br>
 		<div class="inner">
-            <h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+            <h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -162,7 +162,7 @@
             var me = $("<input>"); 
             var ad = $("<input>"); 
 
-            form.prop("action","${contextPath}/address.me").prop("method","post");
+            form.prop("action","${contextPath}/member/address.me").prop("method","post");
             me.prop("type","hidden").prop("name","userId").prop("value","${loginUser.userId}");
             ad.prop("type","hidden").prop("name","address").prop("value",address);
 
