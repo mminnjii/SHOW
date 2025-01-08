@@ -137,31 +137,31 @@
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+                    <a href="/show/showInfo/detail?name=광화문연가"><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
                     <span id="j1">광화문연가</span><br>
                     <span id="j2">2024.02.08-2025.02.09</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <a href="/show/showInfo/detail?name=글루미"><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
                     <span id="j1">글루미 선데이</span><br>
                     <span id="j2">2024.11.05-2025.01.26</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <a href="/show/showInfo/detail?name=클로버"><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
                     <span id="j1">클로버</span><br>
                     <span id="j2">2024.11.05-2025.01.26</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <a href="/show/showInfo/detail?name=틱틱붐"><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
                     <span id="j1">틱틱붐</span><br>
                     <span id="j2">2024.12.17-2025.02.02</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <a href="/show/showInfo/detail?name=오페라"><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
                     <span id="j1">오페라</span><br>
                     <span id="j2">2024.12.22-2024.12.30</span>
                 </td>           

@@ -651,4 +651,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET STATUS = 'N'
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
+	  
+	  <!-- 쇼이름으로 상세검색 -->
+	  <select id="selectWithName" >
+	  	SELECT * 
+		FROM SHOW 
+		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%';
+	  </select>
+	  
 </mapper>

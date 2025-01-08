@@ -188,7 +188,9 @@
 
                     // td 추가
                     str += "<td>"
+                    	+ "<a href='/show/showInfo/detail?name=" + result[i].posterChangeName + "'>"
                         + "<img src='" + imgPath + "' alt='Poster Image' id='r1'/><br><br>"
+                        + "</a>"
                         + "<span id='j1'>" + result[i].showName + "</span><br>"
                         + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
                         + "</td>"

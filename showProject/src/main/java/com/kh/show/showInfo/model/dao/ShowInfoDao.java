@@ -433,4 +433,11 @@ public class ShowInfoDao {
 		return session.update("showInfoMapper.deleteReview",replyNo);
 	}
 
+
+
+
+	public Show selectWithName(SqlSession session, String name) {
+		return session.selectOne("showInfoMapper.selectWithName",name);
+	}
+
 }

@@ -482,6 +482,12 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+	@Override
+	public Show selectWithName(String name) {
+		return showInfoDao.selectWithName(sqlSession,name);
+	}
+
+
 
 
 }

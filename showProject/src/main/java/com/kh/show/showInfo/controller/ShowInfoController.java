@@ -1,8 +1,10 @@
 package com.kh.show.showInfo.controller;
 
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +31,41 @@ public class ShowInfoController {
 	
 	@Autowired
 	private ShowInfoService showInfoService;
+	
+	// 공연상세정보
+	@GetMapping("selectWithName")
+	public String selectWithName(String directoryPath, String name) {
+		System.out.println(name);
+		
+		Show s = showInfoService.selectWithName(name);
+		System.out.println(s.getDetailChangeName());
+			
+//			List<String> matchingFiles = new ArrayList<>();
+//	        File directory = new File(directoryPath);
+//
+//	        if (directory.exists() && directory.isDirectory()) {
+//	            // 파일 및 디렉토리 탐색
+//	            File[] files = directory.listFiles();
+//
+//	            if (files != null) {
+//	                for (File file : files) {
+//	                    if (file.isDirectory()) {
+//	                        // 하위 폴더 재귀 탐색
+//	                        matchingFiles.addAll(selectWithName(file.getAbsolutePath(), name));
+//	                    } else if (file.isFile() && file.getName().contains(name)) {
+//	                        // 이미지 파일인지 확인
+//	                        String lowerCaseName = file.getName().toLowerCase();
+//	                        if (lowerCaseName.endsWith(".jpg") || lowerCaseName.endsWith(".png") || lowerCaseName.endsWith(".gif")) {
+//	                            matchingFiles.add(file.getAbsolutePath());
+//	                        }
+//	                    }
+//	                }
+//	            }
+//	        }
+		
+		return "";
+	}
+	
 	
 	
 	//공연상세이동

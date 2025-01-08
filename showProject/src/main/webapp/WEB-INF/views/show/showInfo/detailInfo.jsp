@@ -21,6 +21,9 @@
 <title>Insert title here</title>
 </head>
 <body>	
+		<%
+        	String Showname = request.getParameter("name");
+    	%>
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
 	
 		<br><br>
@@ -77,6 +80,23 @@
 	        
 	        $(function () {
 	            $('#Modal').modal('show');
+	            
+	            
+	            $.ajax({
+	                url: '/show/showInfo/selectWithName', 
+	                type: 'POST',           
+	                data: {
+	                	reservationId : reservation_uid,
+		                roundId : roundId,
+		                selectedName : selectedName
+	                }, 
+	                success: function(response) {
+	                    console.log('서버 응답:', response);
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error('에러 발생:', error);
+	                }
+	            
 	        });
         
         </script>

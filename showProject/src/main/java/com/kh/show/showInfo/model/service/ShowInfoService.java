@@ -168,5 +168,8 @@ public interface ShowInfoService {
 	
 	// 리뷰 삭제하기
 	int deleteReview(int replyNo);
+	
+	// 쇼이름으로 정보 검색하기
+	Show selectWithName(String name);
 
 }
