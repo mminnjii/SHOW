@@ -45,17 +45,17 @@
 		background-color: rgb(246, 246, 246);
 	}
 
-	/*qna body*/
-	#pay-body{
+	/*chat body*/
+	#chat-body{
 		width: 80%;
 		height: 80%;
 		margin: auto;
 	}
 
-	#payList{
+	#chatList{
 		text-align: center;
 	}
-	#payList>tbody>tr:hover{
+	#c-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -65,7 +65,21 @@
 		margin: auto;
 	}
 
-	
+	#btn-area{
+		width: 80%;
+		text-align: left;
+	}
+
+	#switch{
+		width: 120px;
+		height: 40px;
+		background-color: #597c9b;
+		border: none;
+		border-radius: 10px;
+		color: white;
+
+	}
+
 
 	
 </style>
@@ -85,33 +99,38 @@
 				</div>
 				<div id="mypage-body">
 					<br>
-					<h5>내 채팅방</h5>
+					<h5>가입한 채팅방</h5>
 					<br>
-					<div id="pay-body">
+					<div id="chat-body">
+						<div id="btn-area">
+							<button id="switch">내 채팅방</button>
+						</div>
 						<br>
-						<table id="payList" class="table table-hover" align="center">
+						<table id="chatList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>호스트 ID</th>
+									<th>번호</th>
 									<th>채팅방 이름</th>
+									<th>호스트 ID</th>
 									<th>인원 수</th>
-									<th>마지막 채팅</th>
+									<th>생성일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty list }">
+									<c:when test="${empty clist }">
 										<tr>
-											<td colspan="4">조회된 채팅방이 없습니다.</td>
+											<td colspan="5">가입된 채팅방이 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="c" items="${list }">
-											<tr>
-												<td>admin</td>
-												<td>관리자 방</td>
-												<td>3</td>
-												<td>2024-12-30</td>
+										<c:forEach var="c" items="${clist }">
+											<tr id="c-main">
+												<td>${c.chatNo}</td>
+												<td>${c.chatTitle}</td>
+												<td>${c.userId}</td>
+												<td>${c.joinCount}/${c.chatUserCount}</td>
+												<td>${c.createDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -121,10 +140,11 @@
 						<br>
 						<script>
             	
-							$("#qnaList>tbody>tr").click(function(){
-								var bno = $(this).children().first().text();
-								
-								//location.href = "detail?bno="+bno;
+							$("#chatList #c-main").click(function(){
+								var chatNo = $(this).children().first().text();
+								var userId = $(this).children().first().next().text();
+
+								location.href = "${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 							});
 							
 						</script>
@@ -146,7 +166,7 @@
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty list }">
+										<c:when test="${empty clist }">
 										</c:when>
 										<c:otherwise>
 											<li class="page-item"><a class="page-link" href="chat?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
@@ -174,6 +194,10 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+
+		$("#switch").click(function(){
+			location.href = "${contextPath}/chat2?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 
