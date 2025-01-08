@@ -311,7 +311,7 @@
 		       GENRE_NAME genreNo
 		FROM COUPON
 		JOIN GENRE USING(GENRE_NO)
-		WHERE USER_NO = 1
+		WHERE USER_NO = #{userNo}
 		AND STATUS = 'Y'
 		AND EXPIRED_DATE>SYSDATE
 	</select>
@@ -436,8 +436,8 @@
 	           CHAT_USER_COUNT chatUserCount,
 	           CREATEDATE createDate,
 	           COUNT(J.USER_NO) joinCount
-		FROM CHAT_JOIN J
-		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
+		FROM CHAT C
+		JOIN CHAT_JOIN J ON(J.CHAT_NO = C.CHAT_NO)
 		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
 		WHERE C.STATUS = 'Y'
 		AND C.USER_NO = #{userNo}
@@ -459,7 +459,7 @@
 	
 	<select id="meetingJoinList" resultType="JoinMeeting" >
 	<![CDATA[
-		SELECT M.MEETING_NO meethingNo,
+		SELECT M.MEETING_NO meetingNo,
 	           M.USER_NO userNo,
                E.USER_ID userId,
 	           MEETING_TITLE meetingTitle,
@@ -499,7 +499,7 @@
 	
 	<select id="meetingHostList" resultType="JoinMeeting" >
 	<![CDATA[
-		SELECT M.MEETING_NO meethingNo,
+		SELECT M.MEETING_NO meetingNo,
 	           M.USER_NO userNo,
                E.USER_ID userId,
 	           MEETING_TITLE meetingTitle,

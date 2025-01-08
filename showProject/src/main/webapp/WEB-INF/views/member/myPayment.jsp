@@ -81,7 +81,7 @@
 		<br><br>
 		<div class="inner">
 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
-			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+			<h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">

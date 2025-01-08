@@ -46,10 +46,22 @@
 			<mapping path="/question/**"/>  
 			<mapping path="/qna/**"/>  
 			<mapping path="/chat/**"/>  
+			<mapping path="/member/**"/>  
 			
 			 <!-- 통합 요청중에 제외하고싶은 요청 매핑 추가  -->
 			<exclude-mapping path="/meeting/list"/>
 			<exclude-mapping path="/chat/list"/>
+			<exclude-mapping path="/member/toLogin"/>
+			<exclude-mapping path="/member/login.me"/>
+			<exclude-mapping path="/member/findId"/>
+			<exclude-mapping path="/member/findPwd"/>
+			<exclude-mapping path="/member/newPwd"/>
+			<exclude-mapping path="/member/toEnroll"/> 
+			<exclude-mapping path="/member/toTOS"/>
+			<exclude-mapping path="/member/memberEnrollPage"/>
+			<exclude-mapping path="/member/insert.me"/>
+			<exclude-mapping path="/member/idCheck"/>
+			<exclude-mapping path="/member/phoneCheck"/>
 
 			<beans:bean class="com.kh.show.common.interceptor.LoginInterceptor"/>
 		</interceptor>

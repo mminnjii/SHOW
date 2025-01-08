@@ -89,7 +89,7 @@
 		<br><br>
 		<div class="inner">
 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
-			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+			<h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -116,7 +116,7 @@
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty clist }">
+									<c:when test="${empty c2list }">
 										<tr>
 											<td colspan="5">내 채팅방은 없습니다</td>
 										</tr>
@@ -200,7 +200,7 @@
        	 }
     	});
 		$("#switch").click(function(){
-			location.href = "${contextPath}/chat?userNo=${loginUser.userNo}";
+			location.href = "${contextPath}/member/chat?userNo=${loginUser.userNo}";
 		});
 	</script>
 	
