@@ -45,17 +45,18 @@
 		background-color: rgb(246, 246, 246);
 	}
 
-	/*qna body*/
-	#pay-body{
+	/*group body*/
+	#group-body{
 		width: 80%;
 		height: 80%;
 		margin: auto;
 	}
 
-	#payList{
+	#groupList{
 		text-align: center;
+		width: 100%;
 	}
-	#payList>tbody>tr:hover{
+	#g-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -65,8 +66,24 @@
 		margin: auto;
 	}
 
-	
+	#btn-area{
+		width: 80%;
+		text-align: left;
+	}
 
+	#switch{
+		width: 120px;
+		height: 40px;
+		background-color: #597c9b;
+		border: none;
+		border-radius: 10px;
+		color: white;
+
+	}
+
+	table{
+		font-size: 14px;
+	}
 	
 </style>
 </head>
@@ -85,33 +102,45 @@
 				</div>
 				<div id="mypage-body">
 					<br>
-					<h5>내 소모임</h5>
+					<h5>가입한 소모임</h5>
 					<br>
-					<div id="pay-body">
+					<div id="group-body">
+						<div id="btn-area">
+							<button id="switch">내 소모임</button>
+						</div>
 						<br>
-						<table id="payList" class="table table-hover" align="center">
+						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>소모임 번호</th>
-									<th>소모임 이름</th>
-									<th>호스트 ID</th>
-									<th>인원 수</th>
+									<th width="60px">번호</th>
+									<th>모임명</th>
+									<th>모임장</th>
+									<th>인원수</th>
+									<th>모임 날짜</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty list }">
+									<c:when test="${empty mlist }">
 										<tr>
-											<td colspan="4">가입된 소모임이 없습니다.</td>
+											<td colspan="5">가입한 소모임이 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="g" items="${list }">
-											<tr>
-												<td>1</td>
-												<td>반 고흐전</td>
-												<td>admin</td>
-												<td>10명</td>
+										<c:forEach var="m" items="${mlist }">
+											<tr id="g-main">
+												<td>${m.meetingNo}</td>
+												<td>(${m.showName})${m.meetingTitle}</td>
+												<td>${m.userId}</td>
+												<c:choose>
+													<c:when test="${m.joinCount == m.meetingCount}">
+														<td style="color: red;">${m.joinCount}/${m.meetingCount}</td>
+													</c:when>
+													<c:otherwise>
+														<td>${m.joinCount}/${m.meetingCount}</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${m.meetingDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -121,10 +150,10 @@
 						<br>
 						<script>
             	
-							$("#qnaList>tbody>tr").click(function(){
-								var bno = $(this).children().first().text();
-								
-								//location.href = "detail?bno="+bno;
+							$("#groupList #g-main").click(function(){
+								var mno = $(this).children().first().text();
+
+								location.href = "${contextPath}/meeting/meetingDetail?mno="+mno;
 							});
 							
 						</script>
@@ -146,7 +175,7 @@
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty list }">
+										<c:when test="${empty mlist }">
 										</c:when>
 										<c:otherwise>
 											<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
@@ -174,6 +203,9 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+		$("#switch").click(function(){
+			location.href = "${contextPath}/group2?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 
