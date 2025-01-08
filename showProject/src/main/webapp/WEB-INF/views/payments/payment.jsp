@@ -124,10 +124,10 @@
    		 var roundId = $('input[name="roundId"]').val();
    		 var name = $("#name").text();
    		 var amount = $("#amount").text();
-   		 
    		 var buyerEmail = "${loginUser.email}";
    	     var buyerName = "${loginUser.userName}";
    	     var buyerTel = "${loginUser.phone}";
+   	     var selectedName = "${selectedName}";
        	
    		 let methodToget = "";
    		$("#method").change(function () {
@@ -141,11 +141,12 @@
         $("#card").on("click", function () {
         	
             $.ajax({
-                url: '/show/payments/processPayment', // 서버 URL
-                type: 'POST',           // HTTP 메서드
+                url: '/show/payments/processPayment', 
+                type: 'POST',           
                 data: {
                 	reservationId : reservation_uid,
-	                roundId : roundId
+	                roundId : roundId,
+	                selectedName : selectedName
                 }, 
                 success: function(response) {
                     console.log('서버 응답:', response);
@@ -273,11 +274,12 @@
         	
         	
             $.ajax({
-                url: '/show/payments/processPayment', // 서버 URL
-                type: 'POST',           // HTTP 메서드
+                url: '/show/payments/processPayment', 
+                type: 'POST',           
                 data: {
                 	reservationId : reservation_uid,
-	                roundId : roundId
+	                roundId : roundId,
+	                selectedName : selectedName
                 }, 
                 success: function(response) {
                     console.log('서버 응답:', response);
