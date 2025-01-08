@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 예약테이블 생성 -->
-	<insert id="createReservation" parameterType="HashMap">
+	<insert id="createReservation" parameterType="Reservation">
 		INSERT INTO RESERVATION
 		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, #{userNo}, #{hallNo},DEFAULT,DEFAULT,NULL)
 	</insert>
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- status "N"인 좌석 조회 -->
 	<select id="selectTakenSeats" resultType="String">
-		SELECT ROW_NAME || COL_NO  AS TAKEN
+		SELECT ROW_NAME || COL_NO  AS rowName
 		FROM SEATS
 		WHERE STATUS = 'N'
 		AND ROUND_ID = #{roundId}
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 좌석 상태 변환 -->
-	<update id="updateSeatStatus" parameterType="HashMap">
+	<update id="updateSeatStatus" parameterType="Hashmap">
 		UPDATE SEATS
 		SET STATUS = 'N'
 		WHERE ROW_NAME || COL_NO = #{name}
@@ -110,6 +110,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN SHOWROUND USING (ROUND_ID)
 		JOIN HALL USING(HALL_NO)
 		WHERE RESERVATION_ID = #{reservationId}
+	</select>
+	
+	<!-- 티켓정보 확인 -->
+	<select id="confirmTicket" resultType="com.kh.show.reservation.model.vo.Ticket">
+	      SELECT TICKET_ID AS ticketId
+                ,ROW_NAME || COL_NO AS seatId 
+                ,GRADE_NAME AS seatName
+        FROM TICKET T
+        JOIN SEATS S USING(SEAT_ID)
+        JOIN SEATSOFROW SR USING(ROW_NAME)
+        WHERE RESERVATION_ID = #{reservationId}        
+        AND T.STATUS = 'Y'
 	</select>
 	
 	
