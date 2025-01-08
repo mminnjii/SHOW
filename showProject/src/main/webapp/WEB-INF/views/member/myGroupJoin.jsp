@@ -54,6 +54,7 @@
 
 	#groupList{
 		text-align: center;
+		width: 100%;
 	}
 	#g-main:hover{
 		cursor: pointer;
@@ -78,6 +79,10 @@
 		border-radius: 10px;
 		color: white;
 
+	}
+
+	table{
+		font-size: 14px;
 	}
 	
 </style>
@@ -107,11 +112,10 @@
 						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th width="50px">번호</th>
+									<th width="60px">번호</th>
 									<th>모임명</th>
 									<th>모임장</th>
-									<th>모집 인원</th>
-									<th>모집 기간</th>
+									<th>인원수</th>
 									<th>모임 날짜</th>
 								</tr>
 							</thead>
@@ -119,14 +123,14 @@
 								<c:choose>
 									<c:when test="${empty mlist }">
 										<tr>
-											<td colspan="6">가입한 소모임이 없습니다</td>
+											<td colspan="5">가입한 소모임이 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="m" items="${mlist }">
-											<tr id="c-main">
+											<tr id="g-main">
 												<td>${m.meetingNo}</td>
-												<td>${m.meetingTitle}</td>
+												<td>(${m.showName})${m.meetingTitle}</td>
 												<td>${m.userId}</td>
 												<c:choose>
 													<c:when test="${m.joinCount == m.meetingCount}">
@@ -136,7 +140,6 @@
 														<td>${m.joinCount}/${m.meetingCount}</td>
 													</c:otherwise>
 												</c:choose>
-												<td>${m.startDate}~${m.endDate}</td>
 												<td>${m.meetingDate}</td>
 											</tr>
 										</c:forEach>
@@ -148,10 +151,9 @@
 						<script>
             	
 							$("#groupList #g-main").click(function(){
-								var chatNo = $(this).children().first().text();
-								var userId = $(this).children().first().next().text();
+								var mno = $(this).children().first().text();
 
-								location.href = "${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+								location.href = "${contextPath}/meeting/meetingDetail?mno="+mno;
 							});
 							
 						</script>

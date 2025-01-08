@@ -79,6 +79,10 @@
 		color: white;
 
 	}
+
+	table{
+		font-size: 14px;
+	}
 	
 </style>
 </head>
@@ -107,9 +111,9 @@
 						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th width="50px">번호</th>
+									<th width="70px">번호</th>
 									<th>모임명</th>
-									<th>모집 인원</th>
+									<th>인원수</th>
 									<th>모집 기간</th>
 									<th>모임 날짜</th>
 								</tr>
@@ -123,9 +127,9 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="m" items="${m2list }">
-											<tr id="c-main">
+											<tr id="g-main">
 												<td>${m.meetingNo}</td>
-												<td>${m.meetingTitle}</td>
+												<td>(${m.showName})${m.meetingTitle}</td>
 												<c:choose>
 													<c:when test="${m.joinCount == m.meetingCount}">
 														<td style="color: red;">${m.joinCount}/${m.meetingCount}</td>
@@ -146,10 +150,9 @@
 						<script>
             	
 							$("#groupList #g-main").click(function(){
-								var chatNo = $(this).children().first().text();
-								var userId = $(this).children().first().next().text();
+								var mno = $(this).children().first().text();
 
-								location.href = "${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+								location.href = "${contextPath}/meeting/meetingDetail?mno="+mno;
 							});
 							
 						</script>

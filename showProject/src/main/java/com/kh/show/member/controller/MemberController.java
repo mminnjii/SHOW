@@ -658,11 +658,10 @@ public class MemberController {
 		int listCount = memberService.meetingCount(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-					
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 					
 		ArrayList<MeetingJoin> mlist = memberService.meetingList(userNo,pi);
-					
+
 		model.addAttribute("mlist",mlist);
 		model.addAttribute("pi",pi);
 
@@ -677,11 +676,12 @@ public class MemberController {
 		int listCount = memberService.meetingCount2(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-					
+		System.out.println(1);			
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 					
 		ArrayList<Meeting> m2list = memberService.meetingList2(userNo,pi);
-					
+		
+		
 		model.addAttribute("m2list",m2list);
 		model.addAttribute("pi",pi);
 
