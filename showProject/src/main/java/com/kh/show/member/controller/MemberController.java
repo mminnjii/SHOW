@@ -619,14 +619,14 @@ public class MemberController {
 		int listCount = memberService.chatCount(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-		
+		System.out.println("가입"+userNo);
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
 		ArrayList<ChatJoin> clist = memberService.chatList(userNo,pi);
 		
 		model.addAttribute("clist",clist);
 		model.addAttribute("pi",pi);
-		
+		System.out.println(clist);
 		return "member/myChatJoin";
 	}
 	
@@ -639,11 +639,11 @@ public class MemberController {
 		int listCount = memberService.chatCount2(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-		
+		System.out.println("생성"+userNo);
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 		
 		ArrayList<Chat> c2list = memberService.chatList2(userNo,pi);
-		
+		System.out.println(c2list);
 		model.addAttribute("c2list",c2list);
 		model.addAttribute("pi",pi);
 		
@@ -664,7 +664,7 @@ public class MemberController {
 
 		model.addAttribute("mlist",mlist);
 		model.addAttribute("pi",pi);
-
+		System.out.println(mlist);
 		return "member/myGroupJoin";
 	}
 	
@@ -676,12 +676,12 @@ public class MemberController {
 		int listCount = memberService.meetingCount2(userNo);
 		int pageLimit = 10;
 		int listLimit = 5;
-		System.out.println(1);			
+		System.out.println(userNo);			
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
 					
 		ArrayList<Meeting> m2list = memberService.meetingList2(userNo,pi);
 		
-		
+		System.out.println(m2list);
 		model.addAttribute("m2list",m2list);
 		model.addAttribute("pi",pi);
 
