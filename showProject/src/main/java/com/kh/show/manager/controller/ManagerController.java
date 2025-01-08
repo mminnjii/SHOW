@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.show.customer.model.vo.Faq;
+import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
@@ -215,6 +216,12 @@ public class ManagerController {
 		return service.selectAllShow();
 	}
 	
+	@GetMapping("/managerPage/questionList")
+	@ResponseBody
+	public List<ManagerQuestion> selectAllQuestion(){
+		return service.selectAllQuestion();
+	}
+	
 	@GetMapping("/managerPage/faqInsert")
 	public String insertFaq() {
 		return "manager/faqInsert";
@@ -265,5 +272,15 @@ public class ManagerController {
 		model.addAttribute("reserv", r);
 		return r;
 	}
+	
+	/*
+	@GetMapping("/managerPage/questionList")
+	@ResponseBody
+	public ManagerQuestion questionDetail(@RequestParam(value= "questionNo") int questionNo, Model model) {
+		ManagerQuestion q = service.selectAllQuestion(questionNo);
+		model.addAttribute("question", q);
+		return q;
+	}
+	*/
 	
 }

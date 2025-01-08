@@ -166,19 +166,22 @@
 			 	        	url : "/show/showInfo/enrollReview",
 			 	        	data : {
 			 	        		
-			 	        		rating : rating,
-			 	        		title : title,
-			 	        		writer : writer,
-			 	        		content : content
+			 	        		reviewScore : rating,
+			 	        		reviewTitle : title,
+			 	        		userNo : writer,
+			 	        		reviewContent : content
 			 	        	},
 			 	        	
 			 	        	type: 'POST',  
-			 	        	success : function(success){
-			 	        		alert(success);
-			 	        		window.location.href = '/show/showInfo/review';
+			 	        	success : function(result){
+			 	         		if(result=="NNNNY"){
+				 	        		alert("리뷰작성에 성공했습니다");
+				 	        		window.location.href = '/show/showInfo/review';
+			 	        		}else{
+			 	        			alert("리뷰작성에 실패했습니다");
+			 	        		}
 			 	        	},
 			 	        	error : function(fail){
-			 	        		alert(fail);
 			                     console.log("통신오류");
 			 	        	}
 			 	        }); 

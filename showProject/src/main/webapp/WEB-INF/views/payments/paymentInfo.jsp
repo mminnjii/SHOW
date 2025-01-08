@@ -6,6 +6,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>결제 정보</title>
 <style>
+	#container{
+		margin-top: 100px;
+		margin-bottom: 300px;
+		margin-left: 200px;
+	}
+	
+  table {
+	    width: 60%;
+	    margin-bottom: 50px; 
+	    table-layout: fixed;
+	    margin-left: 10px;
+	    border-collapse: collapse;
+  }
+	
+	tbody {
+	    border-top: 2px solid #000; /* 헤더와 본문 사이에 구분선 추가 */
+	  }
+	
 	button {
 		padding: 10px 20px; 
 		font-size: 16px; 
@@ -14,59 +32,143 @@
 		border-radius: 5px;
 		cursor: pointer;
 	}
+	
+  th, td {
+    text-align: left;
+    padding-left: 8px; 
+  }
+  
+	
 </style>    
 </head>
 <body>
-	
-		<div align="center">
+	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+		<div id="container" align="left">
+			<input type="hidden" name="receiptUrl" value="${receipt} "></input>
 			<br>
-	     		<table align="center">
+	     		<table>
 	     			<thead>
 	     				<tr>
-	     					<th id="name" colspan="3">결제내역</th>
+	     					<th id="name" colspan="3"><h3>결제내역</h3></th>
 	     				</tr>
 	     			</thead>
 	     			<tbody>
 	     				<tr>
-	     					<td>결제번호 :</td>
-	     					<td>${payId}</td>
+	     					<td><h4>결제번호 :</h4></td>
+	     					<td>${paymentId}</td>
+	     				</tr>
+	     				<tr>
+	     					<td><h4>결제금액 :</h4></td>
+	     					<td>${price}</td>
+	     				</tr>
+	     				<tr>
+	     					<td><h4>결제방식 :</h4></td>
+	     					<td>${methodToget }</td>
+	     				</tr>
+	     				<tr>
+	     					<td><h4>결제상태 :</h4></td>
+	     					<td>Y</td>
 	     				</tr>
 	     			<c:if test="${not empty bankName && not empty bankNum && not empty bankHolder && not empty dueDate }">	
 	     				<tr>
-	     					<td>은행이름 :</td>
+	     					<td><h4>은행이름 :</h4></td>
 	     					<td>${bankName}</td>
 	     				</tr>
      					<tr>
-     						<td>은행번호 :</td>
+     						<td><h4>은행번호 :</h4></td>
 	     					<td>${bankNum}</td>
 	     				</tr>
      					<tr>
-     						<td>공연장소 :</td>
+     						<td><h4>예금주 :</h4></td>
 	     					<td>${bankHolder}</td>
 	     				</tr>
 	     				<tr>
-	     					<td>입금예정일 :</td>
+	     					<td><h4>입금예정일 : </h4></td>
 	     					<td>${dueDate} 까지</td>
 	     				</tr>
 	     			</c:if>		
 	     				<tr>
-	     					<td>영수증 :</td>
-	     					<td><a href="#">${receipt}</a></td>
+	     					<td><h4>영수증 : </h4></td>
+	     					<td><button id="receipt">영수증 확인</button></td>
 	     				</tr>
 	     			</tbody>
 	     		</table>
-	        
-	        <br><br>
-	        <hr>
 	        <br><br><br><br><br>
-    		<button id="main">메인으로</button>
+	        <table>
+	     			<thead>
+	     				<tr>
+	     					<th id="name" colspan="3"><h3>예약내역</h3></th>
+	     				</tr>
+	     			</thead>
+	     			<tbody>
+	     				<c:if test="${not empty rInfo }" >
+		     				<tr>
+		     					<td><h4>예약번호 :</h4></td>
+		     					<td>${rInfo.reservationId}</td>
+		     				</tr>
+		     				<tr>
+		     					<td><h4>공연명 :</h4></td>
+		     					<td>${rInfo.showName}</td>
+		     				</tr>
+		     				<tr>
+	     						<td><h4>공연일자 :</h4></td>
+		     					<td>${rInfo.showDate}</td>
+		     				</tr>
+		     				<tr>
+		     					<td><h4>(${rInfo.roundId} 회차) 공연시간 :</h4></td>
+		     					<td>${rInfo.showTime}</td>
+		     				</tr>
+	     					<tr>
+	     						<td><h4>공연장소 :</h4></td>
+		     					<td>${rInfo.hallName}</td>
+		     				</tr>
+     					</c:if>
+	     			</tbody>
+	     		
+	     		</table>
+	     	<br><br>
+	        <br><br><br>
+	         <table>
+	     			<thead>
+	     				<tr>
+	     					<th id="name" colspan="3"><h3>티켓정보</h3></th>
+	     				</tr>
+	     			</thead>
+	     			<tbody>
+		     			<c:if test="${not empty methodToget }" >
+		     				<tr>
+		     					<td><h4>수령방식 :</h4></td>
+		     					<td>${methodToget }</td>
+		     				</tr>
+		     			</c:if >	
+		     			<c:if test="${not empty t }" >	
+		     				<tr>
+		     					<td><h4>매수 :</h4></td>
+		     					<td>${t.size() }</td>
+		     				</tr>
+			     				<tr>
+			     					<td><h4>좌석번호(좌석명) :</h4></td>
+			     			<c:forEach items="${t }" var="t">		
+			     					<td>${t.seatId }(${t.seatName }석)</td>
+			     			</c:forEach>
+			     				</tr>
+			     				
+	     				</c:if >
+	     			</tbody>
+	     		</table>
         </div>
 		
 		<script>
-			$("#main").on("click", function () {
-				window.location.href = "/show";
-			});
+			
+		 	var receiptUrl = $('input[name="receiptUrl"]').val();
+			
+			$("#receipt").on("click",function(){
+				
+				window.open(receiptUrl);
+				
+			}); 
+			
 		</script>
-		
+		<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

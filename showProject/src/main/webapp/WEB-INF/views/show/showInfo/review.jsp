@@ -157,6 +157,12 @@
 	</div>
 	
 	<script>	
+		
+		$(".enroll").on("click",function(){
+			location.href = '/show/showInfo/enroll'; 
+		});
+		
+	
 	
 		$(".modify").on("click",(function(){
 			
@@ -177,36 +183,33 @@
 		})); 
 		
 		
-		/*	$(".delete").on("click",(function(){
-				 
-				var writer = $(".comment #writer").val();
- 	 			
+			$(".delete").on("click",(function(){
+
  	 			var replyNo = $(this).attr("data-rno");
  	 			
- 	 			var userNo = ${loginUser.userNo}
-			
  	 			$.ajax({
- 	 			 	url : "/show/showInfo/updateReview",
+ 	 			 	url : "/show/showInfo/deleteReview",
 	 	        	data : {
 	 	        		
-	 	        		writer : writer,
-	 	        		writer : writer,
-	 	        		content : content
+	 	        		replyNo : replyNo
 	 	        	},
 	 	        	
 	 	        	type : "POST",
 	 	        	
-		 	       	success : function(success){
-	 	        		alert(success);
-	 	        		window.location.href = '/show/showInfo/review';
+		 	       	success : function(result){
+		 	       		if(result=="NNNNY"){
+		 	        		alert("리뷰삭제에 성공했습니다");
+		 	        		window.location.href = '/show/showInfo/review';
+	 	        		}else{
+	 	        			alert("리뷰삭제에 실패했습니다");
+	 	        		}
 	 	        	},
 	 	        	error : function(fail){
-	 	        		alert(fail);
 	                     console.log("통신오류");
 	 	        	}
  	 				
  	 			});
-		})); */
+		})); 
 	
 	
 	</script>

@@ -158,6 +158,15 @@ public interface ShowInfoService {
 	ArrayList<Show> mainRegionRank();
 
 	// 리뷰 등록하기
-	int enrollReview(HashMap<String, String> hashMap);
+	int enrollReview(Review r);
+	
+	// 리뷰수정전 정보 조회
+	Review searchReview(int replyNo);
+	
+	// 리뷰 수정하기
+	int updateReview(Review r);
+	
+	// 리뷰 삭제하기
+	int deleteReview(int replyNo);
 
 }

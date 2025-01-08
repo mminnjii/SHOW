@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class Ticket {
 	private int ticketId;	//	TICKET_ID
 	private int reservationId;	//	RESERVATION_ID
-	private int seatId;	//	SEAT_ID
+	private String seatId;	//	SEAT_ID
+	private String seatName;	//	SEAT_ID
 	private int paymentId;	//	PAYMENT_ID
 	private String status;	//	STATUS
 }

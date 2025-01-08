@@ -242,38 +242,50 @@
         <script>
         	
         	$("#general").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
-        
+	
+        	var noticeType = "general";
+        	
+        	$(".noBtn").on("click", function() {
+        	    noticeType = $(this).val();   // 클릭한 버튼의 value 값 가져오기
+        	    console.log(noticeType);
+        	});
+        	
 	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
 	        $("#noticeList>tbody").on("click","tr", function(){
         		var nno = $(this).children().first().text();
-                console.log(nno);
-                $.ajax({
-                	url: 'detail',
-                	type : "POST",
-                	data : {
-                		nno : nno
-                	}, success : function(noticeDetail){
-                		console.log(noticeDetail);
-                		
-                		var nStr = "";
-                		
-                		nStr += '<div class="divClass title">'+ noticeDetail.noticeTitle + "</div>"
-                			 + '<div class="divClass dateCount">' + noticeDetail.createDate
-                			 + " | "
-                			 + noticeDetail.count + "</div>"
-                			 + '<div class="divClass">'+noticeDetail.noticeContent + "</div>"
-                			 + '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button>';
+                console.log(nno); 
+                
+				if(noticeType == "general"){
+	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
+	                $.ajax({
+	                	url: 'detail',
+	                	type : "POST",
+	                	data : {
+	                		nno : nno
+	                	}, success : function(noticeDetail){
+	                		
+	                		var nStr = "";
+	                		
+	                		nStr += '<div class="divClass title">'+ noticeDetail.noticeTitle + "</div>"
+	                			 + '<div class="divClass dateCount">' + noticeDetail.createDate
+	                			 + " | "
+	                			 + noticeDetail.count + "</div>"
+	                			 + '<div class="divClass">'+noticeDetail.noticeContent + "</div>"
+	                			 + '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button>';
+	
+	                		$(".btnForm").empty();
+	                		$("#noticeDiv").html(nStr);
+	                	}, error : function(){
+	                		alert('공지사항을 불러오는 데 실패했습니다.');
+	                	}
+	        		});
+				}else{
+			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+					
+				}
+				
 
-                		$(".btnForm").empty();
-                		$("#noticeDiv").html(nStr);
-                	}, error : function(){
-                		alert('공지사항을 불러오는 데 실패했습니다.');
-                	}
-        		});
 	        });
-	        
-	        
-	        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
 	        
 	        
 	        
@@ -283,12 +295,8 @@
 	        
 			// 일반공지, 오픈공지 버튼 클릭 시 css 변경 구문	        
             $(".noBtn").on('click', function(){
-            	var noticeType = $(this).val();
-            	console.log(noticeType);
-            	
                 $(".noBtn").css("background-color", "white").css("color", "black").css("border", "1px solid gray");
                 $(this).css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
-                
             });
 			
 			
@@ -299,7 +307,6 @@
 					url: "list",
 					type: "post",
 					success : function(noticeList){
-						console.log(noticeList);
 						
 						var str = "";
 						if(noticeList != null){
@@ -331,7 +338,6 @@
 					url: "openlist",
 					type: "post",
 					success : function(noticeList){
-						console.log(noticeList);
 						
 						var str = "";
 						if(noticeList != null){

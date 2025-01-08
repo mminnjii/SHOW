@@ -1,5 +1,6 @@
 package com.kh.show.payments.model.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.show.payments.model.dao.PaymentsDao;
+import com.kh.show.reservation.model.vo.Ticket;
 
 @Service
 public class PaymentsServiceImpl implements PaymentsService {

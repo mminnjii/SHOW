@@ -451,6 +451,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY SHOW_NO
 	  </select>
 	  
+	  <!-- 공연 목록 - 소모임 신청시 필요 - 전수민 -->
+	<select id="selMeetingShow" parameterType="_int" resultMap="showResultSet">
+		SELECT SHOW_NO
+		        ,SHOW_NAME
+		        ,SHOW_EXPLAIN
+		        ,PRICE
+		        ,NOTICE
+		        ,STATUS
+		        ,HALL_NO
+		        ,GENRE_NO
+		        ,REGION_NO
+		        ,SHOW_START
+		        ,SHOW_END
+		        ,COUNT
+		        ,POSTER_ORIGINNAME
+		        ,POSTER_CHANGENAME
+		        ,DETAIL_ORIGINNAME
+		        ,DETAIL_CHANGENAME
+		FROM SHOW
+		WHERE GENRE_NO = #{genreNo}
+	</select>
+	
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공연상세ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  -->	  
 	  <!-- 공연상세 페이지를 위한 공연정보 조회 -->
 	<select id="selectShow" resultMap="showResultSet">
@@ -600,22 +622,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 리뷰 작성 -->
-	<insert id="enrollReview" parameterType="Hashmap">
+	<insert id="enrollReview" parameterType="Review">
 		INSERT INTO REVIEW 
-		VALUES (REVIEW_SEQ.NEXTVAL, 1, #{writer}, #{rating}, #{title}, #{content},SYSDATE, 'Y')
+		VALUES (REVIEW_SEQ.NEXTVAL, 1, #{userNo}, #{reviewScore}, #{reviewTitle}, #{reviewContent},SYSDATE, 'Y')
 	</insert>
 
 	<!-- 리뷰 수정 전 조회 -->
-<!-- 	<select id="">
+  	<select id="searchReview" parameterType="_int" resultMap="reviewResultSet">
 		SELECT * 
 		FROM REVIEW
-		WHERE REVIEW_ID = #{replyNo};
-	</select> -->
+		WHERE REVIEW_ID = #{replyNo}
+	</select> 
 	
 	<!-- 리뷰 수정 -->
-	
+	<update id="updateReview" parameterType="Review">
+		UPDATE REVIEW
+		SET REVIEW_SCORE = #{reviewScore}
+			, REVIEW_TITLE = #{reviewTitle}
+			, REVIEW_CONTENT = #{reviewContent}
+			, CREATE_DATE = SYSDATE
+		WHERE REVIEW_ID = #{reviewId}
+	</update>
 	
 	
 	<!-- 리뷰 삭제 -->
-	  
+	  <update id="deleteReview" parameterType="_int">
+	  	UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_ID = #{replyNo}
+	  </update>
 </mapper>

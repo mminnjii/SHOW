@@ -178,39 +178,64 @@ public class ShowInfoController {
 	// 리뷰 등록하기
 	@ResponseBody
 	@PostMapping(value = "/enrollReview",produces = "text/html; charset=UTF-8")
-	public String enrollReview(HttpSession session,String rating,String title,String writer,String content) {
-
-		HashMap<String,String> hashMap = new HashMap<>();
-		hashMap.put("rating", rating);
-		hashMap.put("title", title);
-		hashMap.put("writer", writer);
-		hashMap.put("content", content);
+	public String enrollReview(Review r) {
 		
-		int enrollReview = showInfoService.enrollReview(hashMap);
+		r.getUserNo();
+		int enrollReview = showInfoService.enrollReview(r);
+		
 
 		if(enrollReview>0) {
-			return "리뷰작성에 성공했습니다";
+			return "NNNNY";
 		}else {
-			return "리뷰작성에 실패했습니다";
+			return "NNNNN";
 		}
 	}
 	
 	
 	// 리뷰 수정하기 이동
 	@GetMapping("/update")
-	public String updateSearch (int replyNo) {
+	public String updateSearch (Model model, int replyNo) {
 		
-		// Review r = showInfoService.searchReview(replyNo);
+		 Review r = showInfoService.searchReview(replyNo);
+		 model.addAttribute("r",r);
+		 
+		 int rank = (int)r.getReviewScore()*20;
+		 model.addAttribute("rank",rank);
+		 
 		
 		return "show/showInfo/reviewUpdate";
 	}
 	
 	
 	// 리뷰 수정하기
-//	@ResponseBody
-//	@PostMapping(value = "/updateReview",produces = "text/html; charset=UTF-8")
-//	public String updateReview() {
-//		return "";
-//	}
+	@ResponseBody
+	@PostMapping(value = "/updateReview",produces = "text/html; charset=UTF-8")
+	public String updateReview(Review r) {
+		
+		int enrollReview = showInfoService.updateReview(r);
+
+		if(enrollReview>0) {
+			return "NNNNY";
+		}else {
+			return "NNNNN";
+		}
+	}
+	
+	
+	// 리뷰 삭제하기
+	@ResponseBody
+	@PostMapping(value = "/deleteReview",produces = "text/html; charset=UTF-8")
+	public String deleteReview(int replyNo) {
+		
+		int deleteReview = showInfoService.deleteReview(replyNo);
+
+		if(deleteReview>0) {
+			return "NNNNY";
+		}else {
+			return "NNNNN";
+		}
+		
+	}
+	
 	
 }

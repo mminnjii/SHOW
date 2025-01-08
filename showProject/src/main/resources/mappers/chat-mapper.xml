@@ -12,11 +12,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHAT_USER_COUNT" property="chatUserCount"/>
 		<result column="CREATEDATE" property="createDate"/>
 		<result column="STATUS" property="status"/>
+		<result column="JOIN_COUNT" property="joinCount" jdbcType="INTEGER"/>
 		
 		<collection property="memList" ofType="Member">
 			<result column="USER_NO" property="userNo"/>
 			<result column="USER_ID" property="userId"/>
 		</collection>
+
+		<collection property="show" ofType="Show">
+			<result column="SHOW_NAME" property="showName"/>
+		</collection>
+		
+	</resultMap>
+	
+	<resultMap type="ChatMessage" id="chatMessageResultMap">
+		<result column="MESSAGE_NO" property="messageNo"/>
+		<result column="CHAT_CONTENT" property="chatContent"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="CREATEDATE" property="createDate"/>
+	</resultMap>
+	
+	<resultMap type="ChatJoin" id="chatJoinResultMap">
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="USER_NO" property="userNo"/>
+		
+		<collection property="member" ofType="Member">
+			<result column="USER_NO" property="userNo"/>
+			<result column="USER_ID" property="userId"/>
+			<result column="USER_PWD" property="userPwd"/>
+			<result column="USER_NAME" property="userName"/>
+			<result column="USER_RRN" property="userRrn"/>
+			<result column="PHONE" property="phone"/>
+			<result column="EMAIL" property="email"/>
+			<result column="ADDRESS" property="address"/>
+			<result column="ENROLL_DATE" property="enrollDate"/>
+			<result column="MODIFY_DATE" property="modifyDate"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+			<result column="RANK" property="rank"/>
+			<result column="SUBSCRIBE" property="subscribe"/>
+			<result column="STATUS" property="status"/>
+		</collection>
+		
 	</resultMap>
 
 	<!-- 채팅방 목록 개수 -->
@@ -28,11 +66,136 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 채팅방 목록 -->
 	<select id="chatList" resultMap="chatResultMap">
-		SELECT *
+		SELECT C.CHAT_NO
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+		      ,COUNT(CJ.USER_NO) AS JOIN_COUNT
 		FROM CHAT C
-		JOIN MEMBER USING(USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=C.USER_NO)
+		LEFT JOIN CHAT_JOIN CJ ON (CJ.CHAT_NO=C.CHAT_NO) 
 		WHERE C.STATUS = 'Y'
+		GROUP BY C.CHAT_NO
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+		ORDER BY CREATEDATE DESC
 	</select>
 
+	
+	<insert id="chatInsert" parameterType="Chat">
+		INSERT INTO CHAT (CHAT_NO
+		                 ,CHAT_TITLE
+		                 ,SHOW_NO
+		                 ,USER_NO
+		                 ,CHAT_USER_COUNT
+		                 )
+				  VALUES (CHAT_SEQ.NEXTVAL
+					  	 ,#{chatTitle}
+						 ,#{showNo}
+						 ,#{userNo}
+						 ,#{chatUserCount}
+						 )
+	</insert>
 
+	
+	<insert id="chatMessage" parameterType="ChatMessage">
+		INSERT INTO CHAT_MESSAGE
+			VALUES (MSA_SEQ.NEXTVAL
+	               ,#{chatContent}
+	               ,#{userNo}
+	               ,#{chatNo}
+	               ,SYSDATE)
+	</insert>
+	
+	<select id="searchListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHAT C
+		JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		<choose>
+			<when test="condition == 'writer'">
+				WHERE USER_ID LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<when test="condition == 'title'">
+				WHERE CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<otherwise>
+				WHERE (CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+					OR USER_ID LIKE LOWER('%'|| #{keyword} ||'%'))
+			</otherwise>
+		</choose>
+			AND C.STATUS = 'Y'
+	</select>
+
+	<select id="searchChatList" resultMap="chatResultMap">
+		SELECT C.CHAT_NO
+				,C.CHAT_TITLE
+				,C.SHOW_NO
+				,C.USER_NO
+				,C.CHAT_USER_COUNT
+				,C.CREATEDATE
+				,C.STATUS
+				,M.USER_ID
+		FROM CHAT C
+		JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		<choose>
+			<when test="condition == 'writer'">
+				WHERE USER_ID LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<when test="condition == 'title'">
+				WHERE CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+			</when>
+			<otherwise>
+				WHERE (CHAT_TITLE LIKE LOWER('%'|| #{keyword} ||'%')
+					OR USER_ID LIKE LOWER('%'|| #{keyword} ||'%'))
+			</otherwise>
+		</choose>
+			AND C.STATUS = 'Y'
+			ORDER BY CREATEDATE DESC
+	</select>
+	
+	<!-- 채팅방 상세 정보 -->
+	<select id="selectChatInfo" parameterType="_int" resultMap="chatResultMap">
+		SELECT C.CHAT_NO
+		        ,C.CHAT_TITLE
+		        ,C.SHOW_NO
+		        ,C.USER_NO
+		        ,C.CHAT_USER_COUNT
+		        ,C.CREATEDATE
+		        ,C.STATUS  
+		        ,S.SHOW_NAME
+		FROM CHAT C
+		JOIN SHOW S ON (C.SHOW_NO=S.SHOW_NO)
+		WHERE CHAT_NO = #{chatNo}
+	</select>
+	
+	<!-- 참여 인원 insert -->
+	<insert id="insertJoin">
+		INSERT INTO CHAT_JOIN 
+			VALUES(#{chatNo}, #{userNo})
+	</insert>
+	
+	<!-- chat_join User 정보 확인 메소드 -->
+	<select id="selectJoinUser" resultType="_int">
+		SELECT count(*)
+		FROM CHAT_JOIN
+		WHERE CHAT_NO = #{chatNo}
+		    AND USER_NO = #{userNo}
+	</select>
+	
+	<!-- chat_join 회원 데이터 삭제 -->
+	<delete id="joinDelete" parameterType="ChatJoin">
+		DELETE FROM CHAT_JOIN 
+		WHERE CHAT_NO = #{chatNo}
+		   AND USER_NO = #{userNo}
+	</delete>
+	
 </mapper>

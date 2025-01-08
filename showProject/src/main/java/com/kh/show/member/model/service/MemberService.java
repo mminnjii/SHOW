@@ -7,6 +7,7 @@ import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
+import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.showInfo.model.vo.Review;
 
@@ -49,8 +50,28 @@ public interface MemberService {
 	int sListCount(int userNo);
 	//공연 목록 조회
 	ArrayList<Reservation> showList(int userNo, PageInfo pi);
+	
 	//쿠폰 수 조회
 	int couponCount(int userNo);
 	//쿠폰 리스트 추출
 	ArrayList<Coupon> couponList(int userNo);
+	//결제 수 조회
+	int pListCount(int userNo);
+	//결제 리스트 추출
+	ArrayList<Reservation> payList(int userNo, PageInfo pi);
+	//예약 수 조회
+	int reserveCount(int userNo);
+	//예약 리스트 추출
+	ArrayList<Reservation> reserveList(int userNo, PageInfo pi);
+	//예약 취소 
+	int cancelRes(String reservationId);
+	//x티켓 취소
+	int cancelTicket(String reservationId);
+	//결제 취소
+	int cancelPay(String reservationId);
+	//빈좌석 표시
+	int rollbackSeats(int seatId);
+
+	// chat회원 정보 및 프로필 조회 - 전수민 
+	Member selectChatMem(int userNo);
 }
