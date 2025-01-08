@@ -12,7 +12,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Calendar and Seats</title>
+    <title>좌석예매</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -194,10 +194,6 @@
 							</c:forEach>
 						</tr>
 					</tbody>
-					
-					
-					
-				
 			</c:if>
 		</table>
 		<table class="info" id="select">
@@ -261,7 +257,6 @@
         	        			$("#select>tbody").append(tr);
                    		}
         			}else{
-        					console.log($("#select>tbody").find("tr").last());
         					$("#select>tbody").find("tr").last().remove();
         			}
         			
@@ -286,56 +281,66 @@
   	     		var selectedName = $("#select>tbody tr").find("td:nth-child(even)").map(function() {
   	     		  return $(this).text();
   	     		}).get().join(",");
-
-  	     		// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
-  	     	 	 var reservationId = ${rInfo.reservationId };
-  	     		
-  	     	 	var roundId = $('input[name="roundId"]').val();
-  	     	 	
-      			$.ajax({
-      				url : "/show/reservation/selectedSeats",
-      				type : "POST",
-      				data : {
-      					num : num,
-      					selectedName : selectedName,
-      					reservationNo : reservationId,
-      					roundId : roundId
-      				}, 
-      				success : function(num){
-      					
-	      					if(num!=0){
-	      						
-	      						if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
-	         						 
-	          					    const form = document.createElement("form");
-	          				        form.method = "POST";
-	          				        form.action = "/show/payments/pay";
-	
-	          				        const hiddenField = document.createElement("input");
-	          				        hiddenField.type = "hidden";
-	          				        hiddenField.name = "reservationId";
-	          				        hiddenField.value = reservationId;
-	
-	          				        form.appendChild(hiddenField);
-	          				        document.body.appendChild(form);
-	          				        form.submit();
+				
+  	     		if(selectedName != ""){
+  	      			
+  	     			// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
+  	  	     	 	var reservationId = ${rInfo.reservationId };
+  	  	     		
+  	  	     	 	var roundId = $('input[name="roundId"]').val();	
+	  	  	     	
+  	  	     	 	$.ajax({
+	      				url : "/show/reservation/selectedSeats",
+	      				type : "POST",
+	      				data : {
+	      					num : num,
+	      					selectedName : selectedName,
+	      					reservationNo : reservationId,
+	      					roundId : roundId
+	      				}, 
+	      				success : function(num){
+	      					
+		      					if(num!=0){
+		      						
+		      						if(confirm("총"+num+"석을 예매하셨습니다. 맞습니까?")){
+		         						 
+		          					    const form = document.createElement("form");
+		          				        form.method = "POST";
+		          				        form.action = "/show/payments/pay";
+		
+		          				        const hiddenField = document.createElement("input");
+		          				        hiddenField.type = "hidden";
+		          				        hiddenField.name = "reservationId";
+		          				        hiddenField.value = reservationId;
+		
+		          				        form.appendChild(hiddenField);
+		          				        document.body.appendChild(form);
+		          				        form.submit();
+		      						
+		      					}else{
+		      						alert("다시 선택해 주세요."); // 에러 메시지 출력
+		      					}
 	      						
 	      					}else{
-	      						alert("다시 선택해 주세요."); // 에러 메시지 출력
+	      						alert("요청에 실패하였습니다.");
+	      						window.location.href = '/show/common/errorPage';
 	      					}
-      						
-      					}else{
-      						alert("요청에 실패하였습니다.");
-      						window.location.href = '/show/common/errorPage';
-      					}
-      					
-      				},
-      				error : function(error){
-      					console.log(error);
-        				console.log("통신오류");
-      				}
-      			}); 
-  	     	});
+	      					
+	      				},
+	      				error : function(){
+	        				console.log("통신오류");
+	      				}
+	      			}); 
+	  
+  	     			
+  	     			
+  	     		}else{
+  	     			alert("좌석을 선택해 주세요.")
+  	     		}
+  	     		
+	     	});
+  	     	 	
+      			
 	     	
   	     	
   	     	$(function(){
@@ -343,9 +348,8 @@
   	     	 	$('#Modal').modal('show');
   	     		
   	     		var taken = ${taken}; 
+  	     		console.log(taken);
   	     	 
-  	     	    console.log(${taken});
-  	     		
   	     		taken.forEach(function (seatId) {
   	     	        // 테이블 내에서 data-seat 속성을 가진 요소를 선택
   	     	        $("#seats").find("[data-seat='" + seatId + "']")

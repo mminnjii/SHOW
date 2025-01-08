@@ -107,7 +107,7 @@
                 <li>
                     <a class="side-title">My 서비스</a>
                     <ul class="side-sub-menu">
-                        <li class="side-detail"><a href="${contextPath}/group">내 소모임</a></li>
+                        <li class="side-detail"><a href="${contextPath}/group?userNo=${loginUser.userNo}">내 소모임</a></li>
                         <li class="side-detail"><a href="${contextPath}/chat?userNo=${loginUser.userNo}">내 채팅방</a></li>
                         <li class="side-detail"><a href="${contextPath}/subscribe">구독 서비스</a></li>
                     </ul>
@@ -117,7 +117,6 @@
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <a class="side-title" href="${contextPath}/qna?userNo=${loginUser.userNo}">문의 내역</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
