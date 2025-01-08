@@ -60,11 +60,7 @@ public class PaymentAOP {
 			log.info("reservationId : {}",reservationId);
 			log.info("roundId : {}",roundId);
 			log.info("Seats : {}",Seats);
-			String[] seatArray = Seats.split(",");
-			for(String seats : seatArray) {
-				log.info("seats : {}",seats);
 			}
-		}
 		
 		if(reservationTimeCheck > 60.0) { // 예약-결제전 10분 넘어가면 
 			// 예약 좌석 rollback
@@ -75,9 +71,10 @@ public class PaymentAOP {
 			
 			String[] seatArray = Seats.split(",");
 			for(String seats : seatArray) {
-				data.put("reservationId", reservationId);
 				data.put("seats", seats);
 				 int seatsRollback = paymentsService.rollbackSeats(data);
+				 log.info("data : {}",data.get("reservationId"));
+				 log.info("data : {}",data.get("seats"));
 				 log.info("seatsRollback 결과 성공 : {}개",seatsRollback);
 			}
 		}
