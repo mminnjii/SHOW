@@ -45,17 +45,17 @@
 		background-color: rgb(246, 246, 246);
 	}
 
-	/*chat body*/
-	#chat-body{
+	/*group body*/
+	#group-body{
 		width: 80%;
 		height: 80%;
 		margin: auto;
 	}
 
-	#chatList{
+	#groupList{
 		text-align: center;
 	}
-	#c-main:hover{
+	#g-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -97,45 +97,44 @@
 				</div>
 				<div id="mypage-body">
 					<br>
-					<h5>내 채팅방</h5>
+					<h5>가입한 소모임</h5>
 					<br>
-					<div id="chat-body">
+					<div id="group-body">
 						<div id="btn-area">
-							<button id="switch">가입한 채팅방</button>
+							<button id="switch">내 소모임</button>
 						</div>
 						<br>
-						<table id="chatList" class="table table-hover" align="center">
+						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
 									<th>번호</th>
-									<th>채팅방 이름</th>
+									<th>소모임 이름</th>
 									<th>호스트 ID</th>
 									<th>인원 수</th>
-									<th>생성일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty clist }">
+									<c:when test="${empty glist }">
 										<tr>
-											<td colspan="5">내 채팅방은 없습니다</td>
+											<td colspan="4">가입한 소모임이 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="c" items="${c2list }">
+										<c:forEach var="g" items="${glist }">
 											<tr id="c-main">
-												<td>${c.chatNo}</td>
-												<td>${c.chatTitle}</td>
-												<td>${c.userId}</td>
+												<td>${g.chatNo}</td>
+												<td>${g.chatTitle}</td>
+												<td>${g.userId}</td>
 												<c:choose>
-													<c:when test="${c.joinCount == c.chatUserCount}">
-														<td style="color: red;">${c.joinCount}/${c.chatUserCount}</td>
+													<c:when test="${g.joinCount == g.chatUserCount}">
+														<td style="color: red;">${g.joinCount}/${g.chatUserCount}</td>
 													</c:when>
 													<c:otherwise>
-														<td>${c.joinCount}/${c.chatUserCount}</td>
+														<td>${g.joinCount}/${g.chatUserCount}</td>
 													</c:otherwise>
 												</c:choose>
-												<td>${c.createDate}</td>
+												<td>${g.createDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -145,7 +144,7 @@
 						<br>
 						<script>
             	
-							$("#chatList #c-main").click(function(){
+							$("#groupList #g-main").click(function(){
 								var chatNo = $(this).children().first().text();
 								var userId = $(this).children().first().next().text();
 
@@ -156,25 +155,25 @@
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<c:url var="chat2" value="chat2">
+									<c:url var="group" value="group">
 										<c:param name="userNo" value="${loginUser.userNo }"/>
 										<c:param name="currentPage" value="${i }"/>
 									</c:url>
 									<li class="page-item">
-										<a class="page-link" href="${chat2 }">${i}</a>
+										<a class="page-link" href="${group }">${i}</a>
 									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty c2list }">
+										<c:when test="${empty glist }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -200,7 +199,7 @@
        	 }
     	});
 		$("#switch").click(function(){
-			location.href = "${contextPath}/chat?userNo=${loginUser.userNo}";
+			location.href = "${contextPath}/group2?userNo=${loginUser.userNo}";
 		});
 	</script>
 	

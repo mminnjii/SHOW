@@ -7,6 +7,8 @@ import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.payments.model.vo.Payments;
@@ -85,5 +87,13 @@ public interface MemberService {
 	int chatCount2(int userNo);
 	//내가 가입한 채팅방 수
 	ArrayList<Chat> chatList2(int userNo, PageInfo pi);
+	//내가 가입한 소모임 수
+	int meetingCount(int userNo);
+	//내가 가입한 소모임 리스트
+	ArrayList<MeetingJoin> meetingList(int userNo, PageInfo pi);
+	//내가 만든 소모임 수
+	int meetingCount2(int userNo);
+	//내가 만든 소모임 리스트
+	ArrayList<Meeting> meetingList2(int userNo, PageInfo pi);
 
 }

@@ -11,6 +11,8 @@ import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.member.model.dao.MemberDao;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
@@ -204,6 +206,26 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ArrayList<Chat> chatList2(int userNo, PageInfo pi) {
 		return memberDao.chatList2(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int meetingCount(int userNo) {
+		return memberDao.meetingCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<MeetingJoin> meetingList(int userNo, PageInfo pi) {
+		return memberDao.meetingList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int meetingCount2(int userNo) {
+		return memberDao.meetingCount2(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Meeting> meetingList2(int userNo, PageInfo pi) {
+		return memberDao.meetingList2(sqlSession,userNo,pi);
 	}
 
 

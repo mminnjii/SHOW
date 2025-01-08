@@ -29,6 +29,8 @@ import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
@@ -277,15 +279,6 @@ public class MemberController {
 		
 		return "member/subscribe";
 	}
-	@GetMapping("/group")
-	public String group() {
-		
-		return "member/myGroup";
-	}
-	
-	
-	
-	
 	
 	//회원 정보 업데이트 메소드
 	@PostMapping("update.me")
@@ -656,7 +649,44 @@ public class MemberController {
 		
 		return "member/myChatHost";
 	}
-		
+	
+	@GetMapping("/group")
+	public String meeting(@RequestParam(value="currentPage",defaultValue="1")
+					    int currentPage,
+					    Model model,
+					    int userNo) {
+		int listCount = memberService.meetingCount(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+					
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+					
+		ArrayList<MeetingJoin> mlist = memberService.meetingList(userNo,pi);
+					
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+
+		return "member/myGroupJoin";
+	}
+	
+	@GetMapping("/group2")
+	public String meeting2(@RequestParam(value="currentPage",defaultValue="1")
+					    	int currentPage,
+					    	Model model,
+					    	int userNo) {
+		int listCount = memberService.meetingCount2(userNo);
+		int pageLimit = 10;
+		int listLimit = 5;
+					
+		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, listLimit);
+					
+		ArrayList<Meeting> m2list = memberService.meetingList2(userNo,pi);
+					
+		model.addAttribute("m2list",m2list);
+		model.addAttribute("pi",pi);
+
+		return "member/myGroupHost";
+	}	
 
 	
 	

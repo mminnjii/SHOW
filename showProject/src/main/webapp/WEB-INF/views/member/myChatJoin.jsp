@@ -129,7 +129,14 @@
 												<td>${c.chatNo}</td>
 												<td>${c.chatTitle}</td>
 												<td>${c.userId}</td>
-												<td>${c.joinCount}/${c.chatUserCount}</td>
+												<c:choose>
+													<c:when test="${c.joinCount == c.chatUserCount}">
+														<td style="color: red;">${c.joinCount}/${c.chatUserCount}</td>
+													</c:when>
+													<c:otherwise>
+														<td>${c.joinCount}/${c.chatUserCount}</td>
+													</c:otherwise>
+												</c:choose>
 												<td>${c.createDate}</td>
 											</tr>
 										</c:forEach>

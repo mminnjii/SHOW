@@ -11,6 +11,8 @@ import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
+import com.kh.show.meeting.model.vo.Meeting;
+import com.kh.show.meeting.model.vo.MeetingJoin;
 import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.vo.Reservation;
@@ -189,6 +191,30 @@ public class MemberDao {
 		
 		RowBounds rowbounds = new RowBounds(offset,limit);
 		return (ArrayList)sqlSession.selectList("memberMapper.chatList2",userNo,rowbounds);
+	}
+
+	public int meetingCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.meetingCount",userNo);
+	}
+
+	public ArrayList<MeetingJoin> meetingList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.meetingList",userNo,rowbounds);
+	}
+
+	public int meetingCount2(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.meetingCount2",userNo);
+	}
+
+	public ArrayList<Meeting> meetingList2(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("memberMapper.meetingList2",userNo,rowbounds);
 	}
 
 

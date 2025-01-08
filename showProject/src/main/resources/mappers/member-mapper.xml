@@ -472,6 +472,26 @@
 		         CREATEDATE
 		ORDER BY CREATEDATE
 	</select>
+	
+	<select id="meetingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEETING_JOIN
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="meetingCount" resultType="Joinmeeting" >
+		
+	</select>
+	
+	<select id="meetingCount2" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEETING
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="meetingCount2" resultType="Joinmeeting" >
+	
+	</select>
 
 	
 </mapper>
