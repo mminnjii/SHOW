@@ -326,12 +326,9 @@
 					// 데이터는 HashMap으로 전달받음. key 값에 접근하여 데이터 view에 보여주기
 					// 내가 전송한 것과 아닌 것 구분해서 스타일 적용. 
 					var loginUserId = "${loginUser.userId}";
-					var changeName = "${loginUser.changeName}";
-
-					var chatUserChangeName = data.mem.changeName ;
-					console.log(loginUserId);
-					console.log(chatUserChangeName);
-					
+					var changeName = data.mem.changeName;
+					console.log(changeName);
+										
 					var newMessage = "";
 					
 					// 조건 처리 수정 필요 
@@ -341,22 +338,23 @@
 									+ data.cm.chatContent
 									+ "</p></div>";
 					}else{
-						if(changeName == null){
+						if((changeName == null) || (changeName == "")){
 							newMessage += "<div><div>"
-										+ '<img src="${contextPath}/resources/profile/white.png" id="profile">'
-										+ "&nbsp;&nbsp;&nbsp;" + chatUserId
-										+ "</div><p>"
-										+ data.cm.chatContent
-										+ "</p></div>";
+		                        + '<img src="${contextPath}/resources/profile/white.png" id="profile">'
+		                        + "&nbsp;&nbsp;&nbsp;" + chatUserId
+		                        + "</div><p>"
+		                        + data.cm.chatContent
+		                        + "</p></div>";
 						}else{
 							newMessage += "<div><div>"
-										+ '<img src="${contextPath}/resources/profile/chatUserChangeName" id="profile">'										
-										+ "&nbsp;&nbsp;&nbsp;" + chatUserId
-										+ "</div><p>"
-										+ data.cm.chatContent
-										+ "</p></div>";
-							
+		                        + '<img src="${contextPath}/resources/profile/'+changeName+'" id="profile">'
+		                        + "&nbsp;&nbsp;&nbsp;" + chatUserId
+		                        + "</div><p>"
+		                        + data.cm.chatContent
+		                        + "</p></div>";
 						}
+						
+
 					}
 					
 					
