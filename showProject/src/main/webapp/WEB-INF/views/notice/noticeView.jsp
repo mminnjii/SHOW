@@ -32,6 +32,7 @@
         .a {
             text-align: left;
             width: 70%;
+            height: 600px;
             margin: 0px auto;
             background-color: white;
             padding: 3% 5%;

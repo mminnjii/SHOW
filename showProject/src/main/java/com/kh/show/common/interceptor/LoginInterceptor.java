@@ -29,9 +29,16 @@ public class LoginInterceptor implements HandlerInterceptor{
 			
 			// 로그인 되어 있는지 체크 
 			if(loginUser == null) {
+				
+				// 회원이 로그인 한 후에 이전 페이지로 이동할 수 있게 
+				// request.getRequestURI() : 도메인이후 하위 주소를 가져 온다. //ex) "도메인: share" '/reservation.re?rno=1'		
+				String reUrl = request.getRequestURI();
+				session.setAttribute("reUrl", reUrl);
+				System.out.println(reUrl);
+				
+				
 				session.setAttribute("alertMsg", "회원만 이용 가능한 서비스 입니다.");
 				
-				// 응답 뷰 정보 담기   || 잘못 요청 => 위임 X 
 				response.sendRedirect(request.getContextPath());
 				
 				// 기존 요청 막기 

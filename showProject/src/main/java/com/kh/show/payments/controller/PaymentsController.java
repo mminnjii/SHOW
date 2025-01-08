@@ -2,6 +2,7 @@ package com.kh.show.payments.controller;
 
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.show.member.model.vo.Member;
 import com.kh.show.payments.model.service.PaymentsService;
+import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Ticket;
 
 @Controller
 @RequestMapping("/payments") 
@@ -79,12 +82,22 @@ public class PaymentsController {
 		return "payments/payment";
 	}
 	
+	@PostMapping(value ="/processPayment",produces ="text/html; charset=UTF-8")
+	@ResponseBody
+	public String processPayment(int reservationId, int roundId) {
+		System.out.println(reservationId);
+		System.out.println(roundId);
+		
+		return "check";
+	}
 	
 	
+	@Transactional
 	@PostMapping(value = "/bank",produces ="text/html; charset=UTF-8")
 	@ResponseBody
-	public String paymentComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
+	public String bankComplete(HttpSession session ,@RequestBody Map<String, Object> paymentData) {
 		
+		// payment식별자와 결제번호와 연동
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
 	
@@ -151,6 +164,7 @@ public class PaymentsController {
 					 session.setAttribute("bankNum", ((String) paymentData.get("vbank_num")));
 					 session.setAttribute("dueDate", ((String) paymentData.get("vbank_date")));
 					 session.setAttribute("bankHolder", ((String) paymentData.get("vbank_holder")));
+					 session.setAttribute("price", ((String) paymentData.get("amount")));
 					 return "success";
 				 }else {
 					 return "좌석별 티켓 생성에 실패하였습니다.";
@@ -165,10 +179,10 @@ public class PaymentsController {
 		}
 	}
 	
-	
+	@Transactional
 	@ResponseBody
 	@PostMapping(value = "/card",produces ="text/html; charset=UTF-8")
-	public String card(HttpSession session, @RequestBody Map<String, Object> paymentData) {
+	public String cardComplete(HttpSession session, @RequestBody Map<String, Object> paymentData) {
 		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
@@ -220,6 +234,7 @@ public class PaymentsController {
 				 
 				 if(seatArray.length==result3) {
 					 session.setAttribute("receipt", ((String) paymentData.get("receipt")));
+					 session.setAttribute("price", ((String) paymentData.get("amount")));
 					 return "success";
 				 }else {
 					 return "카드데이터가 생성되지 못했습니다.";
@@ -233,7 +248,7 @@ public class PaymentsController {
 		}
 	}
 	
-	
+	@Transactional
 	@ResponseBody
 	@PostMapping(value = "/fail",produces ="text/html; charset=UTF-8")
 	public String paymentFail(HttpSession session, @RequestParam int reservationId, @RequestParam int roundId) {
@@ -287,17 +302,35 @@ public class PaymentsController {
 	
 	
 	@PostMapping("/paymentInfo")
-	public String pamentInfo(HttpSession session, @RequestParam("paymentId") String paymentId, @RequestParam("type") String type,
-							Model model) {
+	public String pamentInfo(HttpSession session, Payments p, Model model) {
 		
-		String[] impParts = paymentId.split("_");
-		String payId = impParts[1];
+		String[] impParts = p.getPaymentId().split("_");
+		String paymentId = impParts[1];
 		
 		String receipt = (String) session.getAttribute("receipt");
-		model.addAttribute("payId",payId);
-		model.addAttribute("receipt",receipt);
+		String price = (String) session.getAttribute("price");
 		
-		if(type.equals("bank")) {
+		model.addAttribute("paymentId",paymentId);
+		model.addAttribute("receipt",receipt);
+		model.addAttribute("price",price);
+		
+		String reservationId = p.getReservationId();
+		
+		// 예약정보 조회
+		Reservation rInfo = reservationService.confirmReservation(reservationId);
+		model.addAttribute("rInfo",rInfo);
+		
+		// 티켓정보 조회
+		ArrayList <Ticket> t = reservationService.confirmTicket(reservationId);
+		model.addAttribute("t",t);
+		
+		if(p.getMethodToget()==1) {
+			model.addAttribute("methodToget","현장수령");
+		}else {
+			model.addAttribute("methodToget","택배수령");
+		}
+		
+		if(p.getPaymentMethod().equals("bank")) {
 			
 			String bankName = (String) session.getAttribute("bankName");
 			String bankNum = (String) session.getAttribute("bankNum");
@@ -314,6 +347,7 @@ public class PaymentsController {
 		    session.removeAttribute("dueDate");
 		    session.removeAttribute("bankHolder");
 		}
+		
 		
 		return "payments/paymentInfo";
 	}

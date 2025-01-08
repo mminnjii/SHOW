@@ -299,8 +299,8 @@
 									+ "</p></div>";
 					}else{
 						newMessage += "<div><div>"
-									+ '<img alt="" src="" id="profile">'
-									+ "&nbsp;" + chatUserId
+									+ '<img alt="회원 프로필" src="${contextPath}/resources/profile/${loginUser.changeName}" id="profile">'
+									+ "&nbsp;&nbsp;&nbsp;" + chatUserId
 									+ "</div><p>"
 									+ data.cm.chatContent
 									+ "</p></div>";
