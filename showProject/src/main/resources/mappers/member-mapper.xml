@@ -23,13 +23,6 @@
 				
 		<result column="POINT" property="point"/>
 
-		<collection property="profile" ofType="Profile">
-			<result column="PROFILE_NO" property="profileNo"/>
-			<result column="USER_NO" property="userNo"/>
-			<result column="ORIGIN_NAME" property="originName"/>
-			<result column="CHANGE_NAME" property="changeName"/>
-			<result column="PROFILE_PATH" property="profilePath"/>
-		</collection>
 	</resultMap>
 	
 	<resultMap type="Coupon" id="couponResultMap">
@@ -175,6 +168,13 @@
 		SELECT COUNT(*)
 		FROM MEMBER
 		WHERE USER_ID = #{checkId}
+		AND STATUS = 'Y'
+	</select>
+	
+	<select id="phoneCheck" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE PHONE = #{phone}
 		AND STATUS = 'Y'
 	</select>
 	
@@ -392,22 +392,62 @@
 		SET STATUS = 'Y'
 		WHERE SEAT_ID = #{seatId}
 	</update>
-	
-
 
 	
-	<!-- 채팅방 MEMBER 정보 불러오기 - 전수민 -->
-	<select id="selectChatMem" resultMap="memberResultSet">
-		SELECT M.USER_NO
-		      ,M.USER_ID
-		      ,P.PROFILE_NO
-		      ,P.ORIGIN_NAME
-		      ,P.CHANGE_NAME
-		      ,P.PROFILE_PATH
-		      ,P.STATUS           
-		FROM MEMBER M
-		LEFT JOIN PROFILE P ON (M.USER_NO=P.USER_NO)
-		WHERE M.USER_NO = #{userNo}
+	<select id="chatCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHAT_JOIN
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="chatList" resultType="Joinchat" >
+		SELECT J.CHAT_NO chatNo,
+	           CHAT_TITLE chatTitle,
+	           C.USER_NO userNo,
+	           M.USER_ID userId,
+	           CHAT_USER_COUNT chatUserCount,
+	           CREATEDATE createDate,
+	           COUNT(J.USER_NO) joinCount
+		FROM CHAT_JOIN J
+		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
+		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+		WHERE C.STATUS = 'Y'
+		AND J.USER_NO = #{userNo}
+		GROUP BY J.CHAT_NO,
+		         CHAT_TITLE,
+		         C.USER_NO,
+		         M.USER_ID,
+		         CHAT_USER_COUNT,
+		         CREATEDATE
+		ORDER BY CREATEDATE
+	</select>
+	
+	<select id="chatCount2" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHAT
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="chatList2" resultType="Joinchat" >
+		SELECT C.CHAT_NO chatNo,
+	           CHAT_TITLE chatTitle,
+	           C.USER_NO userNo,
+	           M.USER_ID userId,
+	           CHAT_USER_COUNT chatUserCount,
+	           CREATEDATE createDate,
+	           COUNT(J.USER_NO) joinCount
+		FROM CHAT_JOIN J
+		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
+		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
+		WHERE C.STATUS = 'Y'
+		AND C.USER_NO = #{userNo}
+		GROUP BY C.CHAT_NO,
+		         CHAT_TITLE,
+		         C.USER_NO,
+		         M.USER_ID,
+		         CHAT_USER_COUNT,
+		         CREATEDATE
+		ORDER BY CREATEDATE
 	</select>
 
 	

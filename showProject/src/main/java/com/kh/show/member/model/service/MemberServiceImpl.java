@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ChatJoin;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.customer.model.vo.Question;
 import com.kh.show.member.model.dao.MemberDao;
@@ -122,12 +124,6 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.showList(sqlSession,userNo,pi);
 	}
 
-	// chat회원 정보 및 프로필 조회 - 전수민 
-	@Override
-	public Member selectChatMem(int userNo) {
-		return memberDao.selectChatMem(sqlSession, userNo);
-	}
-	
 
 	@Override
 	public int couponCount(int userNo) {
@@ -177,6 +173,31 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int rollbackSeats(int seatId) {
 		return memberDao.rollbackSeats(sqlSession,seatId);
+	}
+
+	@Override
+	public int phoneCheck(String phone) {
+		return memberDao.phoneCheck(sqlSession,phone);
+	}
+
+	@Override
+	public int chatCount(int userNo) {
+		return memberDao.chatCount(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<ChatJoin> chatList(int userNo, PageInfo pi) {
+		return memberDao.chatList(sqlSession,userNo,pi);
+	}
+
+	@Override
+	public int chatCount2(int userNo) {
+		return  memberDao.chatCount2(sqlSession,userNo);
+	}
+
+	@Override
+	public ArrayList<Chat> chatList2(int userNo, PageInfo pi) {
+		return memberDao.chatList2(sqlSession,userNo,pi);
 	}
 
 

@@ -142,6 +142,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		int userNo = loginUser.getUserNo();
 		int chatNo = (int)session.getAttributes().get("chatNo");
+		System.out.println(loginUser);
 		
 		ChatMessage cm = ChatMessage.builder()
 									.chatContent(message.getPayload())
@@ -156,11 +157,12 @@ public class WebSocketServer extends TextWebSocketHandler{
 		if(result>0) {
 			log.debug("메시지 저장 성공");
 			
-			Member mem = memberService.selectChatMem(userNo);
+			// member쪽 삭제 필요. vo에도 profile 관련 코드 삭제 
+			//Member mem = memberService.selectChatMem(userNo);
 			
 			// 메시지를 보낸 사용자와 메시지 정보를 담아 전달
 			HashMap<String, Object> infoMap = new HashMap<>();
-			infoMap.put("mem", mem);
+			infoMap.put("mem", loginUser);
 			infoMap.put("cm", cm);
 			
 			// 메시지 정보 VO를 JSON 문자열로 변환하여 전달. 

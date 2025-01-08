@@ -1,10 +1,14 @@
+<%@page import="com.kh.show.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <!DOCTYPE html>
 <html>
+<% 
+	Member loginMember = (Member)session.getAttribute("loginUser");
+%>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>아임포트 테스트</title>
+    <title>결제창</title>
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
 		button {
@@ -44,10 +48,12 @@
 <body>
 		<div align="center">
 			<br>
-			<c:if test="${not empty rInfo }">
+			
 			<input type="hidden" name="reservationId" value="${rInfo.reservationId} "></input>
 			<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
-	     		<table align="center">
+	     		
+     		<c:if test="${not empty rInfo && not empty num && not empty totalPrice}">
+     			<table align="center">
 	     			<thead>
 	     				<tr>
 	     					<th id="name" colspan="3">${rInfo.showName}</th>
@@ -57,50 +63,51 @@
 	     				</tr>
 	     			</thead>
 	     			<tbody>
-	     				<tr>
-	     					<td>공연일자 :</td>
-	     					<td>${rInfo.showDate}</td>
-	     				</tr>
-     					<tr>
-     						<td>공연시간 :</td>
-	     					<td>${rInfo.showTime}</td>
-	     				</tr>
-     					<tr>
-     						<td>공연장소 :</td>
-	     					<td>${rInfo.hallName}</td>
-	     				</tr>
-	     				
-	     				<tr>
-	     					<td>좌석 :</td>
-	     					<td>${selectedName}</td>
-	     				</tr>
-	     				<tr>
-	     					<td>좌석이름 :</td>
-	     					<td>${gradeName}</td>
-	     				</tr>
-	     				<tr>
-	     					<td>총 좌석 수 :</td>
-	     					<td>${num}</td>
-	     					<td>개</td>
-	     				</tr>
-     					<tr>
-     						<td>Total : </td>
-	     					<td id="amount"> ${totalPrice}</td>
-	     					<td>원</td>
-	     				</tr>
-	     				<tr>
-	     					<td style="padding-top: 70px;">티켓수령방식 :</td>
-	     					<td style="padding-top: 70px;">
-	     						<select id="method" >
-	     							<option disabled="disabled" selected>선택하세요</option>
-	     							<option value="1">현장</option>
-	     							<option value="2">택배</option>
-	     						</select>
-	     					</td>
-	     				</tr>
+		     				<tr>
+		     					<td>공연일자 :</td>
+		     					<td>${rInfo.showDate}</td>
+		     				</tr>
+	     					<tr>
+	     						<td>공연시간 :</td>
+		     					<td>${rInfo.showTime}</td>
+		     				</tr>
+	     					<tr>
+	     						<td>공연장소 :</td>
+		     					<td>${rInfo.hallName}</td>
+		     				</tr>
+		     				
+		     				<tr>
+		     					<td>좌석 :</td>
+		     					<td>${selectedName}</td>
+		     				</tr>
+		     				<tr>
+		     					<td>좌석이름 :</td>
+		     					<td>${gradeName}</td>
+		     				</tr>
+		     				<tr>
+		     					<td>총 좌석 수 :</td>
+		     					<td>${num}</td>
+		     					<td>개</td>
+		     				</tr>
+	     					<tr>
+	     						<td>Total : </td>
+		     					<td id="amount"> ${totalPrice}</td>
+		     					<td>원</td>
+		     				</tr>
+		     				<tr>
+		     					<td style="padding-top: 70px;">티켓수령방식 :</td>
+		     					<td style="padding-top: 70px;">
+		     						<select id="method" >
+		     							<option disabled="disabled" selected>선택하세요</option>
+		     							<option value="1">현장</option>
+		     							<option value="2">택배</option>
+		     						</select>
+		     					</td>
+		     				</tr>
 	     			</tbody>
 	     		</table>
-	        </c:if>
+     		</c:if>	
+	        
 	        
 	        <br><br>
 	        <hr>
@@ -117,11 +124,14 @@
    		 var roundId = $('input[name="roundId"]').val();
    		 var name = $("#name").text();
    		 var amount = $("#amount").text();
+   		 
+   		 var buyerEmail = "${loginUser.email}";
+   	     var buyerName = "${loginUser.userName}";
+   	     var buyerTel = "${loginUser.phone}";
        	
    		 let methodToget = "";
    		$("#method").change(function () {
    			methodToget = $(this).val(); // 이벤트 발생 후 최신 값으로 갱신
-   		    console.log("Change 이벤트 후 선택된 값:", methodToget);
    		});
    		 
    		 // 아임포트 초기화
@@ -129,6 +139,22 @@
 
         // 결제 요청
         $("#card").on("click", function () {
+        	
+            $.ajax({
+                url: '/show/payments/processPayment', // 서버 URL
+                type: 'POST',           // HTTP 메서드
+                data: {
+                	reservationId : reservation_uid,
+	                roundId : roundId
+                }, 
+                success: function(response) {
+                    console.log('서버 응답:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('에러 발생:', error);
+                }
+            });
+        	
         	
         	if(methodToget != ""){
         		
@@ -138,9 +164,9 @@
                     merchant_uid: "order_" + reservation_uid, // 예약번호
                     name: name, // 상품명
                     amount: "100", // 결제 금액
-                    buyer_email: "test@example.com", // 구매자 이메일
-                    buyer_name: "홍길동", // 구매자 이름
-                    buyer_tel: "01012345678", // 구매자 전화번호
+                    buyer_email: buyerEmail, // 구매자 이메일
+                    buyer_name: buyerName, // 구매자 이름
+                    buyer_tel: buyerTel, // 구매자 전화번호
                 }, function (rsp) {
                     
                 	if (rsp.success) {
@@ -174,11 +200,23 @@
      	      				        
      	      				    	const hiddenField2 = document.createElement("input");
      	      				        hiddenField2.type = "hidden";
-     	      				        hiddenField2.name = "type";
+     	      				        hiddenField2.name = "PaymentMethod";
      	      				        hiddenField2.value = "card";
+     	      				        
+	     	      				    const hiddenField3 = document.createElement("input");
+	  	      				        hiddenField3.type = "hidden";
+	  	      				        hiddenField3.name = "reservationId";
+	  	      				        hiddenField3.value = reservation_uid;
+	  	      				        
+		  	      				    const hiddenField4 = document.createElement("input");
+	  	  	      					hiddenField4.type = "hidden";
+	  	  	      					hiddenField4.name = "methodToget";
+	  	  	      					hiddenField4.value = methodToget;
      	      				        
      	      				        form.appendChild(hiddenField);
      	      				        form.appendChild(hiddenField2);
+     	      				        form.appendChild(hiddenField3);
+     	      				        form.appendChild(hiddenField4);
      	      				        document.body.appendChild(form);
      	      				        form.submit(); 
     	                    		 
@@ -213,7 +251,6 @@
     	                    		alert("요청에 실패하였습니다. : "+success);
   		      						window.location.href = '/show/common/errorPage'; 
     	                    	 }
-    	                    	 
     	                         
     	                     }, 
     	                     error: function () {
@@ -234,6 +271,23 @@
          
         $("#bank").on("click", function () { 
         	
+        	
+            $.ajax({
+                url: '/show/payments/processPayment', // 서버 URL
+                type: 'POST',           // HTTP 메서드
+                data: {
+                	reservationId : reservation_uid,
+	                roundId : roundId
+                }, 
+                success: function(response) {
+                    console.log('서버 응답:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('에러 발생:', error);
+                }
+            });
+
+        	
         	if(methodToget != ""){
         		
         		IMP.init("imp17528612"); // 아임포트 고객사 식별 코드
@@ -243,9 +297,9 @@
     	            merchant_uid: "order_" + reservation_uid,   // 주문번호 (고유값)
     	            name: name,             // 상품명
     	            amount: amount,                   // 결제 금액
-    	            buyer_email: "test@example.com", // 구매자 이메일
-    	            buyer_name: "홍길동",             // 구매자 이름
-    	            buyer_tel: "01012345678",        // 구매자 전화번호
+    	            buyer_email: buyerEmail, // 구매자 이메일
+                    buyer_name: buyerName, // 구매자 이름
+                    buyer_tel: buyerTel, // 구매자 전화번호
     	            vbank_due: "20250116235959",     // 입금 기한 (YYYYMMDDHHmmss 형식)
     	        }, function (rsp) {
     	        	
@@ -284,11 +338,23 @@
     		      				        
     		      				      	const hiddenField2 = document.createElement("input");
     		      				        hiddenField2.type = "hidden";
-    		      				        hiddenField2.name = "type";
+    		      				        hiddenField2.name = "paymentMethod";
     		      				        hiddenField2.value = "bank";
+    		      				        
+    		      				      	const hiddenField3 = document.createElement("input");
+	  	  	      				        hiddenField3.type = "hidden";
+	  	  	      				        hiddenField3.name = "reservationId";
+	  	  	      				        hiddenField3.value = reservation_uid;
+	  	  	      				        
+		  	  	      				    const hiddenField4 = document.createElement("input");
+		  	  	      					hiddenField4.type = "hidden";
+		  	  	      					hiddenField4.name = "methodToget";
+		  	  	      					hiddenField4.value = methodToget;
 
     		      				        form.appendChild(hiddenField);
     		      				        form.appendChild(hiddenField2);
+    		      				        form.appendChild(hiddenField3);
+    		      				        form.appendChild(hiddenField4);
     		      				        document.body.appendChild(form);
     		      				        form.submit();
     		      				        
