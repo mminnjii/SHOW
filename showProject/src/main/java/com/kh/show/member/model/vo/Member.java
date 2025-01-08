@@ -28,9 +28,5 @@ public class Member {
 	private String subscribe;//	SUBSCRIBE	VARCHAR2(1 BYTE)
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
 	
-	// Profile
-	// collection 사용하기 위해 작성 - 전수민
-	private Profile profile;
-
 	private int point;
 }

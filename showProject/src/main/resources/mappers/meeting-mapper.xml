@@ -183,10 +183,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ME.STATUS='Y'
 			<choose>
 				<when test="condition == 'title'">
-					MEETING_TITLE LIKE '%' || #{keyword} || '%'
+					AND MEETING_TITLE LIKE '%' || #{keyword} || '%'
 				</when>
 				<when test="condition == 'writer'">
-					USER_ID LIKE '%' || #{keyword} || '%'
+					AND USER_ID LIKE '%' || #{keyword} || '%'
 				</when>
 				<otherwise>
 					AND (MEETING_TITLE LIKE '%' || #{keyword} || '%'
@@ -204,10 +204,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ME.STATUS='Y'
 		<choose>
 			<when test="condition == 'title'">
-				MEETING_TITLE LIKE '%' || #{keyword} || '%'
+				AND MEETING_TITLE LIKE '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'writer'">
-				USER_ID LIKE '%' || #{keyword} || '%'
+				AND USER_ID LIKE '%' || #{keyword} || '%'
 			</when>
 			<otherwise>
 				AND (MEETING_TITLE LIKE '%' || #{keyword} || '%'

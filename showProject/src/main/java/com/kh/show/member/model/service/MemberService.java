@@ -41,7 +41,6 @@ public interface MemberService {
 	int updateNewPassword(HashMap<String, String> map);
 	//구독 서비스
 	int startSub(String userId);
-	
 	//문의 목록 수 조회
 	int listCount(int userNo);
 	//회원 qna 목록 조회
@@ -54,7 +53,6 @@ public interface MemberService {
 	int sListCount(int userNo);
 	//공연 목록 조회
 	ArrayList<Reservation> showList(int userNo, PageInfo pi);
-	
 	//쿠폰 수 조회
 	int couponCount(int userNo);
 	//쿠폰 리스트 추출
@@ -75,8 +73,6 @@ public interface MemberService {
 	int cancelPay(String reservationId);
 	//빈좌석 표시
 	int rollbackSeats(int seatId);
-	// chat회원 정보 및 프로필 조회 - 전수민 
-	Member selectChatMem(int userNo);
 	//휴대폰 중복 체크
 	int phoneCheck(String phone);
 	//내가 가입한 채팅방 리스트 수
@@ -95,5 +91,4 @@ public interface MemberService {
 	int meetingCount2(int userNo);
 	//내가 만든 소모임 리스트
 	ArrayList<Meeting> meetingList2(int userNo, PageInfo pi);
-
 }
