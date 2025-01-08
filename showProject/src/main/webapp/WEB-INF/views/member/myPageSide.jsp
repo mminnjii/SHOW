@@ -98,30 +98,30 @@
                 <li>
                     <a class="side-title">내 정보</a>
                     <ul class="side-sub-menu">
-                        <li class="side-detail"><a href="${contextPath}/memberUpdate">회원정보 수정</a></li>
-                        <li class="side-detail"><a href="${contextPath}/address">배송지 관리</a></li>
-                        <li class="side-detail"><a href="${contextPath}/password">비밀번호 변경</a></li>
-                        <li class="side-detail"><a href="${contextPath}/delete">회원 탈퇴</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/memberUpdate">회원정보 수정</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/address">배송지 관리</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/password">비밀번호 변경</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/delete">회원 탈퇴</a></li>
                     </ul>
                 </li>
                 <li>
                     <a class="side-title">My 서비스</a>
                     <ul class="side-sub-menu">
-                        <li class="side-detail"><a href="${contextPath}/group?userNo=${loginUser.userNo}">내 소모임</a></li>
-                        <li class="side-detail"><a href="${contextPath}/chat?userNo=${loginUser.userNo}">내 채팅방</a></li>
-                        <li class="side-detail"><a href="${contextPath}/subscribe">구독 서비스</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/group?userNo=${loginUser.userNo}">내 소모임</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/chat?userNo=${loginUser.userNo}">내 채팅방</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/subscribe">구독 서비스</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a class="side-title" href="${contextPath}/rank">회원 등급</a>
+                    <a class="side-title" href="${contextPath}/member/rank">회원 등급</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <a class="side-title" href="${contextPath}/qna?userNo=${loginUser.userNo}">문의 내역</a>
+                    <a class="side-title" href="${contextPath}/member/qna?userNo=${loginUser.userNo}">문의 내역</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
                 <li>
-                    <a class="side-title" href="${contextPath}/payment?userNo=${loginUser.userNo}">결제 목록</a>
+                    <a class="side-title" href="${contextPath}/member/payment?userNo=${loginUser.userNo}">결제 목록</a>
                     <ul class="side-sub-menu"></ul>
                 </li>
             </ul>

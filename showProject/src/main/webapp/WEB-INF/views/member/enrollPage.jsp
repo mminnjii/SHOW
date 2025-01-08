@@ -79,7 +79,7 @@
 	</div>
 	<script>
 		function toEnroll(){
-			location.href = '${contextPath}/toTOS';
+			location.href = '${contextPath}/member/toTOS';
 		};
 	</script>
 	<br><br><br><br>
