@@ -1,6 +1,9 @@
 package com.kh.show.payments.model.service;
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import com.kh.show.reservation.model.vo.Ticket;
 
 public interface PaymentsService {
 
