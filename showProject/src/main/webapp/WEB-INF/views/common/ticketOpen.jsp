@@ -15,7 +15,7 @@
 
    
        
-    #open{
+    #jjj{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 35px;
         font-weight: 500;
@@ -27,7 +27,7 @@
        
     }
 
-    #s1,#s2,#s3,#s4,#s5{
+    #g1,#g2,#g3,#g4,#g5{
         width: 200px;
         height: 250px;
         border-radius: 10px;
@@ -39,14 +39,14 @@
     #ooo{
         height: 25px;
     }
-    #j1{
+    .j1{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         color: black;
     }
-    #j2{
+    .j2{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 15px;
         font-weight: 400;
@@ -65,50 +65,81 @@
 </head>
 <body>
 
+
+
+
     <div>
+   
         <table  class="op">
-            <tr ><span id="open">티켓오픈</span></tr>
+            <tr><span id="jjj">티켓오픈</span></tr>
             <tr id="ooo"></tr>
-            <tr>
-            <td class="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/강홍석.jpg" alt="" id="s1"></a><br><br>
-                    <span id="j1">[단독판매] 강홍석</span><br>
-                    <span id="j2">2.24(월) 18:00</span>
-                </td>
-                <td class="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/sll.jpg" alt="" id="s2"></a><br><br>
-                    <span id="j1">[단독판매] KB리브</span><br>
-                    <span id="j2">3.19(수) 17:00</span>
-                </td>
-                <td class="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/오페라.jpg" alt="" id="s3"></a><br><br>
-                    <span id="j1">[단독판매] 오페라</span><br>
-                    <span id="j2">2.20(목) 11:00</span>
-                </td>
-                <td class="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/시라노.jpg" alt="" id="s4"></a><br><br>
-                    <span id="j1">[단독판매] 시라노</span><br>
-                    <span id="j2">2.19(수) 14:00</span>
-                </td>
-                <td class="oo"></td>
-                <td>
-                    <a href="/show/showInfo/detail">
-                    <img src="${contextPath }/resources/images/베르테르.jpg" alt="" id="s5"></a><br><br>
-                    <span id="j1">[단독판매] 베르테르</span><br>
-                    <span id="j2">2.20(목) 15:00</span>
-                </td>
-                <td class="oo"></td>
+            <tr class="openTicketList">
+            
             </tr>
         </table>
+       
     </div>
     
+    
+    <script>
+    $(document).on('click', '.openTicketList .openList', function() {
+
+    	var showName = $(this).find('span.j1').text();
+    	
+        location.href = "/show/open?showName=" + showName;
+    });
+	
+    
+	var openTicketList = $(".openTicketList").html();  
+
+	$(document).ready(function() {
+	    // 페이지 로드 시 바로 데이터를 불러와서 표시
+	    openTicketListData();
+	    
+	    // 데이터를 불러오는 함수
+	    function loadOpenData() {
+	        $.ajax({
+	            url: "openTicketList",  
+	            success: function(result) {
+	                var str = ""; 
+
+	                
+	                for (var i = 0; i < result.length; i++) {
+	                    
+	                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+	                   
+	                    str += "<td class='oo'></td>"  
+	                         + "<td class='openList'>"  
+	                         + "<img src='" + imgPath + "' alt='' id='g1'><br><br>"
+	                         + "<span class='j1'>" + result[i].showName + "</span><br>"
+	                         + "<span class='j2'>" + result[i].showStart + " - " + result[i].showEnd + "</span><br>"
+	                         + "</td>";
+	                }
+
+	                
+	                $(".openTicketList").append(str);
+	            },
+	            error: function() {
+	                console.log("통신 오류"); 
+	            }
+	        });
+	    }
+
+	    // 페이지 로드 시 데이터를 불러오기
+	    function openTicketListData() {
+	        loadOpenData();  // 페이지 로드 시 데이터를 불러오는 함수 호출
+	    }
+	});
+
+		
+
+
+    
+</script>
+
+
+
+   
+
 </body>
 </html>

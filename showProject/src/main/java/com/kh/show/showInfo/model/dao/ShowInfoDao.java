@@ -461,4 +461,20 @@ public class ShowInfoDao {
 		return session.update("showInfoMapper.deleteReview",replyNo);
 	}
 
+
+
+
+	public Show openSelect(SqlSessionTemplate sqlSession, String showName) {
+		
+		return sqlSession.selectOne("showInfoMapper.openSelect",showName);
+	}
+
+
+
+
+	public ArrayList<Show> openTicketList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.openTicketList");
+	}
+
 }

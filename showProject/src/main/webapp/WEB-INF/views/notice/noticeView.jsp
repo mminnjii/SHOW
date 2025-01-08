@@ -255,6 +255,15 @@
         		var nno = $(this).children().first().text();
                 console.log(nno); 
                 
+            //오픈공지 클릭시 해당 글 상세보기
+            $("#noticeList>tbody").on("click","tr",function(){
+            	
+            	var openName = $(this).find('#openName').text();
+            	console.log(openName);
+            	location.href = "/show/open?showName="+showName;
+            	
+            });
+                
 				if(noticeType == "general"){
 	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
 	                $.ajax({
@@ -281,6 +290,11 @@
 	        		});
 				}else{
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+			       
+			        	
+			        	
+			        	
+			        
 					
 				}
 				
@@ -313,7 +327,7 @@
 							for(var i=0; i<noticeList.length; i++){
 								str += "<tr>"
 									+ "<td>"+ noticeList[i].noticeNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].noticeTitle +"</td>"
+									+ "<td style='text-align: left;' id='openName'>"+ noticeList[i].noticeTitle +"</td>"
 									+ "<td>"+ noticeList[i].createDate +"</td>"
 									+ "<td>"+ noticeList[i].count +"</td>"
 									+ "</tr>";
@@ -342,12 +356,13 @@
 						var str = "";
 						if(noticeList != null){
 							for(var i=0; i<noticeList.length; i++){
-								str += "<tr>"
-									+ "<td>"+ noticeList[i].openNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].openExplain +"</td>"
-									+ "<td>"+ noticeList[i].openName +"</td>"
-									+ "<td>"+ noticeList[i].genreNo +"</td>"
-									+ "</tr>";
+								 
+							    str += "<tr>"
+							        + "<td>"+ noticeList[i].openNo +"</td>"
+							        + "<td style='text-align: left;'>"+ noticeList[i].openName +"</td>"
+							        + "<td>"+ noticeList[i].createDate +"</td>"
+							        + "<td>"+ noticeList[i].count +"</td>"
+							        + "</tr>";
 							}
 							
 						}else{
@@ -361,6 +376,10 @@
 				});
 			});
 			
+			
+			
+         	
+         
 			
 			
         </script>

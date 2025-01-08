@@ -252,8 +252,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
-    	$("#btnList2").empty();
-    	$("#mainRank2").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -279,7 +278,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#btnList > button").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             
@@ -302,13 +301,12 @@
       
        
             $("#mainRank").empty();  // b2를 눌렀을 때에 저장된 데이터 삭제 
-            $("#btnList2").empty();
-        	$("#mainRank2").empty();
+            
             $("#mainRank").append(previousData);  //맨 처음 데이터를 저장시킨 변수를 불러옴
        
         
             //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
-            $("#btnList > button").removeAttr("disabled");
+            $("#list > button").removeAttr("disabled");
             
     });
 
@@ -328,8 +326,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
-    	$("#btnList2").empty();
-    	$("#mainRank2").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -355,7 +352,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#btnList > button").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             
@@ -384,8 +381,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
-    	$("#btnList2").empty();
-    	$("#mainRank2").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -411,7 +407,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#btnList > button").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
                 
@@ -442,8 +438,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
-    	$("#btnList2").empty();
-    	$("#mainRank2").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -468,7 +463,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#btnList > button").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             

@@ -1,5 +1,7 @@
 package com.kh.show.notice.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +20,7 @@ public class OpenNotice {
 	private int regionNo;			//REGION_NO	NUMBER
 	private int hallNo; 			//HALL_NO	NUMBER
 	private String openPrice;		//OPEN_PRICE	VARCHAR2(100 BYTE)
+	private int count;
+	private Date createDate;
 
 }

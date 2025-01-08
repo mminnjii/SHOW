@@ -178,4 +178,12 @@ public interface ShowInfoService {
 	// 리뷰 삭제하기
 	int deleteReview(int replyNo);
 
+	//메인페이지 티켓 오픈 상세 페이지 
+	Show openSelect(String showName);
+
+	//메인페이지 티켓 오픈 리스트
+	ArrayList<Show> openTicketList();
+	
+	
+
 }

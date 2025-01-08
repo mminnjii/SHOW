@@ -505,6 +505,20 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+	@Override
+	public Show openSelect(String showName) {
+
+		return showInfoDao.openSelect(sqlSession,showName);
+	}
+
+
+	@Override
+	public ArrayList<Show> openTicketList() {
+
+		return showInfoDao.openTicketList(sqlSession);
+	}
+
+
 
 
 

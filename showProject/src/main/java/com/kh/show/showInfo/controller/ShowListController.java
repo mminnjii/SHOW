@@ -2,6 +2,8 @@ package com.kh.show.showInfo.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -553,5 +555,34 @@ public class ShowListController {
 			
 			return rankShowList;
 		}
+		
+		@GetMapping(value="openTicketList",produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public ArrayList<Show> openTicketList(){
+			
+			ArrayList<Show> openTicketList = showInfoService.openTicketList();
+			
+			
+			return openTicketList;
+			
+		}
+	
+		
+		@GetMapping("/open")
+		public String open(HttpSession session,String showName) {
+			//System.out.println(showName);
+			
+			Show s = showInfoService.openSelect(showName);
+			session.setAttribute("s", s);
+			//System.out.println(s);
+			
+			return "notice/ticketOpenPage";
+			
+		}
+		
+		
+		
+		
+		
 
 }
