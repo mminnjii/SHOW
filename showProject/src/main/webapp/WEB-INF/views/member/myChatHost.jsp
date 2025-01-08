@@ -45,17 +45,17 @@
 		background-color: rgb(246, 246, 246);
 	}
 
-	/*qna body*/
-	#qna-body{
+	/*chat body*/
+	#chat-body{
 		width: 80%;
 		height: 80%;
 		margin: auto;
 	}
 
-	#qnaList{
+	#chatList{
 		text-align: center;
 	}
-	#qnaList>tbody>tr:hover{
+	#c-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -64,8 +64,21 @@
 		width: fit-content;
 		margin: auto;
 	}
-	
 
+	#btn-area{
+		width: 80%;
+		text-align: left;
+	}
+
+	#switch{
+		width: 120px;
+		height: 40px;
+		background-color: #597c9b;
+		border: none;
+		border-radius: 10px;
+		color: white;
+
+	}
 	
 </style>
 </head>
@@ -84,42 +97,38 @@
 				</div>
 				<div id="mypage-body">
 					<br>
-					<h5>문의 내역</h5>
-					<div id="qna-body">
-						<div id="toQ" align="right">
-							<button class="btn btn-primary" onclick="toQ();">문의 작성</button>
+					<h5>내 채팅방</h5>
+					<br>
+					<div id="chat-body">
+						<div id="btn-area">
+							<button id="switch">가입한 채팅방</button>
 						</div>
-						<div style="height: 5px;"></div>
-						<table id="qnaList" class="table table-hover" align="center">
+						<br>
+						<table id="chatList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>문의번호</th>
-									<th>제목</th>
-									<th>작성일</th>
-									<th>첨부파일</th>
+									<th>번호</th>
+									<th>채팅방 이름</th>
+									<th>호스트 ID</th>
+									<th>인원 수</th>
+									<th>생성일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty list }">
+									<c:when test="${empty clist }">
 										<tr>
-											<td colspan="4">조회된 문의 내역이 없습니다.</td>
+											<td colspan="5">내 채팅방은 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="q" items="${list }">
-											<tr class="detail-qna">
-												<td>${q.questionNo }</td>
-												<td>${q.quTitle }</td>
-												<td>${q.createDate }</td>
-												<td>
-													<c:if test="${not empty q.originName }">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-check" viewBox="0 0 16 16">
-															<path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
-															<path d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0"/>
-														</svg>
-													</c:if>
-												</td>
+										<c:forEach var="c" items="${c2list }">
+											<tr id="c-main">
+												<td>${c.chatNo}</td>
+												<td>${c.chatTitle}</td>
+												<td>${c.userId}</td>
+												<td>${c.joinCount}/${c.chatUserCount}</td>
+												<td>${c.createDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -128,40 +137,37 @@
 						</table>
 						<br>
 						<script>
-
-							function toQ(){
-								location.href = "${contextPath}/question"
-							}
             	
-							$("#qnaList .detail-qna").click(function(){
-								var qno = $(this).children().first().text();
-								
-								location.href = "qDetail?qno="+qno;
+							$("#chatList #c-main").click(function(){
+								var chatNo = $(this).children().first().text();
+								var userId = $(this).children().first().next().text();
+
+								location.href = "${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 							});
 							
 						</script>
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<c:url var="qna" value="qna">
+									<c:url var="chat2" value="chat2">
 										<c:param name="userNo" value="${loginUser.userNo }"/>
 										<c:param name="currentPage" value="${i }"/>
 									</c:url>
 									<li class="page-item">
-										<a class="page-link" href="${qna }">${i}</a>
+										<a class="page-link" href="${chat2 }">${i}</a>
 									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty list }">
+										<c:when test="${empty c2list }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="qna?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -175,7 +181,6 @@
 	</div>
 
 	<script>
-		// 스크롤 위치 저장
 		window.addEventListener('beforeunload', function () {
        	 localStorage.setItem('scrollPosition', window.scrollY);
     	});
@@ -187,6 +192,9 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+		$("#switch").click(function(){
+			location.href = "${contextPath}/chat?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 
