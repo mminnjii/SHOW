@@ -65,7 +65,7 @@
 	<div class="content">
 		<br><br>
 		<div class="inner">
-			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+			<h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -142,13 +142,10 @@
             	form.submit();
             }
         });
-        $("#returnBtn").click(function(){
-            ocation.href="${contextPath}/board/list";
-        });
         
         //목록으로
 		$("#returnTo").click(function(){
-            location.href="${contextPath}/qna?userNo=${loginUser.userNo}"
+            location.href="${contextPath}/member/qna?userNo=${loginUser.userNo}"
         });
 
         // 스크롤 위치 저장

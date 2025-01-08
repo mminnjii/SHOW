@@ -87,7 +87,7 @@
 		        <c:otherwise>
 		            <!-- 로그인 후 -->
                     <span><a href="${contextPath }" class="to">홈으로</a></span>/
-		            <span><a href="${contextPath }/logout.me" class="to">로그아웃</a></span>
+		            <span><a href="${contextPath }/member/logout.me" class="to">로그아웃</a></span>
 		       </c:otherwise>
 		   </c:choose>
         </div>

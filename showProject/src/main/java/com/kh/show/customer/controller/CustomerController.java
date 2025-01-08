@@ -268,7 +268,7 @@ public class CustomerController {
 			session.setAttribute("alertMsg", "문의 내역 수정 실패!");
 		}
 		
-		return "redirect:/qna?userNo="+q.getUserNo();
+		return "redirect:/member/qna?userNo="+q.getUserNo();
 	}
 	
 	//qna 삭제
@@ -284,10 +284,10 @@ public class CustomerController {
 				new File(session.getServletContext().getRealPath(filePath)).delete();
 			}
 			session.setAttribute("alertMsg", "문의 내용 삭제 성공!");
-			return "redirect:/qna?userNo="+userNo;
+			return "redirect:/member/qna?userNo="+userNo;
 		}else {
 			session.setAttribute("alertMsg", "문의 내용 삭제 실패!");
-			return "redirect:/qna?userNo="+userNo;
+			return "redirect:/member/qna?userNo="+userNo;
 		}
 	}
 
