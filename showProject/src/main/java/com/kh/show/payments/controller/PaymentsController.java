@@ -82,6 +82,15 @@ public class PaymentsController {
 		return "payments/payment";
 	}
 	
+	@PostMapping(value ="/processPayment",produces ="text/html; charset=UTF-8")
+	@ResponseBody
+	public String processPayment(int reservationId, int roundId) {
+		System.out.println(reservationId);
+		System.out.println(roundId);
+		
+		return "check";
+	}
+	
 	
 	@Transactional
 	@PostMapping(value = "/bank",produces ="text/html; charset=UTF-8")
