@@ -72,6 +72,4 @@ public interface MemberService {
 	//빈좌석 표시
 	int rollbackSeats(int seatId);
 
-	// chat회원 정보 및 프로필 조회 - 전수민 
-	Member selectChatMem(int userNo);
 }
