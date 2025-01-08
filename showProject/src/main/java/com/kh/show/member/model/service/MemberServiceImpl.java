@@ -124,12 +124,6 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.showList(sqlSession,userNo,pi);
 	}
 
-	// chat회원 정보 및 프로필 조회 - 전수민 
-	@Override
-	public Member selectChatMem(int userNo) {
-		return memberDao.selectChatMem(sqlSession, userNo);
-	}
-	
 
 	@Override
 	public int couponCount(int userNo) {

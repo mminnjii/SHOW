@@ -38,16 +38,23 @@
 	    </mvc:interceptor>
 	</mvc:interceptors>
 	
-	<!-- 인터셉터 등록 (로그인 인터셉터) 
+	
+	<!-- 인터셉터 등록 (로그인 인터셉터) -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/meeting/**"/>  
 			<mapping path="/question/**"/>  
+			<mapping path="/qna/**"/>  
 			<mapping path="/chat/**"/>  
+			
+			 <!-- 통합 요청중에 제외하고싶은 요청 매핑 추가  -->
+			<exclude-mapping path="/meeting/list"/>
+			<exclude-mapping path="/chat/list"/>
+
 			<beans:bean class="com.kh.show.common.interceptor.LoginInterceptor"/>
 		</interceptor>
 	</interceptors>
-	-->
+	
 	<!-- 소켓 서버 등록 -->
 	<beans:bean id="chatServer" class="com.kh.show.common.websocket.server.WebSocketServer"/>
 	
