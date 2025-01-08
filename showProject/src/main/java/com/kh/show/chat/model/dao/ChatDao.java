@@ -87,6 +87,11 @@ public class ChatDao {
 		return sqlSession.delete("chatMapper.deleteChat", chatNo);
 	}
 
+	// 채팅방에 join되어 있는 회원인지 확인하는 메소드
+	public ChatJoin joinUser(SqlSessionTemplate sqlSession, ChatJoin cj) {
+		return sqlSession.selectOne("chatMapper.joinUser", cj);
+	}
+
 
 	
 	

@@ -219,12 +219,13 @@
 			var selectNo = $(this).val();
 			
 			var maxDate = $("#maxDate-"+selectNo).val();
+			console.log(maxDate);
 			
 			// 정규식 활용하여 모두 치환 
 			var maxDate2 = maxDate.replaceAll('/', "-");
 			var max = maxDate2.split('-');
-			var maxDate3 = '20' + max[0] + '-' + max[1] + '-' + max[2]
-			
+			var maxDate3 = max[0] + '-' + max[1] + '-' + max[2]
+			console.log("maxDate3 : "+ maxDate3);
 			meetingDate.attr("max", maxDate3);
 			
 		});

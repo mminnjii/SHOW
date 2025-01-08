@@ -265,7 +265,6 @@
 			// 연결되었을 때 
 			socket.onopen = function(result){
 				console.log("연결 성공");
-				console.log(result);
 			}
 			
 			// 연결 종료 
@@ -282,12 +281,9 @@
 			
 			socket.onmessage = function(message){
 				console.log("메시지 수신");
-				console.log(message);
-				
 				
 				//전달받은 json 형태의 문자열을 json 객체로 파싱하기
 				var data = JSON.parse(message.data);
-				console.log(data);
 			
 				// 참여 했을 때와 대화를 할 때 전달받는 메시지의 Object 객체 명이 다르기 때문에 해당 객체의 key 값으로 조건처리해서 데이터를 뿌려준다.
 				// 참여자 영역
@@ -304,12 +300,19 @@
 				    var userStr = "";
 				    	
 					for(var i=0; i < userList.length; i++){
-						userStr += "<li>"
-								 + '<img alt="" src="${contextPath}/resources/profile/' + userList[i].changeName + '" id="profile">' 
-								 + "&nbsp;&nbsp;" + userList[i].userId + "</li>";
+						if(userList[i].changeName == null){
+							userStr += "<li>"
+		                         + '<img src="${contextPath}/resources/profile/white.png" id="profile">'
+		                         + "&nbsp;&nbsp;" + userList[i].userId 
+		                         + "</li>";
+						}else{
+							userStr += "<li>"
+			                         + '<img alt="" src="${contextPath}/resources/profile/' + userList[i].changeName + '" id="profile">' 
+			                         + "&nbsp;&nbsp;" + userList[i].userId 
+			                         + "</li>";
+						}
+						
 				    }
-					
-					console.log("userStr : " + userStr);
 					
 				    $(".join ul").html(userStr);
 				}
@@ -320,25 +323,42 @@
 					var div = $(".info");
 					
 					var chatUserId = data.mem.userId;
-					
 					// 데이터는 HashMap으로 전달받음. key 값에 접근하여 데이터 view에 보여주기
 					// 내가 전송한 것과 아닌 것 구분해서 스타일 적용. 
 					var loginUserId = "${loginUser.userId}";
-						
+					var changeName = "${loginUser.changeName}";
+
+					var chatUserChangeName = data.mem.changeName ;
+					console.log(loginUserId);
+					console.log(chatUserChangeName);
+					
 					var newMessage = "";
+					
+					// 조건 처리 수정 필요 
 					if(loginUserId == chatUserId){
 						newMessage += "<div align='right' class='my'>"
 									+ "<p>"
 									+ data.cm.chatContent
 									+ "</p></div>";
 					}else{
-						newMessage += "<div><div>"
-									+ '<img alt="회원 프로필" src="${contextPath}/resources/profile/${loginUser.changeName}" id="profile">'
-									+ "&nbsp;&nbsp;&nbsp;" + chatUserId
-									+ "</div><p>"
-									+ data.cm.chatContent
-									+ "</p></div>";
+						if(changeName == null){
+							newMessage += "<div><div>"
+										+ '<img src="${contextPath}/resources/profile/white.png" id="profile">'
+										+ "&nbsp;&nbsp;&nbsp;" + chatUserId
+										+ "</div><p>"
+										+ data.cm.chatContent
+										+ "</p></div>";
+						}else{
+							newMessage += "<div><div>"
+										+ '<img src="${contextPath}/resources/profile/chatUserChangeName" id="profile">'										
+										+ "&nbsp;&nbsp;&nbsp;" + chatUserId
+										+ "</div><p>"
+										+ data.cm.chatContent
+										+ "</p></div>";
+							
+						}
 					}
+					
 					
 					div.append(newMessage);
 					
@@ -353,7 +373,6 @@
 			
 			// 입력 메시지 
 			var msg = $("#chatMsg").val();
-			console.log(msg);
 
 			// 소켓에 전달 
 			socket.send(msg);
@@ -371,7 +390,6 @@
 			// 나가기 : 접속종료 및 DB 데이터 삭제 
 			
 			var deleteVal = $(".outBtn").val()
-			console.log(deleteVal);
 			
 			// 나가기 / 채팅방 삭제  버튼 value 값을 가져와 각 버튼 기능 처리 
 			if(deleteVal == 'deleteChat'){ // 채팅방 삭제 

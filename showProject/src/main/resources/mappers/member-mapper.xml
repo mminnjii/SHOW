@@ -459,7 +459,7 @@
 	
 	<select id="meetingJoinList" resultType="JoinMeeting" >
 	<![CDATA[
-		SELECT M.MEETING_NO meethingNo,
+		SELECT M.MEETING_NO meetingNo,
 	           M.USER_NO userNo,
                E.USER_ID userId,
 	           MEETING_TITLE meetingTitle,
@@ -499,7 +499,7 @@
 	
 	<select id="meetingHostList" resultType="JoinMeeting" >
 	<![CDATA[
-		SELECT M.MEETING_NO meethingNo,
+		SELECT M.MEETING_NO meetingNo,
 	           M.USER_NO userNo,
                E.USER_ID userId,
 	           MEETING_TITLE meetingTitle,

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.show.chat.model.service.ChatService;
 import com.kh.show.chat.model.vo.Chat;
@@ -23,6 +24,7 @@ import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.vo.Genre;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Slf4j
 @Controller
@@ -166,6 +168,19 @@ public class ChatController {
 		int result = chatService.deleteChat(chatNo);
 		
 		return "chat/chat";
+	}
+	
+	// 채팅방에 join되어 있는 회원인지 확인하는 메소드 
+	@ResponseBody
+	@PostMapping("joinUser")
+	public ChatJoin joinUser(ChatJoin cj) {
+
+		log.debug("cj : {}", cj);
+		
+		ChatJoin joinUser = chatService.joinUser(cj);
+		log.debug("joinUser : {}", joinUser);
+		
+		return joinUser;
 	}
 
 	

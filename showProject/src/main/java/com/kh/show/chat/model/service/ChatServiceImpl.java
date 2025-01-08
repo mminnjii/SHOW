@@ -93,6 +93,12 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.deleteChat(sqlSession, chatNo);
 	}
 
+	// 채팅방에 join되어 있는 회원인지 확인하는 메소드 
+	@Override
+	public ChatJoin joinUser(ChatJoin cj) {
+		return chatDao.joinUser(sqlSession, cj);
+	}
+
 
 	
 
