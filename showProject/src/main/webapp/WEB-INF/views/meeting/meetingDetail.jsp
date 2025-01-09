@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOW-DETAIL</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         
         h1 {
@@ -132,19 +133,31 @@
      
      
      <script>
-		$("#joinbtn").on("click", function(){
-			
-			// 참여 중인 인원
-			var joinCount = ${meetingCount}; 
-			// 참여 가능 인원 
-			var meetingCount= ${meDetail.meetingCount};
+		var userNo = ${loginUser.userNo} ;
+		var meetingNo = ${meDetail.meetingNo} ;
+		var meDeUserNo = ${meDetail.userNo};
 
+		// 참여 중인 인원
+		var joinCount = ${meetingCount}; 
+		// 참여 가능 인원 
+		var meetingCount= ${meDetail.meetingCount};
+
+		// 회원 본인이 생성한 소모임인 경우 참여, 참여 취소 불가능.
+     	if(meDeUserNo == userNo){
+			$("#joinbtn").attr("disabled", true).css("background-color", "gray");
+			$("#cancelbtn").attr("disabled", true).css("background-color", "gray");
+		}	
+     
+		if(meetingCount <= joinCount){
+			$("#joinbtn").attr("disabled", true).css("background-color", "gray");
+		}
+
+		$("#joinbtn").on("click", function(){
+
+			
 			// 참여 가능 인원보다 참여중인 인원이 작은 경우에만 참여 신청 가능
 			if(meetingCount > joinCount){
 				if(confirm("참여하시겠습니까?")){
-					var userNo = ${loginUser.userNo} ;
-					var meetingNo = ${meDetail.meetingNo} ;
-	
 					$.ajax({
 						url : "join",
 						data : {
@@ -160,8 +173,6 @@
 						}
 					});
 				}
-			}else{ // 참여 인원이 차면 신청 불가능 
-				alert("참여인원이 마감되었습니다.");
 			}
 		});
 		

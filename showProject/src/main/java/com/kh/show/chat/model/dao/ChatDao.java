@@ -77,6 +77,21 @@ public class ChatDao {
 		return sqlSession.delete("chatMapper.joinDelete", cj);
 	}
 
+	// 채팅방 번호 뽑기 
+	public int selectChatNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("chatMapper.selectChatNo");
+	}
+
+	// 채팅방 삭제 
+	public int deleteChat(SqlSessionTemplate sqlSession, int chatNo) {
+		return sqlSession.delete("chatMapper.deleteChat", chatNo);
+	}
+
+	// 채팅방에 join되어 있는 회원인지 확인하는 메소드
+	public ChatJoin joinUser(SqlSessionTemplate sqlSession, ChatJoin cj) {
+		return sqlSession.selectOne("chatMapper.joinUser", cj);
+	}
+
 
 	
 	
