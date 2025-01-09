@@ -771,7 +771,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SHOW_START,
 		SHOW_END,
 		POSTER_ORIGINNAME,
-		POSTER_CHANGENAME
+		POSTER_CHANGENAME,
+		DETAIL_CHANGENAME
 		FROM SHOW S
 		JOIN HALL H ON (S.HALL_NO = H.HALL_NO)
 		JOIN GENRE G ON
@@ -829,7 +830,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		FROM REVIEW
 		WHERE STATUS = 'Y'
-		AND SHOW_NO = 1
+		AND SHOW_NO = #{showNo}
 	</select>
 
 
@@ -844,8 +845,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW R
 		JOIN MEMBER USING(USER_NO)
 		WHERE R.STATUS = 'Y'
-		AND SHOW_NO
-		= 1
+		AND SHOW_NO = #{showNo}
 		ORDER BY CREATE_DATE DESC
 	</select>
 
@@ -936,12 +936,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
                       
 	  <!-- 쇼이름으로 상세검색 -->
-	  <select id="selectWithName" >
+<!-- 	  <select id="selectWithName" resultMap="showResultSet">
 	  	SELECT * 
 		FROM SHOW 
-		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%';
+		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%'
 	  </select>
-	  
+	   -->
  
 
 

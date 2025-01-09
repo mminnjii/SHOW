@@ -61,15 +61,15 @@ public ArrayList<Show> musicalShow() {
 	
 	
 	@Override
-	public ArrayList<Review> selectReview() {
-		ArrayList<Review> list = showInfoDao.selectReview(sqlSession);
+	public ArrayList<Review> selectReview(int showNo) {
+		ArrayList<Review> list = showInfoDao.selectReview(sqlSession,showNo);
 		return list;
 	}
 
 
 	@Override
-	public int selectRcount() {
-		return showInfoDao.selectRcount(sqlSession);
+	public int selectRcount(int showNo) {
+		return showInfoDao.selectRcount(sqlSession,showNo);
 	}
 
 

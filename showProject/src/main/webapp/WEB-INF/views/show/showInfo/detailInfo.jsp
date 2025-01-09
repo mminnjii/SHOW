@@ -21,9 +21,6 @@
 <title>Insert title here</title>
 </head>
 <body>	
-		<%
-        	String Showname = request.getParameter("name");
-    	%>
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
 	
 		<br><br>
@@ -34,13 +31,7 @@
 	        <p> ${s.notice }</p>
 	        <br><br><br>  
 	        <h3>공연상세 / 정보</h3> <br>
-	        <img src="/show/resources/images/011.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/012.jpg">
-         	<br><br> 
-	        <img src="/show/resources/images/013.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/014.jpg">
+	        <img src='/show/resources/DetailUploadFiles/${s.detailChangeName}.jpg' />
 	        <p style="margin-top: 1000px;"></p>
         </div>
         
@@ -78,24 +69,13 @@
         
         <script>
 	        
+          var detail = ${s.detailChangeName}
+        
 	        $(function () {
+	        	
+	        	console.log(detail);
+	        
 	            $('#Modal').modal('show');
-	            
-	            
-	            $.ajax({
-	                url: '/show/showInfo/selectWithName', 
-	                type: 'POST',           
-	                data: {
-	                	reservationId : reservation_uid,
-		                roundId : roundId,
-		                selectedName : selectedName
-	                }, 
-	                success: function(response) {
-	                    console.log('서버 응답:', response);
-	                },
-	                error: function(xhr, status, error) {
-	                    console.error('에러 발생:', error);
-	                }
 	            
 	        });
         

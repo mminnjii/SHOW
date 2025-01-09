@@ -23,10 +23,10 @@ public interface ShowInfoService {
 	int updateShowRound();
 	
 	// 리뷰조회
-	ArrayList<Review> selectReview();
+	ArrayList<Review> selectReview(int showNo);
 	
 	// 리뷰 갯수 조회
-	int selectRcount();
+	int selectRcount(int showNo);
 	
 	// 리뷰 검색
 	ArrayList<Review> reviewSearch(String keyword);

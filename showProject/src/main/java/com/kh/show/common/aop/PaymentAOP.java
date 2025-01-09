@@ -38,7 +38,7 @@ public class PaymentAOP {
 	private int reservationId = 0;
 	private int roundId = 0;
 	
-	@Around("execution(* com.kh.show.reservation.model.dao.*.*(..)) || execution(* com.kh.show.payments.controller.*.*(..))")
+	// @Around("execution(* com.kh.show.reservation.model.dao.*.*(..)) || execution(* com.kh.show.payments.controller.*.*(..))")
 	public Object reservationTimeCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		
 		Object obj = joinPoint.proceed(); // 기존 메소드 실행
@@ -84,7 +84,7 @@ public class PaymentAOP {
 	
 	
 
-	@Around("execution(* execution(* com.kh.show.payments.controller.*.*(..)) || com.kh.show.payments.model.dao.*.*(..))")
+	// @Around("execution(* execution(* com.kh.show.payments.controller.*.*(..)) || com.kh.show.payments.model.dao.*.*(..))")
 	public Object paymentsTimeCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object obj = joinPoint.proceed(); // 기존 메소드 실행
 		String methodName = joinPoint.getSignature().getName(); // 대상 메소드명 추출
