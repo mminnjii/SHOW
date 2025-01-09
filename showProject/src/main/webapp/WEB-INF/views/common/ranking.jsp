@@ -157,9 +157,9 @@
 
     <script>
     
-   /*
+   
     var previousData = $("#mainRank").html();
-    
+    /*
     $("#rank2").click(function(){
     	
     	$(this).prop('disabled', true);
