@@ -14,7 +14,7 @@ import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.reservation.model.vo.Ticket;
 
 @Service
-public class ReservationImpl implements ReservationService {
+public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	private ReservationDao reservationDao;
@@ -58,13 +58,18 @@ public class ReservationImpl implements ReservationService {
 	}
 
 	@Override
-	public int updateSeatStatusY(Reservation r) {
-		return reservationDao.updateSeatStatusY(sqlSession,r);
+	public int updateSeatStatusN(Reservation r) {
+		return reservationDao.updateSeatStatusN(sqlSession,r);
 	}
 
 	@Override
 	public int updateReserStatusY(Reservation r) {
 		return reservationDao.updateReserStatusY(sqlSession,r);
+	}
+
+	@Override
+	public int updateSeatStatusP(Reservation r) {
+		return reservationDao.updateSeatStatusP(sqlSession,r);
 	}
 
 

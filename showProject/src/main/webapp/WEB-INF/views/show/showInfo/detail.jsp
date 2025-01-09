@@ -11,7 +11,6 @@
     <style>
 		.detail {
 			margin-left: 150px;
-			margin-top: 50px;
 			font-family: Arial, sans-serif;
 		}
 		
@@ -75,6 +74,7 @@
 		}
 		
 		.details {
+			margin-top : 100px;
 			margin-left: 30px;
 		}
 		
@@ -86,6 +86,7 @@
 		.details p {
 			margin: 0;
 			line-height: 3; /* 텍스트 가독성을 위해 줄 간격 */
+			font-weight: 300;
 		}
 		
 		.menu {
@@ -146,20 +147,20 @@
 	        <!-- 본문 상단 영역 -->
 	        <div class="top-section">
 	        
-	            <img src='/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg' />
+	            <img src='/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg'  style= "margin-top : 100px;"/>
 
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
 					      	 <h2>${s.showName }</h2> <br>
-			                <p>장르 : ${s.genreName }</p> 
-			                <p>소개 : ${s.showExplain }</p> 
-			                <p>장소 : ${s.hallName }</p> 
-			                <p>공연기간 : ${s.showStart }~${s.showEnd }</p>
-			                <p>공연시간 : 120분</p>
-			                <p>VIP석 : ${vipPrice } &nbsp;||&nbsp; 
-				                R석 : ${rPrice } &nbsp;||&nbsp; 
-				                S석 : ${s.price }
+			                <p><b style="font-weight: 500;">장르</b> : &nbsp; ${s.genreName }</p> 
+			                <p style="width: 800px;" ><b style="font-weight: 500;">소개</b> : &nbsp; ${s.showExplain }</p> 
+			                <p><b style="font-weight: 500;">장소</b> : &nbsp; ${s.hallName }</p> 
+			                <p><b style="font-weight: 500;">공연기간</b> :&nbsp; ${s.showStart }~${s.showEnd }</p>
+			                <p><b style="font-weight: 500;">공연시간</b> : &nbsp; 120분</p>
+			                <p><b style="font-weight: 500;">VIP석</b> : &nbsp; ${vipPrice } &nbsp;||&nbsp; 
+				                <b style="font-weight: 500;">R석</b> : &nbsp; ${rPrice } &nbsp;||&nbsp; 
+				               <b style="font-weight: 500;"> S석</b> : &nbsp; ${s.price }
 			                </p>
 						</c:when>                
 		                <c:otherwise>

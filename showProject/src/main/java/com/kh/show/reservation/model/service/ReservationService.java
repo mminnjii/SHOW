@@ -32,11 +32,14 @@ public interface ReservationService {
 	// 티켓 내역 확인
 	ArrayList<Ticket> confirmTicket(String reservationId);
 	
-	// 좌석 상태 Y
-	int updateSeatStatusY(Reservation r);
+	// (결제완료)좌석 상태 변환(N)
+	int updateSeatStatusN(Reservation r);
 	
-	// 예약상태 Y
+	// (결제완료) 예약상태 Y
 	int updateReserStatusY(Reservation r);
+	
+	// 좌석상태 P
+	int updateSeatStatusP(Reservation r);
 
 
 	

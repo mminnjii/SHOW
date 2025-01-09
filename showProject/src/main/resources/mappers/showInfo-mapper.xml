@@ -926,25 +926,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 리뷰 삭제 -->
-
-
-
 	  <update id="deleteReview" parameterType="_int">
 	  	UPDATE REVIEW
 		SET STATUS = 'N'
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
 	  
-                      
-	  <!-- 쇼이름으로 상세검색 -->
-<!-- 	  <select id="selectWithName" resultMap="showResultSet">
-	  	SELECT * 
-		FROM SHOW 
-		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%'
-	  </select>
-	   -->
- 
-
-
 
 </mapper>

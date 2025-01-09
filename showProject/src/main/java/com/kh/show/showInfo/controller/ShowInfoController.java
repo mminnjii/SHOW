@@ -47,8 +47,10 @@ public class ShowInfoController {
 		
 		String posterName= s.getPosterChangeName();
 		posterName = posterName.substring(0, posterName.length() - 1) + "D";
-		 s.setDetailChangeName(posterName);
+		s.setDetailChangeName(posterName);
 		
+		 // System.out.println(s.getDetailChangeName());
+		 
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
 

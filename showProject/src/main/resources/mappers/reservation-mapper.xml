@@ -83,10 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ROW_NAME || COL_NO = #{name}
 		AND ROUND_ID = #{roundId}
 	</update>
-	
-	
 
-	
+
 	<!-- 예약 번호 가져오기 -->
 	<select id="reSearch" parameterType="_int" resultMap="reservationResult">
 		SELECT RESERVATION_ID, SHOW_NAME 
@@ -124,10 +122,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND T.STATUS = 'Y'
 	</select>
 	
-	<!-- 좌석 상태 변환(Y) -->
-	<update id="updateSeatStatusY" parameterType="Reservation">
+	<!-- (결제완료)좌석 상태 변환(N) -->
+	<update id="updateSeatStatusN" parameterType="Reservation">
 		UPDATE SEATS
+		SET STATUS = 'N'
+		WHERE ROW_NAME || COL_NO IN
+		<foreach collection="seats" item="seatId" open="(" separator="," close=")"> 
+			  #{seatId}
+		</foreach>
+		AND ROUND_ID = #{roundId}
+	</update>
+
+	<!-- (결제완료)예약테이블 상태변환(Y) -->
+	<update id="updateReserStatusY" parameterType="Reservation">
+		UPDATE RESERVATION
 		SET STATUS = 'Y'
+		WHERE RESERVATION_ID = #{reservationId}
+	</update>
+	
+	<!-- 좌석 상태 변환(P) -->
+	<update id="updateSeatStatusP" parameterType="Reservation">
+		UPDATE SEATS
+		SET STATUS = 'P'
 		WHERE ROW_NAME || COL_NO IN
 		<foreach collection="seats" item="seatId" open="(" separator="," close=")"> 
 			  #{seatId}
@@ -135,12 +151,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND ROUND_ID = #{roundId}
 	</update>
 	
-	<!-- 예약테이블 상태변환(Y) -->
-	<update id="updateReserStatusY" parameterType="Reservation">
-		UPDATE RESERVATION
+	
+	<!-- 좌석 rollbackM (스케줄러)-->
+	<select id="seatsRollbackM">
+		UPDATE SEATS
 		SET STATUS = 'Y'
-		WHERE RESERVATION_ID = #{reservationId}
-	</update>
+		WHERE SEAT_ID IN (
+		                SELECT SEAT_ID
+		                FROM SEATS
+		                WHERE STATUS = 'M')
+	</select>
+	
+	<!-- 좌석 rollbackP (스케줄러)-->
+	<select id="seatsRollbackP">
+		UPDATE SEATS
+		SET STATUS = 'Y'
+		WHERE SEAT_ID IN (
+		                SELECT SEAT_ID
+		                FROM SEATS
+		                WHERE STATUS = 'P')
+	</select>
+	
+	<!-- 예약 rollback (스케줄러)-->
+	<select id="reservationRollback">
+		UPDATE RESERVATION
+		SET STATUS = 'N'
+		WHERE RESERVATION_ID IN (
+		                SELECT RESERVATION_ID 
+		                FROM RESERVATION
+		                WHERE STATUS = 'M')
+	</select>
+	
+	
 	
 	
 </mapper>

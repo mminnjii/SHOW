@@ -267,7 +267,7 @@
     	            for (var i = 0; i < result.length; i++) {
     	                str += "<tr>"
     	                     + "<td><img src='/show/resources/images/images2/" +(i+1) + ".png' alt='' class='u1'>"
-    	                     + "<a href=''><span class='u3'>"+ result[i].showName +"</span></a></td>"
+    	                     + "<a href='/show/showInfo/detail?showName="+result[i].showName+"'><span class='u3'>"+ result[i].showName +"</span></a></td>"
     	                     + "</tr>"
     	                     + "<tr id='ccc'></tr>";
     	            }

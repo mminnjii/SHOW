@@ -3,6 +3,7 @@ package com.kh.show.payments.controller;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -353,12 +354,10 @@ public class PaymentsController {
 			
 		List<String> seats = r.getSeats();
 		
-		// System.out.println(seats);
-		
 		int result = reservationService.updateReserStatusY(r);
 		System.out.println("reservation: "+result);
 		
-		int result2 = reservationService.updateSeatStatusY(r);
+		int result2 = reservationService.updateSeatStatusN(r);
 		System.out.println("seats: "+result2);
 		
 		if(result * result2 != 0) {
@@ -368,6 +367,24 @@ public class PaymentsController {
 		}
 	}
 	
-	
+	@Transactional
+	@ResponseBody
+	@PostMapping(value = "/statusP",produces ="text/html; charset=UTF-8")
+	public String statusP(String selectedName, int roundId) {
+
+		Reservation r = new Reservation();
+		r.setRoundId(roundId);
+		List<String> seats = Arrays.asList(selectedName.split(","));
+		r.setSeats(seats);
+		
+		int result = reservationService.updateSeatStatusP(r);
+		System.out.println("seats: "+result);
+		
+		if(result >= 0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+	}
 	
 }
