@@ -148,7 +148,7 @@
         });
 
         function enroll(){
-            location.href = "${contextPath}/memberEnrollPage";
+            location.href = "${contextPath}/member/memberEnrollPage";
         }
     </script>
 

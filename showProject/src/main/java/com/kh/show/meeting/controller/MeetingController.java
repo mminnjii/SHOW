@@ -100,10 +100,23 @@ public class MeetingController {
 	@PostMapping("meetingInsert")
 	public String meetingInsert(HttpSession session, Meeting m) {
 		
+		// meetingNo의 값을 미리 가져와야 한다. 
+		int meetingNo = meetingService.selectMeetingNo();
+		m.setMeetingNo(meetingNo);
 		int result = meetingService.meetingInsert(m);
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "소모임 생성이 완료되었습니다. 내 모임은 마이페이지에서 확인하실 수 있습니다.");
+			//소모임 join테이블에 저장되어야 한다.
+			MeetingJoin mj = new MeetingJoin(meetingNo, Integer.parseInt(m.getUserNo()));
+			System.out.println(mj);
+			int result2 = meetingService.meetingJoin(mj); 
+
+			if((result*result2) >0) {
+				session.setAttribute("alertMsg", "소모임 생성이 완료되었습니다. 내 모임은 마이페이지에서 확인하실 수 있습니다.");
+			}
+		} else {
+			session.setAttribute("alertMsg", "소모임 생성이 불가능 합니다. 다시 시도해 주세요.");
+			
 		}
 		
 		return "redirect:list";

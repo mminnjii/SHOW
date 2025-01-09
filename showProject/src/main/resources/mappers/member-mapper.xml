@@ -311,7 +311,7 @@
 		       GENRE_NAME genreNo
 		FROM COUPON
 		JOIN GENRE USING(GENRE_NO)
-		WHERE USER_NO = 1
+		WHERE USER_NO = #{userNo}
 		AND STATUS = 'Y'
 		AND EXPIRED_DATE>SYSDATE
 	</select>
@@ -394,13 +394,13 @@
 	</update>
 
 	
-	<select id="chatCount" resultType="_int">
+	<select id="chatJoinCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM CHAT_JOIN
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<select id="chatList" resultType="Joinchat" >
+	<select id="chatJoinList" resultType="Joinchat" >
 		SELECT J.CHAT_NO chatNo,
 	           CHAT_TITLE chatTitle,
 	           C.USER_NO userNo,
@@ -422,13 +422,13 @@
 		ORDER BY CREATEDATE
 	</select>
 	
-	<select id="chatCount2" resultType="_int">
+	<select id="chatHostCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM CHAT
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<select id="chatList2" resultType="Joinchat" >
+	<select id="chatHostList" resultType="Joinchat" >
 		SELECT C.CHAT_NO chatNo,
 	           CHAT_TITLE chatTitle,
 	           C.USER_NO userNo,
@@ -436,8 +436,8 @@
 	           CHAT_USER_COUNT chatUserCount,
 	           CREATEDATE createDate,
 	           COUNT(J.USER_NO) joinCount
-		FROM CHAT_JOIN J
-		JOIN CHAT C ON(J.CHAT_NO = C.CHAT_NO)
+		FROM CHAT C
+		JOIN CHAT_JOIN J ON(J.CHAT_NO = C.CHAT_NO)
 		JOIN MEMBER M ON(C.USER_NO = M.USER_NO)
 		WHERE C.STATUS = 'Y'
 		AND C.USER_NO = #{userNo}
@@ -449,7 +449,87 @@
 		         CREATEDATE
 		ORDER BY CREATEDATE
 	</select>
+	
 
+	<select id="meetingJoinCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEETING_JOIN
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="meetingJoinList" resultType="JoinMeeting" >
+	<![CDATA[
+		SELECT M.MEETING_NO meetingNo,
+	           M.USER_NO userNo,
+               E.USER_ID userId,
+	           MEETING_TITLE meetingTitle,
+	           SHOW_NAME showName,
+	           MEETING_PLACE meetingPlace,
+	           MEETING_COUNT meetingCount,
+	           MEETING_DATE meetingDate,
+	           START_DATE startDate,
+	           END_DATE endDate,
+	           COUNT(J.USER_NO) joinCount
+		FROM MEETING M
+		JOIN MEETING_JOIN J ON(M.MEETING_NO=J.MEETING_NO)
+		JOIN SHOW S ON(S.SHOW_NO = M.SHOW_NO)
+        JOIN MEMBER E ON(M.USER_NO = E.USER_NO)
+		WHERE M.STATUS = 'Y'
+		AND J.USER_NO = #{userNo}
+        AND MEETING_DATE >= SYSDATE
+		GROUP BY M.MEETING_NO,
+		                M.USER_NO,
+                        E.USER_ID,
+		                MEETING_TITLE,
+		                SHOW_NAME,
+		                MEETING_PLACE,
+		                MEETING_COUNT,
+		                MEETING_DATE,
+		                START_DATE,
+		                END_DATE
+		ORDER BY MEETING_DATE
+		]]> 
+	</select>
+	
+	<select id="meetingHostCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEETING
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="meetingHostList" resultType="JoinMeeting" >
+	<![CDATA[
+		SELECT M.MEETING_NO meetingNo,
+	           M.USER_NO userNo,
+               E.USER_ID userId,
+	           MEETING_TITLE meetingTitle,
+	           SHOW_NAME showName,
+	           MEETING_PLACE meetingPlace,
+	           MEETING_COUNT meetingCount,
+	           MEETING_DATE meetingDate,
+	           START_DATE startDate,
+	           END_DATE endDate,
+	           COUNT(J.USER_NO) joinCount
+		FROM MEETING M
+		JOIN MEETING_JOIN J ON(M.MEETING_NO=J.MEETING_NO)
+		JOIN SHOW S ON(S.SHOW_NO = M.SHOW_NO)
+        JOIN MEMBER E ON(M.USER_NO = E.USER_NO)
+		WHERE M.STATUS = 'Y'
+		AND M.USER_NO = #{userNo}
+        AND MEETING_DATE >= SYSDATE
+		GROUP BY M.MEETING_NO,
+		                M.USER_NO,
+                        E.USER_ID,
+		                MEETING_TITLE,
+		                SHOW_NAME,
+		                MEETING_PLACE,
+		                MEETING_COUNT,
+		                MEETING_DATE,
+		                START_DATE,
+		                END_DATE
+		ORDER BY MEETING_DATE
+		]]> 
+	</select>
 	
 </mapper>
 

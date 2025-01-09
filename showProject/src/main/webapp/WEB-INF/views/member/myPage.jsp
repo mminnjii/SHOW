@@ -172,7 +172,7 @@
 		<br><br>
 		
 		<div class="inner">
-			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+			<h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -223,14 +223,14 @@
 									&nbsp;&nbsp;&nbsp;<span id="c2"></span> 장
 								</td>
 								<td>
-									<form action="${contextPath}/review" method="get">
+									<form action="${contextPath}/member/review" method="get">
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 										&nbsp;&nbsp;&nbsp;<button class="to">후기 작성</button> <br>
 										&nbsp;&nbsp;&nbsp;<span id="c3"></span> 건
 									</form>
 								</td>
 								<td>
-									<form action="${contextPath}/show" method="get">
+									<form action="${contextPath}/member/show" method="get">
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 									&nbsp;&nbsp;&nbsp;<button class="to">내 공연</button><br>
 									&nbsp;&nbsp;&nbsp;<span id="c4"></span> 개

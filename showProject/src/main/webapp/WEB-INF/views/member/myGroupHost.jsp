@@ -45,17 +45,17 @@
 		background-color: rgb(246, 246, 246);
 	}
 
-	/*qna body*/
-	#pay-body{
+	/*chat body*/
+	#group-body{
 		width: 80%;
 		height: 80%;
 		margin: auto;
 	}
 
-	#payList{
+	#groupList{
 		text-align: center;
 	}
-	#payList>tbody>tr:hover{
+	#g-main:hover{
 		cursor: pointer;
 		background-color: white;
 	}
@@ -65,8 +65,24 @@
 		margin: auto;
 	}
 
-	
+	#btn-area{
+		width: 80%;
+		text-align: left;
+	}
 
+	#switch{
+		width: 120px;
+		height: 40px;
+		background-color: #597c9b;
+		border: none;
+		border-radius: 10px;
+		color: white;
+
+	}
+
+	table{
+		font-size: 14px;
+	}
 	
 </style>
 </head>
@@ -77,7 +93,7 @@
 		<br><br>
 		<div class="inner">
 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
-			<h3><a href="${contextPath}/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
+			<h3><a href="${contextPath}/member/myPage" style="text-decoration: none; color: black;">마이페이지</a></h3>
             <br><br>
             <div id="mypage">
 				<div id="mypage-side">
@@ -87,31 +103,43 @@
 					<br>
 					<h5>내 소모임</h5>
 					<br>
-					<div id="pay-body">
+					<div id="group-body">
+						<div id="btn-area">
+							<button id="switch">가입한 소모임</button>
+						</div>
 						<br>
-						<table id="payList" class="table table-hover" align="center">
+						<table id="groupList" class="table table-hover" align="center">
 							<thead>
 								<tr>
-									<th>소모임 번호</th>
-									<th>소모임 이름</th>
-									<th>호스트 ID</th>
-									<th>인원 수</th>
+									<th width="70px">번호</th>
+									<th>모임명</th>
+									<th>인원수</th>
+									<th>모집 기간</th>
+									<th>모임 날짜</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty list }">
+									<c:when test="${empty m2list }">
 										<tr>
-											<td colspan="4">가입된 소모임이 없습니다.</td>
+											<td colspan="5">내 소모임이 없습니다</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="g" items="${list }">
-											<tr>
-												<td>1</td>
-												<td>반 고흐전</td>
-												<td>admin</td>
-												<td>10명</td>
+										<c:forEach var="m" items="${m2list }">
+											<tr id="g-main">
+												<td>${m.meetingNo}</td>
+												<td>(${m.showName})${m.meetingTitle}</td>
+												<c:choose>
+													<c:when test="${m.joinCount == m.meetingCount}">
+														<td style="color: red;">${m.joinCount}/${m.meetingCount}</td>
+													</c:when>
+													<c:otherwise>
+														<td>${m.joinCount}/${m.meetingCount}</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${m.startDate}~${m.endDate}</td>
+												<td>${m.meetingDate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -121,35 +149,35 @@
 						<br>
 						<script>
             	
-							$("#qnaList>tbody>tr").click(function(){
-								var bno = $(this).children().first().text();
-								
-								//location.href = "detail?bno="+bno;
+							$("#groupList #g-main").click(function(){
+								var mno = $(this).children().first().text();
+
+								location.href = "${contextPath}/meeting/meetingDetail?mno="+mno;
 							});
 							
 						</script>
 						<div id="pagingArea" align="center">
 							<ul class="pagination">
 								<c:if test="${pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
+									<li class="page-item"><a class="page-link" href="group2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage-1}">이전</a></li>
 								</c:if>
 								
 								<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">
-									<c:url var="group" value="group">
+									<c:url var="group2" value="group2">
 										<c:param name="userNo" value="${loginUser.userNo }"/>
 										<c:param name="currentPage" value="${i }"/>
 									</c:url>
 									<li class="page-item">
-										<a class="page-link" href="${group }">${i}</a>
+										<a class="page-link" href="${group2 }">${i}</a>
 									</li>
 								</c:forEach>
 								
 								<c:if test="${pi.currentPage != pi.maxPage }">
 									<c:choose>
-										<c:when test="${empty list }">
+										<c:when test="${empty m2list }">
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="group?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
+											<li class="page-item"><a class="page-link" href="chat2?userNo=${loginUser.userNo}&currentPage=${pi.currentPage+1}">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -174,6 +202,9 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+		$("#switch").click(function(){
+			location.href = "${contextPath}/member/group?userNo=${loginUser.userNo}";
+		});
 	</script>
 	
 

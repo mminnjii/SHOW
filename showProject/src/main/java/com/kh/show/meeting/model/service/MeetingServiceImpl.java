@@ -103,4 +103,10 @@ public class MeetingServiceImpl implements MeetingService {
 		return meetingdao.selSearchShow(sqlSession, map);
 	}
 
+	//<!-- 소모임 번호 가져오기 -->
+	@Override
+	public int selectMeetingNo() {
+		return meetingdao.selectMeetingNo(sqlSession);
+	}
+
 }
