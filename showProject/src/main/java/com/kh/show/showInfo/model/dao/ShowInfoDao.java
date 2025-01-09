@@ -477,4 +477,56 @@ public class ShowInfoDao {
 		return (ArrayList)sqlSession.selectList("showInfoMapper.openTicketList");
 	}
 
+
+
+
+	public ArrayList<Show> mainRegionRank0(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank0");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank1(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank1");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank2(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank2");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank3(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank3");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank4(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank4");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank5(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank5");
+	}
+
+
+
+
+	public ArrayList<Show> mainRegionRank6(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("showInfoMapper.mainRegionRank6");
+	}
+
 }

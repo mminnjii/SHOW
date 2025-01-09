@@ -9,22 +9,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
+    
     <style>
          .a {
             text-align: left;
             width: 70%;
             margin: 0px auto;
             background-color: white;
-            padding: 3% 5%;
+            /*padding: 3% 5%;*/
             border: 1px solid lightgray;
             border-radius: 0px 0px  10px 10px;
 			border-top : none;
+			z-index: 2;
         }
 
         #pagingArea {width:fit-content; margin:auto;}
         #searchForm>* {
             float:left;
             margin:5px;
+            
         }
         .select {width:20%;}
         .text {width:53%;}
@@ -32,11 +35,13 @@
         .searchBtn {
             width:20%; 
             background-color: #597c9b;
+            
         }
 
 		#searchForm{
 			width: 50%;
 			margin-left: 51%;
+			
 		}
         
 
@@ -44,6 +49,7 @@
         
        	#chatList{
         	text-align: center;
+        	
         }
         
         .pageBtn{
@@ -51,6 +57,7 @@
         	background-color : white;
         	padding: 5px 10px;
         	border-radius: 8px;
+        	
         }
         
         .joinBtn{
@@ -58,6 +65,7 @@
         	background-color : white;
         	padding: 3px 10px;
         	border-radius: 8px;
+        	
         }
         
         .joinBtn:hover{
@@ -72,8 +80,11 @@
     </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
-    <div class="a" style="padding:5% 10%;">
+
+	<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
+	
+    
+    <div class="a" style="padding:5% 10%;" >
         <h2 align="center">채팅방</h2>
         
         <br>
@@ -96,7 +107,7 @@
         <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
         <br>
         <br><br>
-        <table id="chatList" class="table" align="center">
+        <table id="chatList" class="table"  align="center">
             <thead>
                 <tr>
                     <th>번호</th>

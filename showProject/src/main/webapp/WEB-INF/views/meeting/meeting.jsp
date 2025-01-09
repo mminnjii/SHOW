@@ -59,7 +59,7 @@
 </head>
 <body>
 
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
     <div class="a" style="padding:5% 10%;">
         <h2 align="center">소모임</h2>
         

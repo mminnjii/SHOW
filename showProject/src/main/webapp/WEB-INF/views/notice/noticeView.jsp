@@ -116,7 +116,7 @@
     </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
     <div class="a">
         <h2 align="center">공지사항</h2>
         

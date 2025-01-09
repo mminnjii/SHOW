@@ -25,10 +25,10 @@
 			background-color: #f4f4f4;
 			padding: 20px;
 			box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-			 z-index: 10; /* 다른 요소보다 위에 표시 */
+			z-index: 10000; /* 다른 요소보다 위에 표시 */
 		}
 		
-		td {
+		.mmm {
 			margin: 10px;
 			list-style-type: none;
 			display: inline-block;
@@ -57,11 +57,12 @@
 			}
 		
 		/* 본문 상단 레이아웃 */
+		
 		.top-section {
 			display: flex;
 			align-items: flex-start; /* 이미지와 텍스트 위쪽 정렬 */
 			gap: 20px; /* 이미지와 텍스트 사이 간격 */
-			margin-bottom: 50px; /* 아래 콘텐츠와 간격 */
+			margin-bottom: 50px; /* 아래 콘텐츠와 간격 */ 
 			font-family: "Noto Sans KR", sans-serif;
 			font-size: 17px;
 			font-weight: 400;
@@ -70,9 +71,10 @@
 		.top-section img {
 			width: 320px; /* 이미지 너비 */
 			height: auto; /* 비율 유지 */
-			border-radius: 8px; /* 이미지 둥글게 */
+			border-radius: 8px; /* 이미지 둥글게 */ 
 			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 이미지 그림자 */
 		}
+		
 		
 		.details {
 			margin-left: 30px;
@@ -92,7 +94,7 @@
 			margin-left: 50px;
 		}
 		
-		button {
+		 button {
 			padding: 10px 20px; 
 			font-size: 16px; 
 			font-family: 'Noto Sans KR', sans-serif; 
@@ -101,9 +103,13 @@
 			cursor: pointer;
 		}
 </style>
+
+
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+
+
+	
 		
 		<div class="detail">
 	        <div class="fixed-section">
@@ -171,8 +177,8 @@
 	        
 				<table class="menu">
 					<tr>
-						<td><a href="/show/showInfo/detail">공연정보</a></td>
-						<td><a href="/show/showInfo/review">관람후기</a></td>
+						<td class="mmm"><a href="/show/showInfo/detail">공연정보</a></td>
+						<td class="mmm"><a href="/show/showInfo/review">관람후기</a></td>
 					</tr>
 				</table>
 	         <hr>

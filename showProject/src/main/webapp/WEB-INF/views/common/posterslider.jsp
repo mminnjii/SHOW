@@ -9,6 +9,9 @@
 
 	 #m1{
 	            width: 90%;
+	            height: 550px;
+	            padding:0;
+	            margin:0;
 	            
 	        }
 	#m2{
@@ -28,20 +31,22 @@
 	
 	.slider__inner {
 	    display: flex;
-	    width: 1500px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
+	    width: 1920px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
 	    transition: transform 0.7s ease-in-out;
-	    height: 600px; /* 슬라이드 높이 고정 */
+	    height: 650px; /* 슬라이드 높이 고정 */
 	}
 	
-	.slider__inner img {
+	 .slider__inner img {
 	    width: 100%; /* 이미지를 슬라이드 영역에 맞게 확대/축소 */
 	    height: 550px; /* 이미지의 높이를 100%로 맞춤 */
-	    /*object-fit: contain; /* 이미지 비율 유지하면서 영역에 맞춤 */
+	    object-fit: cover; /* 이미지 비율 유지하면서 영역에 맞춤 */
 	    z-index: 2;
+	    
+	    
 	}
 
 
-#c1{
+	#c1{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 16px;
         font-weight: 500;
@@ -125,7 +130,7 @@
         position :absolute;
         bottom : 10px;
         filter: drop-shadow(2px 6px 6px #c3c3c3);
-        left : 170px;
+        left : 330px;
         z-index: 2;
        
         
@@ -224,13 +229,14 @@
                    
                 </td>
              </tr>
+             
             </table>    
-                
+                 <!-- 
                 <table id="m2">
 				
 				 <tr id="uu"></tr>
             <tr>
-                <td >
+                <td>
                      <span id="timeOne">실시간 공연 순위<img src="/show/resources/images/images2/ranking.png" alt="" id="u2"></span>
                 </td>
             </tr> 
@@ -242,10 +248,12 @@
             
 
         </table>
+        -->
     </div>
     
     <script>
-     var rankShow = $(".rankShow").html();
+    /*
+    var rankShow = $(".rankShow").html();
      
       $(document).ready(function(){
     	 
@@ -290,7 +298,7 @@
       
     
     
-    
+    */
     </script>
     
    

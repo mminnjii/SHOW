@@ -18,21 +18,17 @@
     <style>
         #headerImg22{
             width: 100%;
-            z-index: 99;
 
         }
         #header22{
             width: 100%;
             height: 100px;
-            z-index: 99;
         }
         #logo{
             height: 70px;
-            z-index: 99;
         }
         #td1,#td2,#td4,#td66,#td7{
             width: 100px;
-            z-index: 99;
             z-index: 99;
         }
         #td3{
@@ -41,22 +37,18 @@
             font-weight: 700;
             font-style: normal;
             padding-top: 30px;
-            z-index: 99;
         }
         #td5{
             width: 300px;
             font-size: 12px;
             font-weight: 600;
-            z-index: 99;
         }
         #span1,#span2{
             color: red;
-            z-index: 99;
         }
         #img2{
             height: 50px;
             padding-bottom: 5px;
-            z-index: 99;
         }
         .tr123{
             height: 30px;
@@ -96,7 +88,7 @@
             font-weight: 400;
             font-style: normal;
             padding-right: 5px;
-            /*padding-top: 40px;*/
+            padding-top: 20px;
             text-decoration: none;
             color: black;
             z-index: 99;
@@ -111,7 +103,7 @@
             font-weight: 400;
             font-style: normal;
             
-            padding-top: 40px;
+            padding-top: 50px;
             text-decoration: none;
             color: black;
             z-index: 99;
@@ -121,10 +113,9 @@
         }
         #menu22{
             padding-left: 15px; /*왼쪽 여백을 설정하여 로고와 위치 맞춤*/
-            z-index: 99;
         }
         .search-box2{
-            height: 10px;
+            height: 30px;
             width: 200px;
             background-color: white;
             border-radius: 40px;
@@ -132,7 +123,6 @@
             border: 1px solid gray;
             display: flex;
             align-items: center;
-            z-index: 99;
         }
         .search-text2{
             border: none;
@@ -145,7 +135,6 @@
             line-height: 30px;
             width: 200px;
             font-family: "Noto Sans KR", sans-serif;
-            z-index: 99;
         }
         .search-btn2{
             color: black;
@@ -159,12 +148,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 99;
+            position : relative;
+            right : 20px;
+            
         }
         .pp1 a{
             text-decoration: none;
             color: black;
-            z-index: 99;
         }
 
         #re{
@@ -174,11 +164,9 @@
             color: black;
             font-size: 13px;
             font-weight: 500;
-            z-index: 99;
         }
         #re:hover{
             cursor: pointer;
-            z-index: 99;
         }
         
         

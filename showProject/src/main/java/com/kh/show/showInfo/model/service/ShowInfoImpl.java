@@ -519,6 +519,55 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+	@Override
+	public ArrayList<Show> mainRegionRank0() {
+		
+		return showInfoDao.mainRegionRank0(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank1() {
+
+		return showInfoDao.mainRegionRank1(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank2() {
+
+		return showInfoDao.mainRegionRank2(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank3() {
+
+		return showInfoDao.mainRegionRank3(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank4() {
+
+		return showInfoDao.mainRegionRank4(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank5() {
+
+		return showInfoDao.mainRegionRank5(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Show> mainRegionRank6() {
+
+		return showInfoDao.mainRegionRank6(sqlSession);
+	}
+
+
 
 
 

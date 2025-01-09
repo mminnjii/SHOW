@@ -28,6 +28,10 @@
         font-style: normal;
         color: black;
     }
+    
+    #b1:hover,#b2:hover{
+    border-color: black;
+    }
     #rank1{
         border-style: none;
         font-family: "Noto Sans KR", sans-serif;
@@ -182,6 +186,21 @@
      
 
    <script>
+   
+   
+   $("#list > button").click(function(){
+       // 클릭된 버튼의 스타일을 바꾸기
+       $(this).css({
+           "background-color": "black",
+           "color": "white"
+       });
+
+       // 다른 버튼들의 스타일을 초기화
+       $("#list > button").not(this).css({
+           "background-color": "white",
+           "color": "black"
+       });
+   });
    
    
    

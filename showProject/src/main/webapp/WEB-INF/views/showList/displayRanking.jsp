@@ -111,6 +111,10 @@
         position: relative;
         left: 40px;
 	}
+	
+	#b1:hover,#b2:hover{
+    border-color: black;
+    }
    
   
 </style>
@@ -173,6 +177,20 @@
     <br>
 
    <script>
+   
+		   $("#list > button").click(function(){
+		       // 클릭된 버튼의 스타일을 바꾸기
+		       $(this).css({
+		           "background-color": "black",
+		           "color": "white"
+		       });
+		
+		       // 다른 버튼들의 스타일을 초기화
+		       $("#list > button").not(this).css({
+		           "background-color": "white",
+		           "color": "black"
+		       });
+		   });
    
    					//기존데이터를 previousData에 담아둔다. 
    					var previousData = $("#rankArea").html();
