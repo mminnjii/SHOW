@@ -387,12 +387,12 @@ public class ShowInfoDao {
 	}
 	
 	// 리뷰조회
-	public ArrayList<Review> selectReview(SqlSession session) {
+	public ArrayList<Review> selectReview(SqlSession session, int showNo) {
 		ArrayList<Review> list = (ArrayList)session.selectList("showInfoMapper.selectReview");
 		return list;
 	}
 
-	public int selectRcount(SqlSession session) {
+	public int selectRcount(SqlSession session, int showNo) {
 		return session.selectOne("showInfoMapper.selectRcount");
 	}
 
@@ -464,6 +464,12 @@ public class ShowInfoDao {
 
 
 
+
+	public Show selectWithName(SqlSession session, String name) {
+		return session.selectOne("showInfoMapper.selectWithName",name);
+	}
+		
+
 	public Show openSelect(SqlSessionTemplate sqlSession, String showName) {
 		
 		return sqlSession.selectOne("showInfoMapper.openSelect",showName);
@@ -475,6 +481,7 @@ public class ShowInfoDao {
 	public ArrayList<Show> openTicketList(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("showInfoMapper.openTicketList");
+
 	}
 
 

@@ -838,7 +838,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM SHOW 
 		WHERE GENRE_NO = #{genreNo}
 	</select>
-
+	
+	
+		<!-- 티켓 오픈 상세 정보 조회 -->
+	<select id="openSelect" resultMap="showResultSet">
+	SELECT SHOW_NAME
+	       ,SHOW_EXPLAIN
+	       ,GENRE_NAME
+	       ,REGION_NAME
+	       ,SHOW_START
+	       ,SHOW_END
+	       ,POSTER_ORIGINNAME
+	       ,POSTER_CHANGENAME
+	       ,PRICE
+	FROM SHOW
+	JOIN GENRE USING(GENRE_NO)
+	JOIN REGION USING(REGION_NO)
+	WHERE SHOW_NAME = #{showName}
+	AND STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 티켓 오픈 상세 정보 조회 -->
+	<select id="openTicketList" resultMap="showResultSet">
+	SELECT SHOW_NAME
+	       ,SHOW_EXPLAIN
+	       ,GENRE_NAME
+	       ,REGION_NAME
+	       ,SHOW_START
+	       ,SHOW_END
+	       ,POSTER_ORIGINNAME
+	       ,POSTER_CHANGENAME
+	FROM SHOW
+	JOIN GENRE USING(GENRE_NO)
+	JOIN REGION USING(REGION_NO)
+	WHERE SHOW_NO BETWEEN 94 AND 98
+	AND STATUS = 'Y'
+	</select>
 	
 	
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공연상세ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
@@ -856,7 +892,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SHOW_START,
 		SHOW_END,
 		POSTER_ORIGINNAME,
-		POSTER_CHANGENAME
+		POSTER_CHANGENAME,
+		DETAIL_CHANGENAME
 		FROM SHOW S
 		JOIN HALL H ON (S.HALL_NO = H.HALL_NO)
 		JOIN GENRE G ON
@@ -914,7 +951,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		FROM REVIEW
 		WHERE STATUS = 'Y'
-		AND SHOW_NO = 1
+		AND SHOW_NO = #{showNo}
 	</select>
 
 
@@ -929,8 +966,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW R
 		JOIN MEMBER USING(USER_NO)
 		WHERE R.STATUS = 'Y'
-		AND SHOW_NO
-		= 1
+		AND SHOW_NO = #{showNo}
 		ORDER BY CREATE_DATE DESC
 	</select>
 
@@ -1019,40 +1055,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
 	  
-	<!-- 티켓 오픈 상세 정보 조회 -->
-	<select id="openSelect" resultMap="showResultSet">
-	SELECT SHOW_NAME
-	       ,SHOW_EXPLAIN
-	       ,GENRE_NAME
-	       ,REGION_NAME
-	       ,SHOW_START
-	       ,SHOW_END
-	       ,POSTER_ORIGINNAME
-	       ,POSTER_CHANGENAME
-	       ,PRICE
-	FROM SHOW
-	JOIN GENRE USING(GENRE_NO)
-	JOIN REGION USING(REGION_NO)
-	WHERE SHOW_NAME = #{showName}
-	AND STATUS = 'Y'
-	</select>
-	
-	
-	<!-- 티켓 오픈 상세 정보 조회 -->
-	<select id="openTicketList" resultMap="showResultSet">
-	SELECT SHOW_NAME
-	       ,SHOW_EXPLAIN
-	       ,GENRE_NAME
-	       ,REGION_NAME
-	       ,SHOW_START
-	       ,SHOW_END
-	       ,POSTER_ORIGINNAME
-	       ,POSTER_CHANGENAME
-	FROM SHOW
-	JOIN GENRE USING(GENRE_NO)
-	JOIN REGION USING(REGION_NO)
-	WHERE SHOW_NO BETWEEN 94 AND 98
-	AND STATUS = 'Y'
-	</select>
+                      
+	  <!-- 쇼이름으로 상세검색 -->
+<!-- 	  <select id="selectWithName" resultMap="showResultSet">
+	  	SELECT * 
+		FROM SHOW 
+		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%'
+	  </select>
+	   -->
+ 
+
+
 
 </mapper>

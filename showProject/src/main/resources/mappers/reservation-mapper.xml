@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 예약테이블 생성 -->
 	<insert id="createReservation" parameterType="Reservation">
 		INSERT INTO RESERVATION
-		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, #{userNo}, #{hallNo},DEFAULT,DEFAULT,NULL)
+		VALUES(RESERV_SEQ.NEXTVAL, #{showNo}, #{roundId}, #{userNo}, #{hallNo},'M',DEFAULT,NULL)
 	</insert>
 	
 	<!-- 예약테이블 생성 후 확인데이터 가져오기 -->
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 좌석 상태 변환 -->
 	<update id="updateSeatStatus" parameterType="Hashmap">
 		UPDATE SEATS
-		SET STATUS = 'N'
+		SET STATUS = 'M'
 		WHERE ROW_NAME || COL_NO = #{name}
 		AND ROUND_ID = #{roundId}
 	</update>

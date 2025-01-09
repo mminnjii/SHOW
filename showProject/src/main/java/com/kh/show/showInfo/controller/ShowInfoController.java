@@ -1,8 +1,10 @@
 package com.kh.show.showInfo.controller;
 
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -30,20 +32,19 @@ public class ShowInfoController {
 	@Autowired
 	private ShowInfoService showInfoService;
 	
-	
 	//공연상세이동
 	@GetMapping("/detail")
 	public String detail(HttpSession session,String showName) {
-		//System.out.println(showName);
-		
 		int result = showInfoService.increaseCount(showName);
-		
-		
 		if(result>0) {
 		
 		// 공연정보조회
 		Show s = showInfoService.selectShow(showName);
 		session.setAttribute("s", s);
+		
+		String posterName= s.getPosterChangeName();
+		posterName = posterName.substring(0, posterName.length() - 1) + "D";
+		 s.setDetailChangeName(posterName);
 		
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
@@ -60,10 +61,6 @@ public class ShowInfoController {
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
 
-
-
-		
-
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
@@ -73,8 +70,6 @@ public class ShowInfoController {
 		if(loginUser!=null) {
 			session.setAttribute("userNo", loginUser.getUserNo());
 		}
-	
-		
 
 	}
 		
@@ -107,14 +102,19 @@ public class ShowInfoController {
 		        session.setAttribute("s", s); // 다시 세션에 저장
 		    }
 		    model.addAttribute("s", s);
-		
-		
+		    
+		   int showNo =  s.getShowNo();
+		   
+		   System.out.println("공연번호: "+showNo);
+		   
 		// 리뷰 갯수 세어오기
-		int count =  showInfoService.selectRcount(); 
+		int count =  showInfoService.selectRcount(showNo); 
 		model.addAttribute("count",count);
 		
+		System.out.println(count);
+		
 		// 리뷰 조회
-	    ArrayList<Review> list  = showInfoService.selectReview();  
+	    ArrayList<Review> list  = showInfoService.selectReview(showNo);  
 	    model.addAttribute("r", list);
 	    	    
 	    
