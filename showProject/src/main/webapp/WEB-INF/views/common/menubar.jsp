@@ -57,7 +57,7 @@
             border-top: 1px solid rgba(128, 128, 128, 0.4);
             border-bottom: 1px solid rgba(128, 128, 128, 0.4);
         }
-        table{
+        #header{
             border-collapse: collapse; 
         }
         

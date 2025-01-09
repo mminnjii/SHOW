@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>티켓오픈페이지</title>
+
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +30,7 @@
         color: black;
         }
 
-        table{
+        .pp{
             margin: auto;
             width: 70%;
             
@@ -36,8 +38,8 @@
 
         }
         #cate{
-        border: solid 1px black;
-        background-color: black;
+        border: solid 1px #597C9B;
+        background-color: #597C9B;
         font-family: "Noto Sans KR", sans-serif;
         font-size: 25px;
         font-weight: 600;
@@ -52,7 +54,7 @@
         }
         #searchPage{
             background-color:rgba(216, 212, 212, 0.192);
-            height: 100%;
+            height: 700px;
 
         }
         #result{
@@ -73,23 +75,32 @@
         color: black;
         text-align: center;
         }
-        #resultPoster{
-            width: 100px;
-            height: 150px;
+        #resultPoster2{
+            width: 300px;
+            height: 390px;
             position: relative;
             top: 3px;
-            left : 10px;
             
         }
         #reName{
             display: inline-block;
-            position:absolute;
-            left: 430px;
+            position: relative;
+            
+            
         }
         #rePlace{
             display: inline-block;
-            position:absolute;
-            left: 430px;
+            position: relative;
+            
+            font-size: 15px;
+            color: rgb(156, 154, 154);
+            
+            
+        }
+        #reNotice{
+            display: inline-block;
+            position: relative;
+            
             font-size: 15px;
             color: rgb(156, 154, 154);
             
@@ -97,15 +108,16 @@
         }
         #reDate{
             display: inline-block;
-            position:absolute;
-            left: 430px;
+            position: relative;
+           
             font-size: 15px;
             color: rgb(156, 154, 154);
             
             
         }
-        #td1{
-            width: 150px;
+        #td55{
+            width: 300px;
+            height: 400px;
         }
         #result2{
             width: 150px;
@@ -132,51 +144,39 @@
 </head>
 
 <body>
-
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
     
     <div id="searchPage">
         <br><br><br>
-        <table>
-            <tr>
-                <td colspan="3" ><span id="searchName">${hashMap.keyword}</span><span id="ss1">에 대한 검색결과는 총 </span><span id="searchCount">${hashMap.count}</span><span id="ss1">입니다.</span></td>
-            </tr>
+        <table class="pp">
+            
 
             <tr id="tr1"></tr>
             <tr>
-                <td colspan="3" id="cate">공연</td>
+                <td colspan="3" id="cate">티켓 오픈</td>
             </tr>
             <tr id="tr1"></tr>
-            <tr>
-                <td colspan="3" id="result">티켓 검색 결과</td>
-            </tr>
+           
             <tr id="tr1"></tr>
-            <c:choose>
-            	<c:when test="${empty list }">
-            		<tr>
-            			<td>조회된 공연이 없습니다.</td>
-            		</tr>
-            	</c:when>
-            	<c:otherwise>
-            		<c:forEach items="${list}" var="s">
-            			<tr id="result1">
-                		<td id="td1"><img src="/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg" alt="" id="resultPoster"></td>
-                		<td><span id="reName">${s.showName} </span><br> <span id="rePlace">${s.hall.hallName}</span><br><span id="reDate">${s.showStart}-${s.showEnd}</span></td>
-                		<td id="result2"><button id="reBtn">예매하기</button></td>
-            			</tr>
-            		
-            		</c:forEach>
-            	
-            	</c:otherwise>
-            </c:choose>
-            
-            
+            <tr id="result1">
+             <td>
+               <img src="${contextPath }/resources/PosterUploadFiles/${s.posterChangeName}.jpg" alt="" id="resultPoster2">
+             </td>   
+                <td>
+                    <span id="reName">${s.showName}</span><br> 
+                    <span id="rePlace">지역 : ${s.regionName}</span><br>
+                    <span id="reDate">기간 : ${s.showStart}-${s.showEnd}</span><br>
+                    <span id="reNotice" style="white-space: pre-wrap;">공연 소개 : ${s.showExplain} </span><br>
+                    <span id="rePlace">가격 : ${s.price} </span>
+
+
+                
+                </td>
+                
+            </tr>
         </table>
 
     </div>
-
-<br><br><br>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

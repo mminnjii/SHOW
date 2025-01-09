@@ -15,17 +15,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="HALL_NO" property="hallNo" />
 		<result column="HALL_NAME" property="hallName" />
 		<result column="GENRE_NO" property="genreNo" />
-		<result column="GENRE_Name" property="genreName" />
 		<result column="REGION_NO" property="regionNo" />
 		<result column="REGION_NAME" property="regionName" />
 		<result column="SHOW_START" property="showStart" />
 		<result column="SHOW_END" property="showEnd" />
 		<result column="COUNT" property="count" />
+
+		<result column="POSTER_CHANGENAME" property="posterChangeName" />
+		<result column="POSTER_ORIGINNAME" property="posterOriginName" />
 		
+		<result column="HALL_NAME" property="hall.hallName" />
 		
-		
-	</resultMap>
+	</resultMap>	
 	
+	
+	<resultMap type="Region" id="regionResultSet">
+		<result column="REGION_NAME" property="regionName" />
+		
+	</resultMap>	
+
+
+
+
+ 
+  	       
+  
+
 	<resultMap type="Review" id="reviewResultSet">
 		<result column="REVIEW_ID" property="reviewId" />
 		<result column="SHOW_NO" property="showNo" />
@@ -35,9 +50,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="REVIEW_TITLE" property="reviewTitle" />
 		<result column="REVIEW_CONTENT" property="reviewContent" />
 		<result column="CREATE_DATE" property="createDate" />
-	</resultMap>	
-	
-	
+	</resultMap>
+
+
+
 	<resultMap type="ShowRound" id="roundResultSet">
 		<result column="ROUND_ID" property="roundId" />
 		<result column="SHOW_NO" property="showNo" />
@@ -45,40 +61,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_TIME" property="showTime" />
 		<result column="SHOW_DATE" property="showDate" />
 	</resultMap>
+
+
+	<!-- 뮤지컬 랭킹(1~5위) count 순으로 리스트 -->
+	<select id="musicalShowList" resultMap="showResultSet">
+		SELECT *
+
+		FROM (
+		SELECT SHOW_NO
+	  		   ,SHOW_NAME
+				,SHOW_START
+				,SHOW_END
+				,POSTER_CHANGENAME
+		        ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '1'
+		ORDER BY COUNT DESC
+		)
+
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
 	
-	
- <!-- 뮤지컬 랭킹(1~5위) count 순으로 리스트 -->
-  <select id="musicalShowList" resultMap="showResultSet">
-  	SELECT *
-
-  	FROM (
-  		  SELECT SHOW_NAME
-  	       		 ,SHOW_START
-  	       		 ,SHOW_END
-  	      FROM SHOW
-  	      WHERE GENRE_NO = '2'
-  	      ORDER BY COUNT DESC
-  	      )
-
-  	WHERE ROWNUM BETWEEN 1 AND 5
-  </select>
-
-	<!-- 뮤지컬 경기/인천 지역 리스트 -->
-	  <select id="InchMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	<!-- 뮤지컬 서울 지역 리스트 -->
+	  <select id="musicalRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '1'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+
+	<!-- 뮤지컬 경기/인천 지역 리스트 -->
+
+	  <select id="InchMusical" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+
+	
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
+
 	  </select>
 	  
 	  <!-- 뮤지컬 충청/강원 지역 리스트 -->
 	  <select id="chMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '3'
@@ -87,9 +130,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 뮤지컬 대구/경북 지역 리스트 -->
 	  <select id="deguMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '4'
@@ -98,9 +144,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <!-- 뮤지컬 부산/경남 지역 리스트 -->
 	  <select id="busanMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '5'
@@ -109,9 +158,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 뮤지컬 광주/전라 지역 리스트 -->
 	  <select id="kwMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '6'
@@ -120,9 +172,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	   <!-- 뮤지컬 제주 지역 리스트 -->
 	  <select id="jejMusical" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
 		WHERE GENRE_NO = '1'
 		AND REGION_NO = '7'
@@ -134,9 +189,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="playShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
 	  	      WHERE GENRE_NO = '2'
 	  	      ORDER BY COUNT DESC
@@ -144,68 +202,100 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
 	  
-	  <!-- 연극 경기/인천 지역 리스트 -->
-	  <select id="InchPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  <!-- 연극 서울 지역 리스트 -->
+	  <select id="playRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
+	  <!-- 연극 경기/인천 지역 리스트 -->
+	  <select id="InchPlay" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 연극 충청/강원 지역 리스트 -->
 	  <select id="chPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 연극 대구/경북 지역 리스트 -->
 	  <select id="deguPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 연극 부산/경남 지역 리스트 -->
 	  <select id="busanPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 연극 광주/전라 지역 리스트 -->
 	  <select id="kwPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
 	  
-	   <!-- 뮤지컬 제주 지역 리스트 -->
+	   <!-- 연극 제주 지역 리스트 -->
 	  <select id="jejPlay" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '2'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -214,78 +304,114 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="concertShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '3'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
+	  
+	  <!-- 콘서트 서울 지역 리스트 -->
+	  <select id="concertRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '3'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
 	
 	<!-- 콘서트 경기/인천 지역 리스트 -->
 	  <select id="concertRegionList1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 콘서트 충청/강원 지역 리스트 -->
 	  <select id="concertRegionList2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 콘서트 대구/경북 지역 리스트 -->
 	  <select id="concertRegionList3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 콘서트 부산/경남 지역 리스트 -->
 	  <select id="concertRegionList4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 콘서트 광주/전라 지역 리스트 -->
 	  <select id="concertRegionList5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 콘서트 제주 지역 리스트 -->
 	  <select id="concertRegionList6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '3'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -294,78 +420,113 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="classicShowList" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+               		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '4'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
 	  
-	  <!-- 클래식 경기/인천 지역 리스트 -->
-	  <select id="classicRegion1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  <!-- 클래식 서울 지역 리스트 -->
+	  <select id="classicRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
+	  <!-- 클래식 경기/인천 지역 리스트 -->
+	  <select id="classicRegion1" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 클래식 충청/강원 지역 리스트 -->
 	  <select id="classicRegion2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 클래식 대구/경북 지역 리스트 -->
 	  <select id="classicRegion3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 클래식 부산/경남 지역 리스트 -->
 	  <select id="classicRegion4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 클래식 광주/전라 지역 리스트 -->
 	  <select id="classicRegion5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 클래식 제주 지역 리스트 -->
 	  <select id="classicRegion6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '4'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
@@ -374,223 +535,122 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="displayShow" resultMap="showResultSet">
 	  	SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT SHOW_NO
+	  		   		 ,SHOW_NAME
 	  	       		 ,SHOW_START
 	  	       		 ,SHOW_END
+	  	       		 ,POSTER_CHANGENAME
+	  	       		 ,POSTER_ORIGINNAME
 	  	      FROM SHOW
-	  	      WHERE GENRE_NO = '2'
+	  	      WHERE GENRE_NO = '5'
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
 	  </select>
 	  
 	  
-	  <!-- 전시 경기/인천 지역 리스트 -->
-	  <select id="displayRegion1" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  <!-- 전시 서울 지역 리스트 -->
+	  <select id="displayRegion0" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
+		AND REGION_NO = '1'
+		ORDER BY SHOW_NO
+	  </select>
+	  
+	  <!-- 전시 경기/인천 지역 리스트 -->
+	  <select id="displayRegion1" resultMap="showResultSet">
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
+      		   ,SHOW_START
+               ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
+		FROM SHOW
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '2'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 전시 충청/강원 지역 리스트 -->
 	  <select id="displayRegion2" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '3'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	  <!-- 전시 대구/경북 지역 리스트 -->
 	  <select id="displayRegion3" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '4'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 전시 부산/경남 지역 리스트 -->
 	  <select id="displayRegion4" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '5'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 전시 광주/전라 지역 리스트 -->
 	  <select id="displayRegion5" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '6'
 		ORDER BY SHOW_NO
 	  </select>
 	  
 	   <!-- 전시 제주 지역 리스트 -->
 	  <select id="displayRegion6" resultMap="showResultSet">
-	  	SELECT SHOW_NAME
+	  	SELECT  SHOW_NO
+	  		   ,SHOW_NAME
       		   ,SHOW_START
                ,SHOW_END
+               ,POSTER_CHANGENAME
+               ,POSTER_ORIGINNAME
 		FROM SHOW
-		WHERE GENRE_NO = '1'
+		WHERE GENRE_NO = '5'
 		AND REGION_NO = '7'
 		ORDER BY SHOW_NO
 	  </select>
 	  
-	  <!-- 공연 목록 - 소모임 신청시 필요 - 전수민 -->
-	<select id="selMeetingShow" parameterType="_int" resultMap="showResultSet">
-		SELECT SHOW_NO
-		        ,SHOW_NAME
-		        ,SHOW_EXPLAIN
-		        ,PRICE
-		        ,NOTICE
-		        ,STATUS
-		        ,HALL_NO
-		        ,GENRE_NO
-		        ,REGION_NO
-		        ,SHOW_START
-		        ,SHOW_END
-		        ,COUNT
-		        ,POSTER_ORIGINNAME
-		        ,POSTER_CHANGENAME
-		        ,DETAIL_ORIGINNAME
-		        ,DETAIL_CHANGENAME
-		FROM SHOW
-		WHERE GENRE_NO = #{genreNo}
-	</select>
-	
-<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공연상세ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  -->	  
-	  <!-- 공연상세 페이지를 위한 공연정보 조회 -->
-	<select id="selectShow" resultMap="showResultSet">
-		SELECT S.SHOW_NO,
-		        SHOW_NAME,
-		        SHOW_EXPLAIN,
-		        PRICE,
-		        NOTICE,
-		        HALL_NAME,
-		        S.HALL_NO HALL_NO,
-		        GENRE_NAME,
-		        REGION_NAME,
-		        SHOW_START,
-		        SHOW_END
-		FROM SHOW S
-		JOIN HALL H  ON (S.HALL_NO = H.HALL_NO)
-		JOIN GENRE G ON (S.GENRE_NO = G.GENRE_NO)
-		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
-		WHERE S.STATUS = 'Y'
-		AND S.SHOW_NO = 1
-	</select>
-	
-	<!-- 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) -->
-	<update id="updateSysdate">
-		UPDATE SHOWROUND
-		SET STATUS = 'N'
-	<![CDATA[ WHERE SHOW_DATE < SYSDATE]]>  
-	</update>
-	
-	<update id="updateShowRound">
-		UPDATE SHOWROUND
-		SET STATUS = 'N'
-		WHERE ROUND_ID IN (
-		                SELECT ROUND_ID
-		                FROM SEATS
-		                JOIN HALL USING(HALL_NO)
-		                WHERE STATUS = 'N'
-		                GROUP BY ROUND_ID,TOTAL_SEAT
-		                HAVING COUNT(*) = TOTAL_SEAT)
-	</update>
-	
-	
-	
-	<!-- 공연날짜 조회 -->
-	<select id="selectRound" resultMap="roundResultSet">
-		SELECT SHOW_DATE
-		FROM SHOWROUND
-		WHERE SHOW_NO = 1
-		AND STATUS = 'Y'
-		GROUP BY SHOW_DATE
-		ORDER BY SHOW_DATE
-	</select>
-	
-	<!-- 날짜 선택 후 시간/회차조회 -->
-	<select id="selectTime" resultMap="roundResultSet">
-		SELECT ROUND_ID,
-			   SHOW_ROUND,
-		       SHOW_TIME
-		FROM SHOWROUND
-		WHERE SHOW_NO = 1
-		AND STATUS = 'Y'
-		AND SHOW_DATE = TO_DATE(#{date}, 'YYYY-MM-DD')
-	</select>
-	
-	
-	<!-- 리뷰 수 조회 -->
-	<select id="selectRcount" resultType="int">
-		SELECT COUNT(*)
-		FROM REVIEW
-		WHERE STATUS = 'Y'
-		AND SHOW_NO = 1
-	</select>
-	
-	
-	<!-- 리뷰 조회 -->
-	<select id="selectReview" resultMap="reviewResultSet">
-		SELECT REVIEW_ID,
-		       USER_ID,
-		       R.USER_NO USER_NO,
-		       REVIEW_SCORE,
-		       REVIEW_TITLE,
-		       REVIEW_CONTENT,
-		       CREATE_DATE
-		FROM REVIEW R
-		JOIN MEMBER M ON (R.USER_NO=M.USER_NO)
-		WHERE R.STATUS = 'Y'
-		AND SHOW_NO = 1
-		ORDER BY CREATE_DATE DESC
-	</select>
-	
-	<!-- 리뷰 검색 -->
-	<select id="reviewSearch" parameterType="String" resultMap="reviewResultSet">
-		 SELECT REVIEW_ID,
-		       USER_ID,
-		       REVIEW_SCORE,
-		       REVIEW_TITLE,
-		       REVIEW_CONTENT,
-		       CREATE_DATE
-		FROM REVIEW R
-		JOIN MEMBER USING(USER_NO)
-		WHERE R.STATUS = 'Y'
-		AND (REVIEW_TITLE LIKE '%'||#{keyword}||'%'
- 			 OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
-		ORDER BY CREATE_DATE DESC	
-	</select>
-	
-	<!-- 검색된 리뷰 갯수 -->
-	<select id="searchRcount" parameterType="String" resultType="int">
-		 SELECT COUNT(*)
-		FROM REVIEW R
-		JOIN MEMBER USING(USER_NO)
-		WHERE R.STATUS = 'Y'
-		AND (REVIEW_TITLE LIKE '%'||#{keyword}||'%'
- 			 OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
-		ORDER BY CREATE_DATE DESC
-	</select>
+
 	
 	<!-- 검색 목록 개수 -->
+
 	  <select id="searchListCount" resultType="_int">
 	  	SELECT COUNT(*)
 	  	FROM SHOW
@@ -611,7 +671,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	           REGION_NAME,
 	           COUNT,
                SHOW_START,
-               SHOW_END
+               SHOW_END,
+               POSTER_CHANGENAME,
+               POSTER_ORIGINNAME
 	    FROM SHOW S
 	    JOIN GENRE USING(GENRE_NO)
 	    JOIN REGION USING(REGION_NO)
@@ -619,8 +681,189 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE STATUS = 'Y'
 	    AND SHOW_NAME LIKE '%' || #{keyword} || '%' 
 	    ORDER BY SHOW_START DESC
+
 	</select>
+
+
+
+	<!-- 메인 지역별 랭킹 지역이름으로 버튼 가져오기 -->
+	<select id="mainRegionRank" resultMap="regionResultSet">
+		SELECT REGION_NAME
+		FROM REGION
 	
+	</select>
+	  
+
+	
+
+	<!-- 공연 목록 - 소모임 신청시 필요 - 전수민 -->
+	<select id="selMeetingShow" parameterType="_int" resultMap="showResultSet">
+		SELECT SHOW_NO
+		        ,SHOW_NAME
+		        ,SHOW_EXPLAIN
+		        ,PRICE
+		        ,NOTICE
+		        ,STATUS
+		        ,HALL_NO
+		        ,GENRE_NO
+		        ,REGION_NO
+		        ,SHOW_START
+		        ,SHOW_END
+		        ,COUNT
+		        ,POSTER_ORIGINNAME
+		        ,POSTER_CHANGENAME
+		        ,DETAIL_ORIGINNAME
+		        ,DETAIL_CHANGENAME
+		FROM SHOW 
+		WHERE GENRE_NO = #{genreNo}
+	</select>
+
+	
+	
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공연상세ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- 공연상세 페이지를 위한 공연정보 조회 -->
+	<select id="selectShow" resultMap="showResultSet">
+		SELECT S.SHOW_NO,
+		SHOW_NAME,
+		SHOW_EXPLAIN,
+		PRICE,
+		NOTICE,
+		HALL_NAME,
+		S.HALL_NO HALL_NO,
+		GENRE_NAME,
+		REGION_NAME,
+		SHOW_START,
+		SHOW_END,
+		POSTER_ORIGINNAME,
+		POSTER_CHANGENAME
+		FROM SHOW S
+		JOIN HALL H ON (S.HALL_NO = H.HALL_NO)
+		JOIN GENRE G ON
+		(S.GENRE_NO = G.GENRE_NO)
+		JOIN REGION R ON (S.REGION_NO = R.REGION_NO)
+		WHERE S.STATUS = 'Y'
+		AND SHOW_NAME = #{showName}
+	</select>
+
+	<!-- 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) -->
+	<update id="updateSysdate">
+		UPDATE SHOWROUND
+		SET STATUS = 'N'
+	<![CDATA[ WHERE SHOW_DATE < SYSDATE]]>
+	</update>
+
+	<update id="updateShowRound">
+		UPDATE SHOWROUND
+		SET STATUS = 'N'
+		WHERE HALL_NO IN (
+		SELECT HALL_NO
+		FROM HALL
+		WHERE TOTAL_SEAT = 0)
+	</update>
+
+
+
+	<!-- 공연날짜 조회 -->
+	<select id="selectRound" resultMap="roundResultSet">
+		SELECT SHOW_DATE
+		FROM
+		SHOWROUND
+		WHERE SHOW_NO = 1
+		AND STATUS = 'Y'
+		GROUP BY SHOW_DATE
+		ORDER BY
+		SHOW_DATE
+	</select>
+
+	<!-- 날짜 선택 후 시간/회차조회 -->
+	<select id="selectTime" resultMap="roundResultSet">
+		SELECT ROUND_ID,
+		SHOW_ROUND,
+		SHOW_TIME
+		FROM SHOWROUND
+		WHERE SHOW_NO = 1
+		AND STATUS = 'Y'
+		AND SHOW_DATE =
+		TO_DATE(#{date}, 'YYYY-MM-DD')
+	</select>
+
+
+	<!-- 리뷰 수 조회 -->
+	<select id="selectRcount" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE STATUS = 'Y'
+		AND SHOW_NO = 1
+	</select>
+
+
+	<!-- 리뷰 조회 -->
+	<select id="selectReview" resultMap="reviewResultSet">
+		SELECT REVIEW_ID,
+		USER_ID USER_NO,
+		REVIEW_SCORE,
+		REVIEW_TITLE,
+		REVIEW_CONTENT,
+		CREATE_DATE
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND SHOW_NO
+		= 1
+		ORDER BY CREATE_DATE DESC
+	</select>
+
+	<!-- 리뷰 검색 -->
+	<select id="reviewSearch" parameterType="String"
+		resultMap="reviewResultSet">
+		SELECT REVIEW_ID,
+		USER_ID,
+		REVIEW_SCORE,
+		REVIEW_TITLE,
+		REVIEW_CONTENT,
+		CREATE_DATE
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND
+		(REVIEW_TITLE LIKE '%'||#{keyword}||'%'
+		OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
+		ORDER BY CREATE_DATE DESC
+	</select>
+
+	<!-- 검색된 리뷰 갯수 -->
+	<select id="searchRcount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW R
+		JOIN MEMBER USING(USER_NO)
+		WHERE R.STATUS = 'Y'
+		AND (REVIEW_TITLE LIKE '%'||#{keyword}||'%'
+		OR REVIEW_CONTENT LIKE '%'||#{keyword}||'%')
+		ORDER BY CREATE_DATE DESC
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="increaseCount">
+		UPDATE SHOW
+		SET COUNT = COUNT+1
+		WHERE SHOW_NAME = #{showName}
+		AND STATUS = 'Y'
+	</update>
+
+
+	<!-- 메인페이지 실시간 공연 랭킹 리스트 -->
+	<select id="rankShowList" resultMap="showResultSet">
+		SELECT *
+	  	FROM (
+	  		  SELECT SHOW_NAME
+	  	       		 ,COUNT
+	  	      FROM SHOW
+	  	      ORDER BY COUNT DESC
+	  	      )
+	  	WHERE ROWNUM BETWEEN 1 AND 9
+	</select>	
+
 	<!-- 리뷰 작성 -->
 	<insert id="enrollReview" parameterType="Review">
 		INSERT INTO REVIEW 
@@ -646,9 +889,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 리뷰 삭제 -->
+
+
+
 	  <update id="deleteReview" parameterType="_int">
 	  	UPDATE REVIEW
 		SET STATUS = 'N'
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
+	  
+	<!-- 티켓 오픈 상세 정보 조회 -->
+	<select id="openSelect" resultMap="showResultSet">
+	SELECT SHOW_NAME
+	       ,SHOW_EXPLAIN
+	       ,GENRE_NAME
+	       ,REGION_NAME
+	       ,SHOW_START
+	       ,SHOW_END
+	       ,POSTER_ORIGINNAME
+	       ,POSTER_CHANGENAME
+	       ,PRICE
+	FROM SHOW
+	JOIN GENRE USING(GENRE_NO)
+	JOIN REGION USING(REGION_NO)
+	WHERE SHOW_NAME = #{showName}
+	AND STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 티켓 오픈 상세 정보 조회 -->
+	<select id="openTicketList" resultMap="showResultSet">
+	SELECT SHOW_NAME
+	       ,SHOW_EXPLAIN
+	       ,GENRE_NAME
+	       ,REGION_NAME
+	       ,SHOW_START
+	       ,SHOW_END
+	       ,POSTER_ORIGINNAME
+	       ,POSTER_CHANGENAME
+	FROM SHOW
+	JOIN GENRE USING(GENRE_NO)
+	JOIN REGION USING(REGION_NO)
+	WHERE SHOW_NO BETWEEN 94 AND 98
+	AND STATUS = 'Y'
+	</select>
+
 </mapper>

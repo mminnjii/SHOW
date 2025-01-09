@@ -33,14 +33,21 @@ public class ShowInfoController {
 	
 	//공연상세이동
 	@GetMapping("/detail")
-	public String detail(HttpSession session) {
+	public String detail(HttpSession session,String showName) {
+		//System.out.println(showName);
+		
+		int result = showInfoService.increaseCount(showName);
+		
+		
+		if(result>0) {
 		
 		// 공연정보조회
-		Show s = showInfoService.selectShow();
+		Show s = showInfoService.selectShow(showName);
 		session.setAttribute("s", s);
 		
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
+
 		double rPrice = sPrice*1.2; 
 		
 		NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
@@ -48,10 +55,15 @@ public class ShowInfoController {
 		session.setAttribute("rPrice", formatter.format(rPrice));
 		session.setAttribute("sPrice", s.getPrice());
 		session.setAttribute("Price", sPrice);
+
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
+
+
+
 		
+
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
@@ -62,8 +74,16 @@ public class ShowInfoController {
 			session.setAttribute("userNo", loginUser.getUserNo());
 		}
 	
-		return "show/showInfo/detailInfo";
+		
+
 	}
+		
+		return "show/showInfo/detailInfo";
+	
+	}
+	
+	
+	
 	
 	@ResponseBody
 	@GetMapping(value = "selectDate")
@@ -77,13 +97,13 @@ public class ShowInfoController {
 	
 	// 리뷰이동
 	@GetMapping("/review")
-	public String review(HttpSession session, Model model) {
+	public String review(String showName,HttpSession session, Model model) {
 		
 			Show s = (Show)session.getAttribute("s");
 
 		    // 세션에 데이터가 없으면 DB에서 다시 조회
 		    if (s == null) {
-		        s = showInfoService.selectShow();
+		        s = showInfoService.selectShow(showName);
 		        session.setAttribute("s", s); // 다시 세션에 저장
 		    }
 		    model.addAttribute("s", s);
@@ -165,7 +185,16 @@ public class ShowInfoController {
 			return "common/searchError";
 			
 		}
+
+		
+		
+		
+		
+
 	}
+	
+	
+	
 	
 	
 	// 리뷰 등록하기 이동
@@ -236,6 +265,8 @@ public class ShowInfoController {
 		}
 		
 	}
+	
+	
 	
 	
 }

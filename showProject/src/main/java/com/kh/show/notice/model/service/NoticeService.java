@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.notice.model.vo.OpenNotice;
+import com.kh.show.showInfo.model.vo.Show;
 
 public interface NoticeService {
 	
@@ -32,5 +33,8 @@ public interface NoticeService {
 
 	// 오픈 공지 목록 
 	ArrayList<OpenNotice> selectOpenList(PageInfo pi);
+
+	//오픈 공지 상세 페이지
+	Notice openSelect(String showName);
 
 }

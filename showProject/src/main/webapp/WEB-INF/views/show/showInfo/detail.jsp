@@ -142,7 +142,9 @@
 	    <div class="content">
 	        <!-- 본문 상단 영역 -->
 	        <div class="top-section">
-	            <img src="/show/resources/images/꽃의비밀.jpg">
+	        
+	            <img src='/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg' />
+
 	            <div class="details">
 	                <c:choose>
 						<c:when test="${not empty s }">
@@ -209,19 +211,19 @@
     	function reservation(){
     		
     		// 로그인 유저 조건걸어주기
-    		var userNo = $('input[name="userNo"]').val(); 
+    		var userNo = $('input[name="userNo"]').val();
     		
     		if(userNo){
-    			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태 
+    			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태
 	       	     var selectedOption = $("#time").find(":selected");
 	       	     var roundId = selectedOption.data("round-id");
-	       	     
+	       	    
 	       	     if(selectedOption && roundId){
 	       	    	location.href= '/show/reservation/seats?showNo='+${s.showNo}+"&roundId="+roundId+"&hallNo="+${s.hallNo};
 	       	     }else{
 	       	    	 alert("공연날짜 및 시간을 선택하세요");
 	       	     }
-	       	     
+	       	    
     		}else{
     			alert("로그인 후 이용하세요")
     			location.href= '/show/toLogin';

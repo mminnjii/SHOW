@@ -11,6 +11,7 @@ import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.dao.NoticeDao;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.notice.model.vo.OpenNotice;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -71,6 +72,13 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public ArrayList<OpenNotice> selectOpenList(PageInfo pi) {
 		return noticeDao.selectOpenList(sqlSession, pi);
+	}
+
+	//오픈공지 상세페이지
+	@Override
+	public Notice openSelect(String showName) {
+		
+		return noticeDao.openSelect(sqlSession, showName);
 	}
 
 }
