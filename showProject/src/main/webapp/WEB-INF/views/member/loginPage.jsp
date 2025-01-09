@@ -132,7 +132,7 @@
 				<img src="${contextPath}\resources\images\로고.jpg" id="headLogo">
 			</a>
 			<br><br><br>
-			<form action="${contextPath}/login.me" method="post">
+			<form action="${contextPath}/member/login.me" method="post">
 				<div class="login">
 					<div class="info-area1">
 						<label for="userId">
@@ -168,7 +168,7 @@
 			<div id="link">
 				<a data-toggle="modal" data-target="#findId">아이디 찾기</a> |
 				<a data-toggle="modal" data-target="#findPwd">비밀번호 찾기</a> |
-				<a href="${contextPath}/toEnroll">회원가입</a> 
+				<a href="${contextPath}/member/toEnroll">회원가입</a> 
 			</div>
 			<br>
 			<div id="naver">
@@ -184,7 +184,7 @@
                     <h4 class="modal-title">아이디 찾기</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="${contextPath }/findId" method="post">
+                <form action="${contextPath }/member/findId" method="post">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <label for="userName" class="mr-sm-2">이름 : </label>
@@ -209,7 +209,7 @@
                     <h4 class="modal-title">비밀번호 찾기</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="${contextPath }/findPwd" method="post">
+                <form action="${contextPath }/member/findPwd" method="post">
                     <!-- Modal body -->
                     <div class="modal-body">
 						<p>*비밀번호의 경우 암호화 저장되어 분실 시 찾아드릴 수 없는 정보입니다.</p>

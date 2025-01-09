@@ -8,7 +8,6 @@
  	</settings>
  	<typeAliases>
  		<typeAlias type="com.kh.show.member.model.vo.Member" alias="Member"/>
- 		<typeAlias type="com.kh.show.member.model.vo.Profile" alias="Profile"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Faq" alias="Faq"/>
  		<typeAlias type="com.kh.show.customer.model.vo.Question" alias="Question"/>
  		<typeAlias type="com.kh.show.reservation.model.vo.Reservation" alias="Reservation"/>
@@ -65,6 +64,10 @@
 
 
 		<typeAlias type="com.kh.show.member.model.vo.Joinchat" alias="Joinchat"/>
+
+
+
+		<typeAlias type="com.kh.show.member.model.vo.JoinMeeting" alias="JoinMeeting"/>
 
  	</typeAliases>
 </configuration>
