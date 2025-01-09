@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.service.ShowInfoService;
 import com.kh.show.showInfo.model.vo.Review;
@@ -28,6 +29,8 @@ import com.kh.show.showInfo.model.vo.ShowRound;
 @RequestMapping("/showInfo") 
 public class ShowInfoController {
 	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private ShowInfoService showInfoService;
@@ -69,6 +72,9 @@ public class ShowInfoController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser!=null) {
 			session.setAttribute("userNo", loginUser.getUserNo());
+			session.setAttribute("rank", loginUser.getRank());
+			int cno = memberService.couponCount(loginUser.getUserNo());
+			session.setAttribute("cno", cno);
 		}
 
 	}
@@ -77,8 +83,7 @@ public class ShowInfoController {
 	
 	}
 	
-	
-	
+
 	
 	@ResponseBody
 	@GetMapping(value = "selectDate")
@@ -102,25 +107,22 @@ public class ShowInfoController {
 		        session.setAttribute("s", s); // 다시 세션에 저장
 		    }
 		    model.addAttribute("s", s);
-		    
 		   int showNo =  s.getShowNo();
 		   
-		   System.out.println("공연번호: "+showNo);
 		   
 		// 리뷰 갯수 세어오기
 		int count =  showInfoService.selectRcount(showNo); 
 		model.addAttribute("count",count);
 		
-		System.out.println(count);
 		
 		// 리뷰 조회
 	    ArrayList<Review> list  = showInfoService.selectReview(showNo);  
 	    model.addAttribute("r", list);
-	    	    
 	    
 	    double reviewAvg  = 0;
 	    
 		for(Review r : list ) { 
+			
 			reviewAvg += r.getReviewScore();
 			
 			String id = r.getUserId();

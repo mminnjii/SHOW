@@ -57,5 +57,15 @@ public class ReservationImpl implements ReservationService {
 		return reservationDao.confirmTicket(sqlSession,reservationId);
 	}
 
+	@Override
+	public int updateSeatStatusY(Reservation r) {
+		return reservationDao.updateSeatStatusY(sqlSession,r);
+	}
+
+	@Override
+	public int updateReserStatusY(Reservation r) {
+		return reservationDao.updateReserStatusY(sqlSession,r);
+	}
+
 
 }

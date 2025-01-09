@@ -837,7 +837,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 조회 -->
 	<select id="selectReview" resultMap="reviewResultSet">
 		SELECT REVIEW_ID,
-		USER_ID USER_NO,
+		USER_ID, 
+		USER_NO,
 		REVIEW_SCORE,
 		REVIEW_TITLE,
 		REVIEW_CONTENT,

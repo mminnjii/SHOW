@@ -132,9 +132,12 @@
 	        </select>
 	        <br><br>
 	        <br><br><br>
-	        <p>회원등급</p>
-
+	        <p>회원등급 : </p>
 	        <br>
+			<h4>${rank }</h4>
+			<br><br>
+		 	<p>보유쿠폰 : ${cno } 개 </p>
+	        <br><br><br><br>
 			<button onclick="reservation();">예약하기</button>
 	    </div>
 	    
@@ -181,6 +184,12 @@
     
     <script>
     	
+    	$(function(){
+    		var rank = ${rank }
+    		console.log(rank);
+    	});
+    
+    
     	function selectDate(){
     		
      		$.ajax({
@@ -226,7 +235,7 @@
 	       	    
     		}else{
     			alert("로그인 후 이용하세요")
-    			location.href= '/show/toLogin';
+    			location.href= '/show/member/toLogin';
     		}
     	}
     	

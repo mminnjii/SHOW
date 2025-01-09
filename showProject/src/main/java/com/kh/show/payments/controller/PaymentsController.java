@@ -4,6 +4,7 @@ package com.kh.show.payments.controller;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import com.kh.show.payments.model.service.PaymentsService;
 import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.Ticket;
 
 @Controller
@@ -82,17 +84,7 @@ public class PaymentsController {
 		return "payments/payment";
 	}
 	
-	@PostMapping(value ="/processPayment",produces ="text/html; charset=UTF-8")
-	@ResponseBody
-	public String processPayment(int reservationId, int roundId, String selectedName) {
-		System.out.println(reservationId);
-		System.out.println(roundId);
-		System.out.println(selectedName);
-		
-		return "check";
-	}
-	
-	
+
 	@Transactional
 	@PostMapping(value = "/bank",produces ="text/html; charset=UTF-8")
 	@ResponseBody
@@ -154,8 +146,7 @@ public class PaymentsController {
 				    int result4 = paymentsService.createTicket(ticket);
 			        if (result4 == 0) {
 			        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-			        }
-			        
+			        }        
 			        result3 += result4;
 				 }
 				 
@@ -352,5 +343,31 @@ public class PaymentsController {
 		
 		return "payments/paymentInfo";
 	}
+	
+	
+	
+	@Transactional
+	@ResponseBody
+	@PostMapping(value = "/statusY",produces ="text/html; charset=UTF-8")
+	public String statusY(Reservation r) {
+			
+		List<String> seats = r.getSeats();
+		
+		// System.out.println(seats);
+		
+		int result = reservationService.updateReserStatusY(r);
+		System.out.println("reservation: "+result);
+		
+		int result2 = reservationService.updateSeatStatusY(r);
+		System.out.println("seats: "+result2);
+		
+		if(result * result2 != 0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+	}
+	
+	
 	
 }

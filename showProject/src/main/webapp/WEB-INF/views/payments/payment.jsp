@@ -140,23 +140,6 @@
         // 결제 요청
         $("#card").on("click", function () {
         	
-            $.ajax({
-                url: '/show/payments/processPayment', 
-                type: 'POST',           
-                data: {
-                	reservationId : reservation_uid,
-	                roundId : roundId,
-	                selectedName : selectedName
-                }, 
-                success: function(response) {
-                    console.log('서버 응답:', response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('에러 발생:', error);
-                }
-            });
-        	
-        	
         	if(methodToget != ""){
         		
         		IMP.request_pay({
@@ -271,24 +254,6 @@
         
          
         $("#bank").on("click", function () { 
-        	
-        	
-            $.ajax({
-                url: '/show/payments/processPayment', 
-                type: 'POST',           
-                data: {
-                	reservationId : reservation_uid,
-	                roundId : roundId,
-	                selectedName : selectedName
-                }, 
-                success: function(response) {
-                    console.log('서버 응답:', response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('에러 발생:', error);
-                }
-            });
-
         	
         	if(methodToget != ""){
         		
