@@ -105,6 +105,16 @@ public class MeetingDao {
 	public int selectMeetingNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("meetingMapper.selectMeetingNo");
 	}
+
+	// 모집 기간이 지난 경우 status N으로 바꾸는 메소드 
+	public int updateStatus(SqlSessionTemplate sqlSession, int meetingNo) {
+		return sqlSession.update("meetingMapper.updateStatus", meetingNo);
+	}
+
+	// 소모임 삭제 메소드
+	public int deleteMeeting(SqlSessionTemplate sqlSession, int meetingNo) {
+		return sqlSession.delete("meetingMapper.deleteMeeting", meetingNo);
+	}
 	
 	
 }

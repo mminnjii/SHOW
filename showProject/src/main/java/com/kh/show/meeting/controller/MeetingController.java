@@ -1,6 +1,9 @@
 package com.kh.show.meeting.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -47,12 +50,33 @@ public class MeetingController {
 		
 		// 소모임 리스트 
 		ArrayList<Meeting> meList = meetingService.meetingList(pi);
-
+		
+		// 소모임 리스트에서 status 값을 sysdate 현재 시간과 비교해서 구인 마감 날짜가 지난 경우 status값을 n으로 바꿔준다.
 		for (Meeting ml : meList) {
-			System.out.println(ml);
+
+			String endDate = new SimpleDateFormat("yyyy-MM-dd").format(ml.getEndDate());
+			
+			Date date = new Date();
+			String sysDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+			
+			// sysDate가 endDate보다 큰 경우 STATUS값 N으로 변경. 음수면 endDate가 더 크다는 것 
+			int compare = sysDate.compareTo(endDate);
+			
+			int meetingNo = ml.getMeetingNo();
+			
+			if(compare > 0) {
+				int result = meetingService.updateStatus(meetingNo);
+			}
+			
 		}
+		
+		// 업데이트 된 경우 리스트를 다시 불러와야 한다. 
+		meList = meetingService.meetingList(pi);
+		
+		
 		m.addAttribute("meList", meList);
 		m.addAttribute("pi",pi);
+		
 		
 		return "meeting/meeting";
 	}
@@ -64,6 +88,10 @@ public class MeetingController {
 		ArrayList<Genre> genreList = meetingService.selectGenre();
 		
 		m.addAttribute("genreList", genreList);
+		
+		for(Genre g : genreList) {
+			System.out.println(g);
+		}
 		
 		return "meeting/meetingInsert";
 	}
@@ -140,6 +168,7 @@ public class MeetingController {
 		
 		m.addAttribute("meDetail", meDetail);
 		
+		
 		return "meeting/meetingDetail";
 	}
 	
@@ -209,6 +238,16 @@ public class MeetingController {
 		m.addAttribute("meList", meList);
 		m.addAttribute("pi",pi);
 		m.addAttribute("hashmap", hashmap);
+		
+		return "meeting/meeting";
+	}
+	
+	// 소모임 삭제 메소드 
+	@PostMapping("deleteMeeting")
+	public String deleteMeeting(int meetingNo) {
+		System.out.println(meetingNo);
+		
+		int result = meetingService.deleteMeeting(meetingNo);
 		
 		return "meeting/meeting";
 	}

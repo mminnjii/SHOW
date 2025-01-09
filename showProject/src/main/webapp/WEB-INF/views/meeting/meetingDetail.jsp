@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -117,6 +118,7 @@
                  		</c:otherwise>
                  	</c:choose>
              </div>
+             
          </div>
 
          <br>
@@ -125,6 +127,10 @@
          <div class="btn">
              <button type="button" id="joinbtn">참여하기</button>
              <button type="button" id="cancelbtn">참여취소</button>
+             <!-- 로그인한 회원의 회원 번호와 모임 생성한 회원 번호가 같으면 삭제 가능한 버튼 만들기 -->
+			 <c:if test="${loginUser.userNo == meDetail.userNo}">
+	             <button type="button" id="deletebtn">모임 삭제</button>
+			 </c:if>
              <button type="button" onclick="location.href='${contextPath}/meeting/list?currentPage=1'">목록으로</button>
          </div>
      </div>
@@ -136,7 +142,10 @@
 		var userNo = ${loginUser.userNo} ;
 		var meetingNo = ${meDetail.meetingNo} ;
 		var meDeUserNo = ${meDetail.userNo};
-
+		
+		console.log("meetingNo : "+ meetingNo);
+		console.log("meDeUserNo : "+ meDeUserNo);
+		
 		// 참여 중인 인원
 		var joinCount = ${meetingCount}; 
 		// 참여 가능 인원 
@@ -148,14 +157,20 @@
 			$("#cancelbtn").attr("disabled", true).css("background-color", "gray");
 		}	
      
+		// 참여중인 인원이 참여 가능인원과 같거나 클 때, 비활성화 
 		if(meetingCount <= joinCount){
 			$("#joinbtn").attr("disabled", true).css("background-color", "gray");
 		}
 
+		// status가 N인 경우 참여 및 취소 버튼 비활성화 처리
+		var status = `${meDetail.status}`;
+		if(status == 'N'){
+			$("#joinbtn").attr("disabled", true).css("background-color", "gray");
+			$("#cancelbtn").attr("disabled", true).css("background-color", "gray");
+		}
+		
+		// 참여 가능 인원보다 참여중인 인원이 작은 경우에만 참여 신청 가능
 		$("#joinbtn").on("click", function(){
-
-			
-			// 참여 가능 인원보다 참여중인 인원이 작은 경우에만 참여 신청 가능
 			if(meetingCount > joinCount){
 				if(confirm("참여하시겠습니까?")){
 					$.ajax({
@@ -205,7 +220,25 @@
 				
 			}
 			
-			
+		});
+		
+		var meetingNo = ${meDetail.meetingNo} ;
+
+		// 모임 삭제 
+		$("#deletebtn").on("click", function(){
+			$.ajax({
+				url : "deleteMeeting",
+				type : "POST",
+				data : {
+					meetingNo : meetingNo
+				}, success : function(){
+					alert("모임이 삭제되었습니다. 소모임 페이지로 이동됩니다.");
+					location.href = '${contextPath}/meeting/list';
+					
+				}, error : function(){
+					console.log("에러발생")
+				}
+			});
 		});
 		
 	 </script>

@@ -16,10 +16,7 @@
         #pagingArea {width:fit-content; margin:auto;}
        
         
-        #searchForm>* {
-            float:left;
-            margin:5px;
-        }
+        
         
 
         .select {width:20%;}
@@ -72,7 +69,17 @@
 		
 		.btnGroup{width: 20%; margin:5px;}
 		#searchForm{width: 40%;}			
-
+		#searchForm>* {
+            float:left;
+            margin:5px;
+        }
+        
+        #OpenSearchForm{width: 40%;}			
+		#OpenSearchForm>* {
+            float:left;
+            margin:5px;
+        }
+        
 		/* 상세보기 style */
  		.divClass{
             border-bottom: 1px solid lightgrey;
@@ -119,7 +126,7 @@
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
     <div class="a">
         <h2 align="center">공지사항</h2>
-        
+        <br><br>
         <div class="btnForm">
 	       <div class="btnGroup">
 	           <button id="general" class="noBtn" value="general">일반 공지</button>
@@ -146,7 +153,26 @@
 	   
 	           <button type="submit" class="searchBtn btn btn-secondary">검색</button>
 	       </form>
+	       
+	       <!-- 오픈공지 -->
+	       <form id="OpenSearchForm" action="${contextPath}/notice/openSearch" method="get">
+	       
+	           <div class="select">
+	               <select class="custom-select" name="condition">
+	                   <option value="all">전체</option>
+	                   <option value="title">제목</option>
+	                   <option value="content">내용</option>
+	               </select>
+	           </div>
+	   
+	           <div class="text"><!-- 검색 후에 검색한 키워드값 보여주기 -->
+	               <input type="text" class="form-control" name="keyword" value="${map.keyword}">
+	           </div>
+	   
+	           <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+	       </form>
         </div>
+        
         
         <div id="noticeDiv">
         <table id="noticeList" class="table" align="center">
@@ -175,10 +201,39 @@
             		</c:forEach>
             	</c:otherwise>
             </c:choose>
-
             </tbody>
         </table>
+        </div>
         
+        <div id="openNoticeDiv">
+	        <table id="noticeList" class="table" align="center">
+	            <thead>
+	                <tr>
+	                    <th>번호</th>
+	                    <th>제목</th>
+	                    <th>작성 날짜</th>
+	                    <th>조회수</th>
+	                </tr>
+	            </thead>
+	            <tbody  id="openNoticeTbody">
+	            	<c:choose>
+						<c:when test="${empty openNoticeList}">
+		            		<tr><td id="noting" style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<c:forEach var="list" items="${openNoticeList}">
+		            			<tr>
+			            			<td>${list.openNo}</td>
+			            			<td style="text-align: left;">${list.showName}</td>
+			            			<td>${list.createDate}</td>
+			            			<td>${list.count}</td>
+		            			</tr>
+		            		</c:forEach>
+		            	</c:otherwise>
+					</c:choose>
+	            </tbody>
+	        </table>
+        </div>
         <br>
         
         <!-- 페이지네이션 -->
@@ -244,6 +299,9 @@
         	
         	$("#general").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
 	
+        	$("#OpenSearchForm").hide();
+        	$("#openNoticeDiv").hide();
+        	
         	var noticeType = "general";
         	
         	$(".noBtn").on("click", function() {
@@ -251,12 +309,10 @@
         	    console.log(noticeType);
         	});
         	
+        
 	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
 	        $("#noticeList>tbody").on("click","tr", function(){
         		var nno = $(this).children().first().text();
-                //console.log(nno); 
-                
-            
                 
 				if(noticeType == "general"){
 	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
@@ -283,20 +339,16 @@
 	                	}
 	        		});
 				}else{
+					
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
-			       
-					
+					var showName = $(this).children().eq(1).text();
+	            	console.log(showName);
+	            	location.href = "/show/open?showName="+showName;
 			        	
-			        	
-			        	
-			        
-					
 				}
 				
 
 	        });
-	        
-	        
 	        
 	        
 	        // 선택한 셀렉트 박스의 값 유지
@@ -309,11 +361,12 @@
             });
 			
 			
-			
-			
          	// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
          	// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
 			$(".btnGroup").on("click", "#general" , function(){
+				$("#searchForm").show(); 
+				$("#OpenSearchForm").hide();
+				
 				$.ajax({
 					url: "list",
 					type: "post",
@@ -329,7 +382,6 @@
 									+ "<td>"+ noticeList[i].count +"</td>"
 									+ "</tr>";
 							}	
-							// 페이징 처리도 해주어야 한다? 
 						}else{
 							str += '<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>';
 						}
@@ -343,19 +395,12 @@
 			
          	
 			
-         	
-			//오픈공지 클릭시 해당 글 상세보기
-            $("#noticeList>tbody").on("click","tr",function(){
-            	
-            	var showName = $(this).children().eq(1).text();
-            	console.log(showName);
-            	location.href = "/show/open?showName="+showName;
-            	
-            });
-         	
 			// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
 			// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
 			$(".btnGroup").on("click", "#open", function(){
+				$("#searchForm").hide(); 
+				$("#OpenSearchForm").show();
+				
 				$.ajax({
 					url: "openlist",
 					type: "post",
@@ -385,17 +430,11 @@
 			});
 			
 			
-			
-         	
-         
-			
-			
         </script>
         
         
         
         <br><br>
-    </div>
     <br><br>
 
    	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
