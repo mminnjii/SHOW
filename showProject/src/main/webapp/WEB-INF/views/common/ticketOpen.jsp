@@ -27,12 +27,27 @@
        
     }
 
-    #g1,#g2,#g3,#g4,#g5{
-        width: 200px;
-        height: 250px;
-        border-radius: 10px;
-        align-items: center;
-    }
+   .image-wrapper {
+    width: 200px; /* 부모 컨테이너 크기 설정 */
+    height: 250px; /* 부모 컨테이너 크기 설정 */
+    border-radius: 10px; /* 부모 컨테이너의 border-radius 설정 */
+    overflow: hidden; /* 이미지가 확대될 때 부모 컨테이너 밖으로 넘지 않도록 숨김 */
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 이미지를 부모 요소 안에서 중앙에 배치 */
+	}
+
+	#g1 {
+    width: 100%; /* 이미지 크기가 부모 컨테이너 크기에 맞게 조정 */
+    height: 100%;
+    transition: transform 0.3s ease-in-out; /* 이미지 확대 시 부드러운 전환 효과 */
+    object-fit: cover; /* 이미지가 부모 요소의 크기에 맞게 잘리거나 비율을 유지하여 채워짐 */
+	}
+
+	#g1:hover {
+    transform: scale(1.1); /* hover 시 이미지 확대 */
+	}
     .oo{
         width: 38px;
     }
@@ -109,8 +124,9 @@
 	                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 	                   
 	                    str += "<td class='oo'></td>"  
-	                         + "<td class='openList'>"  
-	                         + "<img src='" + imgPath + "' alt='' id='g1'><br><br>"
+	                         + "<td class='openList'>" 
+	                         + "<div class='image-wrapper'>"
+	                         + "<img src='" + imgPath + "' alt='' id='g1'></div><br><br>"
 	                         + "<span class='j1'>" + result[i].showName + "</span><br>"
 	                         + "<span class='j2'>" + result[i].showStart + " - " + result[i].showEnd + "</span><br>"
 	                         + "</td>";

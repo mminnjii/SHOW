@@ -254,16 +254,9 @@
 	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
 	        $("#noticeList>tbody").on("click","tr", function(){
         		var nno = $(this).children().first().text();
-                console.log(nno); 
+                //console.log(nno); 
                 
-            //오픈공지 클릭시 해당 글 상세보기
-            $("#noticeList>tbody").on("click","tr",function(){
-            	
-            	var openName = $(this).find('#openName').text();
-            	console.log(openName);
-            	location.href = "/show/open?showName="+showName;
-            	
-            });
+            
                 
 				if(noticeType == "general"){
 	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
@@ -292,6 +285,7 @@
 				}else{
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
 			       
+					
 			        	
 			        	
 			        	
@@ -313,6 +307,8 @@
                 $(".noBtn").css("background-color", "white").css("color", "black").css("border", "1px solid gray");
                 $(this).css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
             });
+			
+			
 			
 			
          	// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
@@ -346,6 +342,17 @@
 			});
 			
          	
+			
+         	
+			//오픈공지 클릭시 해당 글 상세보기
+            $("#noticeList>tbody").on("click","tr",function(){
+            	
+            	var showName = $(this).children().eq(1).text();
+            	console.log(showName);
+            	location.href = "/show/open?showName="+showName;
+            	
+            });
+         	
 			// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
 			// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
 			$(".btnGroup").on("click", "#open", function(){
@@ -360,7 +367,7 @@
 								 
 							    str += "<tr>"
 							        + "<td>"+ noticeList[i].openNo +"</td>"
-							        + "<td style='text-align: left;'>"+ noticeList[i].openName +"</td>"
+							        + "<td style='text-align: left;'>"+ noticeList[i].showName +"</td>"
 							        + "<td>"+ noticeList[i].createDate +"</td>"
 							        + "<td>"+ noticeList[i].count +"</td>"
 							        + "</tr>";

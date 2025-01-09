@@ -141,43 +141,7 @@
             
             
             <tr id="mainRank">
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
-                    <span id="j1">광화문연가</span><br>
-                    <span id="j2">2025.02.08-2025.02.09</span>
-
-                </td>
-                
-                <td>
-           			<a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">글루미 선데이</span><br>
-                    <span id="j2">2024.11.05-2025.01.26</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">클로버</span><br>
-                    <span id="j2">2024.11.05-2025.01.26</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">틱틱붐</span><br>
-                    <span id="j2">2024.12.17-2025.02.02</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
-                    <span id="j1">오페라</span><br>
-                    <span id="j2">2024.12.22-2024.12.30</span>
-                </td>        
+               
                 
 
             </tr>
@@ -242,6 +206,65 @@
     
     */
     
+    
+    var seoulRegion = $("#mainRank").html();
+
+    $(document).ready(function(){
+        // 페이지 로드 시 바로 데이터를 불러와서 표시
+        mainRankData();
+
+        
+        // #c1 버튼 클릭 시 데이터 로드
+        $(".b1").click(function(){
+        	
+            $(this).prop('disabled', true);  
+            $("#mainRank").empty();
+            loadRankData();  // 데이터를 불러오는 함수 호출
+        });
+    });
+
+    
+    // 데이터를 불러오는 함수
+    function loadRankData() {
+        $.ajax({
+            url: "musicalShow",  // 서버에서 데이터를 가져오는 URL
+            success: function(result){
+                var str = ""; 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
+                    
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    
+                    str += "<td>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>";
+                          
+
+                }
+
+              
+
+                // regionArea에 데이터를 추가
+                $("#mainRank").append(str);
+
+                // 버튼을 다시 활성화
+                $("#list > button").removeAttr("disabled");
+
+            },
+            error:function(){
+                console.log("통신 오류");
+            }
+        });
+    }
+
+    // 페이지 로드 시 데이터를 불러오기
+    function mainRankData() {
+    	loadRankData();  // 페이지 로드 시 데이터를 불러오는 함수 호출
+    }
+
+    
     $(".b2").click(function(){
     	
     	// 버튼을 클릭했을 때 비활성화
@@ -294,22 +317,7 @@
 
     
     
- 	// b1 버튼 클릭 시 이전 데이터로 돌아가기
-    $(".b1").click(function(){
-        $(this).prop('disabled', true);  // 버튼 비활성화
-        
-      
-       
-            $("#mainRank").empty();  // b2를 눌렀을 때에 저장된 데이터 삭제 
-            
-            $("#mainRank").append(previousData);  //맨 처음 데이터를 저장시킨 변수를 불러옴
-       
-        
-            //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
-            $("#list > button").removeAttr("disabled");
-            
-    });
-
+ 	
     
  	
   //기존데이터를 previousData에 담아둔다. 
