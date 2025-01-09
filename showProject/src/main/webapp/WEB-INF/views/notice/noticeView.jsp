@@ -254,7 +254,9 @@
 	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
 	        $("#noticeList>tbody").on("click","tr", function(){
         		var nno = $(this).children().first().text();
-                console.log(nno); 
+                //console.log(nno); 
+                
+            
                 
 				if(noticeType == "general"){
 	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
@@ -282,6 +284,12 @@
 	        		});
 				}else{
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+			       
+					
+			        	
+			        	
+			        	
+			        
 					
 				}
 				
@@ -301,6 +309,8 @@
             });
 			
 			
+			
+			
          	// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
          	// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
 			$(".btnGroup").on("click", "#general" , function(){
@@ -314,7 +324,7 @@
 							for(var i=0; i<noticeList.length; i++){
 								str += "<tr>"
 									+ "<td>"+ noticeList[i].noticeNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].noticeTitle +"</td>"
+									+ "<td style='text-align: left;' id='openName'>"+ noticeList[i].noticeTitle +"</td>"
 									+ "<td>"+ noticeList[i].createDate +"</td>"
 									+ "<td>"+ noticeList[i].count +"</td>"
 									+ "</tr>";
@@ -332,6 +342,17 @@
 			});
 			
          	
+			
+         	
+			//오픈공지 클릭시 해당 글 상세보기
+            $("#noticeList>tbody").on("click","tr",function(){
+            	
+            	var showName = $(this).children().eq(1).text();
+            	console.log(showName);
+            	location.href = "/show/open?showName="+showName;
+            	
+            });
+         	
 			// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
 			// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
 			$(".btnGroup").on("click", "#open", function(){
@@ -343,12 +364,13 @@
 						var str = "";
 						if(noticeList != null){
 							for(var i=0; i<noticeList.length; i++){
-								str += "<tr>"
-									+ "<td>"+ noticeList[i].openNo +"</td>"
-									+ "<td style='text-align: left;'>"+ noticeList[i].openExplain +"</td>"
-									+ "<td>"+ noticeList[i].openName +"</td>"
-									+ "<td>"+ noticeList[i].genreNo +"</td>"
-									+ "</tr>";
+								 
+							    str += "<tr>"
+							        + "<td>"+ noticeList[i].openNo +"</td>"
+							        + "<td style='text-align: left;'>"+ noticeList[i].showName +"</td>"
+							        + "<td>"+ noticeList[i].createDate +"</td>"
+							        + "<td>"+ noticeList[i].count +"</td>"
+							        + "</tr>";
 							}
 							
 						}else{
@@ -362,6 +384,10 @@
 				});
 			});
 			
+			
+			
+         	
+         
 			
 			
         </script>

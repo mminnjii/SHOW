@@ -24,8 +24,8 @@ public class ShowInfoDao {
 	
 	
 	// 공연상세정보조회
-	public Show selectShow(SqlSession session) {
-		Show s = session.selectOne("showInfoMapper.selectShow");
+	public Show selectShow(SqlSession session,String showName) {
+		Show s = session.selectOne("showInfoMapper.selectShow",showName);
 		return s;
 	}
 
@@ -408,9 +408,37 @@ public class ShowInfoDao {
 
 
 
+
+	public int increaseCount(SqlSessionTemplate sqlSession, String showName) {
+		
+		
+		return sqlSession.update("showInfoMapper.increaseCount",showName);
+	}
+
+
+
+
+	public Show selectShowInfo(SqlSessionTemplate sqlSession, int sno) {
+
+		return sqlSession.selectOne("showInfoMapper.selectShowInfo",sno);
+	}
+
+
+
+
+	public ArrayList<Show> rankShowList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("showInfoMapper.rankShowList");
+	}
+
+
+
+
+
 	public int enrollReview(SqlSession session, Review r) {
 		return session.insert("showInfoMapper.enrollReview",r);
 	}
+
 
 
 
@@ -436,8 +464,24 @@ public class ShowInfoDao {
 
 
 
+
 	public Show selectWithName(SqlSession session, String name) {
 		return session.selectOne("showInfoMapper.selectWithName",name);
+	}
+		
+
+	public Show openSelect(SqlSessionTemplate sqlSession, String showName) {
+		
+		return sqlSession.selectOne("showInfoMapper.openSelect",showName);
+	}
+
+
+
+
+	public ArrayList<Show> openTicketList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.openTicketList");
+
 	}
 
 }

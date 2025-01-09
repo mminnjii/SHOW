@@ -87,7 +87,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM GENRE
 	</select>
 	
-	<!-- 소모임 생성 메소드 -->
+	<!-- 소모임 번호 가져오기 -->
+	<select id="selectMeetingNo" resultType="_int">
+		SELECT MEET_SEQ.NEXTVAL
+		FROM DUAL
+	</select>
+		
+	<!-- 소모임 생성 -->
 	<insert id="meetingInsert" parameterType="Meeting">
 		INSERT INTO MEETING(MEETING_NO
 		                    ,USER_NO
@@ -100,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                    ,END_DATE
 		                    ,INFOMATION
 		                    ) 
-		            VALUES(MEET_SEQ.NEXTVAL
+		            VALUES(#{meetingNo}
 		                    ,#{userNo}
 		                    ,#{meetingTitle}
 		                    ,#{showNo}

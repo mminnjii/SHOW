@@ -212,26 +212,23 @@
 	            var td = tr.children();
 	            
 	            var join = td.eq(3).text().split("/");
-	  			console.log(join);
 	            
 	  			var joinCount = join[0];
-	  			console.log("joinCount : " + joinCount);
 	            
 	  			var chatUserCount = join[1];
-	  			console.log("chatUserCount : " + chatUserCount);
 	            
 	  			// 입장 인원 수 > 참여 인원 수인 경우에만 채팅방 참여 가능 
 	  			// 회원 id, 채팅방 번호  => count는 리스트에서만 확인 가능하면 된다. (오라클 sql 구문 작성해둠)
 	  			var chatNo = td.eq(0).text();
-	  			console.log(chatNo);
 	  			
 	            // 백틱이 없는 경우 undifind가 뜬다. 왜? 확인 필요함. 이전에는 문제 없었음. 
 	            // var meetingCount= ${meDetail.meetingCount}; 해당값은 가져와짐. int라 그런건가? 문자열이여서 안되는건가? 
 	            var userId = `${loginUser.userId}`;
-	  			console.log(userId);
+
+	  			var userNo = ${loginUser.userNo};
 	  			
 	  			
-	  			if(chatUserCount > joinCount){ // 입장이 가능할 때
+	  			if(chatUserCount > joinCount){ // 채팅방 정원이 차지 않아 입장이 가능할 때
 		  			$.ajax({
 		  				url: "chatting",
 		  				data :{
@@ -245,9 +242,29 @@
 	  				
                     alert("채팅방입장");
 	                 
-	              }else{
-	                 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능 
-                     alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
+	              }else{ // 채팅방 정원이 가득 차 입장 불가능
+	            	  // 정원이 찼지만 이미 참여되어 있는 회원인 경우에는 채팅방 입장 가능
+	            	  $.ajax({
+	            		 url: "joinUser",
+	            		 type : "POST",
+	            		 data: {
+	            			chatNo: chatNo,
+	            			userNo : userNo
+	            		 },
+	            		 success : function(joinUser){
+	            			 if(joinUser){
+	            				 location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+	            			 } else{
+	            				 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능
+	            				 alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
+	            			 }
+	            		 }, 
+	            		 error : function(){
+	            			conole.log("에러 발생");
+	            		 }
+	            	  });
+	            	  
+	              		
 	              }
 	  			
 	            

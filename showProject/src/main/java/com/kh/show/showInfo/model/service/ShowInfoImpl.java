@@ -32,8 +32,8 @@ public ArrayList<Show> musicalShow() {
 
 	
 	@Override
-	public Show selectShow() {
-		Show s = showInfoDao.selectShow(sqlSession);
+	public Show selectShow(String showName) {
+		Show s = showInfoDao.selectShow(sqlSession,showName);
 		return s;
 	}
 
@@ -459,6 +459,29 @@ public ArrayList<Show> musicalShow() {
 
 
 	@Override
+	public int increaseCount(String showName) {
+		
+		return showInfoDao.increaseCount(sqlSession,showName);
+	}
+
+
+	@Override
+	public Show selectShowInfo(int sno) {
+
+		return showInfoDao.selectShowInfo(sqlSession,sno);
+	}
+
+
+	@Override
+	public ArrayList<Show> rankShowList() {
+
+		return showInfoDao.rankShowList(sqlSession);
+	}
+
+
+
+
+
 	public int enrollReview(Review r) {
 		return showInfoDao.enrollReview(sqlSession,r);
 	}
@@ -483,9 +506,26 @@ public ArrayList<Show> musicalShow() {
 
 
 	@Override
+ 
 	public Show selectWithName(String name) {
 		return showInfoDao.selectWithName(sqlSession,name);
 	}
+
+
+
+	public Show openSelect(String showName) {
+
+		return showInfoDao.openSelect(sqlSession,showName);
+	}
+
+
+
+	@Override
+	public ArrayList<Show> openTicketList() {
+
+		return showInfoDao.openTicketList(sqlSession);
+	}
+
 
 
 

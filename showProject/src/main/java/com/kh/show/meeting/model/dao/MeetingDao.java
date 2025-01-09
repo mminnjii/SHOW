@@ -100,6 +100,11 @@ public class MeetingDao {
 		
 		return (ArrayList)sqlSession.selectList("meetingMapper.selSearchShow", map);
 	}
+
+	//<!-- 소모임 번호 가져오기 -->
+	public int selectMeetingNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("meetingMapper.selectMeetingNo");
+	}
 	
 	
 }

@@ -117,6 +117,8 @@
 </head>
 <body>
  <br><br><br>
+ 
+ 	
 
     <div class="musicalRanking" >
         <table  class="rankTable">
@@ -133,10 +135,12 @@
             </tr>
             
             
+            
             	
             <tr id="rankArea">
             
 				 <td>
+				 	
                     <a href=""><img src="/show/resources/PosterUploadFiles/클래식_서울_신카이 마코토 영화음악 콘서트0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
                     <span id="j1">신카이 마코토</span><br>
                     <span id="j2">2024.11.03-2024.11.03</span>
@@ -171,12 +175,19 @@
 
     </div>
     <br>
+    
+    			 
+                
+                
+     
 
    <script>
    
+   
+   
    					//기존데이터를 previousData에 담아둔다. 
    					var previousData = $("#rankArea").html();
-   
+   					
   
                     $("#b2").click(function(){
                     	
@@ -201,13 +212,15 @@
                                     
                                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     str += "<td>"
-                                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                                    	  + "<a href=''><img src='" + imgPath + "' alt='Poster Image' id='f1'/></a><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"
                                           + "<td id='j3'></td>"
 
                                 }
+                                
+                                
                                   
                                 
                                 $("#rankArea").append(str);
@@ -242,6 +255,12 @@
                             //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
                             $("#b2").removeAttr("disabled");
                     });
+                 	
+                 	
+                 	
+                
+                  
+                 
 
 </script>
 

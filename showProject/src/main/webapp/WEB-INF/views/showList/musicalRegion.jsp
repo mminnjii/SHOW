@@ -53,12 +53,27 @@
 
     }
 
-    #r1,#r2,#r3,#r4{
-        width: 270px;
-        height: 350px;
-        border-radius: 10px;
-        align-items: center;
-    }
+    .image-wrapper {
+    width: 270px;
+    height: 350px; /* 부모 컨테이너 크기 설정 */
+    border-radius: 10px; /* 부모 컨테이너의 border-radius 설정 */
+    overflow: hidden; /* 이미지가 확대될 때 부모 컨테이너 밖으로 넘지 않도록 숨김 */
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 이미지를 부모 요소 안에서 중앙에 배치 */
+	}
+
+	.r1{
+    width: 100%; /* 이미지 크기가 부모 컨테이너 크기에 맞게 조정 */
+    height: 100%;
+    transition: transform 0.3s ease-in-out; /* 이미지 확대 시 부드러운 전환 효과 */
+    object-fit: cover; /* 이미지가 부모 요소의 크기에 맞게 잘리거나 비율을 유지하여 채워짐 */
+	}
+
+	.r1:hover {
+    transform: scale(1.1); /* hover 시 이미지 확대 */
+	}
     #oo{
         width: 30px;
     }
@@ -147,6 +162,21 @@
         </table>
 
     </div>
+    
+    <script>
+   
+		$(document).on('click','#regionArea td',function(){
+			
+			//var showName = $('#regionArea td').eq(1).text();
+			var showName = $(this).find('span#j1').text();
+			console.log(showName); 
+			location.href = "/show/showInfo/detail?showName="+ showName;
+			
+		});
+    
+		
+     
+     </script>
 
     <script>
     
@@ -188,9 +218,8 @@
 
                     // td 추가
                     str += "<td>"
-                    	+ "<a href='/show/showInfo/detail?name=" + result[i].posterChangeName + "'>"
-                        + "<img src='" + imgPath + "' alt='Poster Image' id='r1'/><br><br>"
-                        + "</a>"
+                    	+ "<div class='image-wrapper'>"
+                        + "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
                         + "<span id='j1'>" + result[i].showName + "</span><br>"
                         + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
                         + "</td>"
@@ -204,12 +233,7 @@
                 $("#regionArea").append(str);
 
                 // 버튼을 다시 활성화
-                $("#c2").removeAttr("disabled");
-                $("#c3").removeAttr("disabled");
-                $("#c4").removeAttr("disabled");
-                $("#c5").removeAttr("disabled");
-                $("#c6").removeAttr("disabled");
-                $("#c7").removeAttr("disabled");
+                $("#list11 > button").removeAttr("disabled");
 
             },
             error:function(){
@@ -260,7 +284,8 @@
         			    
         			    // td 추가
         			    str += "<td>"
-        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r1'/><br><br>"
+        			    	+ "<div class='image-wrapper'>"
+        			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
         			        + "<span id='j1'>" + result[i].showName + "</span><br>"
         			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
         			        + "</td>"
@@ -273,13 +298,7 @@
         			$("#regionArea").append(str);
         			
         			
-        			
-        			$("#c1").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c5").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -324,7 +343,8 @@
 	
 	        			    // td 추가
 	        			    str += "<td >"
-	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
+	        			    	+ "<div class='image-wrapper'>"
+	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
 	        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
 	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 	        			        + "</td>"
@@ -339,13 +359,7 @@
 	
 	        			
 	        			
-	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c6").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -384,7 +398,8 @@
 			        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 			        			    // td 추가
 			        			    str += "<td>"
-			        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
+			        			    	+ "<div class='image-wrapper'>"
+			        			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
 			        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
 			        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 			        			        + "</td>"
@@ -400,12 +415,7 @@
 			        			
 			        			
 			        			
-			        			$("#c1").removeAttr("disabled");
-			                	$("#c2").removeAttr("disabled");
-			                	$("#c3").removeAttr("disabled");
-			                	$("#c5").removeAttr("disabled");
-			                	$("#c6").removeAttr("disabled");
-			                	$("#c7").removeAttr("disabled");
+			        			$("#list11 > button").removeAttr("disabled");
 			        			
 			        		},
 			        		error:function(){
@@ -445,7 +455,8 @@
         			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
         			    // td 추가
         			    str += "<td>"
-        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
+        			    	+ "<div class='image-wrapper'>"
+        			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
         			        + "<span id='j1'>" + result[i].showName + "</span><br>"
         			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
         			        + "</td>"
@@ -461,12 +472,7 @@
         			
         			
         			
-        			$("#c1").removeAttr("disabled");
-                	$("#c2").removeAttr("disabled");
-                	$("#c3").removeAttr("disabled");
-                	$("#c4").removeAttr("disabled");
-                	$("#c6").removeAttr("disabled");
-                	$("#c7").removeAttr("disabled");
+        			$("#list11 > button").removeAttr("disabled");
         			
         		},
         		error:function(){
@@ -506,7 +512,8 @@
 	        			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
 	        			    // td 추가
 	        			    str += "<td>"
-	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
+	        			    	+ "<div class='image-wrapper'>"
+	        			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
 	        			        + "<span id='j1'>" + result[i].showName + "</span><br>"
 	        			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
 	        			        + "</td>"
@@ -522,12 +529,7 @@
 	        			
 	        			
 	        			
-	        			$("#c1").removeAttr("disabled");
-	                	$("#c2").removeAttr("disabled");
-	                	$("#c3").removeAttr("disabled");
-	                	$("#c4").removeAttr("disabled");
-	                	$("#c5").removeAttr("disabled");
-	                	$("#c7").removeAttr("disabled");
+	        			$("#list11 > button").removeAttr("disabled");
 	        			
 	        		},
 	        		error:function(){
@@ -565,7 +567,8 @@
     			    var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
     			    // td 추가
     			    str += "<td>"
-    			    	+ "<img src='" + imgPath + "' alt='Poster Image' id='r4'/><br><br>"
+    			    	+ "<div class='image-wrapper'>"
+    			    	+ "<img src='" + imgPath + "' alt='Poster Image' class='r1'/></div><br><br>"
     			        + "<span id='j1'>" + result[i].showName + "</span><br>"
     			        + "<span id='j2'>" + result[i].showStart + "-" + result[i].showEnd + "</span><br><br><br><br>"
     			        + "</td>"
@@ -581,13 +584,7 @@
     			
     			
     			
-    			$("#c1").removeAttr("disabled");
-            	$("#c2").removeAttr("disabled");
-            	$("#c3").removeAttr("disabled");
-            	$("#c4").removeAttr("disabled");
-            	$("#c5").removeAttr("disabled");
-            	$("#c6").removeAttr("disabled");
-    			
+    			$("#list11 > button").removeAttr("disabled");
     		},
     		error:function(){
     			console.log("통신 오류");

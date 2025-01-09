@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뮤지컬리스트</title>
+    <title>클래식리스트</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -142,6 +142,8 @@
 
     </div>
     
+    
+    
       <!-- Swiper JS -->
       <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
@@ -164,6 +166,8 @@
           }
         });
       </script>
+      
+     
       
       <%@include file="/WEB-INF/views/showList/classicRanking.jsp" %>
       <%@include file="/WEB-INF/views/showList/classicRegion.jsp" %>

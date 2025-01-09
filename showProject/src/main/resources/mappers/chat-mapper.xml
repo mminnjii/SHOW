@@ -90,7 +90,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY CREATEDATE DESC
 	</select>
 
+	<!-- 채팅방 번호 뽑기 -->
+	<select id="selectChatNo" resultType="_int">
+		SELECT CHAT_SEQ.NEXTVAL
+		FROM DUAL 
+	</select>
 	
+	<!-- 채팅방 생성 -->
 	<insert id="chatInsert" parameterType="Chat">
 		INSERT INTO CHAT (CHAT_NO
 		                 ,CHAT_TITLE
@@ -98,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                 ,USER_NO
 		                 ,CHAT_USER_COUNT
 		                 )
-				  VALUES (CHAT_SEQ.NEXTVAL
+				  VALUES (#{chatNo}
 					  	 ,#{chatTitle}
 						 ,#{showNo}
 						 ,#{userNo}
@@ -197,5 +203,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE CHAT_NO = #{chatNo}
 		   AND USER_NO = #{userNo}
 	</delete>
+	
+	<!-- 채팅방 삭제 -->
+	<delete id="deleteChat" parameterType="_int">
+		DELETE FROM CHAT
+		WHERE CHAT_NO = #{chatNo}
+	</delete>
+	
+	<!-- 채팅방에 join되어 있는 회원인지 확인하는 메소드 -->
+	<select id="joinUser" resultMap="chatJoinResultMap">
+		SELECT * 
+		FROM CHAT_JOIN 
+		WHERE CHAT_NO = #{chatNo}
+		    AND USER_NO = #{userNo}
+	</select>
 	
 </mapper>

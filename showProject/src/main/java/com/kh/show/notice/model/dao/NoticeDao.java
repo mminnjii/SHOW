@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.notice.model.vo.OpenNotice;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Repository
 public class NoticeDao {
@@ -87,6 +88,11 @@ public class NoticeDao {
 				   
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectOpenList", null, rowBounds);
 		
+	}
+
+	public Notice openSelect(SqlSessionTemplate sqlSession, String showName) {
+		
+		return sqlSession.selectOne("noticeMapper.openSelect",showName);
 	}
 
 }

@@ -10,7 +10,7 @@ import com.kh.show.showInfo.model.vo.ShowRound;
 public interface ShowInfoService {
 	
 	// 공연상세정보조회
-	Show selectShow();
+	Show selectShow(String showName);
 	
 	// 공연회차정보조회(날짜)
 	ArrayList<ShowRound> selectRound();
@@ -156,6 +156,15 @@ public interface ShowInfoService {
 
 	//메인 지역별 랭킹 지역이름 가져오기
 	ArrayList<Show> mainRegionRank();
+	
+	//조회수 증가 메소드
+	int increaseCount(String showName);
+	
+	//공연정보 몇개만 조회
+	Show selectShowInfo(int sno);
+	
+	//메인페이지 실시간 공연 순위 리스트
+	ArrayList<Show> rankShowList();
 
 	// 리뷰 등록하기
 	int enrollReview(Review r);
@@ -171,5 +180,13 @@ public interface ShowInfoService {
 	
 	// 쇼이름으로 정보 검색하기
 	Show selectWithName(String name);
+
+	//메인페이지 티켓 오픈 상세 페이지 
+	Show openSelect(String showName);
+
+	//메인페이지 티켓 오픈 리스트
+	ArrayList<Show> openTicketList();
+	
+	
 
 }
