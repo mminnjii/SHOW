@@ -60,6 +60,21 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.searchNotice", map, rowBounds);
 	}
 
+	// 오픈공지 검색 목록 개수
+	public int searchOpenCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("noticeMapper.searchOpenCount", map);
+	}
+
+	// 오픈공지 검색 목록 정보 메소드 
+	public ArrayList<OpenNotice> searchOpenNotice(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchOpenNotice", map, rowBounds);
+	}
+	
 	// 공지사항 상세보기 
 	public Notice noticeDetail(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
@@ -94,5 +109,7 @@ public class NoticeDao {
 		
 		return sqlSession.selectOne("noticeMapper.openSelect",showName);
 	}
+
+	
 
 }

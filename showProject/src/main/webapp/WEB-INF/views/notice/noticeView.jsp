@@ -16,10 +16,7 @@
         #pagingArea {width:fit-content; margin:auto;}
        
         
-        #searchForm>* {
-            float:left;
-            margin:5px;
-        }
+        
         
 
         .select {width:20%;}
@@ -32,7 +29,6 @@
         .a {
             text-align: left;
             width: 70%;
-            height: 600px;
             margin: 0px auto;
             background-color: white;
             padding: 3% 5%;
@@ -72,7 +68,17 @@
 		
 		.btnGroup{width: 20%; margin:5px;}
 		#searchForm{width: 40%;}			
-
+		#searchForm>* {
+            float:left;
+            margin:5px;
+        }
+        
+        #OpenSearchForm{width: 40%;}			
+		#OpenSearchForm>* {
+            float:left;
+            margin:5px;
+        }
+        
 		/* 상세보기 style */
  		.divClass{
             border-bottom: 1px solid lightgrey;
@@ -119,7 +125,7 @@
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
     <div class="a">
         <h2 align="center">공지사항</h2>
-        
+        <br><br>
         <div class="btnForm">
 	       <div class="btnGroup">
 	           <button id="general" class="noBtn" value="general">일반 공지</button>
@@ -146,7 +152,26 @@
 	   
 	           <button type="submit" class="searchBtn btn btn-secondary">검색</button>
 	       </form>
+	       
+	       <!-- 오픈공지 -->
+	       <form id="OpenSearchForm" action="${contextPath}/notice/openSearch" method="get">
+	       
+	           <div class="select">
+	               <select class="custom-select" name="condition">
+	                   <option value="all">전체</option>
+	                   <option value="title">제목</option>
+	                   <option value="content">내용</option>
+	               </select>
+	           </div>
+	   
+	           <div class="text"><!-- 검색 후에 검색한 키워드값 보여주기 -->
+	               <input type="text" class="form-control" name="keyword" value="${map.keyword}">
+	           </div>
+	   
+	           <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+	       </form>
         </div>
+        
         
         <div id="noticeDiv">
         <table id="noticeList" class="table" align="center">
@@ -159,13 +184,10 @@
                 </tr>
             </thead>
             <tbody id="noticeTbody">
-            
-            <c:choose>
-            	<c:when test="${empty noticeList}">
-            		<tr><td id="noting" style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>
-            	</c:when>
-            	<c:otherwise>
-            		<c:forEach var="list" items="${noticeList}">
+            	<!-- noticeList가 있으면 일반공지, openNoticeList가 있으면 오픈공지-->
+            	<c:choose>
+            		<c:when test="${not empty noticeList}">
+            			<c:forEach var="list" items="${noticeList}">
             			<tr>
 	            			<td>${list.noticeNo}</td>
 	            			<td style="text-align: left;">${list.noticeTitle}</td>
@@ -173,11 +195,24 @@
 	            			<td>${list.count}</td>
             			</tr>
             		</c:forEach>
-            	</c:otherwise>
-            </c:choose>
-
+            		</c:when>
+            		<c:when test="${not empty openNoticeList}">
+           				<c:forEach var="openlist" items="${openNoticeList}">
+	            			<tr>
+		            			<td>${openlist.openNo}</td>
+		            			<td style="text-align: left;">${openlist.showName}</td>
+		            			<td>${openlist.createDate}</td>
+		            			<td>${openlist.count}</td>
+	            			</tr>
+	            		</c:forEach>
+            		</c:when>
+            		<c:otherwise>
+	            		<tr><td id="noting" style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>
+            		</c:otherwise>
+            	</c:choose>
             </tbody>
         </table>
+        </div>
         
         <br>
         
@@ -242,27 +277,42 @@
         
         <script>
         	
-        	$("#general").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
-	
+        	// 리스트를 불러올 때 noticeType을 같이 전달하여 버튼 선택될 수 있도록 한다. 
+        	// 검색시 새로고침(재랜더링) 되기 때문에 어떤 form을 보여주고 가려야 되는지도 처리해야 한다.
         	var noticeType = "general";
+        	noticeType2 = "${noticeType}";
+
+        	if(noticeType2 == "general"){
+	        	$("#general").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
+	        	$("#OpenSearchForm").hide();
+	        	$("#searchForm").show();
+        	}else if(noticeType2 == "open"){
+	        	$("#open").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
+	        	$("#searchForm").hide();
+	        	$("#OpenSearchForm").show();
+        	}
+	
+        	// $("#OpenSearchForm").hide();
+        	
+        	// value 값에 따라 
+        	var noticeType = "general";
+        	
         	
         	$(".noBtn").on("click", function() {
         	    noticeType = $(this).val();   // 클릭한 버튼의 value 값 가져오기
         	    console.log(noticeType);
         	});
         	
+        
 	        // 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
 	        $("#noticeList>tbody").on("click","tr", function(){
         		var nno = $(this).children().first().text();
-                //console.log(nno); 
-                
-            
                 
 				if(noticeType == "general"){
 	            	// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
 	                $.ajax({
 	                	url: 'detail',
-	                	type : "POST",
+	                	type: "POST",
 	                	data : {
 	                		nno : nno
 	                	}, success : function(noticeDetail){
@@ -283,24 +333,20 @@
 	                	}
 	        		});
 				}else{
+					
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
-			       
-					
-			        	
-			        	
-			        	
-			        
-					
+					var showName = $(this).children().eq(1).text();
+	            	console.log(showName);
+	            	location.href = "/show/open?showName="+showName;
 				}
 				
 
 	        });
 	        
 	        
-	        
-	        
 	        // 선택한 셀렉트 박스의 값 유지
 	        $("option[value='${map.condition}']").attr("selected", true);
+	        
 	        
 			// 일반공지, 오픈공지 버튼 클릭 시 css 변경 구문	        
             $(".noBtn").on('click', function(){
@@ -309,14 +355,15 @@
             });
 			
 			
-			
-			
          	// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
          	// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
 			$(".btnGroup").on("click", "#general" , function(){
+				$("#OpenSearchForm").hide();
+	        	$("#searchForm").show();
+	        	
 				$.ajax({
 					url: "list",
-					type: "post",
+					type: "POST",
 					success : function(noticeList){
 						
 						var str = "";
@@ -329,7 +376,6 @@
 									+ "<td>"+ noticeList[i].count +"</td>"
 									+ "</tr>";
 							}	
-							// 페이징 처리도 해주어야 한다? 
 						}else{
 							str += '<tr><td style="text-align: center;" colspan="4">공지사항 내역이 없습니다.</td></tr>';
 						}
@@ -339,23 +385,16 @@
 						
 					}
 				});
+				
 			});
 			
-         	
 			
-         	
-			//오픈공지 클릭시 해당 글 상세보기
-            $("#noticeList>tbody").on("click","tr",function(){
-            	
-            	var showName = $(this).children().eq(1).text();
-            	console.log(showName);
-            	location.href = "/show/open?showName="+showName;
-            	
-            });
-         	
 			// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
 			// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
 			$(".btnGroup").on("click", "#open", function(){
+				$("#OpenSearchForm").show();
+	        	$("#searchForm").hide();
+	        	
 				$.ajax({
 					url: "openlist",
 					type: "post",
@@ -364,7 +403,7 @@
 						var str = "";
 						if(noticeList != null){
 							for(var i=0; i<noticeList.length; i++){
-								 
+								
 							    str += "<tr>"
 							        + "<td>"+ noticeList[i].openNo +"</td>"
 							        + "<td style='text-align: left;'>"+ noticeList[i].showName +"</td>"
@@ -383,20 +422,11 @@
 					}
 				});
 			});
-			
-			
-			
-         	
-         
-			
-			
+		
         </script>
         
-        
-        
         <br><br>
-    </div>
-    <br><br>
+    	<br><br>
 
    	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
    

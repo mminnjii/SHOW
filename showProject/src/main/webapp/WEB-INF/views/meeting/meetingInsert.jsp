@@ -77,7 +77,7 @@
 
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
 <div class="a">
-
+	&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
     <h1>소모임 생성</h1>
     <form action="meetingInsert" method="POST">
     
@@ -92,7 +92,7 @@
 	        <select id="category" name="category" required>
 	            <option value="" disabled selected>공연카테고리를 선택하세요</option>
 	            <c:forEach var="g" items="${genreList}">
-		            <option value="${g.genreNo}" id="genreNo">${g.genreName}</option>
+		            <option value="${g.genreNo}" class="${g.genreNo}" name="${g.genreNo}" id="genreNo">${g.genreName}</option>
 	            </c:forEach>
 	        </select>
        	</div>
@@ -159,14 +159,17 @@
 		
 		meetingDate.attr("min", stDate);
 		joinEndDate.attr("min", stDate);
+
+		
 		
 		// 카테고리 클릭 시 해당 카테고리에 해당하는 show 목록 불러오기 (동적으로 생성된 카테고리 option을 선택하는 것이기 때문에 .on 메소드 사용)
 		$("#showDiv1").on("change", "#category", function(){
+			var genreNo = $("#category").val(); 
 			
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/selectShow",
 				data: {
-					genreNo : $("#category").val()
+					genreNo : genreNo
 				}, 
 				success : function(showList){
 					var str = "";
@@ -176,6 +179,7 @@
 							str += '<option value="'+showList[i].showNo+'">'+showList[i].showName+'</option>'
 							dateStr += '<input type="hidden" id="maxDate-'+ showList[i].showNo +'" value="'+ showList[i].showEnd +'">';
 						}
+						
 					}
 					
 					// 기존에 있던 리스트 지우고 생성
@@ -188,12 +192,13 @@
 		
 		// 검색 input 박스 안의 내용 변경시 검색어가 포함된 리스트 생성 
 		$("#showDiv2").on("input", "#keyword", function(){
-			
+			var genreNo = $("#category").val(); 
+			var keyword = $("#keyword").val();
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/searchShow",
 				data: {
-					genreNo : $("#genreNo").val(),
-					keyword : $("#keyword").val()
+					genreNo : genreNo,
+					keyword : keyword
 				}, 
 				success : function(showList){
 					var str = "";
@@ -230,14 +235,14 @@
 			
 		});
 		
-		// 모임날짜 2일 전까지만 마감할 수 있도록 조건 처리 
+		// 모임날짜 1일 전까지만 마감할 수 있도록 조건 처리 
 		$("#meetingDate").on("change", function(){
 						
 			var date = $(this).val();
 			console.log(date);
 			
 			var mDate = new Date(date);
-			mDate.setDate(mDate.getDate() -2);
+			mDate.setDate(mDate.getDate() -1);
 			mDate = (mDate.getFullYear()+"-"+(mDate.getMonth()+1).toString().padStart(2, '0')+"-"+mDate.getDate().toString().padStart(2, '0'));
 			console.log(mDate);
 			

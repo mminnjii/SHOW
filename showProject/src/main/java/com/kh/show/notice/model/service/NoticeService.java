@@ -19,8 +19,14 @@ public interface NoticeService {
 	// 검색 리스트 개수 
 	int searchCount(HashMap<String, String> map);
 
+	// 오픈공지 검색 리스트 개수
+	int searchOpenCount(HashMap<String, String> map);
+
 	// 일반공지 검색 목록 
 	ArrayList<Notice> searchNotice(HashMap<String, String> map, PageInfo pi);
+
+	// 오픈공지 검색 목록 
+	ArrayList<OpenNotice> searchOpenNotice(HashMap<String, String> map, PageInfo pi);
 
 	// 공지 상세보기 
 	Notice noticeDetail(int nno);
@@ -36,5 +42,7 @@ public interface NoticeService {
 
 	//오픈 공지 상세 페이지
 	Notice openSelect(String showName);
+
+
 
 }
