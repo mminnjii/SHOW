@@ -1013,12 +1013,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="rankShowList" resultMap="showResultSet">
 		SELECT *
 	  	FROM (
-	  		  SELECT SHOW_NAME
+	  		  SELECT POSTER_ORIGINNAME
+	  		         ,POSTER_CHANGENAME
 	  	       		 ,COUNT
 	  	      FROM SHOW
+	  	      WHERE COUNT > 0
+	  	      AND STATUS = 'Y'
 	  	      ORDER BY COUNT DESC
 	  	      )
-	  	WHERE ROWNUM BETWEEN 1 AND 9
+	  	WHERE ROWNUM BETWEEN 1 AND 5
+	  	
 	</select>	
 
 	<!-- 리뷰 작성 -->

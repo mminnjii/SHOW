@@ -32,7 +32,9 @@
 	
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	<%@include file="/WEB-INF/views/common/posterslider.jsp" %> 
-	<br><br><br><br><br><br><br><br>
+	<%@include file="/WEB-INF/views/common/sidemenubar.jsp" %>
+	
+	<br><br><br><br>
     <%@include file="/WEB-INF/views/common/ticketOpen.jsp" %>    
     <br><br><br>  
     <%@include file="/WEB-INF/views/common/ranking.jsp" %>  

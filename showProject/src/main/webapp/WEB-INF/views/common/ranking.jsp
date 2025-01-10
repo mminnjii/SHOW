@@ -20,7 +20,10 @@
 #tt{
         
         
-        margin:auto;
+        position: relative;
+        left: 340px;
+        
+
         
        
     }
@@ -192,7 +195,23 @@
         });
     });
     
+    $(document).on('click','#mainRank td',function(){
+		
+		//var showName = $('#regionArea td').eq(1).text();
+		var showName = $(this).find('span#j1').text();
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+	});
     
+  $(document).on('click','#mainRank2 td',function(){
+		
+		//var showName = $('#regionArea td').eq(1).text();
+		var showName = $(this).find('span#j1').text();
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+	});
 
     
     

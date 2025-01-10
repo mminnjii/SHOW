@@ -32,10 +32,10 @@
     #b1:hover,#b2:hover{
     border-color: black;
     }
-    #rank1{
+    .rank1{
         border-style: none;
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 25px;
+        font-size: 35px;
         font-weight: 500;
         font-style: normal;
         color: black;
@@ -124,7 +124,7 @@
 
     <div class="musicalRanking" >
         <table  class="rankTable">
-            <tr> <td id="rank1">랭킹</td>  </tr>
+            <tr> <td class="rank1">랭킹</td>  </tr>
             <br><br>
             <tr>
             <td colspan="9" id="list">
