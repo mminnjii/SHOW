@@ -41,7 +41,13 @@ public interface NoticeService {
 	ArrayList<OpenNotice> selectOpenList(PageInfo pi);
 
 	//오픈 공지 상세 페이지
-	Notice openSelect(String showName);
+	OpenNotice openSelect(String showName);
+	
+	// 오픈공지 조회수 업데이트
+	int opennoticeUpCount(int openNo);
+
+	// 오픈공지 상세 정보 
+	Show openNoticeSelect(int openNo);
 
 
 
