@@ -44,5 +44,17 @@ public class ReservationDao {
 		return (ArrayList)session.selectList("reservationMapper.confirmTicket",reservationId);
 	}
 
+	public int updateSeatStatusN(SqlSession session, Reservation r) {
+		return session.update("reservationMapper.updateSeatStatusN",r);
+	}
+
+	public int updateReserStatusY(SqlSession session, Reservation r) {
+		return session.update("reservationMapper.updateReserStatusY",r);
+	}
+
+	public int updateSeatStatusP(SqlSession session, Reservation r) {
+		return session.update("reservationMapper.updateSeatStatusP",r);
+	}
+
 
 }

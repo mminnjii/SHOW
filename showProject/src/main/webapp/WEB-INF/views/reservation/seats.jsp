@@ -220,24 +220,24 @@
     	
     	
     
-    	$('#back').on('click',function(){
+    	$("#back").on("click",function(){
     		history.back();
     	});
     
     
 
-	     $('.seat').on('click', function() {
+	     $(".seat").on("click", function() {
 	    	 
 	    	   	// 선택 좌석
-	    	 	var selected = $(this).toggleClass('selected');
+	    	 	var selected = $(this).toggleClass("selected");
 	    	   	// 좌석 번호
-	    	  	var seatNumber = $(this).attr('data-seat');
+	    	  	var seatNumber = $(this).attr("data-seat");
 	    	 	// 선택 좌석 수
             	var selectedCount = $(".seat.selected").length; 
             	
             	$("#select>thead>tr .num").text("총 "+selectedCount +"석이 선택되었습니다");
             	
-        			if($(this).hasClass('selected')){
+        			if($(this).hasClass("selected")){
         				if(seatNumber.includes("A") || seatNumber.includes("B")){
         						var vip = $("<td>").text("VIP석");
 		              			var num = $("<td>").text(seatNumber).attr("name","selectedCount");
@@ -263,13 +263,10 @@
 	    	});
 	     
 	       
-	     	$(".reset").on('click',function(){
-	        	
+	     	$(".reset").on("click",function(){
 	     		$("#select>thead>tr .num").text("총 0석이 선택되었습니다");
 	     		$("#select>tbody>tr").remove();
-	     		$('.seat').removeClass('selected');
-	     		
-	     		
+	     		$(".seat").removeClass("selected");
 	          }); 
 	     	
 	     	
@@ -284,18 +281,16 @@
 				
   	     		if(selectedName != ""){
   	      			
-  	     			// 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
-  	  	     	 	var reservationId = ${rInfo.reservationId };
-  	  	     		
   	  	     	 	var roundId = $('input[name="roundId"]').val();	
-	  	  	     	
+  	  	    		 // 예약번호 없을 시 빈문자열로 전송 (int는 null x > 스트링으로 보내기 )
+  	  	     	 	var reservationId = ${rInfo.reservationId };
+  	  	     	 	
   	  	     	 	$.ajax({
 	      				url : "/show/reservation/selectedSeats",
 	      				type : "POST",
 	      				data : {
 	      					num : num,
 	      					selectedName : selectedName,
-	      					reservationNo : reservationId,
 	      					roundId : roundId
 	      				}, 
 	      				success : function(num){
@@ -331,8 +326,6 @@
 	        				console.log("통신오류");
 	      				}
 	      			}); 
-	  
-  	     			
   	     			
   	     		}else{
   	     			alert("좌석을 선택해 주세요.")
@@ -345,11 +338,9 @@
   	     	
   	     	$(function(){
   	     		
-  	     	 	$('#Modal').modal('show');
-  	     		
-  	     		var taken = ${taken}; 
-  	     		console.log(taken);
-  	     	 
+  	     	 	$("#Modal").modal("show");
+				
+  	     	 	var taken = ${taken}
   	     		taken.forEach(function (seatId) {
   	     	        // 테이블 내에서 data-seat 속성을 가진 요소를 선택
   	     	        $("#seats").find("[data-seat='" + seatId + "']")

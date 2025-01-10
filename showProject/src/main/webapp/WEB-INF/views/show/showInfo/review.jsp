@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 	<style>
 		.review{
-			margin-left: 150px;
+			margin-left: 200px;
 		}
 		.box{
 			display: inline-block; 
@@ -20,7 +20,6 @@
 		pre {
             font-family: "Noto Sans KR", sans-serif;
             font-size: 15px;
-            font-weight: 400;
             font-style: normal;
             margin-left: -100px; /* 요소를 왼쪽으로 이동 */
             margin-top: -50px;
@@ -73,7 +72,7 @@
 	<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
 	<br><br>
 	<div class="review">
-		<h2 align="left">관람후기</h2>
+		<h2 align="left">리뷰게시판</h2>
 		<br><br><br>
 		
 			<pre>
@@ -93,10 +92,11 @@
 	             <!-- 5개의 별을 반복 -->
 	             <c:forEach var="i" begin="1" end="5">
 	                 <!-- 평점에 따라 별을 채우거나 비움 -->
-			     <div class="star 
-		        ${i <= Math.floor(reviewAvg) ? 'filled' :
-		        (i == Math.floor(reviewAvg) + 1 ? 'partially-filled' : '')}" 
-		        style="--percent: ${(reviewAvg - avgFloor) * 100}%;"></div>
+				     <div class="star 
+				        ${i <= Math.floor(reviewAvg) ? 'filled' :
+				        (i == Math.floor(reviewAvg) + 1 ? 'partially-filled' : '')}" 
+				        style="--percent: ${(reviewAvg - avgFloor) * 100}%;">
+			        </div>
 	             </c:forEach>
 	        </div>
 		</div>
@@ -136,7 +136,6 @@
 								<button class="delete" data-rno="${r.reviewId }">삭제하기</button>
 							</div>
 						</c:if> 
-						
 						<br>
 						<h3 class="title" data-content="${r.reviewTitle}">
 							${r.reviewTitle}
@@ -144,7 +143,6 @@
 						<h5 class="origin" data-content="${r.reviewContent}">
 							${r.reviewContent}
 						</h5> <br><br><br><br><br><br>
-					
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -159,7 +157,8 @@
 	<script>	
 		
 		$(".enroll").on("click",function(){
-			location.href = '/show/showInfo/enroll'; 
+			var showNo = ${s.showNo}
+			location.href = '/show/showInfo/enroll?showNo='+showNo; 
 		});
 		
 	
@@ -190,15 +189,13 @@
  	 			$.ajax({
  	 			 	url : "/show/showInfo/deleteReview",
 	 	        	data : {
-	 	        		
 	 	        		replyNo : replyNo
 	 	        	},
-	 	        	
 	 	        	type : "POST",
-	 	        	
 		 	       	success : function(result){
 		 	       		if(result=="NNNNY"){
-		 	        		alert("리뷰삭제에 성공했습니다");
+		 	        		console.log(result);
+		 	       			alert("리뷰삭제에 성공했습니다");
 		 	        		window.location.href = '/show/showInfo/review';
 	 	        		}else{
 	 	        			alert("리뷰삭제에 실패했습니다");

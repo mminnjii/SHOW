@@ -151,7 +151,6 @@
                 <td colspan="3" id="result">티켓 검색 결과</td>
             </tr>
             <tr id="tr1"></tr>
-            
             <c:choose>
             	<c:when test="${empty list }">
             		<tr>
@@ -161,7 +160,7 @@
             	<c:otherwise>
             		<c:forEach items="${list}" var="s">
             			<tr id="result1">
-                		<td id="td1"><img src="${contextPath }/resources/images/꽃의비밀.jpg" alt="" id="resultPoster"></td>
+                		<td id="td1"><img src="/show/resources/PosterUploadFiles/${s.posterChangeName}.jpg" alt="" id="resultPoster"></td>
                 		<td><span id="reName">${s.showName} </span><br> <span id="rePlace">${s.hall.hallName}</span><br><span id="reDate">${s.showStart}-${s.showEnd}</span></td>
                 		<td id="result2"><button id="reBtn">예매하기</button></td>
             			</tr>

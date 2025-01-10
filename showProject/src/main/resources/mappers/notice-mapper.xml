@@ -15,12 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="OpenNotice" id="openNoticeResultSet">
 		<result column="OPEN_NO" property="openNo"/>
-		<result column="OPEN_NAME" property="openName"/>
+		<result column="SHOW_NAME" property="showName"/>
 		<result column="OPEN_EXPLAIN" property="openExplain"/>
 		<result column="GENRE_NO" property="genreNo"/>
 		<result column="REGION_NO" property="regionNo"/>
 		<result column="HALL_NO" property="hallNo"/>
 		<result column="OPEN_PRICE" property="openPrice"/>
+		<result column="CREATE_DATE" property="createDate"/>
 	</resultMap>
 	
 	
@@ -73,6 +74,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				OR NOTICE_CONTENT LIKE '%' || #{keyword} || '%')
 			</when>
 		</choose>
+		ORDER BY CREATEDATE DESC
+	</select>
+	
+	<!-- 오픈공지 검색 목록 개수  -->
+	<select id="searchOpenCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM OPEN_NOTICE
+		WHERE 
+		<choose>
+			<when test="condition == 'title'">
+				SHOW_NAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				OPEN_EXPLAIN LIKE '%' || #{keyword} || '%' 
+			</when>
+			<otherwise>
+				(SHOW_NAME LIKE '%' || #{keyword} || '%'
+				OR OPEN_EXPLAIN LIKE '%' || #{keyword} || '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 오픈공지 검색 목록 정보 | 동적 sql문 사용하여 쿼리문 작성 -->
+	<select id="searchOpenNotice" resultMap="openNoticeResultSet">
+		SELECT *
+		FROM OPEN_NOTICE
+		WHERE 
+		<choose>
+			<when test="condition == 'title'">
+				SHOW_NAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				OPEN_EXPLAIN LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'all'">
+				(SHOW_NAME LIKE '%' || #{keyword} || '%'
+				OR OPEN_EXPLAIN LIKE '%' || #{keyword} || '%')
+			</when>
+		</choose>
+		ORDER BY CREATE_DATE DESC
 	</select>
 	
 	<!-- 공지사항 상세보기 -->
@@ -89,6 +130,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET COUNT = COUNT+1
 		WHERE NOTICE_NO = #{nno}
 	</update>
+	
+	<!-- 오픈공지 조회수 up  -->
+	<update id="opennoticeUpCount">
+		UPDATE OPEN_NOTICE
+		SET COUNT = COUNT+1
+		WHERE OPEN_NO = #{openNo}
+	</update>
 
 	<!-- 오픈공지 개수 -->
 	<select id="openlistCount" resultType="_int">
@@ -100,7 +148,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOpenList" resultMap="openNoticeResultSet">
 		SELECT * 
 		FROM OPEN_NOTICE
+		ORDER BY CREATE_DATE DESC
 	</select>
+	
+	
 	
 	
 </mapper>

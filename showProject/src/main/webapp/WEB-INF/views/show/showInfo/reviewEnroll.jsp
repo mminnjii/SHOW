@@ -67,8 +67,8 @@
         <div class="innerOuter">
             <h2>후기 작성하기</h2>
             <br>
-            	<input type="hidden" id="writer" class="form-control" value="${loginUser.userNo }" name="boardWriter" readonly>
-                <table align="center" id="enrollForm">
+            	<input type="hidden" id="writer" class="form-control" value="${loginUser.userNo }">
+                <table align="center" id="enrollForm" >
                 	<tr>
                         <th><label for="rank">평점</label></th>
                         <td>
@@ -157,6 +157,7 @@
 	        var title = $("#title").val();
 	        var writer = $("#writer").val();
 	        var content = $("#content").val();
+	        var showNo = ${showNo}
 
 	        if(rating != ""){
 	        	if(title != ""){
@@ -169,12 +170,14 @@
 			 	        		reviewScore : rating,
 			 	        		reviewTitle : title,
 			 	        		userNo : writer,
-			 	        		reviewContent : content
+			 	        		reviewContent : content,
+			 	        		showNo : showNo
 			 	        	},
 			 	        	
 			 	        	type: 'POST',  
 			 	        	success : function(result){
 			 	         		if(result=="NNNNY"){
+			 	         			console.log(result);
 				 	        		alert("리뷰작성에 성공했습니다");
 				 	        		window.location.href = '/show/showInfo/review';
 			 	        		}else{

@@ -24,7 +24,7 @@
         
        
     }
-    #b1,#b2,#b3,#b4,#b5,#b6{
+    .b1,.b2,.b3,.b4,.b5,.b6{
         background-color: white;
         border-radius: 30px;
         border-color:gainsboro;
@@ -120,7 +120,7 @@
 <body>
 
     <div>
-        <table id="tt" >
+        <table id="tt">
          <br><br>
             <tr> 
             <td colspan="9">
@@ -130,63 +130,34 @@
             <br><br>
             <tr id="btnList">
             <td colspan="9" id="list">
-                <button id="b1">뮤지컬</button>
-                <button id="b2">콘서트</button>
-                <button id="b3">클래식/무용</button>
-                <button id="b4">연극</button>
-                <button id="b5">전시</button>
+                <button class="b1">뮤지컬</button>
+                <button class="b2">콘서트</button>
+                <button class="b3">클래식/무용</button>
+                <button class="b4">연극</button>
+                <button class="b5">전시</button>
             </td>
              
             </tr>
             
             
             <tr id="mainRank">
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_광화문연가0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
-                    <span id="j1">광화문연가</span><br>
-
-                </td>
-                
-                <td>
-           <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_글루미 선데이0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
-                    <span id="j1">글루미 선데이</span><br>
-                    <span id="j2">2024.11.05-2025.01.26</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_클로버0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
-                    <span id="j1">클로버</span><br>
-                    <span id="j2">2024.11.05-2025.01.26</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_틱틱붐0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
-                    <span id="j1">틱틱붐</span><br>
-                    <span id="j2">2024.12.17-2025.02.02</span>
-
-                </td>
-                
-                <td>
-
-                    <a href=""><img src="/show/resources/PosterUploadFiles/뮤지컬_서울_오페라0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
-                    <span id="j1">오페라</span><br>
-                    <span id="j2">2024.12.22-2024.12.30</span>
-                </td>        
+               
                 
 
             </tr>
+            
+            
+         
+            
+           
         </table>
 
     </div>
+    
 
     <script>
     
-    
+   /*
     var previousData = $("#mainRank").html();
     
     $("#rank2").click(function(){
@@ -204,7 +175,7 @@
                      
                      
                      str += "<td colspan='9' id='list'"
-                     + "<button id='b1'>"+result[i].regionName+"</button>";
+                     + "<button class='b1'>"+result[i].regionName+"</button>";
                      
                  </td>
 
@@ -214,7 +185,7 @@
                  $("#btnList").append(str);
                  
                  //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                 $("#b1").removeAttr("disabled");
+                 $(".b1").removeAttr("disabled");
                  
                  
              
@@ -233,9 +204,66 @@
     });
     
     
+    */
     
     
-    $("#b2").click(function(){
+    var seoulRegion = $("#mainRank").html();
+
+    $(document).ready(function(){
+        // 페이지 로드 시 바로 데이터를 불러와서 표시
+        mainRankData();
+
+        
+        // #c1 버튼 클릭 시 데이터 로드
+        $(".b1").click(function(){
+        	
+            $(this).prop('disabled', true);  
+            $("#mainRank").empty();
+            loadRankData();  // 데이터를 불러오는 함수 호출
+        });
+    });
+
+    
+    // 데이터를 불러오는 함수
+    function loadRankData() {
+        $.ajax({
+            url: "musicalShow",  // 서버에서 데이터를 가져오는 URL
+            success: function(result){
+                var str = ""; 
+                var str = "";
+                for(var i = 0; i < result.length; i++){
+                    
+                	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                    
+                    str += "<td>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
+                          + "<span id='j1'>" + result[i].showName + "</span><br>"
+                          + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
+                          + "</td>";
+                }
+
+              
+
+                // regionArea에 데이터를 추가
+                $("#mainRank").append(str);
+
+                // 버튼을 다시 활성화
+                $("#list > button").removeAttr("disabled");
+
+            },
+            error:function(){
+                console.log("통신 오류");
+            }
+        });
+    }
+
+    // 페이지 로드 시 데이터를 불러오기
+    function mainRankData() {
+    	loadRankData();  // 페이지 로드 시 데이터를 불러오는 함수 호출
+    }
+
+    
+    $(".b2").click(function(){
     	
     	// 버튼을 클릭했을 때 비활성화
         $(this).prop('disabled', true);
@@ -245,6 +273,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -258,11 +287,11 @@
                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                     
                     str += "<td>"
-                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
-                          + "</td>"
-                          + "<td id='j3'></td>";
+                          + "</td>";
+                          
 
                 }
                   
@@ -270,7 +299,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#b1").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             
@@ -286,32 +315,14 @@
 
     
     
- 	// b1 버튼 클릭 시 이전 데이터로 돌아가기
-    $("#b1").click(function(){
-        $(this).prop('disabled', true);  // 버튼 비활성화
-        
-      
-       
-            $("#mainRank").empty();  // b2를 눌렀을 때에 저장된 데이터 삭제 
-            $("#mainRank").append(previousData);  //맨 처음 데이터를 저장시킨 변수를 불러옴
-       
-        
-            //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
-            $("#b2").removeAttr("disabled");
-            $("#b3").removeAttr("disabled");
-            $("#b4").removeAttr("disabled");
-            $("#b5").removeAttr("disabled");
-            $("#b6").removeAttr("disabled");
-            
-    });
-
+ 	
     
  	
   //기존데이터를 previousData에 담아둔다. 
 		var previousData = $("#mainRank").html();
 
 
-    $("#b3").click(function(){
+    $(".b3").click(function(){
     	
     	// 버튼을 클릭했을 때 비활성화
         $(this).prop('disabled', true);
@@ -321,6 +332,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -334,11 +346,11 @@
                     
                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                     str += "<td>"
-                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
-                          + "</td>"
-                          + "<td id='j3'></td>"
+                          + "</td>";
+                          
 
                 }
                   
@@ -346,12 +358,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#b1").removeAttr("disabled");
-                $("#b2").removeAttr("disabled");
-                $("#b3").removeAttr("disabled");
-                $("#b4").removeAttr("disabled");
-                $("#b5").removeAttr("disabled");
-                $("#b6").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             
@@ -370,7 +377,7 @@
     var previousData = $("#mainRank").html();
     
     
-    $("#b4").click(function(){
+    $(".b4").click(function(){
     	
     	// 버튼을 클릭했을 때 비활성화
         $(this).prop('disabled', true);
@@ -380,6 +387,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -393,11 +401,11 @@
                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                     
                     str += "<td>"
-                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
-                          + "</td>"
-                          + "<td id='j3'></td>"
+                          + "</td>";
+                         
 
                 }
                   
@@ -405,10 +413,7 @@
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#b1").removeAttr("disabled");
-                $("#b2").removeAttr("disabled");
-                $("#b3").removeAttr("disabled");
-                $("#b5").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
                 
@@ -429,7 +434,7 @@
     var previousData = $("#mainRank").html();
     
     
-    $("#b5").click(function(){
+    $(".b5").click(function(){
     	
     	// 버튼을 클릭했을 때 비활성화
         $(this).prop('disabled', true);
@@ -439,6 +444,7 @@
     	
     	//버튼을 누르면 기존에 있던 데이터가 없어지고 필터링된 데이터가 보이게 설정
     	$("#mainRank").empty();
+    	
     	//모든 내용을 비우고 새로운 데이터를 추가하려면 empty()메서드 사용
     	//removeAttr는 HTML 요소의 속성만을 제거하는 메소드
     	
@@ -452,22 +458,18 @@
                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                     
                     str += "<td>"
-                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                    	+ "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><span id='one'>"+(i+1)+"</span><br><br>"
                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
-                          + "</td>"
-                          + "<td id='j3'></td>"
-
+                          + "</td>";
+                         
                 }
                   
                 
                 $("#mainRank").append(str);
                 
                 //b2버튼이 클릭되면 b1 버튼은 다시 활성화 될 수 있게 처리
-                $("#b1").removeAttr("disabled");
-                $("#b2").removeAttr("disabled");
-                $("#b3").removeAttr("disabled");
-                $("#b4").removeAttr("disabled");
+                $("#list > button").removeAttr("disabled");
                 
                 
             

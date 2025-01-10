@@ -19,5 +19,7 @@ public class Notice {
 	private Date createDate; 		// CREATEDATE	DATE
 	private int count;  			// COUNT	NUMBER
 	private String status; 			// STATUS	VARCHAR2(1 BYTE)
+	
+	
 
 }

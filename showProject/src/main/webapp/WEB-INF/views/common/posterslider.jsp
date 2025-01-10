@@ -9,6 +9,9 @@
 
 	 #m1{
 	            width: 90%;
+	            height: 550px;
+	            padding:0;
+	            margin:0;
 	            
 	        }
 	#m2{
@@ -28,20 +31,22 @@
 	
 	.slider__inner {
 	    display: flex;
-	    width: 1500px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
+	    width: 1920px; /* 전체 너비에 맞게 슬라이드 너비 설정 */
 	    transition: transform 0.7s ease-in-out;
-	    height: 600px; /* 슬라이드 높이 고정 */
+	    height: 650px; /* 슬라이드 높이 고정 */
 	}
 	
-	.slider__inner img {
+	 .slider__inner img {
 	    width: 100%; /* 이미지를 슬라이드 영역에 맞게 확대/축소 */
 	    height: 550px; /* 이미지의 높이를 100%로 맞춤 */
-	    /*object-fit: contain; /* 이미지 비율 유지하면서 영역에 맞춤 */
+	    object-fit: cover; /* 이미지 비율 유지하면서 영역에 맞춤 */
 	    z-index: 2;
+	    
+	    
 	}
 
 
-#c1{
+	#c1{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 16px;
         font-weight: 500;
@@ -125,7 +130,7 @@
         position :absolute;
         bottom : 10px;
         filter: drop-shadow(2px 6px 6px #c3c3c3);
-        left : 170px;
+        left : 330px;
         z-index: 2;
        
         
@@ -158,7 +163,7 @@
         #uuu{
             height: 10px;
         }
-        #u1{
+        .u1{
         width: 30px;
         height: 30px;
         position: relative;
@@ -171,7 +176,7 @@
             top: 10px;
             
         }
-        #u3{
+        .u3{
         font-family: "Noto Sans KR", sans-serif;
         font-size: 20px;
         font-weight: 400;
@@ -183,6 +188,10 @@
         
         #mainDiv{
         display: flex; /*div의 table을 2개 사용하면서 나란히 놓고 싶을 때 사용하는 css*/
+        }
+        
+        #ccc{
+       	height : 10px;
         }
     
  
@@ -220,62 +229,81 @@
                    
                 </td>
              </tr>
+             
             </table>    
-                
+                 <!-- 
                 <table id="m2">
 				
 				 <tr id="uu"></tr>
             <tr>
-                <td >
+                <td>
                      <span id="timeOne">실시간 공연 순위<img src="/show/resources/images/images2/ranking.png" alt="" id="u2"></span>
                 </td>
             </tr> 
             <tr id="uuu"></tr>
-            <tr>
-                <td><img src="/show/resources/images/images2/1.png" alt="" id="u1"><a href=""><span id="u3">뉴욕의 거장들</span></a></td>
+            <tr id="uuu"></tr>
+            <tr class="rankShow">
+            
             </tr>
             
-            <tr>
-                <td><img src="/show/resources/images/images2/2.png" alt=""  id="u1"><a href=""><span id="u3">꾳의 비밀</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/3.png" alt=""  id="u1"><a href=""><span id="u3">틱틱붐</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/4.png" alt=""  id="u1"><a href=""><span id="u3">퍼스트 맨</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/5.png" alt=""  id="u1"><a href=""><span id="u3">클로버</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/6.png" alt=""  id="u1"><a href=""><span id="u3">르 스페이스</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/7.png" alt=""  id="u1"><a href=""><span id="u3">글루미 선데이</span></a></td>
-            </tr>
-            
-            <tr>
-                <td><img src="/show/resources/images/images2/8.png" alt=""  id="u1"><a href=""><span id="u3">김연우 콘서트</span></a></td>
-            </tr>
-            
-            
-				
-				
-            
-          
 
         </table>
+        -->
     </div>
+    
+
+
+    <script>
+    /* 
+    var rankShow = $(".rankShow").html();
+     
+      $(document).ready(function(){
+    	 
+    	 rankShowData(); 
+    	 
+    	 //1시간마다 데이터를 자동으로 갱신하기 위함 -- 랭킹 
+    	 setInterval(loadShowData, 120000);
+    	 
+      });
+      
+      function loadShowData(){
+    	  
+    	  $.ajax({
+    		 url: "rankShowList",
+    		 success: function(result) {
+    			 console.log(result);
+    	            var str = "";  
+    	            
+    	            for (var i = 0; i < result.length; i++) {
+    	                str += "<tr>"
+    	                     + "<td><img src='/show/resources/images/images2/" +(i+1) + ".png' alt='' class='u1'>"
+    	                     + "<a href='/show/showInfo/detail?showName="+result[i].showName+"'><span class='u3'>"+ result[i].showName +"</span></a></td>"
+    	                     + "</tr>"
+    	                     + "<tr id='ccc'></tr>";
+    	            }
+    	            // 생성된 HTML을 .rankShow 요소에 삽입
+    	            $(".rankShow").html(str);
+    	        },
+    		 error:function(){
+    			 console.log("통신 오류");
+    		 }
+    	  });
+      }
+      
+     
+      
+      function rankShowData(){
+    	  loadShowData();
+      }
+      
+      
+      
+
     
    
 	    
+    */
     
-     <script>
     $(document).ready(function(){
         $('.slider__inner').slick({
             arrows : false,

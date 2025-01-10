@@ -16,6 +16,7 @@
  		<typeAlias type="com.kh.show.showInfo.model.vo.ManagerShowInfo" alias="ManagerShowInfo"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.ManagerShowInfo2" alias="ManagerShowInfo2"/>
  		<typeAlias type="com.kh.show.showInfo.model.vo.ManagerUpdateShow" alias="ManagerUpdateShow"/>
+ 		<typeAlias type="com.kh.show.showInfo.model.vo.ManagerShowInfo" alias="ShowInfo"/>
 		<typeAlias type="com.kh.show.notice.model.vo.Notice" alias="Notice"/> 		
 		<typeAlias type="com.kh.show.showInfo.model.vo.Region" alias="Region"/>
 		<typeAlias type="com.kh.show.notice.model.vo.OpenNotice" alias="OpenNotice"/> 		

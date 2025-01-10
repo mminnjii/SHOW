@@ -1,5 +1,7 @@
 package com.kh.show.showInfo.model.vo;
 
+import com.kh.show.notice.model.vo.OpenNotice;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,4 +47,7 @@ public class Show {
 	
 	//Hall VO 만들고 mapper에도 추가했음
 	private Hall hall;  // 하나의 Hall 객체만 담도록 수정
+	
+	private OpenNotice openNotice;
+	
 }

@@ -1,6 +1,7 @@
 package com.kh.show.reservation.model.vo;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.show.showInfo.model.vo.Genre;
 import com.kh.show.showInfo.model.vo.Hall;
@@ -36,7 +37,9 @@ public class Reservation {
 	private Date showDate;	// 사용을 위해 추가	
 	private Date createDate;	//	CREATEDATE
 	private String precaution;	//	PRECAUTION
-
+	
+	private List<String> seats; 
+	
 	// mapper에서 collection 이용하기 위해 사용.
 	private ArrayList<Show> showList;
 	private ArrayList<Hall> hallList;

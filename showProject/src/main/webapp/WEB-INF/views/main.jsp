@@ -3,7 +3,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>티켓펄</title>
+<link rel="icon" href="${contextPath }/resources/images/pal.png" type="image/png">
 <!-- slick carousel css 파일 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 

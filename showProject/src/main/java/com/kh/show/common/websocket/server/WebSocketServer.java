@@ -43,7 +43,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 	 * 	  4. 세션 삭제 
 	 * 		 - 해당 채팅방 번호에 해당하는 Set<WebSocketSession> 리스트에서 session 삭제 
 	 * 
-	 * ** Set<WebSocketSession>을 전역 변수로 사용하면 session에 
+	 * ** Set<WebSocketSession>을 전역 변수로 사용하면 소켓 연결이 될 때 마다 초기화되는 것 같음. => 각 메소드에서 선언하는 지역변수로 선언하여 사용. 
 	 * 
 	 * */
 	
@@ -64,7 +64,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 		
 		// websocketSession 속성 추출
 		// HTTP 세션에 저장된 정보를 웹소켓 세션에서 전달하여, 웹 소켓 연결 후에도 해당 세션 정보를 사용하기 위해
-		// 웹소켓은 초기 연결(핸드쉐이크) 시 HTTP를 사용하여 서버와 클라이언트가 연결을 맺습니다.
+		// 웹소켓은 초기 연결(핸드쉐이크) 시 HTTP를 사용하여 서버와 클라이언트 연결
 		// 이때, HTTP 세션에 저장된 정보(예: 로그인한 사용자 정보)를 웹소켓 세션에 전달하여 사용하기 위해 
 		// HttpSessionHandshakeInterceptor 사용 : servlet에 등록 
 		log.debug("WebSocket session : \n{}", session);
@@ -75,8 +75,10 @@ public class WebSocketServer extends TextWebSocketHandler{
 		// 회원의 정보와 입장한 채팅방 번호를 가져온다. 
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		int chatNo = (int)session.getAttributes().get("chatNo");
+		
+		log.debug("chatNo : {}", (int)session.getAttributes().get("chatNo"));
 
-		// 채팅방 번호와 user 세션 정보 저장
+		// 채팅방 번호와 user 세션 정보 map에 저장
 		Set<WebSocketSession> users = new CopyOnWriteArraySet<>();
 		users = chatUser.get(chatNo);
 	
@@ -126,9 +128,8 @@ public class WebSocketServer extends TextWebSocketHandler{
 		joinUser.put("userList", userList);
 		joinUser.put("joinSize", users.size());
 		
-		
+		// 메시지 정보 Json으로 변환해서 전달
 		String responseMsg = new Gson().toJson(joinUser);
-
 		TextMessage tm = new TextMessage(responseMsg);
 		
 		// 채팅방의 모든 사용자에게 메시지 전달. 
@@ -146,12 +147,10 @@ public class WebSocketServer extends TextWebSocketHandler{
 		log.debug("메시지 수신 : {}", message.getPayload());
 		String changeMessage = message.getPayload();
 		
+		// 전달받은 메시지가 없는 경우 공백 처리해서 DB에 저장 
 		if((changeMessage.equals(null)) || (changeMessage.equals(""))) {
 			changeMessage = " ";
 		}
-		
-		System.out.println("changeMessage : " + changeMessage);
-		log.debug("Textmessage : {}", message);
 		
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		int userNo = loginUser.getUserNo();
@@ -164,8 +163,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 									.chatNo(chatNo)
 									.build();
 		
-		System.out.println("cm : " + cm);
-		// 전달받은 메시지를 DB에 저장한다. 
+		// 전달받은 메시지 정보를 DB에 저장한다. 
 		int result = chatService.chatMessage(cm);
 		
 		if(result>0) {

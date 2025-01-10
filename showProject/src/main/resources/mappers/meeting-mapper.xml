@@ -67,7 +67,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM MEETING ME
 		JOIN MEMBER M ON ME.USER_NO = M.USER_NO
 		LEFT JOIN MEETING_JOIN MJ ON(ME.MEETING_NO=MJ.MEETING_NO)
-		WHERE ME.STATUS='Y'
 		GROUP BY 
 		    ME.MEETING_NO, ME.USER_NO, MEETING_TITLE,SHOW_NO,MEETING_PLACE, MEETING_COUNT, 
 		    MEETING_DATE, START_DATE, END_DATE, INFOMATION, ME.STATUS, USER_ID
@@ -231,6 +230,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    AND SHOW_NAME LIKE '%'|| #{keyword} ||'%'
 	</select>
 	
+	<!-- 모집 기간이 지난 경우 status N으로 바꾸는 메소드 -->
+	<update id="updateStatus" parameterType="_int">
+		UPDATE MEETING 
+		SET STATUS = 'N'
+		WHERE MEETING_NO = #{meetingNo}
+	</update>
 	
+	<!-- 소모임 삭제 메소드 -->
+	<delete id="deleteMeeting">
+		DELETE FROM MEETING 
+		WHERE MEETING_NO = #{meetingNo}
+	</delete>
 	
 </mapper>

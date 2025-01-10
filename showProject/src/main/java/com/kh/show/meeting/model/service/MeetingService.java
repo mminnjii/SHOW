@@ -53,4 +53,10 @@ public interface MeetingService {
 	//<!-- 소모임 번호 가져오기 -->
 	int selectMeetingNo();
 
+	// 모집 기간이 지난 경우 status N으로 바꾸는 메소드 
+	int updateStatus(int meetingNo);
+
+	// 소모임 삭제 메소드
+	int deleteMeeting(int meetingNo);
+
 }

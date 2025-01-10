@@ -12,13 +12,17 @@
 <style>
 
 	.info{
-		margin-left: 150px;
+		margin-left: 200px;
 	}
 	
+	.info h2 {
+           font-family: "Noto Sans KR", sans-serif;
+           font-size: 25px;
+	}
 
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공연상세정보</title>
 </head>
 <body>	
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
@@ -27,17 +31,11 @@
 		<div class="info">
 	        <!-- 아래 일반 본문 -->
 	       
-	        <h3>공지사항</h3> <br>
-	        <p> ${s.notice }</p>
+	        <h2>공지사항</h2> <br>
+	        <p style="width: 800px;"> ${s.notice }</p>
 	        <br><br><br>  
-	        <h3>공연상세 / 정보</h3> <br>
-	        <img src="/show/resources/images/011.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/012.jpg">
-         	<br><br> 
-	        <img src="/show/resources/images/013.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/014.jpg">
+	        <h2>공연상세 / 정보</h2> <br>
+	        <img src='/show/resources/DetailUploadFiles/${s.detailChangeName}.jpg' style="width: 1000px;" />
 	        <p style="margin-top: 1000px;"></p>
         </div>
         
@@ -74,9 +72,11 @@
         </div>
         
         <script>
-	        
+
 	        $(function () {
+	        	        
 	            $('#Modal').modal('show');
+	            
 	        });
         
         </script>
