@@ -129,7 +129,7 @@ public class NotiveController {
 		m.addAttribute("map", map);
 		m.addAttribute("noticeType", "general");
 		
-		return "/notice/noticeView";
+		return "/notice/noticeView2";
 	}
 
 	// 오픈공지 검색 목록 
@@ -164,7 +164,7 @@ public class NotiveController {
 		m.addAttribute("map", map);
 		m.addAttribute("noticeType", "open");
 		
-		return "/notice/noticeView";
+		return "/notice/noticeView2";
 	}
 	
 	
