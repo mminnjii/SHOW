@@ -47,6 +47,9 @@ public interface ChatService {
 	// 채팅방에 join되어 있는 회원인지 확인하는 메소드 
 	ChatJoin joinUser(ChatJoin cj);
 
+	// 채팅방 메시지 담은 List 
+	ArrayList<ChatMessage> selectChatList(int chatNo);
+
 
 
 }

@@ -2,7 +2,10 @@ package com.kh.show.showInfo.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -379,7 +382,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion1 = showInfoService.classicRegion1();
 		
-		System.out.println(classicRegion1);
+		//System.out.println(classicRegion1);
 		
 		return classicRegion1;
 		
@@ -391,7 +394,7 @@ public class ShowListController {
 		
 		ArrayList<Show> classicRegion2 = showInfoService.classicRegion2();
 		
-		System.out.println(classicRegion2);
+		//System.out.println(classicRegion2);
 		
 		return classicRegion2;
 		
@@ -541,5 +544,45 @@ public class ShowListController {
 			
 		}
 	
+		@Scheduled
+		@GetMapping(value="rankShowList",produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public ArrayList<Show> rankShowList() {
+			
+			ArrayList<Show> rankShowList = showInfoService.rankShowList();
+			
+			//System.out.println("Rank Show List: " + rankShowList);
+			
+			return rankShowList;
+		}
+		
+		@GetMapping(value="openTicketList",produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public ArrayList<Show> openTicketList(){
+			
+			ArrayList<Show> openTicketList = showInfoService.openTicketList();
+			
+			
+			return openTicketList;
+			
+		}
+	
+		
+		@GetMapping("/open")
+		public String open(HttpSession session,String showName) {
+			//System.out.println(showName);
+			
+			Show s = showInfoService.openSelect(showName);
+			session.setAttribute("s", s);
+			//System.out.println(s);
+			
+			return "notice/ticketOpenPage";
+			
+		}
+		
+		
+		
+		
+		
 
 }

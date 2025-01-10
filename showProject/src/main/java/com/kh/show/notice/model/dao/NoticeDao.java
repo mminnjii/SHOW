@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.notice.model.vo.OpenNotice;
+import com.kh.show.showInfo.model.vo.Show;
 
 @Repository
 public class NoticeDao {
@@ -59,6 +60,21 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.searchNotice", map, rowBounds);
 	}
 
+	// 오픈공지 검색 목록 개수
+	public int searchOpenCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("noticeMapper.searchOpenCount", map);
+	}
+
+	// 오픈공지 검색 목록 정보 메소드 
+	public ArrayList<OpenNotice> searchOpenNotice(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchOpenNotice", map, rowBounds);
+	}
+	
 	// 공지사항 상세보기 
 	public Notice noticeDetail(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
@@ -88,5 +104,22 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectOpenList", null, rowBounds);
 		
 	}
+
+	public OpenNotice openSelect(SqlSessionTemplate sqlSession, String showName) {
+		
+		return sqlSession.selectOne("noticeMapper.openSelect",showName);
+	}
+
+	public int opennoticeUpCount(SqlSessionTemplate sqlSession, int openNo) {
+		return sqlSession.update("noticeMapper.opennoticeUpCount", openNo);
+	}
+
+	// 오픈공지 상세정보 
+	public Show openNoticeSelect(SqlSessionTemplate sqlSession, int openNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("showInfoMapper.openNoticeSelect", openNo);
+	}
+
+	
 
 }

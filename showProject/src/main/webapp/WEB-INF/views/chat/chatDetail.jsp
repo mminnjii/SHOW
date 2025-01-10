@@ -71,8 +71,11 @@
         .info {
             margin-bottom: 15px;
             font-size: 14px;
-            height: 78%;
+            height: 75%;
+            padding-top: 5px;
             overflow-y: scroll;  /* 세로 스크롤바 생성 */
+	        overflow-x: hidden;
+            box-sizing: border-box;
         }
         
         /* 스크롤바 영역에 대한 설정 */
@@ -91,6 +94,24 @@
 		.info::-webkit-scrollbar-track {
 		    background: #e2ecf6;  /*스크롤바 뒷 배경 색상*/
 		}
+		
+		
+        #joinUser::-webkit-scrollbar{
+        	width: 12px;
+        	border-radius: 5px; 
+        }
+        /* 스크롤바 막대 설정 */
+        #joinUser::-webkit-scrollbar-thumb {
+		    height: 30%; /* 스크롤바의 길이 */
+		    background: #597c9b; /* 스크롤바의 색상 */
+		    
+		    border-radius: 10px;
+		}
+        /* 스크롤바 배경 설정 */
+		#joinUser::-webkit-scrollbar-track {
+		    background: #e2ecf6;  /*스크롤바 뒷 배경 색상*/
+		}
+		
 
         .info p {
             border: 1px solid rgb(197,196,170);
@@ -186,9 +207,10 @@
 			overflow-y : scroll;
 			margin: 15px 20px 0px 0px;
 			padding: 5%;
-			height: 520px;
+			height: 500px;
 			border-radius: 8px;
 			border: 1px solid lightgray;
+			box-sizing: border-box;
 		}
 
     </style>
@@ -203,7 +225,9 @@
 	           	<span id="joinCount">채팅방 참여자</span>
 	        </div>
         	<p style="color: gray; font-size: 12px;">&nbsp;&nbsp;(현재 접속한 참여자)</p>
-           	<div id="joinUser"><ul></ul></div>
+           	<div id="joinUser">
+           		<ul></ul>
+           	</div>
         </div>
 
         <div class="contnet">
@@ -223,10 +247,43 @@
             </div>
             <hr>
             <div class="chatArea">
-            	<p style="color: red; font-size: 12px;">* 나가기 버튼을 클릭하시면 채팅방 참여자에서 삭제 됩니다.</p>
+            	<p style="color: red; font-size: 10px; text-align: right;">* 나가기 버튼을 클릭하시면 채팅방 참여자에서 삭제 됩니다. <br>(마이페이지>My서비스>내채팅방 목록 삭제)</p>
                 <div class="info">
                     <!-- 내 메세지인 경우에는 오른쪽에 표시되도록 조건 처리 필요 -->
-					
+					<!-- 기존 채팅 내역 출력 -->
+					<c:if test="${not empty chatMeList}">
+						<c:forEach var="cml" items="${chatMeList}">
+							<c:choose>
+								<c:when test="${loginUser.userNo == cml.userNo}">
+									<div align='right' class='my'>
+										<p>${cml.chatContent}</p>
+									</div>
+								</c:when>
+								<c:otherwise>
+								<c:choose>
+									<c:when test="${empty cml.member.changeName}">
+										<div>
+											<div>
+												<img src="${contextPath}/resources/profile/white.png" id="profile">
+		                        				&nbsp;&nbsp;  ${cml.member.userId}
+		                        			</div>
+		                        			<p>${cml.chatContent}</p>
+		                        		</div>
+									</c:when>
+									<c:otherwise>
+										<div>
+											<div>
+		                        				<img src="${contextPath}/resources/profile/${cml.member.changeName}" id="profile">
+		                        				&nbsp;&nbsp;  ${cml.member.userId}
+		                        			</div>
+		                        			<p>${cml.chatContent}</p>
+				                        </div>
+									</c:otherwise>
+								</c:choose>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:if>
                 </div>
                 <hr>
                 <div class="chat">
@@ -331,13 +388,15 @@
 										
 					var newMessage = "";
 					
-					// 조건 처리 수정 필요 
+					//내가 보낸 채팅 (채팅을 보낸 사람과 로그인한 사람의 아이디가 일치하는 경우) 
 					if(loginUserId == chatUserId){
 						newMessage += "<div align='right' class='my'>"
 									+ "<p>"
 									+ data.cm.chatContent
 									+ "</p></div>";
 					}else{
+						// 상대방이 채팅을 보냈을 때. 
+						// changeName 프로필이 없는 경우 
 						if((changeName == null) || (changeName == "")){
 							newMessage += "<div><div>"
 		                        + '<img src="${contextPath}/resources/profile/white.png" id="profile">'
@@ -346,6 +405,7 @@
 		                        + data.cm.chatContent
 		                        + "</p></div>";
 						}else{
+							// changeName 프로필이 있는 경우
 							newMessage += "<div><div>"
 		                        + '<img src="${contextPath}/resources/profile/'+changeName+'" id="profile">'
 		                        + "&nbsp;&nbsp;&nbsp;" + chatUserId
@@ -353,7 +413,6 @@
 		                        + data.cm.chatContent
 		                        + "</p></div>";
 						}
-						
 
 					}
 					
@@ -414,7 +473,8 @@
 						userNo : ${loginUser.userNo}
 					},
 					success : function(){
-						
+						alert("채팅방 목록에서 삭제됩니다.");
+						location.href='${contextPath}/chat/list';
 					},
 					error : function(){
 						console.log("오류발생")	

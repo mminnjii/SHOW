@@ -117,6 +117,8 @@
 </head>
 <body>
  <br><br><br>
+ 
+ 	
 
     <div class="musicalRanking" >
         <table  class="rankTable">
@@ -133,35 +135,37 @@
             </tr>
             
             
+            
             	
             <tr id="rankArea">
             
 				 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_서울_신카이 마코토 영화음악 콘서트0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
+				 	
+                    <a href="/show/showInfo/detail?showName=신카이 마코토"><img src="/show/resources/PosterUploadFiles/클래식_서울_신카이 마코토 영화음악 콘서트0P.jpg" alt="" id='f1' ><span id="one">1</span></a><br>
                     <span id="j1">신카이 마코토</span><br>
                     <span id="j2">2024.11.03-2024.11.03</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_제주_유키 구라모토 내한 콘서트- 제주0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
+                    <a href="/show/showInfo/detail?showName=유키구라모토 내한 콘서트"><img src="/show/resources/PosterUploadFiles/클래식_제주_유키 구라모토 내한 콘서트- 제주0P.jpg" alt="" id='f1'><span id="one">2</span></a><br>
                     <span id="j1">유키 구라모토 내한 25주년</span><br>
                     <span id="j2">2025.03.08-2025.03.08</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_대구/경북_로열 클래식 발레단 내한공연 0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
+                    <a href="/show/showInfo/detail?showName=로열 클래식 발레단 내한공연"><img src="/show/resources/PosterUploadFiles/클래식_대구/경북_로열 클래식 발레단 내한공연 0P.jpg" alt="" id='f1'><span id="one">3</span></a><br>
                     <span id="j1">호두까기 인형</span><br>
                     <span id="j2">2024.12.28-2024.12.29</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_부산/경남_지브리 하우스 콘서트0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
+                    <a href="/show/showInfo/detail?showName=지브리 하우스 콘서트"><img src="/show/resources/PosterUploadFiles/클래식_부산/경남_지브리 하우스 콘서트0P.jpg" alt="" id='f1'><span id="one">4</span></a><br>
                     <span id="j1">지브리와 사랑에 빠지다</span><br>
                     <span id="j2">2024.05.24-2025.05.24</span>
                 </td>
                 
                 <td>
-                    <a href=""><img src="/show/resources/PosterUploadFiles/클래식_충청/강원_2025 가족뮤지컬 겨울왕국0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
+                    <a href="/show/showInfo/detail?showName=겨울왕국-화성"><img src="/show/resources/PosterUploadFiles/클래식_충청/강원_2025 가족뮤지컬 겨울왕국0P.jpg" alt="" id='f1'><span id="one">5</span></a><br>
                     <span id="j1">2025 가족뮤지컬 겨울이야기</span><br>
                     <span id="j2">2025.03.06-2025.03.07</span>
                 </td>           
@@ -171,12 +175,19 @@
 
     </div>
     <br>
+    
+    			 
+                
+                
+     
 
    <script>
    
+   
+   
    					//기존데이터를 previousData에 담아둔다. 
    					var previousData = $("#rankArea").html();
-   
+   					
   
                     $("#b2").click(function(){
                     	
@@ -201,13 +212,15 @@
                                     
                                 	var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
                                     str += "<td>"
-                                    	  + "<img src='" + imgPath + "' alt='Poster Image' id='f1'/><br><br>"
+                                    	  + "<a href=''><img src='" + imgPath + "' alt='Poster Image' id='f1'/></a><br><br>"
                                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                                           + "</td>"
                                           + "<td id='j3'></td>"
 
                                 }
+                                
+                                
                                   
                                 
                                 $("#rankArea").append(str);
@@ -242,6 +255,12 @@
                             //b1버튼을 눌렀을때 b2버튼은 다시 활성화시키기
                             $("#b2").removeAttr("disabled");
                     });
+                 	
+                 	
+                 	
+                
+                  
+                 
 
 </script>
 

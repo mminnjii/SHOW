@@ -15,34 +15,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
 	
 	@Autowired
 	private ReservationService reservationService;
-//	
-//	@Autowired
-//	private SchedulerTest sc;
-	
 	
 	// 좌석이동
 	@GetMapping("/seats")
 	public String seats(HttpSession session, Model model, Reservation r) {
-		
-		// long start = System.currentTimeMillis();
 		
 		// 회원번호 추출
 		Integer userNo = (Integer) session.getAttribute("userNo");
@@ -78,7 +69,7 @@ public class ReservationController {
 		// status "N"인 좌석 조회
 		ArrayList<String> taken= reservationService.selectTakenSeats(roundId);  
 		if(taken != null) {
-			Gson gson = new Gson();
+			Gson gson = new Gson(); 
 			model.addAttribute("taken",gson.toJson(taken));
 		}else {
 			model.addAttribute("errorMsg","status N인 좌석 조회에 실패했습니다.");
@@ -94,9 +85,6 @@ public class ReservationController {
 			return "common/errorPage";
 		}
 		
-		// long finish = System.currentTimeMillis();
-		
-		// log.debug("걸린 시간 : {} 초",((finish-start)/1000.0));
 		
 		// 좌석 별 가격 조회
 		Object vipPrice= (Object) session.getAttribute("vipPrice");
@@ -123,6 +111,7 @@ public class ReservationController {
 		 for(String name : seatArray) {
 			 
 			Map<String, Object> seats = new HashMap<>();
+			
 			seats.put("name", name);
 			seats.put("roundId", roundId);
 		    int result = reservationService.updateSeatStatus(seats);

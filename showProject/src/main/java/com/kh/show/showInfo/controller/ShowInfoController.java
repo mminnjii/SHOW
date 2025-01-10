@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.show.member.model.service.MemberService;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.service.ShowInfoService;
 import com.kh.show.showInfo.model.vo.Review;
@@ -26,18 +27,26 @@ import com.kh.show.showInfo.model.vo.ShowRound;
 @RequestMapping("/showInfo") 
 public class ShowInfoController {
 	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private ShowInfoService showInfoService;
 	
-	
 	//공연상세이동
 	@GetMapping("/detail")
-	public String detail(HttpSession session) {
+	public String detail(HttpSession session,String showName) {
+		int result = showInfoService.increaseCount(showName);
+		if(result>0) {
 		
 		// 공연정보조회
-		Show s = showInfoService.selectShow();
+		Show s = showInfoService.selectShow(showName);
 		session.setAttribute("s", s);
+		
+		String posterName= s.getPosterChangeName();
+		posterName = posterName.substring(0, posterName.length() - 1) + "D";
+		posterName = posterName.replace("/", "");
+		s.setDetailChangeName(posterName);
 		
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
@@ -48,10 +57,11 @@ public class ShowInfoController {
 		session.setAttribute("rPrice", formatter.format(rPrice));
 		session.setAttribute("sPrice", s.getPrice());
 		session.setAttribute("Price", sPrice);
+
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
-		
+
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
 		session.setAttribute("date", date);
@@ -60,10 +70,16 @@ public class ShowInfoController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser!=null) {
 			session.setAttribute("userNo", loginUser.getUserNo());
+			session.setAttribute("rank", loginUser.getRank());
+			int cno = memberService.couponCount(loginUser.getUserNo());
+			session.setAttribute("cno", cno);
 		}
-	
+
+	}
 		return "show/showInfo/detailInfo";
 	}
+	
+
 	
 	@ResponseBody
 	@GetMapping(value = "selectDate")
@@ -77,37 +93,38 @@ public class ShowInfoController {
 	
 	// 리뷰이동
 	@GetMapping("/review")
-	public String review(HttpSession session, Model model) {
+	public String review(String showName,HttpSession session, Model model) {
 		
 			Show s = (Show)session.getAttribute("s");
 
 		    // 세션에 데이터가 없으면 DB에서 다시 조회
 		    if (s == null) {
-		        s = showInfoService.selectShow();
+		        s = showInfoService.selectShow(showName);
 		        session.setAttribute("s", s); // 다시 세션에 저장
 		    }
 		    model.addAttribute("s", s);
-		
-		
+		   int showNo =  s.getShowNo();
+		   
 		// 리뷰 갯수 세어오기
-		int count =  showInfoService.selectRcount(); 
+		int count =  showInfoService.selectRcount(showNo); 
 		model.addAttribute("count",count);
 		
 		// 리뷰 조회
-	    ArrayList<Review> list  = showInfoService.selectReview();  
+	    ArrayList<Review> list  = showInfoService.selectReview(showNo);  
 	    model.addAttribute("r", list);
-	    	    
 	    
 	    double reviewAvg  = 0;
 	    
 		for(Review r : list ) { 
-			reviewAvg += r.getReviewScore();
 			
+			reviewAvg += r.getReviewScore();
+			// 사용자 아이디 마스킹 처리하기
 			String id = r.getUserId();
 			String maskedBid = id.substring(0, id.length() - 3).replaceAll(".", "*") + id.substring(id.length() - 3);
 			r.setUserId(maskedBid);
 		}
 		
+		// 리뷰평균값 매기기
 		reviewAvg = Math.round((reviewAvg/count) * 10) / 10.0;
 		double avgFloor = Math.floor(reviewAvg);
 		
@@ -127,7 +144,7 @@ public class ShowInfoController {
 		// 검색된 리뷰 갯수 세어오기
 		int count =  showInfoService.searchRcount(keyword); 
 		model.addAttribute("count",count);
-		
+	
 		
 		return "show/showInfo/review";
 	}
@@ -165,12 +182,22 @@ public class ShowInfoController {
 			return "common/searchError";
 			
 		}
+
+		
+		
+		
+		
+
 	}
+	
+	
+	
 	
 	
 	// 리뷰 등록하기 이동
 	@GetMapping("/enroll")
-	public String enroll() {
+	public String enroll(Model model, int showNo) {
+		model.addAttribute("showNo",showNo);
 		return "show/showInfo/reviewEnroll";
 	}
 	
@@ -179,11 +206,8 @@ public class ShowInfoController {
 	@ResponseBody
 	@PostMapping(value = "/enrollReview",produces = "text/html; charset=UTF-8")
 	public String enrollReview(Review r) {
-		
-		r.getUserNo();
 		int enrollReview = showInfoService.enrollReview(r);
 		
-
 		if(enrollReview>0) {
 			return "NNNNY";
 		}else {
@@ -201,9 +225,8 @@ public class ShowInfoController {
 		 
 		 int rank = (int)r.getReviewScore()*20;
 		 model.addAttribute("rank",rank);
-		 
-		
-		return "show/showInfo/reviewUpdate";
+
+		 return "show/showInfo/reviewUpdate";
 	}
 	
 	
@@ -236,6 +259,8 @@ public class ShowInfoController {
 		}
 		
 	}
+	
+	
 	
 	
 }

@@ -3,6 +3,8 @@ package com.kh.show.notice.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.notice.model.service.NoticeService;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.notice.model.vo.OpenNotice;
+import com.kh.show.showInfo.model.service.ShowInfoService;
+import com.kh.show.showInfo.model.vo.Show;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,8 +32,14 @@ public class NotiveController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Autowired
+	private ShowInfoService showInfoService;
+	
 	@GetMapping("/list")
-	public String noticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage, Model m) {
+	public String noticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage, Model m
+											,@RequestParam(value = "noticeType", defaultValue = "general") String noticeType) {
+		
+		System.out.println(noticeType);
 		
 		// 페이징 처리 
 		int listCount = noticeService.listCount(); // 공지사항 개수 count 
@@ -40,15 +49,34 @@ public class NotiveController {
 		// 페이징 처리를 위한 요소 가지고 오기 
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		// 리스트 조회하기 (defalt 일반 공지)
-		ArrayList<Notice> noticeList = noticeService.selectList(pi);
+		if(noticeType.equals("general")) {
+			// 리스트 조회하기 (defalt 일반 공지)
+			ArrayList<Notice> noticeList = noticeService.selectList(pi);
+			m.addAttribute("noticeList", noticeList);
 		
-		m.addAttribute("noticeList", noticeList);
+		}else if (noticeType.equals("open")){
+			listCount = noticeService.openlistCount(); // 공지사항 개수 count 
+			pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+			// 리스트 조회하기 (defalt 일반 공지)
+			ArrayList<OpenNotice> openNoticeList = noticeService.selectOpenList(pi);
+			
+			// 문자열 \n 줄바꿈 html 줄바꿈 태그로 변경
+			for(OpenNotice on : openNoticeList) {
+				String openExplain = on.getOpenExplain();
+				openExplain = openExplain.replace("\n", "<br>");
+				on.setOpenExplain(openExplain);
+			}
+			
+			m.addAttribute("openNoticeList", openNoticeList);
+		}
+		
 		m.addAttribute("pi", pi);
+		m.addAttribute("noticeType", noticeType);
 		
-		return "/notice/noticeView";
+		return "/notice/noticeView2";
 	}
 	
+	// 일반공지 버튼 재 클릭시 
 	// 데이터 그대로 전달 
 	@ResponseBody
 	@PostMapping(value="/list", produces = "application/json; charset=UTF-8")
@@ -74,29 +102,54 @@ public class NotiveController {
 	public String searchNotice(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 														,String condition
 														,String keyword
-														,Model m){
+														,Model m
+														,String noticeType){
 		
+		System.out.println(noticeType);
+
 		// 하나에 묶어서 전달해야 하기 때문에 전달받은 검색 조건을 맵에 담아 전달 
 		HashMap<String,String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-
-		// 검색 목록 개수 - 검색 키워드에 따라 검색해야 한다.
-		int searchCount = noticeService.searchCount(map);
 		
+		int searchCount = noticeService.searchCount(map);
 		int pageLimit = 10;
 		int boardLimit = 10;
-		
+
 		// 페이징 처리를 위한 검색 목록 개수 
 		PageInfo pi = Pagenation.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
-		// 검색 목록
-		ArrayList<Notice> noticeList = noticeService.searchNotice(map, pi);
+
+		if(noticeType.equals("general")) {
+			// 검색 목록
+			ArrayList<Notice> noticeList = noticeService.searchNotice(map, pi);
+			
+			for(Notice c : noticeList) {
+				System.out.println(c);
+			}
+			
+			m.addAttribute("noticeList",noticeList);
+			
+		}else if (noticeType.equals("open")){
+			searchCount = noticeService.searchOpenCount(map);
+			
+			pi = Pagenation.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
+			// 검색 목록
+			ArrayList<OpenNotice> openNoticeList = noticeService.searchOpenNotice(map, pi);
+			
+			for(OpenNotice c : openNoticeList) {
+				System.out.println(c);
+			}
+			
+			m.addAttribute("openNoticeList",openNoticeList);
+			
+		}
+
 		
-		m.addAttribute("noticeList",noticeList);
 		m.addAttribute("pi", pi);
 		m.addAttribute("map", map);
+		m.addAttribute("noticeType", noticeType);
 		
-		return "/notice/noticeView";
+		return "/notice/noticeView2";
 	}
 
 	
@@ -125,32 +178,23 @@ public class NotiveController {
 		return noticeDetail; 
 	}
 		
-	
-	// 오픈공지 목록 
-	// 데이터 그대로 전달 
 	@ResponseBody
-	@PostMapping(value="/openlist", produces = "application/json; charset=UTF-8")
-	public ArrayList<OpenNotice> openNoticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage){
+	@PostMapping("/open")
+	public Show open(HttpSession session,String showName, int openNo) {
 		
-		// 페이징 처리 
-		int listCount = noticeService.openlistCount(); // 공지사항 개수 count 
-		int pageLimit = 10;  	// 페이징바 최대 개수 
-		int boardLimit = 10; 	// 한 페이지에 보여질 게시글 개수
+		System.out.println(openNo);
+		int result = noticeService.opennoticeUpCount(openNo);
+
+		Show s = null;
 		
-		// 페이징 처리를 위한 요소 가지고 오기 
-		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		// 리스트 조회하기 (defalt 일반 공지)
-		ArrayList<OpenNotice> noticeList = noticeService.selectOpenList(pi);
-		
-		// 문자열 \n 줄바꿈 html 줄바꿈 태그로 변경
-		for(OpenNotice on : noticeList) {
-			String openExplain = on.getOpenExplain();
-			openExplain = openExplain.replace("\n", "<br>");
-			on.setOpenExplain(openExplain);
+		if(result>0) {
+			s = noticeService.openNoticeSelect(openNo);
+			session.setAttribute("s", s);
+			System.out.println(s);
 		}
 		
-		return noticeList;
+		return s;
+		
 	}
 	
 	

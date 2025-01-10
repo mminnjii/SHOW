@@ -24,8 +24,8 @@ public class ShowInfoDao {
 	
 	
 	// 공연상세정보조회
-	public Show selectShow(SqlSession session) {
-		Show s = session.selectOne("showInfoMapper.selectShow");
+	public Show selectShow(SqlSession session,String showName) {
+		Show s = session.selectOne("showInfoMapper.selectShow",showName);
 		return s;
 	}
 
@@ -387,13 +387,13 @@ public class ShowInfoDao {
 	}
 	
 	// 리뷰조회
-	public ArrayList<Review> selectReview(SqlSession session) {
-		ArrayList<Review> list = (ArrayList)session.selectList("showInfoMapper.selectReview");
+	public ArrayList<Review> selectReview(SqlSession session, int showNo) {
+		ArrayList<Review> list = (ArrayList)session.selectList("showInfoMapper.selectReview",showNo);
 		return list;
 	}
 
-	public int selectRcount(SqlSession session) {
-		return session.selectOne("showInfoMapper.selectRcount");
+	public int selectRcount(SqlSession session, int showNo) {
+		return session.selectOne("showInfoMapper.selectRcount",showNo);
 	}
 
 	public ArrayList<Review> reviewSearch(SqlSession session, String keyword) {
@@ -408,9 +408,37 @@ public class ShowInfoDao {
 
 
 
+
+	public int increaseCount(SqlSessionTemplate sqlSession, String showName) {
+		
+		
+		return sqlSession.update("showInfoMapper.increaseCount",showName);
+	}
+
+
+
+
+	public Show selectShowInfo(SqlSessionTemplate sqlSession, int sno) {
+
+		return sqlSession.selectOne("showInfoMapper.selectShowInfo",sno);
+	}
+
+
+
+
+	public ArrayList<Show> rankShowList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("showInfoMapper.rankShowList");
+	}
+
+
+
+
+
 	public int enrollReview(SqlSession session, Review r) {
 		return session.insert("showInfoMapper.enrollReview",r);
 	}
+
 
 
 
@@ -431,6 +459,29 @@ public class ShowInfoDao {
 
 	public int deleteReview(SqlSession session, int replyNo) {
 		return session.update("showInfoMapper.deleteReview",replyNo);
+	}
+
+
+
+
+
+	public Show selectWithName(SqlSession session, String name) {
+		return session.selectOne("showInfoMapper.selectWithName",name);
+	}
+		
+
+	public Show openSelect(SqlSessionTemplate sqlSession, String showName) {
+		
+		return sqlSession.selectOne("showInfoMapper.openSelect",showName);
+	}
+
+
+
+
+	public ArrayList<Show> openTicketList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("showInfoMapper.openTicketList");
+
 	}
 
 }
