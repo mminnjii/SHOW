@@ -21,14 +21,14 @@ public class ShowInfoServiceImpl implements ShowInfoService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-@Override
-public ArrayList<Show> musicalShow() {
-	
-	ArrayList<Show> musicalShowList = showInfoDao.musicalShow(sqlSession);
-	
-	
-	return musicalShowList;
-}
+	@Override
+	public ArrayList<Show> musicalShow() {
+		
+		ArrayList<Show> musicalShowList = showInfoDao.musicalShow(sqlSession);
+		
+		
+		return musicalShowList;
+	}
 
 	
 	@Override
@@ -85,7 +85,7 @@ public ArrayList<Show> musicalShow() {
 		return showInfoDao.searchRcount(sqlSession,keyword);
 	}
 
-
+	@Override
 	public ArrayList<Show> musicalRegion() {
 		
 		ArrayList<Show> musicalRegionList = showInfoDao.musicalRegionList(sqlSession);
@@ -479,9 +479,6 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
-
-
-
 	public int enrollReview(Review r) {
 		return showInfoDao.enrollReview(sqlSession,r);
 	}
@@ -505,14 +502,15 @@ public ArrayList<Show> musicalShow() {
 	}
 
 
+
 	@Override
- 
 	public Show selectWithName(String name) {
 		return showInfoDao.selectWithName(sqlSession,name);
 	}
 
 
 
+	@Override
 	public Show openSelect(String showName) {
 
 		return showInfoDao.openSelect(sqlSession,showName);

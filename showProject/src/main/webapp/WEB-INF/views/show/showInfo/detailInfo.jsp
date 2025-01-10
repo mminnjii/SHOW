@@ -22,7 +22,7 @@
 
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공연상세정보</title>
 </head>
 <body>	
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
@@ -72,15 +72,9 @@
         </div>
         
         <script>
-	        
-          // var detail = ${s.detailChangeName}
-          // var showName = ${s.showName}
-        
+
 	        $(function () {
-	        	
-	        	// console.log(detail);
-	        	// console.log(showName);
-	        
+	        	        
 	            $('#Modal').modal('show');
 	            
 	        });
