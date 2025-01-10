@@ -210,7 +210,7 @@
 			</div>
 
 			<div class="oneQ">
-				<a href="${contextPath}/member/qna?userNo=${loginUser.userNo}">
+				<a href="${contextPath}/member/qna?userNo=${loginUser.userNo}" class="link">
 					<i class="fa-solid fa-magnifying-glass"></i> 내 문의 내역 보기
 					<p>문의한 내용을 확인해보세요</p>
 				</a>
