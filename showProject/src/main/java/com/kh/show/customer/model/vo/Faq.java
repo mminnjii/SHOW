@@ -16,6 +16,7 @@ public class Faq {
 	private String faqTitle; 		//FAQ_TITLE	VARCHAR2(500 BYTE)
 	private String faqContent; 		//FAQ_CONTENT	VARCHAR2(2000 BYTE)
 	private String qcategoryNo;	 	//QCATEGORY_NO	VARCHAR2(100 BYTE)
+	private String qcategoryName;
 	private int count;
 	
 }

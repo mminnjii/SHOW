@@ -36,6 +36,9 @@ public class Show {
 	private String detailOriginName;	//	DETAILORIGINNAME VARCHAR2(1000 BYTE)
 	private String detailChangeName;	//	DETAILCHANGENAME VARCHAR2(1000 BYTE)
 	private int count;					//	COUNT			 NUMBER
+	
+	private String posterPath;
+	private String detailPath;
 
 	private Genre genre;
 	

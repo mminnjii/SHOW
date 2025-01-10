@@ -7,11 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
+import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo2;
+import com.kh.show.showInfo.model.vo.ManagerUpdateShow;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Repository
@@ -59,13 +63,13 @@ public class ManagerDao {
 	}
 	
 //	공연 불러오기
-	public List<Show> selectAllShow(SqlSessionTemplate sqlSession) {
+	public List<ManagerShowInfo> selectAllShow(SqlSessionTemplate sqlSession) {
 
 		return sqlSession.selectList("managerMapper.selectAllShow");
 	}
 	
 	public List<ManagerQuestion> selectAllQuestion(SqlSessionTemplate sqlSession) {
-		
+
 		return sqlSession.selectList("managerMapper.selectAllQuestion");
 	}
 	
@@ -89,7 +93,7 @@ public class ManagerDao {
 		return sqlSession.selectOne("managerMapper.faqDetail", faqNo);
 	}
 
-	public Show showDetail(SqlSessionTemplate sqlSession, int showNo) {
+	public ManagerShowInfo2 showDetail(SqlSessionTemplate sqlSession, int showNo) {
 
 		return sqlSession.selectOne("managerMapper.showDetail", showNo);
 	}
@@ -99,12 +103,48 @@ public class ManagerDao {
 		return sqlSession.selectOne("managerMapper.reservDetail", reservNo);
 	}
 
-	
+	public ManagerQuestion2 questionDetail(SqlSessionTemplate sqlSession, int qNo) {
+		
+		return sqlSession.selectOne("managerMapper.questionDetail", qNo);
+	}
 
-	
+	public Notice beforeNoticeUpdate(SqlSessionTemplate sqlSession, int noticeNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeNoticeUpdate", noticeNo);
+	}
 
-	
+	public int afterNoticeUpdate(SqlSessionTemplate sqlSession, Notice notice) {
+		
+		return sqlSession.update("managerMapper.afterNoticeUpdate", notice);
+	}
 
-	
-	
+	public Faq beforeFaqUpdate(SqlSessionTemplate sqlSession, int faqNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeFaqUpdate", faqNo);
+	}
+
+	public int afterFaqUpdate(SqlSessionTemplate sqlSession, Faq faq) {
+
+		return sqlSession.update("managerMapper.afterFaqUpdate", faq);
+	}
+
+	public Member beforeUserUpdate(SqlSessionTemplate sqlSession, int userNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeUserUpdate", userNo);
+	}
+
+	public int afterUserUpdate(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("managerMapper.afterUserUpdate", m);
+	}
+
+	public ManagerUpdateShow beforeShowUpdate(SqlSessionTemplate sqlSession, int showNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeShowUpdate", showNo);
+	}
+
+	public int afterShowUpdate(SqlSessionTemplate sqlSession, Show show) {
+		
+		return sqlSession.update("managerMapper.afterShowUpdate", show);
+	}
 }
