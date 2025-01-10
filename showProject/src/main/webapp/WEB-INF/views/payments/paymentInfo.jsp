@@ -141,14 +141,15 @@
 		     					<td>${methodToget }</td>
 		     				</tr>
 		     			</c:if >	
-		     			<c:if test="${not empty t }" >	
+		     			<c:if test="${not empty t }" >
 		     				<tr>
 		     					<td><h4>매수 :</h4></td>
 		     					<td>${t.size() }</td>
 		     				</tr>
 			     				<tr>
 			     					<td><h4>좌석번호(좌석명) :</h4></td>
-			     			<c:forEach items="${t }" var="t">		
+			     			<c:forEach items="${t }" var="t">
+			     					<input type="hidden" name="seatId" value="${t.seatId }"></input>		
 			     					<td>${t.seatId }(${t.seatName }석)</td>
 			     			</c:forEach>
 			     				</tr>
@@ -168,6 +169,35 @@
 				
 			}); 
 			
+			
+			$(function(){
+				 var seats = [];
+				 
+				$('input[name="seatId"]').each(function() {
+					 seats.push($(this).val());
+			    });
+				
+				var roundId = ${rInfo.roundId}
+				var reservationId = ${rInfo.reservationId}
+	           
+				$.ajax({
+	                url: '/show/payments/statusY', 
+	                type: 'POST',           
+	                data: {
+	                	seats : seats,
+	                	roundId : roundId,
+	                	reservationId : reservationId
+	                }, 
+	                success: function(response) {
+	                    console.log('서버 응답:', response);
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error('에러 발생:', error);
+	                }
+	            });
+				
+			});
+
 		</script>
 		<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

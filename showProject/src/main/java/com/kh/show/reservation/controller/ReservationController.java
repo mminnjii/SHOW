@@ -15,11 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.kh.show.member.model.vo.Member;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.SeatsOfRow;
@@ -33,10 +31,6 @@ public class ReservationController {
 	
 	@Autowired
 	private ReservationService reservationService;
-//	
-//	@Autowired
-//	private SchedulerTest sc;
-	
 	
 	// 좌석이동
 	@GetMapping("/seats")
@@ -94,9 +88,6 @@ public class ReservationController {
 			return "common/errorPage";
 		}
 		
-		// long finish = System.currentTimeMillis();
-		
-		// log.debug("걸린 시간 : {} 초",((finish-start)/1000.0));
 		
 		// 좌석 별 가격 조회
 		Object vipPrice= (Object) session.getAttribute("vipPrice");
