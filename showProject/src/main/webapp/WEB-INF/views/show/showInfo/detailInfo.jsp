@@ -12,9 +12,13 @@
 <style>
 
 	.info{
-		margin-left: 150px;
+		margin-left: 200px;
 	}
 	
+	.info h2 {
+           font-family: "Noto Sans KR", sans-serif;
+           font-size: 25px;
+	}
 
 </style>
 <meta charset="UTF-8">
@@ -27,11 +31,11 @@
 		<div class="info">
 	        <!-- 아래 일반 본문 -->
 	       
-	        <h3>공지사항</h3> <br>
-	        <p> ${s.notice }</p>
+	        <h2>공지사항</h2> <br>
+	        <p style="width: 800px;"> ${s.notice }</p>
 	        <br><br><br>  
-	        <h3>공연상세 / 정보</h3> <br>
-	        <img src='/show/resources/DetailUploadFiles/${s.detailChangeName}.jpg' />
+	        <h2>공연상세 / 정보</h2> <br>
+	        <img src='/show/resources/DetailUploadFiles/${s.detailChangeName}.jpg' style="width: 1000px;" />
 	        <p style="margin-top: 1000px;"></p>
         </div>
         
@@ -69,11 +73,13 @@
         
         <script>
 	        
-          var detail = ${s.detailChangeName}
+          // var detail = ${s.detailChangeName}
+          // var showName = ${s.showName}
         
 	        $(function () {
 	        	
-	        	console.log(detail);
+	        	// console.log(detail);
+	        	// console.log(showName);
 	        
 	            $('#Modal').modal('show');
 	            

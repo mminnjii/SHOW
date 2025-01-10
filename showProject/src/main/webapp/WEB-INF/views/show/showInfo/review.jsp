@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 	<style>
 		.review{
-			margin-left: 150px;
+			margin-left: 200px;
 		}
 		.box{
 			display: inline-block; 
@@ -20,7 +20,6 @@
 		pre {
             font-family: "Noto Sans KR", sans-serif;
             font-size: 15px;
-            font-weight: 400;
             font-style: normal;
             margin-left: -100px; /* 요소를 왼쪽으로 이동 */
             margin-top: -50px;

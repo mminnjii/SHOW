@@ -13,7 +13,7 @@ import com.kh.show.showInfo.model.vo.Show;
 import com.kh.show.showInfo.model.vo.ShowRound;
 
 @Service
-public class ShowInfoImpl implements ShowInfoService {
+public class ShowInfoServiceImpl implements ShowInfoService {
 
 	@Autowired
 	private ShowInfoDao showInfoDao;

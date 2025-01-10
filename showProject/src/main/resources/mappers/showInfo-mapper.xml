@@ -816,9 +816,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE SHOWROUND
 		SET STATUS = 'N'
 		WHERE HALL_NO IN (
-		SELECT HALL_NO
-		FROM HALL
-		WHERE TOTAL_SEAT = 0)
+				  SELECT HALL_NO
+				  FROM HALL
+				  WHERE TOTAL_SEAT = 0)
 	</update>
 
 
@@ -860,7 +860,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 조회 -->
 	<select id="selectReview" resultMap="reviewResultSet">
 		SELECT REVIEW_ID,
-		USER_ID USER_NO,
+		USER_ID, 
+		USER_NO,
 		REVIEW_SCORE,
 		REVIEW_TITLE,
 		REVIEW_CONTENT,
@@ -945,18 +946,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, CREATE_DATE = SYSDATE
 		WHERE REVIEW_ID = #{reviewId}
 	</update>
-	
-	
+
 	<!-- 리뷰 삭제 -->
-
-
-
 	  <update id="deleteReview" parameterType="_int">
 	  	UPDATE REVIEW
 		SET STATUS = 'N'
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
 	  
+
                       
 	  <!-- 쇼이름으로 상세검색 -->
 <!-- 	  <select id="selectWithName" resultMap="showResultSet">
@@ -966,7 +964,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  </select>
 	   -->
  
-
 
 
 </mapper>

@@ -81,7 +81,12 @@
 	  </context:component-scan>
 	 
 	 
-	 
+	 	<!-- 스케줄러 사용하기 위한 task 어노테이션 활성화 
+	 		 @Scheduled 어노테이션 활성화
+	 	-->
+	 	<task:annotation-driven scheduler="taskScheduler"/>
+	 	<!-- 해당 @Scheduler 어노테이션 활성화 하여 사용할 스케줄러 등록 -->
+		<task:scheduler id="taskScheduler" pool-size="10"/>
 	
 	 
 </beans>
