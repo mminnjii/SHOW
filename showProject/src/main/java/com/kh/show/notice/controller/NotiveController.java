@@ -46,10 +46,12 @@ public class NotiveController {
 		
 		m.addAttribute("noticeList", noticeList);
 		m.addAttribute("pi", pi);
+		m.addAttribute("noticeType", "general");
 		
 		return "/notice/noticeView";
 	}
 	
+	// 일반공지 버튼 재 클릭시 
 	// 데이터 그대로 전달 
 	@ResponseBody
 	@PostMapping(value="/list", produces = "application/json; charset=UTF-8")
@@ -100,6 +102,7 @@ public class NotiveController {
 		m.addAttribute("noticeList",noticeList);
 		m.addAttribute("pi", pi);
 		m.addAttribute("map", map);
+		m.addAttribute("noticeType", "general");
 		
 		return "/notice/noticeView";
 	}
@@ -134,6 +137,7 @@ public class NotiveController {
 		m.addAttribute("openNoticeList",openNoticeList);
 		m.addAttribute("pi", pi);
 		m.addAttribute("map", map);
+		m.addAttribute("noticeType", "open");
 		
 		return "/notice/noticeView";
 	}
@@ -169,7 +173,7 @@ public class NotiveController {
 	// 데이터 그대로 전달 
 	@ResponseBody
 	@PostMapping(value="/openlist", produces = "application/json; charset=UTF-8")
-	public ArrayList<OpenNotice> openNoticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage){
+	public ArrayList<OpenNotice> openNoticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage, Model m){
 		
 		// 페이징 처리 
 		int listCount = noticeService.openlistCount(); // 공지사항 개수 count 
@@ -189,6 +193,8 @@ public class NotiveController {
 			on.setOpenExplain(openExplain);
 		}
 		
+		m.addAttribute("noticeType", "open");
+		
 		return noticeList;
 	}
 	
@@ -199,7 +205,7 @@ public class NotiveController {
 		Notice s = noticeService.openSelect(showName);
 		session.setAttribute("s", s);
 		//System.out.println(s);
-		
+
 		return "notice/ticketOpenPage";
 		
 	}
