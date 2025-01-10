@@ -134,8 +134,7 @@
 	       
 	       <br>
 	
-			<!-- 일반공지, 오픈공지별 검색 기능 구현되어야 한다. 
-				 일반공지, 오픈공지 검색 url 변경 필요. => function 함수로 action값 변경?? -->
+			<!-- 일반공지, 오픈공지별 검색 기능 구현 -->
 	       <form id="searchForm" action="${contextPath}/notice/search" method="get">
 	       
 	           <div class="select">
@@ -212,65 +211,123 @@
             	</c:choose>
             </tbody>
         </table>
-        </div>
+        
         
         <br>
         
-        <!-- 페이지네이션 -->
+        <!-- 페이지네이션 --><%-- 일반공지 페이징처리 --%>
         <div id="pagingArea">
         	<!-- 이전/다음 버튼 : 현재 페이지에 따라 만든다. 시작일때는 없음. 마지막페이지일때는 다음버튼 없음 (=> 비활성화 하는 것으로 수정?) 
         		 페이지 버튼 
         		 클릭 했을 때 현재 페이지 버튼은 비활성화 한다.
         	-->
-        	<c:choose> <%-- 이전버튼 --%>
-        		<c:when test="${pi.currentPage == 1}">
-	        		<button class="pageBtn" disabled>이전</button>
-        		</c:when>
-	        	<c:otherwise>
-	        		<button class="pageBtn" onclick="location.href=location.href='${contextPath}/notice/list?currentPage=${pi.currentPage - 1}'">이전</button>
-	        	</c:otherwise>
-        	</c:choose>
-			
-			<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-				<c:choose>
-					<c:when test="${empty map}"><%-- 검색이 아니면 --%>
-						<c:choose>
-							<c:when test="${i != pi.currentPage}">
-								<button class="pageBtn" onclick="location.href='${contextPath}/notice/list?currentPage=${i}'">${i}</button>
-							</c:when>
-							<c:otherwise>
-								<button class="pageBtn" disabled>${i}</button>
-							</c:otherwise>
-						</c:choose>
-					</c:when>
+        	<c:choose>
+        		<c:when test="${not empty noticeList}">
+        			<c:choose> <%-- 이전버튼 --%>
+		        		<c:when test="${pi.currentPage == 1}">
+			        		<button class="pageBtn" disabled>이전</button>
+		        		</c:when>
+			        	<c:otherwise>
+			        		<button class="pageBtn" onclick="location.href=location.href='${contextPath}/notice/list?currentPage=${pi.currentPage - 1}'">이전</button>
+			        	</c:otherwise>
+		        	</c:choose>
 					
-					<c:otherwise> <%--검색이라면 --%>
-						<c:url var="searchUrl" value="/notice/search">
-							<c:param name="currentPage" value="${i}"/>
-							<c:param name="condition" value="${map.condition}"/>
-							<c:param name="keyword" value="${map.keyword}"/>
-						</c:url>
+					<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
 						<c:choose>
-							<c:when test="${i != pi.currentPage}">
-								<button class="pageBtn" onclick="location.href='${searchUrl}'">${i}</button>
+							<c:when test="${empty map}"><%-- 검색이 아니면 --%>
+								<c:choose>
+									<c:when test="${i != pi.currentPage}">
+										<button class="pageBtn" onclick="location.href='${contextPath}/notice/list?currentPage=${i}'">${i}</button>
+									</c:when>
+									<c:otherwise>
+										<button class="pageBtn" disabled>${i}</button>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
-							<c:otherwise>
-								<button class="pageBtn" disabled>${i}</button>
+							
+							<c:otherwise> <%--검색이라면 --%>
+								<c:url var="searchUrl" value="/notice/search">
+									<c:param name="currentPage" value="${i}"/>
+									<c:param name="condition" value="${map.condition}"/>
+									<c:param name="keyword" value="${map.keyword}"/>
+								</c:url>
+								<c:choose>
+									<c:when test="${i != pi.currentPage}">
+										<button class="pageBtn" onclick="location.href='${searchUrl}'">${i}</button>
+									</c:when>
+									<c:otherwise>
+										<button class="pageBtn" disabled>${i}</button>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
 						</c:choose>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		        	
-		    <c:choose> <%-- 다음버튼 --%>
-        		<c:when test="${pi.currentPage == pi.maxPage}">
-	        		<button class="pageBtn" disabled>다음</button>
+					</c:forEach>
+				        	
+				    <c:choose> <%-- 다음버튼 --%>
+		        		<c:when test="${pi.currentPage == pi.maxPage}">
+			        		<button class="pageBtn" disabled>다음</button>
+		        		</c:when>
+			        	<c:otherwise>
+			        		<button class="pageBtn" onclick="location.href='${contextPath}/notice/list?currentPage=${pi.currentPage + 1}'">다음</button>
+			        	</c:otherwise>
+		        	</c:choose>
         		</c:when>
-	        	<c:otherwise>
-	        		<button class="pageBtn" onclick="location.href='${contextPath}/notice/list?currentPage=${pi.currentPage + 1}'">다음</button>
-	        	</c:otherwise>
+        		
+        		<%-- 오픈공지 페이징처리 --%>
+        		<c:when test="${(noticeType == 'open') or (not empty openNoticeList)}"> 
+        			<c:choose> <%-- 이전버튼 --%>
+		        		<c:when test="${pi.currentPage == 1}">
+			        		<button class="pageBtn" disabled>이전</button>
+		        		</c:when>
+			        	<c:otherwise>
+			        		<button class="pageBtn" onclick="location.href=location.href='${contextPath}/notice/openlist?currentPage=${pi.currentPage - 1}'">이전</button>
+			        	</c:otherwise>
+		        	</c:choose>
+					
+					<c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+						<c:choose>
+							<c:when test="${empty map}"><%-- 검색이 아니면 --%>
+								<c:choose>
+									<c:when test="${i != pi.currentPage}">
+										<button class="pageBtn" onclick="location.href='${contextPath}/notice/openlist?currentPage=${i}'">${i}</button>
+									</c:when>
+									<c:otherwise>
+										<button class="pageBtn" disabled>${i}</button>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							
+							<c:otherwise> <%--검색이라면 --%>
+								<c:url var="searchUrl" value="/notice/openSearch">
+									<c:param name="currentPage" value="${i}"/>
+									<c:param name="condition" value="${map.condition}"/>
+									<c:param name="keyword" value="${map.keyword}"/>
+								</c:url>
+								<c:choose>
+									<c:when test="${i != pi.currentPage}">
+										<button class="pageBtn" onclick="location.href='${searchUrl}'">${i}</button>
+									</c:when>
+									<c:otherwise>
+										<button class="pageBtn" disabled>${i}</button>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				        	
+				    <c:choose> <%-- 다음버튼 --%>
+		        		<c:when test="${pi.currentPage == pi.maxPage}">
+			        		<button class="pageBtn" disabled>다음</button>
+		        		</c:when>
+			        	<c:otherwise>
+			        		<button class="pageBtn" onclick="location.href='${contextPath}/notice/openlist?currentPage=${pi.currentPage + 1}'">다음</button>
+			        	</c:otherwise>
+		        	</c:choose>
+        		</c:when>
         	</c:choose>
         	
+        	
+        	</div>
         </div>
        
         </div>
@@ -279,6 +336,7 @@
         	
         	// 리스트를 불러올 때 noticeType을 같이 전달하여 버튼 선택될 수 있도록 한다. 
         	// 검색시 새로고침(재랜더링) 되기 때문에 어떤 form을 보여주고 가려야 되는지도 처리해야 한다.
+        	// noticeType에 따라 검색 form 보여주기 
         	var noticeType = "general";
         	noticeType2 = "${noticeType}";
 
@@ -320,9 +378,9 @@
 	                		var nStr = "";
 	                		
 	                		nStr += '<div class="divClass title">'+ noticeDetail.noticeTitle + "</div>"
-	                			 + '<div class="divClass dateCount">' + noticeDetail.createDate
-	                			 + " | "
-	                			 + noticeDetail.count + "</div>"
+	                			 + '<div class="divClass dateCount">등록일 : ' + noticeDetail.createDate
+	                			 + " | 조회수 :"
+	                			 +  noticeDetail.count + "</div>"
 	                			 + '<div class="divClass">'+noticeDetail.noticeContent + "</div>"
 	                			 + '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button>';
 	
@@ -336,8 +394,10 @@
 					
 			        // 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
 					var showName = $(this).children().eq(1).text();
+					var openNo = $(this).children().eq(0).text();
 	            	console.log(showName);
-	            	location.href = "/show/open?showName="+showName;
+	            	console.log(openNo);
+	            	location.href = "/show/open?showName="+showName+"&openNo="+openNo;
 				}
 				
 
@@ -398,17 +458,17 @@
 				$.ajax({
 					url: "openlist",
 					type: "post",
-					success : function(noticeList){
+					success : function(openNoticeList){
 						
 						var str = "";
-						if(noticeList != null){
-							for(var i=0; i<noticeList.length; i++){
+						if(openNoticeList != null){
+							for(var i=0; i<openNoticeList.length; i++){
 								
 							    str += "<tr>"
-							        + "<td>"+ noticeList[i].openNo +"</td>"
-							        + "<td style='text-align: left;'>"+ noticeList[i].showName +"</td>"
-							        + "<td>"+ noticeList[i].createDate +"</td>"
-							        + "<td>"+ noticeList[i].count +"</td>"
+							        + "<td>"+ openNoticeList[i].openNo +"</td>"
+							        + "<td style='text-align: left;'>"+ openNoticeList[i].showName +"</td>"
+							        + "<td>"+ openNoticeList[i].createDate +"</td>"
+							        + "<td>"+ openNoticeList[i].count +"</td>"
 							        + "</tr>";
 							}
 							
