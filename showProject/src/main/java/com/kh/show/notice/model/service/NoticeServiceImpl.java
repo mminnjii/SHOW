@@ -90,9 +90,21 @@ public class NoticeServiceImpl implements NoticeService{
 
 	//오픈공지 상세페이지
 	@Override
-	public Notice openSelect(String showName) {
+	public OpenNotice openSelect(String showName) {
 		
 		return noticeDao.openSelect(sqlSession, showName);
+	}
+
+	// 오픈공지 조회수 업데이트 
+	@Override
+	public int opennoticeUpCount(int openNo) {
+		return noticeDao.opennoticeUpCount(sqlSession, openNo);
+	}
+
+	// 오픈 공지 상세보기
+	@Override
+	public Show openNoticeSelect(int openNo) {
+		return noticeDao.openNoticeSelect(sqlSession, openNo);
 	}
 
 	
