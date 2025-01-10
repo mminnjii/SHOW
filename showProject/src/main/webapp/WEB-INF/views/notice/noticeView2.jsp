@@ -229,7 +229,7 @@
 			<!-- 일반공지, 오픈공지별 검색 기능 구현 -->
 			<form id="searchForm" action="${contextPath}/notice/search"
 				method="get">
-
+				 <input type="hidden" name="noticeType" value="general">
 				<div class="select">
 					<select class="custom-select" name="condition">
 						<option value="all">전체</option>
@@ -248,9 +248,9 @@
 			</form>
 
 			<!-- 오픈공지 -->
-			<form id="OpenSearchForm" action="${contextPath}/notice/openSearch"
+			<form id="OpenSearchForm" action="${contextPath}/notice/search"
 				method="get">
-
+ 				<input type="hidden" name="noticeType" value="open">
 				<div class="select">
 					<select class="custom-select" name="condition">
 						<option value="all">전체</option>
@@ -352,6 +352,7 @@
 						<c:otherwise>
 							<%--검색이라면 --%>
 							<c:url var="searchUrl" value="/notice/search">
+								<c:param name="noticeType" value="${noticeType}" />
 								<c:param name="currentPage" value="${i}" />
 								<c:param name="condition" value="${map.condition}" />
 								<c:param name="keyword" value="${map.keyword}" />
@@ -379,6 +380,9 @@
 					</c:otherwise>
 				</c:choose>
 
+
+				
+				
 
 			</div>
 		</div>
