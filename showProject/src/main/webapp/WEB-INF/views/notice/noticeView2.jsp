@@ -211,7 +211,7 @@
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp"%>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp"%>
 	<div class="a">
 		<h2 align="center">공지사항</h2>
 		<br>
@@ -467,8 +467,8 @@
 								console.log(openNo);
 								//location.href = "/show/open?showName="+showName+"&openNo="+openNo;
 
-								$
-										.ajax({
+								
+										$.ajax({
 											url : 'open',
 											type : "POST",
 											data : {
