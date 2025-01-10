@@ -24,7 +24,6 @@ import com.kh.show.reservation.model.vo.SeatsOfRow;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -35,8 +34,6 @@ public class ReservationController {
 	// 좌석이동
 	@GetMapping("/seats")
 	public String seats(HttpSession session, Model model, Reservation r) {
-		
-		// long start = System.currentTimeMillis();
 		
 		// 회원번호 추출
 		Integer userNo = (Integer) session.getAttribute("userNo");
@@ -72,7 +69,7 @@ public class ReservationController {
 		// status "N"인 좌석 조회
 		ArrayList<String> taken= reservationService.selectTakenSeats(roundId);  
 		if(taken != null) {
-			Gson gson = new Gson();
+			Gson gson = new Gson(); 
 			model.addAttribute("taken",gson.toJson(taken));
 		}else {
 			model.addAttribute("errorMsg","status N인 좌석 조회에 실패했습니다.");

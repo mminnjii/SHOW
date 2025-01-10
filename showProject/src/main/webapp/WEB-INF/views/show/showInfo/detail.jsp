@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>본문 영역 수정</title>
+    <title>공연상세정보</title>
     <style>
 		.detail {
 			margin-left: 150px;
@@ -133,12 +133,14 @@
 	        </select>
 	        <br><br>
 	        <br><br><br>
-	        <p>회원등급 : </p>
-	        <br>
-			<h4>${rank }</h4>
-			<br><br>
-		 	<p>보유쿠폰 : ${cno } 개 </p>
-	        <br><br><br><br>
+	        <c:if test="${not empty userNo }">
+		        <p>회원등급 : </p>
+		        <br>
+				<h4>${rank }</h4>
+				<br><br>
+			 	<p>보유쿠폰 : ${cno } 개 </p>
+		        <br><br><br><br>
+	        </c:if>
 			<button onclick="reservation();">예약하기</button>
 	    </div>
 	    
@@ -153,13 +155,42 @@
 	                <c:choose>
 						<c:when test="${not empty s }">
 					      	 <h2>${s.showName }</h2> <br>
-			                <p><b style="font-weight: 500;">장르</b> : &nbsp; ${s.genreName }</p> 
-			                <p style="width: 800px;" ><b style="font-weight: 500;">소개</b> : &nbsp; ${s.showExplain }</p> 
+			                <p>
+			                	<b style="font-weight: 500;">장르</b> : &nbsp; 
+			                	 <c:choose>
+			                	 	<c:when test="${s.genreNo eq '2' }">
+			                	 		연극
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '3' }">
+			                	 		콘서트
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '4' }">
+			                	 		클래식
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '5' }">
+			                	 		전시
+			                	 	</c:when>
+			                	 	<c:otherwise>
+			                	 		뮤지컬
+			                	 	</c:otherwise>
+			                	 </c:choose>
+			                </p> 
+			                <p style="width: 800px;" >
+			                	<b style="font-weight: 500;">소개</b> : &nbsp; 
+			                		<c:choose>
+			                			<c:when test="${s.showExplain eq '--'}">
+			                				여러분의 연말을 책임질 ${s.showName } !
+			                			</c:when>
+			                			<c:otherwise>
+			                				${s.showExplain }
+			                			</c:otherwise>
+			                		</c:choose>
+			                </p> 
 			                <p><b style="font-weight: 500;">장소</b> : &nbsp; ${s.hallName }</p> 
 			                <p><b style="font-weight: 500;">공연기간</b> :&nbsp; ${s.showStart }~${s.showEnd }</p>
 			                <p><b style="font-weight: 500;">공연시간</b> : &nbsp; 120분</p>
 			                <p><b style="font-weight: 500;">VIP석</b> : &nbsp; ${vipPrice } &nbsp;||&nbsp; 
-				                <b style="font-weight: 500;">R석</b> : &nbsp; ${rPrice } &nbsp;||&nbsp; 
+				               <b style="font-weight: 500;">R석</b> : &nbsp; ${rPrice } &nbsp;||&nbsp; 
 				               <b style="font-weight: 500;"> S석</b> : &nbsp; ${s.price }
 			                </p>
 						</c:when>                
@@ -185,12 +216,6 @@
     
     <script>
     	
-    	$(function(){
-    		var rank = ${rank }
-    		console.log(rank);
-    	});
-    
-    
     	function selectDate(){
     		
      		$.ajax({
