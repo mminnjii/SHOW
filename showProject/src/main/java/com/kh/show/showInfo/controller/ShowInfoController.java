@@ -1,10 +1,8 @@
 package com.kh.show.showInfo.controller;
 
-import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -47,10 +45,9 @@ public class ShowInfoController {
 		
 		String posterName= s.getPosterChangeName();
 		posterName = posterName.substring(0, posterName.length() - 1) + "D";
+		posterName = posterName.replace("/", "");
 		s.setDetailChangeName(posterName);
 		
-		 // System.out.println(s.getDetailChangeName());
-		 
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
 

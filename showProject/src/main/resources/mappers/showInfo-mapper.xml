@@ -793,9 +793,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE SHOWROUND
 		SET STATUS = 'N'
 		WHERE HALL_NO IN (
-		SELECT HALL_NO
-		FROM HALL
-		WHERE TOTAL_SEAT = 0)
+				  SELECT HALL_NO
+				  FROM HALL
+				  WHERE TOTAL_SEAT = 0)
 	</update>
 
 

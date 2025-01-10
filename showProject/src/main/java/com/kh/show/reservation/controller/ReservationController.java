@@ -31,10 +31,6 @@ public class ReservationController {
 	
 	@Autowired
 	private ReservationService reservationService;
-
-//	@Autowired
-//	private RSscheduler sc;
-	
 	
 	// 좌석이동
 	@GetMapping("/seats")

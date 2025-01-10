@@ -241,6 +241,7 @@ public class PaymentsController {
 		}
 	}
 	
+	// 결제 실패시 
 	@Transactional
 	@ResponseBody
 	@PostMapping(value = "/fail",produces ="text/html; charset=UTF-8")
@@ -345,28 +346,7 @@ public class PaymentsController {
 		return "payments/paymentInfo";
 	}
 	
-	
-	
-	@Transactional
-	@ResponseBody
-	@PostMapping(value = "/statusY",produces ="text/html; charset=UTF-8")
-	public String statusY(Reservation r) {
-			
-		List<String> seats = r.getSeats();
-		
-		int result = reservationService.updateReserStatusY(r);
-		System.out.println("reservation: "+result);
-		
-		int result2 = reservationService.updateSeatStatusN(r);
-		System.out.println("seats: "+result2);
-		
-		if(result * result2 != 0) {
-			return "Y";
-		}else {
-			return "N";
-		}
-	}
-	
+	// 좌석 : 결제 중(P)
 	@Transactional
 	@ResponseBody
 	@PostMapping(value = "/statusP",produces ="text/html; charset=UTF-8")
@@ -386,5 +366,27 @@ public class PaymentsController {
 			return "N";
 		}
 	}
+
+	// 결제 최종 완료시(예약은 Y / 좌석은 N) 
+	@Transactional
+	@ResponseBody
+	@PostMapping(value = "/statusY",produces ="text/html; charset=UTF-8")
+	public String statusY(Reservation r) {
+			
+		int result = reservationService.updateReserStatusY(r);
+		System.out.println("reservation: "+result);
+		
+		int result2 = reservationService.updateSeatStatusN(r);
+		System.out.println("seats: "+result2);
+		
+		if(result * result2 != 0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+		
+	}
+	
+
 	
 }

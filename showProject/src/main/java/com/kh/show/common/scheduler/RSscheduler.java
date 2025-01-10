@@ -13,34 +13,28 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RSscheduler {
 	
-	// @Scheduled(initialDelay = 1000, fixedDelay = 2000)
-	// @Scheduled(cron = "0 * * * * *") // 매분 마다
-	public void scTest() {
-		log.debug("스케쥴러 테스트");
-	}
-	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
 	
 	// (예약)예약시작-결제완료 40분
-	// @Scheduled(cron = "0 * * * * *") 
+	@Scheduled(cron = "0 0/40 * * * *") 
 	private void reservationRollback() {
 		int result = sqlsession.update("reservationMapper.reservationRollback");
-		System.out.println("예약 : "+result);
+		log.debug("예약 reservationRollbackN : "+result);
 	}
 	
 	// (좌석)예약시작-결제시작 10분
-	// @Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0/10 * * * *") 
 	private void seatsRollbackM() {
 		int result = sqlsession.update("reservationMapper.seatsRollbackM");
-		System.out.println("좌석 : "+ result);
+		log.debug("좌석 seatsRollbackMtoY : "+ result);
 	}
 	
 	// (좌석)결제시작-결제완료 30분
-	// @Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0/30 * * * *") 
 	private void seatsRollbackP() {
 		int result = sqlsession.update("reservationMapper.seatsRollbackP");
-		System.out.println("좌석 : "+ result);
+		log.debug("좌석 seatsRollbackPtoY : "+ result);
 	}
 	
 	

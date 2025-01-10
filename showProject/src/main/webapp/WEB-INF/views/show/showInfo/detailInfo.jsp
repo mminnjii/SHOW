@@ -73,13 +73,13 @@
         
         <script>
 	        
-          var detail = ${s.detailChangeName}
-          var showName = ${s.showName}
+          // var detail = ${s.detailChangeName}
+          // var showName = ${s.showName}
         
 	        $(function () {
 	        	
-	        	console.log(detail);
-	        	console.log(showName);
+	        	// console.log(detail);
+	        	// console.log(showName);
 	        
 	            $('#Modal').modal('show');
 	            
