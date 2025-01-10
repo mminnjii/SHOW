@@ -47,15 +47,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE RESERVATION_ID = #{reservationId}
 	</delete>
 	
-	
-	<!-- 좌석 상태 y 설정 (rollback.) -->
-	<update id="rollbackSeats" parameterType="HashMap">
-		UPDATE SEATS
-		SET STATUS = 'Y'
-		WHERE ROW_NAME || COL_NO = #{seats}
-		AND ROUND_ID = #{roundId}
-	</update>
-	
 
 	
 	

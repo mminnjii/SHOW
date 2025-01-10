@@ -140,13 +140,12 @@
         // 결제 요청
         $("#card").on("click", function () {
         	
-            $.ajax({
-                url: '/show/payments/processPayment', 
+        	$.ajax({
+                url: '/show/payments/statusP', 
                 type: 'POST',           
                 data: {
-                	reservationId : reservation_uid,
-	                roundId : roundId,
-	                selectedName : selectedName
+                	selectedName : selectedName,
+                	roundId : roundId
                 }, 
                 success: function(response) {
                     console.log('서버 응답:', response);
@@ -271,15 +270,13 @@
         
          
         $("#bank").on("click", function () { 
-        	
-        	
-            $.ajax({
-                url: '/show/payments/processPayment', 
+    		
+        	$.ajax({
+                url: '/show/payments/statusP', 
                 type: 'POST',           
                 data: {
-                	reservationId : reservation_uid,
-	                roundId : roundId,
-	                selectedName : selectedName
+                	selectedName : selectedName,
+                	roundId : roundId
                 }, 
                 success: function(response) {
                     console.log('서버 응답:', response);
@@ -288,7 +285,6 @@
                     console.error('에러 발생:', error);
                 }
             });
-
         	
         	if(methodToget != ""){
         		

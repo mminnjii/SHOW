@@ -92,6 +92,11 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.joinUser", cj);
 	}
 
+	// 채팅방 메시지 담은 List
+	public ArrayList<ChatMessage> selectChatList(SqlSessionTemplate sqlSession, int chatNo) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectChatList", chatNo);
+	}
+
 
 	
 	

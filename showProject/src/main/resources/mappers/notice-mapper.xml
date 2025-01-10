@@ -76,6 +76,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 	</select>
 	
+	<!-- 오픈공지 검색 목록 개수  -->
+	<select id="searchOpenCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM OPEN_NOTICE
+		WHERE 
+		<choose>
+			<when test="condition == 'title'">
+				SHOW_NAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				OPEN_EXPLAIN LIKE '%' || #{keyword} || '%' 
+			</when>
+			<otherwise>
+				(SHOW_NAME LIKE '%' || #{keyword} || '%'
+				OR OPEN_EXPLAIN LIKE '%' || #{keyword} || '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 오픈공지 검색 목록 정보 | 동적 sql문 사용하여 쿼리문 작성 -->
+	<select id="searchOpenNotice" resultMap="openNoticeResultSet">
+		SELECT *
+		FROM OPEN_NOTICE
+		WHERE 
+		<choose>
+			<when test="condition == 'title'">
+				SHOW_NAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'content'">
+				OPEN_EXPLAIN LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'all'">
+				(SHOW_NAME LIKE '%' || #{keyword} || '%'
+				OR OPEN_EXPLAIN LIKE '%' || #{keyword} || '%')
+			</when>
+		</choose>
+	</select>
+	
 	<!-- 공지사항 상세보기 -->
 	<select id="noticeDetail" parameterType="_int" resultMap="noticeResultSet">
 		SELECT *

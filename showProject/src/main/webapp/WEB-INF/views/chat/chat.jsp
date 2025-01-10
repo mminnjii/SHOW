@@ -225,7 +225,7 @@
 	            // var meetingCount= ${meDetail.meetingCount}; 해당값은 가져와짐. int라 그런건가? 문자열이여서 안되는건가? 
 	            var userId = `${loginUser.userId}`;
 
-	  			var userNo = ${loginUser.userNo};
+	  			var userNo = `${loginUser.userNo}`;
 	  			
 	  			
 	  			if(chatUserCount > joinCount){ // 채팅방 정원이 차지 않아 입장이 가능할 때
@@ -263,14 +263,7 @@
 	            			conole.log("에러 발생");
 	            		 }
 	            	  });
-	            	  
-	              		
 	              }
-	  			
-	            
-	  			
-	  			
-	            
             });
             
         </script>
