@@ -84,9 +84,10 @@ public class PaymentsController {
 	
 	@PostMapping(value ="/processPayment",produces ="text/html; charset=UTF-8")
 	@ResponseBody
-	public String processPayment(int reservationId, int roundId) {
+	public String processPayment(int reservationId, int roundId, String selectedName) {
 		System.out.println(reservationId);
 		System.out.println(roundId);
+		System.out.println(selectedName);
 		
 		return "check";
 	}

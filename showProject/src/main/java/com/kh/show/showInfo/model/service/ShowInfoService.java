@@ -23,10 +23,10 @@ public interface ShowInfoService {
 	int updateShowRound();
 	
 	// 리뷰조회
-	ArrayList<Review> selectReview();
+	ArrayList<Review> selectReview(int showNo);
 	
 	// 리뷰 갯수 조회
-	int selectRcount();
+	int selectRcount(int showNo);
 	
 	// 리뷰 검색
 	ArrayList<Review> reviewSearch(String keyword);
@@ -177,6 +177,9 @@ public interface ShowInfoService {
 	
 	// 리뷰 삭제하기
 	int deleteReview(int replyNo);
+	
+	// 쇼이름으로 정보 검색하기
+	Show selectWithName(String name);
 
 	//메인페이지 티켓 오픈 상세 페이지 
 	Show openSelect(String showName);

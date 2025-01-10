@@ -31,13 +31,7 @@
 	        <p> ${s.notice }</p>
 	        <br><br><br>  
 	        <h3>공연상세 / 정보</h3> <br>
-	        <img src="/show/resources/images/011.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/012.jpg">
-         	<br><br> 
-	        <img src="/show/resources/images/013.jpg">
-	        <br><br> 
-	        <img src="/show/resources/images/014.jpg">
+	        <img src='/show/resources/DetailUploadFiles/${s.detailChangeName}.jpg' />
 	        <p style="margin-top: 1000px;"></p>
         </div>
         
@@ -75,8 +69,14 @@
         
         <script>
 	        
+          var detail = ${s.detailChangeName}
+        
 	        $(function () {
+	        	
+	        	console.log(detail);
+	        
 	            $('#Modal').modal('show');
+	            
 	        });
         
         </script>

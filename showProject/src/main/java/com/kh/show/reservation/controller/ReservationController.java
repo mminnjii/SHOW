@@ -123,6 +123,7 @@ public class ReservationController {
 		 for(String name : seatArray) {
 			 
 			Map<String, Object> seats = new HashMap<>();
+			
 			seats.put("name", name);
 			seats.put("roundId", roundId);
 		    int result = reservationService.updateSeatStatus(seats);
