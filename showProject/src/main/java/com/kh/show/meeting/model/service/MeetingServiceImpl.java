@@ -109,4 +109,16 @@ public class MeetingServiceImpl implements MeetingService {
 		return meetingdao.selectMeetingNo(sqlSession);
 	}
 
+	// 모집 기간이 지난 경우 status N으로 바꾸는 메소드 
+	@Override
+	public int updateStatus(int meetingNo) {
+		return meetingdao.updateStatus(sqlSession, meetingNo);
+	}
+
+	// 소모임 삭제 메소드
+	@Override
+	public int deleteMeeting(int meetingNo) {
+		return meetingdao.deleteMeeting(sqlSession, meetingNo);
+	}
+
 }

@@ -99,7 +99,7 @@
 <%@include file="/WEB-INF/views/common/menubar.jsp" %>
 <div class="a">
 
-
+&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
     <h1>채팅방 생성</h1>
     <form action="chatInsert" method="POST">
     <br><br>
@@ -159,14 +159,14 @@
 	<script>
 		// 카테고리 클릭 시 해당 카테고리에 해당하는 show 목록 불러오기 (동적으로 생성된 카테고리 option을 선택하는 것이기 때문에 .on 메소드 사용)
 		$("#showDiv1").on("change", "#category", function(){
+			var genreNo = $("#category").val(); 
+			
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/selectShow",
 				data: {
-					genreNo : $("#category").val()
+					genreNo : genreNo
 				}, 
 				success : function(showList){
-					console.log(showList);
-					
 					var str = "";
 					if(showList != null){
 						for(var i=0; i<showList.length; i++){
@@ -184,14 +184,14 @@
 		// 검색 input 박스 안의 내용 변경시 검색어가 포함된 리스트 생성 
 		$("#showDiv2").on("input", "#keyword", function(){
 			
-			console.log($("#genreNo").val());
-			console.log($("#keyword").val());
+			var genreNo = $("#category").val(); 
+			var keyword = $("#keyword").val();
 			
 			$.ajax({  // meeting controller에서 동일한 작업을 했기 때문에 해당 url 경로 입력.
 				url: "${contextPath}/meeting/searchShow",
 				data: {
-					genreNo : $("#genreNo").val(),
-					keyword : $("#keyword").val()
+					genreNo : genreNo,
+					keyword : keyword
 				}, 
 				success : function(showList){
 					console.log(showList);

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.show.chat.model.service.ChatService;
 import com.kh.show.chat.model.vo.Chat;
 import com.kh.show.chat.model.vo.ChatJoin;
+import com.kh.show.chat.model.vo.ChatMessage;
 import com.kh.show.common.template.PageInfo;
 import com.kh.show.common.template.Pagenation;
 import com.kh.show.meeting.model.service.MeetingService;
@@ -24,7 +25,6 @@ import com.kh.show.member.model.vo.Member;
 import com.kh.show.showInfo.model.vo.Genre;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Slf4j
 @Controller
@@ -134,21 +134,22 @@ public class ChatController {
 	
 	// 채팅 페이지 
 	@GetMapping("chatting")
-	public String chattingDetail(String userId, int chatNo, HttpSession session) {
+	public String chattingDetail(String userId, int chatNo, HttpSession session, Model m) {
 	 
-		System.out.println("userId : " + userId);
-	    System.out.println("chatNo : " + chatNo);
-	    
 	    session.setAttribute("chatNo", chatNo);
 	    
 	    // 채팅방 상세 정보 
 	    Chat chatInfo = chatService.selectChatInfo(chatNo);
 	    session.setAttribute("chatInfo", chatInfo);
 	    
-	    System.out.println(chatInfo);
+	    // 채팅방 메시지 담은 List 
+	    ArrayList<ChatMessage> chatMeList = chatService.selectChatList(chatNo);
+	    
+	    m.addAttribute("chatMeList", chatMeList);
 	    
 	    return "chat/chatDetail";
 	}
+	
 	
 	// 나가기 버튼 클릭시 join테이블의 데이터 삭제 
 	@PostMapping("joinDelete")

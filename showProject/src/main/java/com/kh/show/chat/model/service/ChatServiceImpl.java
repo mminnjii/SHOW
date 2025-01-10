@@ -99,6 +99,12 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.joinUser(sqlSession, cj);
 	}
 
+	// 채팅방 메시지 담은 List 
+	@Override
+	public ArrayList<ChatMessage> selectChatList(int chatNo) {
+		return chatDao.selectChatList(sqlSession, chatNo);
+	}
+
 
 	
 
