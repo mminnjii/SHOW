@@ -55,12 +55,26 @@
     <tr><td id="rankText">실시간 공연 순위</td></tr>
     <tr class="rankShow">
         <!-- 여기에 데이터를 삽입 -->
+        
+        
     </tr>
 </table>
 
 <script>
+
+$(document).on('click','.Top td',function(){
+	
+	//input이라 요소 찾기를 제대로 해야함
+	var showName = $(this).closest('tr').find('.input2').val();
+
+	console.log(showName); 
+	location.href = "/show/showInfo/detail?showName="+ showName;
+	
+});
+
+
     $(document).ready(function() {
-        loadShowData(); // 페이지 로딩 시 바로 데이터 로드
+        loadShowData(); 
 
         // 2분마다 데이터를 자동으로 갱신
         setInterval(loadShowData, 120000);
@@ -68,24 +82,26 @@
 
     function loadShowData() {
         $.ajax({
-            url: "rankShowList", // 데이터 URL
+            url: "rankShowList", 
             success: function(result) {
                 console.log(result);
 
                 var str = "";
-                // result가 배열일 경우
+               
                 
                 
                 for (var i = 0; i < result.length; i++) {
                 	
                 	 var imgPath = '/show/resources/PosterUploadFiles/' + result[i].posterChangeName + '.jpg';
+                	 var input = "<input type='hidden' name='showName' value='" + result[i].showName + "' class='input2'/>";
                 	
                     str += "<tr class='Top'>"
-                        + "<td><div class='Topimage'><img src='" + imgPath + "' alt='' ></div></td>"
-                        + "</tr>";
+                    	+  input
+                        +  "<td><div class='Topimage'><img src='" + imgPath + "' alt='' ></div></td>"
+                        +  "</tr>";
                 }
                 
-                // .rankShow 요소에 생성된 HTML 삽입
+                
                 $(".rankShow").html(str);
             },
             error: function() {

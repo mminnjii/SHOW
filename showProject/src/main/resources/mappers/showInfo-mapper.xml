@@ -1016,6 +1016,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	FROM (
 	  		  SELECT POSTER_ORIGINNAME
 	  		         ,POSTER_CHANGENAME
+	  		         ,SHOW_NAME
 	  	       		 ,COUNT
 	  	      FROM SHOW
 	  	      WHERE COUNT > 0
@@ -1023,6 +1024,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	      ORDER BY COUNT DESC
 	  	      )
 	  	WHERE ROWNUM BETWEEN 1 AND 5
+	  	
+	  	
 	  	
 	</select>	
 

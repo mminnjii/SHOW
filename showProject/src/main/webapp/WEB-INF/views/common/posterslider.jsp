@@ -254,7 +254,8 @@
 
 
     <script>
-     var rankShow = $(".rankShow").html();
+    /* 
+    var rankShow = $(".rankShow").html();
      
       $(document).ready(function(){
     	 
@@ -301,8 +302,8 @@
     
    
 	    
+    */
     
-     <script>
     $(document).ready(function(){
         $('.slider__inner').slick({
             arrows : false,
