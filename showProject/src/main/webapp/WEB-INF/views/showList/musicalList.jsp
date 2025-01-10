@@ -121,15 +121,15 @@
     
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=베르테르"><img src="/show/resources/images/musicalShowSlider/베르테르.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=시라노"><img src="/show/resources/images/musicalShowSlider/시라노.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=아나키스트"><img src="/show/resources/images/musicalShowSlider/아나키스트.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=오셀로"><img src="/show/resources/images/musicalShowSlider/오셀로.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=지킬"><img src="/show/resources/images/musicalShowSlider/지킬.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=클로버"><img src="/show/resources/images/musicalShowSlider/클로버.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=틱틱붐"><img src="/show/resources/images/musicalShowSlider/틱틱붐.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=퍼스트맨"><img src="/show/resources/images/musicalShowSlider/퍼스트맨.jpg" alt=""></a></div>
-          <div class="swiper-slide"><a href="/show/showInfo/detail?name=해적"><img src="/show/resources/images/musicalShowSlider/해적.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=베르테르"><img src="/show/resources/images/musicalShowSlider/베르테르.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=시라노"><img src="/show/resources/images/musicalShowSlider/시라노.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=아나키스트"><img src="/show/resources/images/musicalShowSlider/아나키스트.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=오셀로"><img src="/show/resources/images/musicalShowSlider/오셀로.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=지킬"><img src="/show/resources/images/musicalShowSlider/지킬.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=클로버"><img src="/show/resources/images/musicalShowSlider/클로버.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=틱틱붐"><img src="/show/resources/images/musicalShowSlider/틱틱붐.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=퍼스트맨"><img src="/show/resources/images/musicalShowSlider/퍼스트맨.jpg" alt=""></a></div>
+          <div class="swiper-slide"><a href="/show/showInfo/detail?showName=해적"><img src="/show/resources/images/musicalShowSlider/해적.jpg" alt=""></a></div>
         </div>
         
         <div class="autoplay-progress">

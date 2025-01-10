@@ -251,7 +251,53 @@
         -->
     </div>
     
-    
+
+
+    <script>
+     var rankShow = $(".rankShow").html();
+     
+      $(document).ready(function(){
+    	 
+    	 rankShowData(); 
+    	 
+    	 //1시간마다 데이터를 자동으로 갱신하기 위함 -- 랭킹 
+    	 setInterval(loadShowData, 120000);
+    	 
+      });
+      
+      function loadShowData(){
+    	  
+    	  $.ajax({
+    		 url: "rankShowList",
+    		 success: function(result) {
+    			 console.log(result);
+    	            var str = "";  
+    	            
+    	            for (var i = 0; i < result.length; i++) {
+    	                str += "<tr>"
+    	                     + "<td><img src='/show/resources/images/images2/" +(i+1) + ".png' alt='' class='u1'>"
+    	                     + "<a href='/show/showInfo/detail?showName="+result[i].showName+"'><span class='u3'>"+ result[i].showName +"</span></a></td>"
+    	                     + "</tr>"
+    	                     + "<tr id='ccc'></tr>";
+    	            }
+    	            // 생성된 HTML을 .rankShow 요소에 삽입
+    	            $(".rankShow").html(str);
+    	        },
+    		 error:function(){
+    			 console.log("통신 오류");
+    		 }
+    	  });
+      }
+      
+     
+      
+      function rankShowData(){
+    	  loadShowData();
+      }
+      
+      
+      
+
     
    
 	    

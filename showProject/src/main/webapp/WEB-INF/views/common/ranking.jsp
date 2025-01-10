@@ -316,8 +316,6 @@
                           + "<span id='j1'>" + result[i].showName + "</span><br>"
                           + "<span id='j2'>" +result[i].showStart+"-"+result[i].showEnd+ "</span>"
                           + "</td>";
-                          
-
                 }
 
               
