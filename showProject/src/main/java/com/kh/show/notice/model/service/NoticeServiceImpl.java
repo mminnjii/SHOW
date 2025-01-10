@@ -49,6 +49,20 @@ public class NoticeServiceImpl implements NoticeService{
 	
 		return noticeDao.searchNotice(sqlSession, map, pi);
 	}
+	
+	// 오픈공지 검색 목록 개수 
+	@Override
+	public int searchOpenCount(HashMap<String, String> map) {
+		return noticeDao.searchOpenCount(sqlSession, map);
+	}
+
+	// 오픈공지 검색 목록 정보 메소드 
+	@Override
+	public ArrayList<OpenNotice> searchOpenNotice(HashMap<String, String> map, PageInfo pi) {
+		return noticeDao.searchOpenNotice(sqlSession, map, pi);
+	}
+
+	
 
 	// 공지사항 상세보기 
 	@Override
@@ -81,4 +95,5 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.openSelect(sqlSession, showName);
 	}
 
+	
 }

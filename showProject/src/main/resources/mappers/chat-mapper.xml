@@ -31,6 +31,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="USER_NO" property="userNo"/>
 		<result column="CHAT_NO" property="chatNo"/>
 		<result column="CREATEDATE" property="createDate"/>
+		
+		<collection property="member" ofType="Member">
+			<result column="USER_NO" property="userNo"/>
+			<result column="USER_ID" property="userId"/>
+			<result column="USER_PWD" property="userPwd"/>
+			<result column="USER_NAME" property="userName"/>
+			<result column="USER_RRN" property="userRrn"/>
+			<result column="PHONE" property="phone"/>
+			<result column="EMAIL" property="email"/>
+			<result column="ADDRESS" property="address"/>
+			<result column="ENROLL_DATE" property="enrollDate"/>
+			<result column="MODIFY_DATE" property="modifyDate"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+			<result column="RANK" property="rank"/>
+			<result column="SUBSCRIBE" property="subscribe"/>
+			<result column="STATUS" property="status"/>
+		</collection>
+		
 	</resultMap>
 	
 	<resultMap type="ChatJoin" id="chatJoinResultMap">
@@ -216,6 +235,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM CHAT_JOIN 
 		WHERE CHAT_NO = #{chatNo}
 		    AND USER_NO = #{userNo}
+	</select>
+	
+	
+	<!-- 채팅방 메시지 담은 List -->
+	<select id="selectChatList" parameterType="_int" resultMap="chatMessageResultMap">
+		SELECT CM.MESSAGE_NO
+		        ,CM.CHAT_CONTENT
+		        ,CM.USER_NO
+		        ,CM.CHAT_NO
+		        ,CM.CREATEDATE 
+		        ,M.USER_NO
+		        ,M.USER_ID
+		        ,M.ORIGIN_NAME
+		        ,M.CHANGE_NAME
+		FROM CHAT_MESSAGE CM
+		JOIN MEMBER M ON (CM.USER_NO= M.USER_NO)
+		WHERE CM.CHAT_NO = #{chatNo}
+		ORDER BY CM.CREATEDATE
 	</select>
 	
 </mapper>

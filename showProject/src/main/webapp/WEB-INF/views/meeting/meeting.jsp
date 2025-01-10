@@ -44,9 +44,11 @@
             background-color: lightgray; /*#597c9b*/
             cursor: pointer;
         }
+		
 		#meetingList{
         	text-align: center;
         }
+        
  		.pageBtn{
         	border : 1px solid lightgray;
         	background-color : white;
@@ -54,6 +56,7 @@
         	border-radius: 8px;
         }
 
+		
 
     </style>
 </head>
@@ -109,8 +112,9 @@
 		                      <td>${m.memList[0].userId}</td>  <!-- 리스트이기 떄문에 객체에 접근해야 한다. -->
 		                      <td>${m.joinNo} / ${m.meetingCount}</td>
 		                      <td>${m.startDate} ~ ${m.endDate}</td>
+		                      <!-- 모집 마감 날짜를 지났거나 모집인원이 채워졌을 경우 모집마감 표시 -->
 		                      <c:choose>
-		                      	<c:when test="${m.joinNo >= m.meetingCount }">
+		                      	<c:when test="${(m.joinNo >= m.meetingCount) or (m.status == 'N')}">
 		                      		<td>
 		                      			<p style="color: red;">모집 마감</p>
 		                      		</td>
