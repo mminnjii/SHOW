@@ -479,9 +479,6 @@ public class ShowInfoServiceImpl implements ShowInfoService {
 	}
 
 
-
-
-	@Override
 	public int enrollReview(Review r) {
 		return showInfoDao.enrollReview(sqlSession,r);
 	}
@@ -505,10 +502,12 @@ public class ShowInfoServiceImpl implements ShowInfoService {
 	}
 
 
+
 	@Override
 	public Show selectWithName(String name) {
 		return showInfoDao.selectWithName(sqlSession,name);
 	}
+
 
 
 	@Override

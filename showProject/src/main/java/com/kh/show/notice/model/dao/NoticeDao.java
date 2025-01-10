@@ -105,9 +105,19 @@ public class NoticeDao {
 		
 	}
 
-	public Notice openSelect(SqlSessionTemplate sqlSession, String showName) {
+	public OpenNotice openSelect(SqlSessionTemplate sqlSession, String showName) {
 		
 		return sqlSession.selectOne("noticeMapper.openSelect",showName);
+	}
+
+	public int opennoticeUpCount(SqlSessionTemplate sqlSession, int openNo) {
+		return sqlSession.update("noticeMapper.opennoticeUpCount", openNo);
+	}
+
+	// 오픈공지 상세정보 
+	public Show openNoticeSelect(SqlSessionTemplate sqlSession, int openNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("showInfoMapper.openNoticeSelect", openNo);
 	}
 
 	

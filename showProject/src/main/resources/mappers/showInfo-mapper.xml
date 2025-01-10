@@ -25,6 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="POSTER_ORIGINNAME" property="posterOriginName" />
 		
 		<result column="HALL_NAME" property="hall.hallName" />
+
+		<result column="COUNT" property="openNotice.count" />
+		<result column="CREATE_DATE" property="openNotice.createDate" />
 		
 	</resultMap>	
 	
@@ -720,20 +723,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<!-- 티켓 오픈 상세 정보 조회 -->
 	<select id="openSelect" resultMap="showResultSet">
-	SELECT SHOW_NAME
-	       ,SHOW_EXPLAIN
-	       ,GENRE_NAME
-	       ,REGION_NAME
-	       ,SHOW_START
-	       ,SHOW_END
-	       ,POSTER_ORIGINNAME
-	       ,POSTER_CHANGENAME
-	       ,PRICE
-	FROM SHOW
-	JOIN GENRE USING(GENRE_NO)
-	JOIN REGION USING(REGION_NO)
-	WHERE SHOW_NAME = #{showName}
-	AND STATUS = 'Y'
+		SELECT SHOW_NAME
+		       ,SHOW_EXPLAIN
+		       ,GENRE_NAME
+		       ,REGION_NAME
+		       ,SHOW_START
+		       ,SHOW_END
+		       ,POSTER_ORIGINNAME
+		       ,POSTER_CHANGENAME
+		       ,PRICE
+		FROM SHOW
+		JOIN GENRE USING(GENRE_NO)
+		JOIN REGION USING(REGION_NO)
+		WHERE SHOW_NAME = #{showName}
+		AND STATUS = 'Y'
+	</select>
+
+	<!-- 티켓 오픈 상세 정보 조회 (공지사항페이지) - 전수민 -->
+	<select id="openNoticeSelect" resultMap="showResultSet">
+		SELECT S.SHOW_NAME
+		       ,S.SHOW_EXPLAIN
+		       ,G.GENRE_NAME
+		       ,R.REGION_NAME
+		       ,S.SHOW_START
+		       ,S.SHOW_END
+		       ,S.POSTER_ORIGINNAME
+		       ,S.POSTER_CHANGENAME
+		       ,S.PRICE
+		       ,OP.COUNT
+		       ,OP.CREATE_DATE
+		FROM SHOW S
+		JOIN GENRE G ON(S.GENRE_NO=G.GENRE_NO)
+		JOIN REGION R ON(S.REGION_NO=R.REGION_NO)
+		JOIN OPEN_NOTICE OP ON (S.SHOW_NAME = OP.SHOW_NAME)
+		WHERE OP.OPEN_NO = #{openNo}
 	</select>
 	
 	
@@ -923,8 +946,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, CREATE_DATE = SYSDATE
 		WHERE REVIEW_ID = #{reviewId}
 	</update>
-	
-	
+
 	<!-- 리뷰 삭제 -->
 	  <update id="deleteReview" parameterType="_int">
 	  	UPDATE REVIEW
@@ -932,5 +954,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE REVIEW_ID = #{replyNo}
 	  </update>
 	  
+
+                      
+	  <!-- 쇼이름으로 상세검색 -->
+<!-- 	  <select id="selectWithName" resultMap="showResultSet">
+	  	SELECT * 
+		FROM SHOW 
+		WHERE SHOW_NAME LIKE '%'||#{keyword}||'%'
+	  </select>
+	   -->
+ 
+
 
 </mapper>
