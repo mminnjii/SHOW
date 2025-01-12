@@ -29,8 +29,6 @@
 	
 		<br><br>
 		<div class="info">
-	        <!-- 아래 일반 본문 -->
-	       
 	        <h2>공지사항</h2> <br>
 	        <p style="width: 800px;"> ${s.notice }</p>
 	        <br><br><br>  
@@ -41,7 +39,7 @@
         
         
         <div class="modal fade" id="Modal">
-            <div class="modal-dialog">
+            <div class="modal-dialog" aria-hidden="false">
                 <div class="modal-content">
                     <!-- 모달 헤더 -->
                     <div class="modal-header">
@@ -74,9 +72,7 @@
         <script>
 
 	        $(function () {
-	        	        
 	            $('#Modal').modal('show');
-	            
 	        });
         
         </script>

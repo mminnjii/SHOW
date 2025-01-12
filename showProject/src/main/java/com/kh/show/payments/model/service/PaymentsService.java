@@ -1,23 +1,28 @@
 package com.kh.show.payments.model.service;
 
-import java.util.Map;
+import java.util.List;
+
+import com.kh.show.payments.model.vo.Account;
+import com.kh.show.payments.model.vo.Payments;
+import com.kh.show.reservation.model.vo.Seats;
+import com.kh.show.reservation.model.vo.Ticket;
 
 
 public interface PaymentsService {
 
-	int createPay(Map<String, Object> info);
+	int createPay(Payments p);
 
-	int createTicket(Map<String, Object> ticket);
+	int createTicket(Ticket t);
 	
-	int selectId(Map<String, Object> ticket);
+	List<Seats> selectId(Ticket t);
 	
-	int createAccount(Map<String, Object> info);
+	int createAccount(Account ac);
 
-	int rollbackSeats(Map<String, Object> data);
+	int rollbackSeats(Seats s);
 
-	int deleteReservation(Map<String, Object> data);
+	int deleteReservation(int reservationId);
 
-	int createCard(Map<String, Object> info);
+	int createCard(Payments p);
 
 
 }
