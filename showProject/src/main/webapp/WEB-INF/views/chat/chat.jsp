@@ -236,6 +236,7 @@
 		  					userId : userId
 		  				},
 		  				success : function(data){
+		  					console.log(data);
 			  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 		  				}
 		  			});
@@ -258,7 +259,7 @@
 	            				 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능
 	            				 alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
 	            			 }
-	            		 }, 
+	            		 },
 	            		 error : function(){
 	            			conole.log("에러 발생");
 	            		 }
