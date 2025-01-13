@@ -81,6 +81,7 @@
 		font-weight: bold;
 		font-size: 16px;		
 	}
+
 	.eye{
 		cursor: pointer;
 	}
@@ -144,7 +145,19 @@
 					<br>
 				</div>
 				<button type="submit" id="btn1">로그인</button>
+				<br><br>
 			</form>
+			<div id="naver_id_login"></div>
+			<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+			<script type="text/javascript">
+				var naver_id_login = new naver_id_login("UWoEpHIfCFQaFNyGegJk", "http://localhost:8889/show/member/naver");
+				var state = naver_id_login.getUniqState();
+				naver_id_login.setButton("green", 10,40);
+				naver_id_login.setDomain("http://localhost:8889/show/");
+				naver_id_login.setState(state);
+				naver_id_login.setPopup();
+				naver_id_login.init_naver_id_login();
+			</script>
 			<br>
 			<div id="link">
 				<a data-toggle="modal" data-target="#findId">아이디 찾기</a> |
@@ -152,18 +165,7 @@
 				<a href="${contextPath}/member/toEnroll">회원가입</a> 
 			</div>
 			<br>
-			<div id="naver_id_login"></div>
 		</div>
-		<!-- naver -->
-		<script type="text/javascript">
-			var naver_id_login = new naver_id_login("UWoEpHIfCFQaFNyGegJk", "${contextPath}/member/memberEnrollPage2");
-			var state = naver_id_login.getUniqState();
-			naver_id_login.setButton("white", 2,40);
-			naver_id_login.setDomain("http://localhost:8889/show/");
-			naver_id_login.setState(state);
-			naver_id_login.setPopup();
-			naver_id_login.init_naver_id_login();
-		</script>
 	</div>
 	<div class="modal fade" id="findId">
         <div class="modal-dialog modal-sm">

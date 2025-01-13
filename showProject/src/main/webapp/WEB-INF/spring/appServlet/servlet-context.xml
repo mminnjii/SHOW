@@ -65,6 +65,7 @@
 			<exclude-mapping path="/member/insert.me"/>
 			<exclude-mapping path="/member/idCheck"/>
 			<exclude-mapping path="/member/phoneCheck"/>
+			<exclude-mapping path="/member/naver"/>
 
 			<beans:bean class="com.kh.show.common.interceptor.LoginInterceptor"/>
 		</interceptor>
