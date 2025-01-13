@@ -72,11 +72,11 @@
     </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
     <div class="a" style="padding:5% 10%;">
-        <h2 align="center">채팅방</h2>
+        <h2 align="center">공연·전시 톡톡</h2>
         
-        <br>
+        <br><br>
         <form id="searchForm" action="${contextPath}/chat/chatSearch" method="get" align="center">
             <div class="select">
                 <select class="custom-select" name="condition">
