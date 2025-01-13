@@ -186,6 +186,11 @@ public class ManagerDao {
 		
 		return sqlSession.update("managerMapper.afterQuestionAnswer", m);
 	}
+	
+	public ManagerChat beforeChatUpdate(SqlSessionTemplate sqlSession, int cNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeChatUpdate", cNo);
+	}
 
 	public ManagerMeeting beforeMeetingUpdate(SqlSessionTemplate sqlSession, int mNo) {
 		
@@ -235,5 +240,15 @@ public class ManagerDao {
 	public int reservDelete(SqlSessionTemplate sqlSession, int reservId) {
 		
 		return sqlSession.delete("managerMapper.reservDelete", reservId);
+	}
+
+	public int afterChatUpdate(SqlSessionTemplate sqlSession, ManagerChat mc) {
+		
+		return sqlSession.update("managerMapper.afterChatUpdate", mc);
+	}
+
+	public ManagerPageReservation2 beforeReservUpdate(SqlSessionTemplate sqlSession, int reservNo) {
+		
+		return sqlSession.selectOne("managerMapper.beforeReservUpdate", reservNo);
 	}
 }

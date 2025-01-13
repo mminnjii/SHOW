@@ -342,6 +342,7 @@ public class ManagerController {
 	@ResponseBody
 	public ManagerQuestion2 questionDetail(@RequestParam(value = "questionNo") Integer qNo, Model model) {
 	    ManagerQuestion2 q = service.questionDetail(qNo);
+	    q.setChangeName("/resources/questionUpFile/" + q.getChangeName());
 	    model.addAttribute("question", q);
 	    return q;
 	}
@@ -589,6 +590,42 @@ public class ManagerController {
 			session.setAttribute("alertMsg", "답변이 완료되었습니다.");
 		} else {
 			session.setAttribute("alertMsg", "답변에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/reservUpdate")
+	public String beforeReservUpdate(@RequestParam(value="reservId") int reservNo, Model model) {
+		ManagerPageReservation2 r = service.beforeReservUpdate(reservNo);
+		model.addAttribute("reserv", r);
+		return "manager/reservUpdate";
+	}
+	
+	
+	@GetMapping("/managerPage/chatUpdate")
+	public String beforeChatUpdate(@RequestParam(value="chatNo") int cNo, Model model) {
+		ManagerChat c = service.beforeChatUpdate(cNo);
+		model.addAttribute("chat", c);
+		return "manager/chatUpdate";
+	}
+	
+	@PostMapping("/managerPage/chatUpdate")
+	public String afterChatUpdate(HttpServletRequest request, HttpSession session) {
+		int cNo = Integer.parseInt(request.getParameter("chatNo"));
+		String chatTitle = request.getParameter("chatTitle");
+		
+		ManagerChat mc = new ManagerChat();
+		
+		mc.setChatNo(cNo);
+		mc.setChatTitle(chatTitle);
+		
+		int result = service.afterChatUpdate(mc);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "채팅방 정보 수정에 성공하였습니다.");
+		} else {
+			session.setAttribute("alertMsg", "채팅방 정보 수정에 실패하였습니다.");
 		}
 		
 		return "manager/managerPage";

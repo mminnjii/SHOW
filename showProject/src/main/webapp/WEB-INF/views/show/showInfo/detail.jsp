@@ -109,7 +109,6 @@
 </head>
 <body>
 
-
 	
 		
 		<div class="detail">

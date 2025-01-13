@@ -120,4 +120,10 @@ public interface ManagerService {
 	int chatDelete(int chatNo);
 
 	int reservDelete(int reservId);
+
+	ManagerChat beforeChatUpdate(int cNo);
+
+	int afterChatUpdate(ManagerChat mc);
+
+	ManagerPageReservation2 beforeReservUpdate(int reservNo);
 }
