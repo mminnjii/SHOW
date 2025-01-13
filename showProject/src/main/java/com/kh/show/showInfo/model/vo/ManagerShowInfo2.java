@@ -15,4 +15,9 @@ public class ManagerShowInfo2 {
 	private String showStart;
 	private String showEnd;
 	private int count;
+	private String posterChangeName;
+	private String detailChangeName;
+	
+	private String posterPath;
+	private String detailPath;
 }

@@ -226,7 +226,20 @@ body {
         	event.preventDefault();
         	hideCreateButtons();
         	loadData('question');
-        })
+        });
+
+        document.getElementById('meetingBtn').addEventListener('click', function(event){
+        	event.preventDefault();
+        	hideCreateButtons();
+        	loadData('meeting');
+        });
+        
+        document.getElementById('chatBtn').addEventListener('click', function(event){
+        	event.preventDefault();
+        	hideCreateButtons();
+        	loadData('chat');
+        });
+        
 
 
         function hideCreateButtons() {
@@ -293,6 +306,30 @@ body {
             	quTitle: '문의 제목',
             	createDate: '문의 날짜',
             	answerContent: '답변 내용'
+            },
+            meeting: {
+            	meetingNo: '소모임 번호',
+            	userNo: '모임 주최 사용자 번호',
+            	userId: '모임 주최 사용자 아이디',
+            	meetingTitle: '소모임 제목',
+            	showNo: '공연 번호',
+            	showName: '공연 이름',
+            	meetingPlace: '소모임 주최장소',
+            	meetingCount: '소모임 인원',
+            	meetingDate: '소모임 날짜',
+            	startDate: '구인 시작 날짜',
+            	endDate: '구인 종료 날짜'
+            },
+            chat: {
+            	chatNo: '채팅 번호',
+            	chatTitle: '채팅 제목',
+            	showNo: '공연 번호',
+            	showTitle: '공연 제목',
+            	showName: '공연 이름',
+            	userNo: '회원 번호',
+            	userId: '채팅 생성 사용자 아이디',
+            	chatUserCount: '참여중인 회원 수',
+            	createDate: '채팅방 생성 날짜'
             }
         };
 
@@ -305,8 +342,10 @@ body {
                 show: `${contextPath}/managerPage/showList`,
                 member: `${contextPath}/managerPage/memberList`,
                 reserv: `${contextPath}/managerPage/reservList`,
-                question: `${contextPath}/managerPage/questionList`
-            };
+                question: `${contextPath}/managerPage/questionList`,
+                meeting: `${contextPath}/managerPage/meetingList`,
+                chat: `${contextPath}/managerPage/chatList`
+        };
             const url = urlMap[type];
             fetchDataAndDisplay(url, type);  // URL로 데이터 요청
         }
@@ -382,16 +421,23 @@ body {
                     const editBtn = document.createElement('button');
                     if (type === 'question') {
                         editBtn.textContent = '답변';  // 1:1문의일 때는 수정 버튼을 '답변' 버튼으로 변경
-                    } else{	
+                    } else{
                         editBtn.textContent = '수정';
                     } 
+             
                     editBtn.classList.add('action-btn');
                     editBtn.addEventListener('click', () => editItem(row));
 
                     const deleteBtn = document.createElement('button');
+                    
+                    
                     deleteBtn.textContent = '삭제';
                     deleteBtn.classList.add('action-btn', 'delete-btn');
                     deleteBtn.addEventListener('click', () => deleteItem(row));
+                    
+                    if (type === 'member'){
+                    	deleteBtn.textContent = '탈퇴';
+                    }
 
                     editTd.appendChild(editBtn);
                     deleteTd.appendChild(deleteBtn);
@@ -429,26 +475,33 @@ body {
             	
                 var url = '';
                 if (row.noticeNo) {
-                    url = `${contextPath}/managerPage/notice?noticeNo=` + row.noticeNo;  // Notice 상세 요청
-                } else if (row.faqNo) {
-                    url = `${contextPath}/managerPage/faq?faqNo=` + row.faqNo;  // FAQ 상세 요청
-                } else if (row.showNo) {
-                    url = `${contextPath}/managerPage/show?showNo=` + row.showNo;  // Show 상세 요청
+                    url = '${contextPath}/managerPage/notice?noticeNo=' + row.noticeNo;  // Notice 상세 요청
+                } else if (row.meetingNo){
+                	url = '${contextPath}/managerPage/meeting?meetingNo=' + row.meetingNo;
+                } else if (row.chatNo){
+                	url = '${contextPath}/managerPage/chat?chatNo=' + row.chatNo;
                 } else if (row.questionNo) {
-                    url = `${contextPath}/managerPage/question?questionNo=` + row.questionNo;	// Question 상세 요청
+                    url = '${contextPath}/managerPage/question?questionNo=' + row.questionNo;	// Question 상세 요청
+                } else if (row.userNo){
+                	url = '${contextPath}/managerPage/user?userNo=' + row.userNo;	// user 상세 요청
+                } else if (row.faqNo) {
+                    url = '${contextPath}/managerPage/faq?faqNo=' + row.faqNo;  // FAQ 상세 요청
+                } else if (row.showNo) {
+                    url = '${contextPath}/managerPage/show?showNo=' + row.showNo;  // Show 상세 요청
                 } else if (row.reservationId) {
-                    url = `${contextPath}/managerPage/reserv?reservId=` + row.reservationId;  // Reservation 상세 요청
-                } 
+                    url = '${contextPath}/managerPage/reserv?reservId=' + row.reservationId;  // Reservation 상세 요청
+                }  
                 
                 // AJAX 요청으로 상세 내용 가져오기
                 fetch(url)
                 .then(response => response.json())
                 .then(data => {
+                	const contextPath = window.location.pathname.split('/')[1]; // 현재 contextPath 추출
                     const detailRow = tableRow.nextElementSibling;
                     const detailContent = detailRow.querySelector('.detail-content');
                     const contentNo = data.reservationId || data.noticeNo || data.faqNo || data.showNo || data.questionNo || '번호 없음';
                     const contentTitle = data.noticeTitle || data.faqTitle || data.showName || data.quTitle || '제목 없음';
-                    const contentContent = data.noticeContent || data.faqContent || data.showExplain || data.quContent || '내용 없음';
+                    const contentContent = data.noticeContent || data.faqContent || data.showExplain || data.quContent || data.information || '내용 없음';
                     const contentCreateDate = data.createDate || '작성일 없음';
                     const lineChangeContent = (text) => {return text.replace(/\n/g, '<br>');};	// 줄바꿈 만들어주기(sql에선 \n을 여기선 <br>로 써야 함)
                     const Content = lineChangeContent(contentContent);
@@ -461,13 +514,24 @@ body {
                         			'<p>공지사항 제목 : '+contentTitle+'</p>\n'+
                         			'<p>공지사항 내용 <br><br>'+Content+'</p>\n'+
                         			'<p>작성일 : '+contentCreateDate+'</p>\n';
-                    	} else if(data.faqNo){
+                    	} else if(data.chatNo){
                     		detailContent.innerHTML = 
-                    			'<p><strong>FAQ 상세내용</strong></p>'+
-                    			'<p>FAQ 번호 : '+data.faqNo+'</p>'+
-                    			'<p>FAQ 제목 : '+data.faqTitle+'</p>'+
-                    			'<p>FAQ 내용 : '+Content+'</p>'+
-                    			'<p>FAQ 카테고리 : '+data.qcategoryName+'</p>';
+                    			'<p><strong>나타낼 상세내용이 없습니다.(채팅로그는 나오지 않습니다.)</strong></p>';
+                    	} else if(data.meetingNo){
+                    		detailContent.innerHTML = 
+                    			'<p><strong>소모임 상세정보</strong></p>'+
+                    			'<p>소모임 번호 : '+data.meetingNo+'</p>'+
+                    			'<p>소모임 주최 유저 번호 : '+data.userNo+'</p>'+
+                    			'<p>소모임 주최 유저 아이디 : '+data.userId+'</p>'+
+                    			'<p>소모임 제목 : '+data.meetingTitle+'</p>'+
+                    			'<p>공연 번호 : '+data.showNo+'</p>'+
+                    			'<p>공연 제목 : '+data.showName+'</p>'+
+                    			'<p>소모임 주최 장소 : '+data.meetingPlace+'</p>'+
+                    			'<p>소모임 참여 인원 : '+data.meetingCount+'</p>'+
+                    			'<p>소모임 주최 날짜 : '+data.meetingDate+'</p>'+
+                    			'<p>소모임 구인 시작 날짜 : '+data.startDate+'</p>'+
+                    			'<p>소모임 구인 종료 날짜 : '+data.endDate+'</p>'+
+                    			'<p>소모임 상세내용 : '+Content+'</p>';
                     	} else if(data.questionNo){
                     		detailContent.innerHTML =
                     			'<p><strong>1:1 문의 상세내용</strong></p>'+
@@ -480,7 +544,28 @@ body {
                     			'<p>문의 내용 : <br>'+data.quContent+'</p>'+
                     			'<p>문의 날짜 : '+contentCreateDate+'</p>'+
                     			'<p>답변 내용 : <br>'+data.answerContent+'</p>'
-                    	} else if(data.reservationId){
+                    	} else if(data.enrollDate){
+                    		detailContent.innerHTML =
+                    			'<p><strong>사용자 상세내용</strong></p>'+
+                    			'<p>사용자 번호 : '+data.userNo+'</p>'+
+                    			'<p>사용자 아이디 : '+data.userId+'</p>'+
+                    			'<p>사용자 이름 : '+data.userName+'</p>'+
+                    			'<p>사용자 주민번호 : '+data.userRrn+'</p>'+
+                    			'<p>사용자 연락처 : '+data.phone+'</p>'+
+                    			'<p>사용자 이메일 : '+data.email+'</p>'+
+                    			'<p>사용자 주소 : '+data.address+'</p>'+
+                    			'<p>가입일 : '+data.enrollDate+'</p>'+
+                    			'<p>최종 정보 수정일 : '+data.modifyDate+'</p>'+
+                    			'<p>등급 : '+data.rank+'</p>'+
+                    			'<p>구독 여부 : '+data.subscribe+'</p>';
+                    	} else if(data.faqTitle){
+                    		detailContent.innerHTML = 
+                    			'<p><strong>FAQ 상세내용</strong></p>'+
+                    			'<p>FAQ 번호 : '+data.faqNo+'</p>'+
+                    			'<p>FAQ 제목 : '+data.faqTitle+'</p>'+
+                    			'<p>FAQ 내용 : '+Content+'</p>'+
+                    			'<p>FAQ 카테고리 : '+data.qcategoryName+'</p>';
+                    	}  else if(data.reservationId){
                     		detailContent.innerHTML = 
                 			'<p><strong>예약 상세내용</strong></p>'+
                 			'<p>예약 번호 : '+data.reservationId+'</p>'+
@@ -490,19 +575,23 @@ body {
                 			'<p>공연장 이름 : '+data.hallName+'</p>'+
                 			'<p>예약일 : '+contentCreateDate+'</p>';
                     	} else if(data.showNo){
-                    		detailContent.innerHTML = 
-                    			'<p><strong>공연 상세내용</strong></p>'+
-                    			'<p>공연 번호 : '+contentNo+'</p>'+
-                    			'<p>공연 제목 : '+contentTitle+'</p>'+
-                    			'<p>공연 설명 : '+Content+'</p>'+
-                    			'<p>공지사항 : '+data.notice+'</p>'+
-                    			'<p>공연장 이름 : '+data.hallName+'</p>'+
-                    			'<p>공연 장르 : '+data.genreName+'</p>'+
-                    			'<p>공연 지역 : '+data.regionName+'</p>'+
-                    			'<p>공연 시작일 : '+data.showStart+'</p>'+
-                    			'<p>공연 종료일 : '+data.showEnd+'</p>'+
-                    			'<p>조회수 : '+data.count+'</p>';
-                    	} 
+                    	    detailContent.innerHTML = 
+                    	        '<p><strong>공연 상세내용</strong></p>'+
+                    	        '<p>공연 번호 : '+contentNo+'</p>'+
+                    	        '<p>공연 제목 : '+contentTitle+'</p>'+
+                    	        '<p>공연 설명 : '+Content+'</p>'+
+                    	        '<p>공지사항 : '+data.notice+'</p>'+
+                    	        '<p>공연장 이름 : '+data.hallName+'</p>'+
+                    	        '<p>공연 장르 : '+data.genreName+'</p>'+
+                    	        '<p>공연 지역 : '+data.regionName+'</p>'+
+                    	        '<p>공연 시작일 : '+data.showStart+'</p>'+
+                    	        '<p>공연 종료일 : '+data.showEnd+'</p>'+
+                    	        '<p>조회수 : '+data.count+'</p>'+
+                    	        '<p>포스터 이미지</p>' +
+                    	        '<img src="'+data.posterPath + '" alt="포스터 이미지">' +
+                    	        '<p>상세내용 이미지</p>'+
+                    	        '<img src="'+data.detailPath + '" alt="상세 이미지">';
+                    	}
                         detailRow.setAttribute('data-loaded', 'true');
                         if (detailRow.style.display === 'none' || !detailRow.style.display) {
                             detailRow.style.display = 'table-row';
@@ -532,23 +621,56 @@ body {
         function editItem(row) {
             let editUrl = '';
             if (row.noticeNo) {
-                editUrl = '${contextPath}/managerPage/noticeUpdate?noticeNo='+row.noticeNo;
+                editUrl = `${contextPath}/managerPage/noticeUpdate?noticeNo=`+row.noticeNo;
             } else if (row.faqNo) {
-                editUrl = '${contextPath}/managerPage/faqUpdate?faqNo='+row.faqNo;
+                editUrl = `${contextPath}/managerPage/faqUpdate?faqNo=`+row.faqNo;
+            } else if (row.meetingNo){
+            	editUrl = `${contextPath}/managerPage/meetingUpdate?meetingNo=`+row.meetingNo;
+            } else if (row.chatNo){
+            	editUrl = `${contextPath}/managerPage/chatUpdate?chatNo=`+row.chatNo;
             } else if (row.showNo) {
-                editUrl = '${contextPath}/managerPage/showUpdate?showNo='+row.showNo;
-            } else if (row.userNo) {
-            	editUrl = '${contextPath}/managerPage/userUpdate?userNo='+row.userNo;
+                editUrl = `${contextPath}/managerPage/showUpdate?showNo=`+row.showNo;
             } else if (row.questionNo) {
-                editUrl = '${contextPath}/managerPage/questionAnswer?questionNo='+row.questionNo;
+                editUrl = `${contextPath}/managerPage/questionAnswer?questionNo=`+row.questionNo;
+            } else if (row.userNo) {
+            	editUrl = `${contextPath}/managerPage/userUpdate?userNo=`+row.userNo;
             } else {
-                console.error('수정 URL을 생성할 수 없습니다.');
+                console.error('수정 및 답변 URL을 생성할 수 없습니다.');
                 return;
             }
-
             // 페이지 이동
             window.location.href = editUrl;
-        }
+        };
+        
+        function deleteItem(row) {
+            let deleteUrl = '';
+            if (row.noticeNo) {
+            	deleteUrl = `${contextPath}/managerPage/noticeDelete?noticeNo=`+row.noticeNo;
+            } else if (row.reservationId){
+            	deleteUrl = `${contextPath}/managerPage/reservationDelete?reservationId=`+row.reservationId
+            } else if (row.chatNo){
+            	deleteUrl = `${contextPath}/managerPage/chatDelete?chatNo=`+row.chatNo;
+            } else if (row.faqNo) {	
+            	deleteUrl = `${contextPath}/managerPage/faqDelete?faqNo=`+row.faqNo;
+            } else if (row.meetingNo){
+            	deleteUrl = `${contextPath}/managerPage/meetingDelete?meetingNo=`+row.meetingNo;
+            } else if (row.showNo) {
+            	deleteUrl = `${contextPath}/managerPage/showDelete?showNo=`+row.showNo;
+            } else if (row.questionNo) {
+            	deleteUrl = `${contextPath}/managerPage/questionDelete?questionNo=`+row.questionNo;
+            } else if (row.userNo) {
+            	deleteUrl = `${contextPath}/managerPage/userDelete?userNo=`+row.userNo;
+            }   else {
+                console.error('삭제 URL을 생성할 수 없습니다.');
+                return;
+            }
+            
+            if(confirm("정말 삭제하시겠습니까?")){
+            	window.location.href=deleteUrl;
+            } else {
+            	window.location.href=`${contextPath}/managerPage`;
+            }
+        };
     });
 </script>
 </body>
