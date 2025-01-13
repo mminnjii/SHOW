@@ -115,7 +115,7 @@
        	<div id="showDiv1" class="showDiv2 showDiv22" style="width: 200px;">
 	        <select id="category" name="category" required>
 	            <option value="" disabled selected>공연카테고리를 선택하세요</option>
-	            <c:forEach var="g" items="${genreList}">
+	            <c:forEach var="g" begin="1" items="${genreList}">
 		            <option value="${g.genreNo}" id="genreNo">${g.genreName}</option>
 	            </c:forEach>
 	        </select>

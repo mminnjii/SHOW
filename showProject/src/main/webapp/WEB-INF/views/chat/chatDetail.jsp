@@ -135,7 +135,7 @@
             align-items: center;
         }
 
-        .chat input {
+        .chat textarea {
             flex: 1;
             padding: 10px;
             font-size: 14px;
@@ -247,7 +247,7 @@
             </div>
             <hr>
             <div class="chatArea">
-            	<p style="color: red; font-size: 10px; text-align: right;">* 나가기 버튼을 클릭하시면 채팅방 참여자에서 삭제 됩니다. <br>(마이페이지>My서비스>내채팅방 목록 삭제)</p>
+            	<p style="color: red; font-size: 10px; text-align: right;">* 나가기 버튼을 누르면 채팅방에서 즉시 탈퇴됩니다. 채팅방을 유지하려면 뒤로가기 버튼을 눌러주세요. <br>채팅방 목록은 [마이페이지 > My서비스 > 내 채팅방]에서 확인할 수 있습니다.</p>
                 <div class="info">
                     <!-- 내 메세지인 경우에는 오른쪽에 표시되도록 조건 처리 필요 -->
 					<!-- 기존 채팅 내역 출력 -->
@@ -287,7 +287,7 @@
                 </div>
                 <hr>
                 <div class="chat">
-                    <input id="chatMsg" type="text" class="form-control" placeholder="메시지를 입력해 주세요."> 
+                	<textarea id="chatMsg" class="form-control" placeholder="메시지를 입력해 주세요." style="resize: none; "></textarea>
                     <button class="btn btn-secondary" onclick="send();">전송</button>
                 </div>
             </div>
@@ -299,7 +299,7 @@
 		console.log(${loginUser.userNo});
 	
 		// 스크롤 제일 하단 보기 => 어떤 원리인지 공부하기 
-		var $info = $(".info");
+		var $info = $(".info"); 
 		$info.scrollTop($info[0].scrollHeight);
 	
 		// 페이지가 로드되면 바로 소켓 연결 
