@@ -1,19 +1,21 @@
 package com.kh.show.showInfo.model.vo;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class ManagerShowInfo {
+public class ManagerUpdateShow {
 	private int showNo;
 	private String showName;
 	private String showExplain;
 	private String price;
+	private String notice;
 	private String hallName;
 	private String genreName;
 	private String regionName;
 	private String showStart;
 	private String showEnd;
-	private int count;
+	private String posterChangeName;
+	private String detailChangeName;
+	private String posterPath;
+	private String detailPath;
 }

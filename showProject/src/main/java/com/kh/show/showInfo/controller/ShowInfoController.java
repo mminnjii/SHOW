@@ -50,7 +50,6 @@ public class ShowInfoController {
 		
 		double sPrice = Integer.parseInt(s.getPrice().replace(",", ""));
 		double vipPrice = sPrice*1.4;
-
 		double rPrice = sPrice*1.2; 
 		
 		NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
@@ -77,9 +76,7 @@ public class ShowInfoController {
 		}
 
 	}
-		
 		return "show/showInfo/detailInfo";
-	
 	}
 	
 
@@ -108,11 +105,9 @@ public class ShowInfoController {
 		    model.addAttribute("s", s);
 		   int showNo =  s.getShowNo();
 		   
-		   
 		// 리뷰 갯수 세어오기
 		int count =  showInfoService.selectRcount(showNo); 
 		model.addAttribute("count",count);
-		
 		
 		// 리뷰 조회
 	    ArrayList<Review> list  = showInfoService.selectReview(showNo);  
@@ -123,12 +118,13 @@ public class ShowInfoController {
 		for(Review r : list ) { 
 			
 			reviewAvg += r.getReviewScore();
-			
+			// 사용자 아이디 마스킹 처리하기
 			String id = r.getUserId();
 			String maskedBid = id.substring(0, id.length() - 3).replaceAll(".", "*") + id.substring(id.length() - 3);
 			r.setUserId(maskedBid);
 		}
 		
+		// 리뷰평균값 매기기
 		reviewAvg = Math.round((reviewAvg/count) * 10) / 10.0;
 		double avgFloor = Math.floor(reviewAvg);
 		
@@ -148,7 +144,7 @@ public class ShowInfoController {
 		// 검색된 리뷰 갯수 세어오기
 		int count =  showInfoService.searchRcount(keyword); 
 		model.addAttribute("count",count);
-		
+	
 		
 		return "show/showInfo/review";
 	}
@@ -200,7 +196,8 @@ public class ShowInfoController {
 	
 	// 리뷰 등록하기 이동
 	@GetMapping("/enroll")
-	public String enroll() {
+	public String enroll(Model model, int showNo) {
+		model.addAttribute("showNo",showNo);
 		return "show/showInfo/reviewEnroll";
 	}
 	
@@ -209,11 +206,8 @@ public class ShowInfoController {
 	@ResponseBody
 	@PostMapping(value = "/enrollReview",produces = "text/html; charset=UTF-8")
 	public String enrollReview(Review r) {
-		
-		r.getUserNo();
 		int enrollReview = showInfoService.enrollReview(r);
 		
-
 		if(enrollReview>0) {
 			return "NNNNY";
 		}else {
@@ -231,9 +225,8 @@ public class ShowInfoController {
 		 
 		 int rank = (int)r.getReviewScore()*20;
 		 model.addAttribute("rank",rank);
-		 
-		
-		return "show/showInfo/reviewUpdate";
+
+		 return "show/showInfo/reviewUpdate";
 	}
 	
 	

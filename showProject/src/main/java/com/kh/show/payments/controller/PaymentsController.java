@@ -25,7 +25,6 @@ import com.kh.show.payments.model.service.PaymentsService;
 import com.kh.show.payments.model.vo.Payments;
 import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
-import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.Ticket;
 
 @Controller

@@ -74,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				OR NOTICE_CONTENT LIKE '%' || #{keyword} || '%')
 			</when>
 		</choose>
+		ORDER BY CREATEDATE DESC
 	</select>
 	
 	<!-- 오픈공지 검색 목록 개수  -->
@@ -112,6 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				OR OPEN_EXPLAIN LIKE '%' || #{keyword} || '%')
 			</when>
 		</choose>
+		ORDER BY CREATE_DATE DESC
 	</select>
 	
 	<!-- 공지사항 상세보기 -->
@@ -128,6 +130,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET COUNT = COUNT+1
 		WHERE NOTICE_NO = #{nno}
 	</update>
+	
+	<!-- 오픈공지 조회수 up  -->
+	<update id="opennoticeUpCount">
+		UPDATE OPEN_NOTICE
+		SET COUNT = COUNT+1
+		WHERE OPEN_NO = #{openNo}
+	</update>
 
 	<!-- 오픈공지 개수 -->
 	<select id="openlistCount" resultType="_int">
@@ -139,25 +148,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOpenList" resultMap="openNoticeResultSet">
 		SELECT * 
 		FROM OPEN_NOTICE
+		ORDER BY CREATE_DATE DESC
 	</select>
 	
 	
-	<!-- 오픈공지 상세페이지 -->
-	<select id="openSelect" resultMap="openNoticeResultSet">
-	SELECT  S.SHOW_NAME
-	       ,SHOW_EXPLAIN
-	       ,R.REGION_NAME
-	       ,SHOW_START
-	       ,SHOW_END
-	       ,POSTER_ORIGINNAME
-	       ,POSTER_CHANGENAME
-	       ,PRICE
-	FROM SHOW S 
-	JOIN OPEN_NOTICE O ON(S.OPEN_NO = O.OPEN_NO)
-	JOIN REGION R ON(S.REGION_NO = R.REGION_NO)
-	WHERE SHOW_NAME = #{showName}
-	AND STATUS = 'Y'
-	</select>
+	
 	
 </mapper>
 
