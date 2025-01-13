@@ -222,7 +222,7 @@
 		<div class="outer2">
 			<h3>고객센터 안내</h3>
 			<div>
-				<i class="fa-solid fa-magnifying-glass"> 티켓 1234-1234</i>
+				<i class="fa-solid fa-magnifying-glass"> 티켓 1588-2690</i>
 				<p>○ 09:00 ~ 18:00 (연중무휴)</p>
 				<p>○ 입점 판매 문의는 점심시간 (12:00 ~ 13:00) 및 주말/공휴일 상담 제외</p>
 			</div>

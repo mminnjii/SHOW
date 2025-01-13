@@ -111,7 +111,7 @@
                 <c:choose>
                     <c:when test="${empty chatList}">
                     	<tr>
-							<td colspan="6" style="text-align: center;" id="noting" >조회된 게시글이 없습니다.</td>	
+							<td colspan="6" style="text-align: center;" id="noting" >조회된 채팅방이 없습니다.</td>	
                   		</tr>
                     </c:when>
                     <c:otherwise>
