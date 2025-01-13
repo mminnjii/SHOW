@@ -172,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 메인페이지 지역별랭킹 제주 -->
 	<select id="mainRegionRank6" resultMap="showResultSet">
-	SELECT *
+		SELECT *
 		FROM (
 		SELECT SHOW_NO
 	  		   ,SHOW_NAME

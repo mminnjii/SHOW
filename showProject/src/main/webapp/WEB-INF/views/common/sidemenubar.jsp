@@ -61,17 +61,17 @@
     </tr>
 </table>
 
-<script>
-
-$(document).on('click','.Top td',function(){
+	<script>
 	
-	//input이라 요소 찾기를 제대로 해야함
-	var showName = $(this).closest('tr').find('.input2').val();
-
-	console.log(showName); 
-	location.href = "/show/showInfo/detail?showName="+ showName;
+	$(document).on('click','.Top td',function(){
+		
+		//input이라 요소 찾기를 제대로 해야함
+		var showName = $(this).closest('tr').find('.input2').val();
 	
-});
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+	});
 
 
     $(document).ready(function() {
