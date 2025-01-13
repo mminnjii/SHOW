@@ -28,10 +28,14 @@
         font-style: normal;
         color: black;
     }
-    #rank1{
+    
+    #b1:hover,#b2:hover{
+    border-color: black;
+    }
+    .rank1{
         border-style: none;
         font-family: "Noto Sans KR", sans-serif;
-        font-size: 25px;
+        font-size: 35px;
         font-weight: 500;
         font-style: normal;
         color: black;
@@ -122,7 +126,7 @@
 
     <div class="musicalRanking" >
         <table  class="rankTable">
-            <tr> <td id="rank1">랭킹</td>  </tr>
+            <tr> <td class="rank1">랭킹</td>  </tr>
             <br><br>
             <tr>
             <td colspan="9" id="list">
@@ -182,6 +186,21 @@
      
 
    <script>
+   
+   
+   $("#list > button").click(function(){
+       // 클릭된 버튼의 스타일을 바꾸기
+       $(this).css({
+           "background-color": "black",
+           "color": "white"
+       });
+
+       // 다른 버튼들의 스타일을 초기화
+       $("#list > button").not(this).css({
+           "background-color": "white",
+           "color": "black"
+       });
+   });
    
    
    

@@ -56,6 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_START" property="showStart"/>
 		<result column="SHOW_END" property="showEnd"/>
 		<result column="COUNT" property="count"/>
+		<result column="POSTER_CHANGENAME" property="posterChangeName"/>
+		<result column="DETAIL_CHANGENAME" property="detailChangeName"/>
 	</resultMap>
 	<resultMap type="ManagerUpdateShow" id="ManagerUpdateShow">
 		<result column="SHOW_NO" property="showNo"/>
@@ -121,13 +123,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="ManagerQuestion2" id="questionResultSet2">
 		<result column="QUESTION_NO" property="questionNo"/>
 		<result column="USER_NO" property="userNo"/>
-		<result column="USER_NAME" property="userName"/>
+		<result column="USER_ID" property="userId"/>
 		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="QCATEGORY_NO" property="qcategoryNo"/>
 		<result column="QCATEGORY_NAME" property="qcategoryName"/>
 		<result column="Q_TITLE" property="quTitle"/>
 		<result column="Q_CONTENT" property="quContent"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="CREATEDATE" property="createDate"/>
 		<result column="ANSWER_CONTENT" property="answerContent"/>
+	</resultMap>
+	<resultMap type="ManagerMeeting" id="MeetingResultSet">
+		<result column="MEETING_NO" property="meetingNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="MEETING_TITLE" property="meetingTitle"/>
+		<result column="SHOW_NO" property="showNo"/>
+		<result column="SHOW_NAME" property="showName"/>
+		<result column="MEETING_PLACE" property="meetingPlace"/>
+		<result column="MEETING_COUNT" property="meetingCount"/>
+		<result column="MEETING_DATE" property="meetingDate"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		<result column="INFOMATION" property="information"/>
+	</resultMap>
+	<resultMap type="ManagerChat" id="ChatingResultSet">
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="CHAT_TITLE" property="chatTitle"/>
+		<result column="SHOW_NO" property="showNo"/>
+		<result column="SHOW_NAME" property="showTitle"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="CHAT_USER_COUNT" property="chatUserCount"/>
+		<result column="CREATEDATE" property="createDate"/>
 	</resultMap>
 	
 	<select id="loginManager" resultMap="managerResultSet">
@@ -198,6 +226,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN GENRE G USING (GENRE_NO)
 		INNER JOIN REGION R USING (REGION_NO)
 		ORDER BY S.SHOW_NO
+	</select>
+	
+	<select id="selectAllMeeting" resultMap="MeetingResultSet">
+		SELECT MEETING_NO, MEM.USER_ID, MEET.USER_NO, MEETING_TITLE, MEET.SHOW_NO, S.SHOW_NAME, MEETING_PLACE, MEETING_COUNT, MEETING_DATE, MEET.START_DATE, MEET.END_DATE
+		FROM MEETING MEET
+		INNER JOIN MEMBER MEM ON (MEET.USER_NO = MEM.USER_NO)
+		INNER JOIN SHOW S ON (MEET.SHOW_NO = S.SHOW_NO)
+	</select>
+	
+	<select id="selectAllChating" resultMap="ChatingResultSet">
+		SELECT CHAT_NO, CHAT_TITLE, C.SHOW_NO, S.SHOW_NAME, C.USER_NO, M.USER_ID, CHAT_USER_COUNT, C.CREATEDATE
+		FROM CHAT C
+		INNER JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		INNER JOIN SHOW S ON (C.SHOW_NO = S.SHOW_NO)
 	</select>
 	
 	<insert id="showInsert" parameterType="Show">
@@ -275,7 +317,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="showDetail" resultMap="ManagerShowInfoResultSet2">
-		SELECT S.SHOW_NO, SHOW_NAME, SHOW_EXPLAIN, PRICE, NOTICE, HALL_NAME, GENRE_NAME, REGION_NAME, SHOW_START, SHOW_END, COUNT
+		SELECT S.SHOW_NO, SHOW_NAME, SHOW_EXPLAIN, PRICE, NOTICE, HALL_NAME, GENRE_NAME, REGION_NAME, SHOW_START, SHOW_END, COUNT, POSTER_CHANGENAME, DETAIL_CHANGENAME
 		FROM SHOW S
 		INNER JOIN HALL USING (HALL_NO)
 		INNER JOIN GENRE USING(GENRE_NO)
@@ -305,6 +347,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN MEMBER M ON (Q.USER_NO = M.USER_NO)
 		INNER JOIN QCATEGORY QC ON (Q.QCATEGORY_NO = QC.QCATEGORY_NO)
 		WHERE QUESTION_NO = #{qNo}
+	</select>
+	
+	<select id="userDetail" resultMap="memberResultSet">
+		SELECT USER_NO, USER_ID, USER_NAME, USER_RRN, PHONE, EMAIL, ADDRESS, ENROLL_DATE, MODIFY_DATE, RANK, SUBSCRIBE
+		FROM MEMBER
+		WHERE USER_NO = #{uNo}
+	</select>
+	
+	<select id="meetingDetail" resultMap="MeetingResultSet">
+		SELECT MEETING_NO, MEET.USER_NO, MEM.USER_ID, MEETING_TITLE, MEET.SHOW_NO, S.SHOW_NAME, MEETING_PLACE, MEETING_COUNT, MEETING_DATE, START_DATE, END_DATE, INFOMATION
+		FROM MEETING MEET
+		INNER JOIN MEMBER MEM ON (MEET.USER_NO = MEM.USER_NO)
+		INNER JOIN SHOW S ON (MEET.SHOW_NO = S.SHOW_NO)
+		WHERE MEETING_NO = #{meetNo}
+	</select>
+	
+	<select id="chatDetail" resultMap="ChatingResultSet">
+		SELECT CHAT_NO, CHAT_TITLE, C.SHOW_NO, S.SHOW_NAME, C.USER_NO, M.USER_ID, CHAT_USER_COUNT, CREATEDATE
+		FROM CHAT C
+		INNER JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		INNER JOIN SHOW S ON (C.SHOW_NO = S.SHOW_NO)
+		WHERE CHAT_NO = #{chatNo} 
 	</select>
 	
 	<select id="beforeNoticeUpdate" resultMap="noticeResultSet">
@@ -378,4 +442,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			DETAIL_CHANGENAME = #{detailChangeName}
 		WHERE SHOW_NO = #{showNo}
 	</update>
+	
+	<select id="beforeQuestionAnswer" resultMap="questionResultSet2">
+		SELECT QUESTION_NO, Q.USER_NO, M.USER_ID, RESERVATION_ID, Q.QCATEGORY_NO, QCATEGORY_NAME, Q_TITLE, Q_CONTENT, Q.CHANGE_NAME, CREATEDATE, ANSWER_CONTENT
+		FROM QUESTION Q
+		INNER JOIN MEMBER M ON (Q.USER_NO = M.USER_NO)
+		INNER JOIN QCATEGORY QC ON (Q.QCATEGORY_NO = QC.QCATEGORY_NO)
+		WHERE QUESTION_NO = #{qNo}
+	</select>
+	
+	<update id="afterQuestionAnswer" parameterType="question">
+		UPDATE QUESTION
+		SET ANSWER_CONTENT = #{answerContent}
+		WHERE QUESTION_NO = #{questionNo}
+	</update>
+	
+	<select id="beforeMeetingUpdate" resultMap="MeetingResultSet">
+		SELECT MEETING_NO, MEET.USER_NO, MEM.USER_ID, MEETING_TITLE, MEET.SHOW_NO, S.SHOW_NAME, MEETING_PLACE, MEETING_COUNT, MEETING_DATE, START_DATE, END_DATE, INFOMATION
+		FROM MEETING MEET
+		INNER JOIN MEMBER MEM ON (MEET.USER_NO = MEM.USER_NO)
+		INNER JOIN SHOW S ON (MEET.SHOW_NO = S.SHOW_NO)
+	</select>
+	
+	<update id="afterMeetingUpdate" parameterType="meeting">
+		UPDATE MEETING
+		SET MEETING_TITLE = #{meetingTitle},
+			INFOMATION = #{information}
+		WHERE MEETING_NO = #{meetingNo}
+	</update>
+	
+	<delete id="noticeDelete" parameterType="_int">
+		DELETE FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+	</delete>
+	
+	<delete id="faqDelete" parameterType="_int">
+		DELETE FROM FAQ
+		WHERE FAQ_NO = #{faqNo}
+	</delete>
+	
+	<delete id="meetingDelete" parameterType="_int">
+		DELETE FROM MEETING
+		WHERE MEETING_NO = #{meetingNo}
+	</delete>
+	
+	<delete id="showDelete" parameterType="_int">
+		DELETE FROM SHOW
+		WHERE SHOW_NO = #{showNo}
+	</delete>
+	
+	<delete id="questionDelete" parameterType="_int">
+		DELETE FROM QUESTION
+		WHERE QUESTION_NO = #{questionNo}
+	</delete>
+	
+	<delete id="userDelete" parameterType="_int">
+		DELETE FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</delete>
+	
+	<delete id="chatDelete" parameterType="_int">
+		DELETE FROM CHAT
+		WHERE CHAT_NO = #{chatNo}
+	</delete>
+	
+	<delete id="reservDelete" parameterType="_int">
+		DELETE FROM RESERVATION
+		WHERE RESERVATION_ID = #{reservId}
+	</delete>
 </mapper>

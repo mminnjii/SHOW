@@ -88,43 +88,43 @@
 		    <!-- 제목 -->
 		    <div class="form-group">
 		    	<input type="hidden" id="userNo" name="userNo" value="${member.userNo}">
-		        <label for="noticeTitle">사용자 아이디</label>
+		        <label for="noticeTitle">아이디</label>
 		        <input type="text" id="userId" name="userId" value="${member.userId}" required>
 		    </div>
 		
 		    <!-- 공지 내용 -->
 		    <div class="form-group">
-		        <label for="userName">사용자 이름</label>
+		        <label for="userName">이름</label>
 		        <input type="text" id="userName" name="userName" value="${member.userName}" required>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userRrn">사용자 주민번호(외국인 등록번호)</label>
+		        <label for="userRrn">주민번호(외국인 등록번호)</label>
 		        <input type="text" id="userRrn" name="userRrn" value="${member.userRrn}" required>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="phone">사용자 연락처</label>
+		        <label for="phone">연락처</label>
 		        <input type="text" id="phone" name="phone" value="${member.phone}" required>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userEmail">사용자 이메일</label>
+		        <label for="userEmail">이메일</label>
 		        <input type="text" id="userEmail" name="userEmail" value="${member.email}" required>
 		    </div>
 
 		    <div class="form-group">
-		        <label for="userAddress">사용자 주소</label>
+		        <label for="userAddress">주소</label>
 		        <input type="text" id="userAddress" name="userAddress" value="${member.address}" required>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userRank">사용자 등급</label>
+		        <label for="userRank">등급</label>
 		        <input type="text" id="userRank" name="userRank" value="${member.rank}" required>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userSubscribe">사용자 구독 여부</label>
+		        <label for="userSubscribe">구독 여부</label>
 		        <input type="text" id="userSubscribe" name="userSubscribe" value="${member.subscribe}" required>
 		    </div>
 

@@ -198,7 +198,12 @@
 		    </div>
 		</form>
 	</div>
-
+	
+	<script>
+		console.log("${pageContext.request.contextPath}");
+		console.log("${show.detailPath}");
+	</script>
+	
     <script>
     document.getElementById('posterImage').addEventListener('change', function(event) {
         const file = event.target.files[0];

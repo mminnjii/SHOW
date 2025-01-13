@@ -67,7 +67,7 @@
 </head>
 <body>
 
-	<%@include file="/WEB-INF/views/common/menubar.jsp"%>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp"%>
 
 	<div class="a">
 		<h3>예약 확인/취소 페이지</h3>
