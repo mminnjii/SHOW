@@ -10,8 +10,9 @@ import lombok.Data;
 public class ManagerQuestion {
 	private int questionNo; 		//QUESTION_NO	NUMBER
 	private int userNo; 			//USER_NO	NUMBER
+	private String userName;
 	private String reservationId; 		//RESERVATION_ID	NUMBER
-	private int qcategoryNo; 		//QCATEGORY_NO	NUMBER
+	private String qcategoryName; 		//QCATEGORY_NO	NUMBER
 	private String quTitle; 			//Q_TITLE	VARCHAR2(500 BYTE)
 	private Date createDate; 		//CREATEDATE	DATE
 }

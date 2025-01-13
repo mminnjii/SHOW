@@ -20,12 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
+import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo2;
+import com.kh.show.showInfo.model.vo.ManagerUpdateShow;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Controller
@@ -97,11 +101,10 @@ public class ManagerController {
 	        
 	        String posterOriginName = posterFile.getOriginalFilename();
 	        String detailOriginName = detailFile.getOriginalFilename();
-	        String extension = posterOriginName.substring(posterOriginName.lastIndexOf("."));
 	        String startDate = show.getShowStart().replace("-", "");
 	        String endDate = show.getShowEnd().replace("-", "");
-	        String posterChangeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
-	        String detailChangeName = genreName + "_" + regionName + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + extension;
+	        String posterChangeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
+	        String detailChangeName = genreName + "_" + regionName + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
 	        
 
 	        // 경로 지정
@@ -171,6 +174,7 @@ public class ManagerController {
 	    return "redirect:/managerPage";
 	}
 	
+//	공지사항 등록하기
 	@PostMapping("/managerPage/noticeInsert")
 	public String noticeInsert(@ModelAttribute Notice n,
 							   HttpSession session) {
@@ -186,42 +190,39 @@ public class ManagerController {
 		}
 	}
 	
+//	공지 목록 불러오기
 	@GetMapping("/managerPage/noticeList")
 	@ResponseBody
 	public List<Notice> selectAllNotice(){
 		return service.selectAllNotice();
 	}
 	
+//	공지 상세보기
+	@GetMapping("/managerPage/notice")
+	@ResponseBody
+	public Notice noticeDetail(@RequestParam(value = "noticeNo") int noticeNo, Model model) {
+	    Notice n = service.noticeDetail(noticeNo);  // service에서 해당 데이터를 가져옵니다.
+	    model.addAttribute("notice", n);
+	    return n;  // 반환된 데이터를 프론트엔드에 전송
+	}
+	
+//	FAQ(자주 묻는 질문) 목록 불러오기
 	@GetMapping("/managerPage/faqList")
 	@ResponseBody
 	public List<Faq> selectAllFaq(){
 		return service.selectAllFaq();
 	}
 	
-	@GetMapping("/managerPage/memberList")
+//	FAQ(자주 묻는 질문) 상세보기
+	@GetMapping("/managerPage/faq")
 	@ResponseBody
-	public List<Member> selectAllMember(){
-		return service.selectAllMember();
+	public Faq faqDetail(@RequestParam(value = "faqNo") int faqNo, Model model) {
+		Faq f = service.faqDetail(faqNo);
+		model.addAttribute("faq", f);
+		return f;
 	}
 	
-	@GetMapping("/managerPage/reservList")
-	@ResponseBody
-	public List<Reservation> selectAllReserv(){
-		return service.selectAllReserv();
-	}
-	
-	@GetMapping("/managerPage/showList")
-	@ResponseBody
-	public List<Show> selectAllShow(){
-		return service.selectAllShow();
-	}
-	
-	@GetMapping("/managerPage/questionList")
-	@ResponseBody
-	public List<ManagerQuestion> selectAllQuestion(){
-		return service.selectAllQuestion();
-	}
-	
+//	FAQ(자주 묻는 질문) 삽입
 	@GetMapping("/managerPage/faqInsert")
 	public String insertFaq() {
 		return "manager/faqInsert";
@@ -241,26 +242,44 @@ public class ManagerController {
 		return "redirect:/managerPage";
 	}
 	
-	@GetMapping("/managerPage/notice")
+//	멤버 목록 불러오기
+	@GetMapping("/managerPage/memberList")
 	@ResponseBody
-	public Notice noticeDetail(@RequestParam(value = "noticeNo") int noticeNo, Model model) {
-	    Notice n = service.noticeDetail(noticeNo);  // service에서 해당 데이터를 가져옵니다.
-	    model.addAttribute("notice", n);
-	    return n;  // 반환된 데이터를 프론트엔드에 전송
+	public List<Member> selectAllMember(){
+		return service.selectAllMember();
 	}
+	
+//	예약 목록 불러오기
+	@GetMapping("/managerPage/reservList")
+	@ResponseBody
+	public List<Reservation> selectAllReserv(){
+		return service.selectAllReserv();
+	}
+	
+//	공연 목록 불러오기
+	@GetMapping("/managerPage/showList")
+	@ResponseBody
+	public List<ManagerShowInfo> selectAllShow(){
+		return service.selectAllShow();
+	}
+	
+//	예약 목록 불러오기
+	@GetMapping("/managerPage/questionList")
+	@ResponseBody
+	public List<ManagerQuestion> selectAllQuestion(){
+		return service.selectAllQuestion();
+	}
+	
+	
+	
 
-	@GetMapping("/managerPage/faq")
-	@ResponseBody
-	public Faq faqDetail(@RequestParam(value = "faqNo") int faqNo, Model model) {
-		Faq f = service.faqDetail(faqNo);
-		model.addAttribute("faq", f);
-		return f;
-	}
+
+	
 
 	@GetMapping("/managerPage/show")
 	@ResponseBody
-	public Show showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
-		Show s = service.showDetail(showNo);
+	public ManagerShowInfo2 showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
+		ManagerShowInfo2 s = service.showDetail(showNo);
 		model.addAttribute("show", s);
 	    return s;
 	}
@@ -273,14 +292,221 @@ public class ManagerController {
 		return r;
 	}
 	
-	/*
-	@GetMapping("/managerPage/questionList")
+	@GetMapping("/managerPage/question")
 	@ResponseBody
-	public ManagerQuestion questionDetail(@RequestParam(value= "questionNo") int questionNo, Model model) {
-		ManagerQuestion q = service.selectAllQuestion(questionNo);
-		model.addAttribute("question", q);
-		return q;
+	public ManagerQuestion2 questionDetail(@RequestParam(value = "questionNo") Integer qNo, Model model) {
+	    ManagerQuestion2 q = service.questionDetail(qNo);
+	    model.addAttribute("question", q);
+	    return q;
 	}
-	*/
 	
+	@GetMapping("/managerPage/noticeUpdate")
+	public String beforeNoticeUpdate(@RequestParam(value="noticeNo") int noticeNo, Model model){
+		Notice notice = service.beforeNoticeUpdate(noticeNo);
+		model.addAttribute("notice", notice);
+		
+		return "manager/noticeUpdate";
+	}
+	
+	@PostMapping("/managerPage/noticeUpdate")
+	public String afterNoticeUpdate(HttpServletRequest request, HttpSession session) {
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		String noticeTitle = request.getParameter("noticeTitle");
+		String noticeContent = request.getParameter("noticeContent");
+		Notice notice = new Notice();
+		notice.setNoticeNo(noticeNo);
+		notice.setNoticeTitle(noticeTitle);
+		notice.setNoticeContent(noticeContent);
+		int result = service.afterNoticeUpdate(notice);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "공지사항 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "공지사항 수정에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/faqUpdate")
+	public String beforeFaqUpdate(@RequestParam(value="faqNo") int faqNo, Model model) {
+		Faq faq = service.beforeFaqUpdate(faqNo);
+		model.addAttribute(faq);
+		
+		return "manager/faqUpdate";
+	}
+	
+	@PostMapping("/managerPage/faqUpdate")
+	public String afterFaqUpdate(HttpServletRequest request, HttpSession session) {
+		int faqNo = Integer.parseInt(request.getParameter("faqNo"));
+		String faqTitle = request.getParameter("faqTitle");
+		String faqContent = request.getParameter("faqContent");
+		Faq faq = new Faq();
+		faq.setFaqNo(faqNo);
+		faq.setFaqTitle(faqTitle);
+		faq.setFaqContent(faqContent);
+		int result = service.afterFaqUpdate(faq);
+		if(result>0) {
+			session.setAttribute("alertMsg", "FAQ 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "FAQ 수정에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/userUpdate")
+	public String beforeUserUpdate(@RequestParam(value="userNo") int userNo, Model model) {
+		Member member = service.beforeUserUpdate(userNo);
+		model.addAttribute(member);
+		
+		return "manager/userUpdate";
+	}
+	
+	@PostMapping("managerPage/userUpdate")
+	public String afterUserUpdate(HttpServletRequest request, HttpSession session) {
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		String userId = request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String userRrn = request.getParameter("userRrn");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String address = request.getParameter("address");
+		String rank = request.getParameter("rank");
+		String subscribe = request.getParameter("subscribe");
+		Member m = new Member();
+		m.setUserNo(userNo);
+		m.setUserId(userId);
+		m.setUserName(userName);
+		m.setUserRrn(userRrn);
+		m.setPhone(phone);
+		m.setEmail(email);
+		m.setAddress(address);
+		m.setRank(rank);
+		m.setSubscribe(subscribe);
+		
+		int result = service.afterUserUpdate(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "회원 정보 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "회원 정보 수정에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/showUpdate")
+	public String beforeUpdateShow(@RequestParam(value="showNo") int showNo, Model model, HttpSession session, HttpServletRequest request) {
+		ManagerUpdateShow show = service.beforeShowUpdate(showNo);
+        String startDate = show.getShowStart().replace("-", "");
+        String endDate = show.getShowEnd().replace("-", ""); 
+        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/"+show.getGenreName()+"_"+show.getRegionName()+"/");
+        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/"+show.getGenreName()+"_"+show.getRegionName()+"/");
+        String posterChangeName = show.getGenreName() + "_" + show.getRegionName() + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
+        String detailChangeName = show.getGenreName() + "_" + show.getRegionName() + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
+        String posterPath = "/resources/PosterUploadFiles/" + show.getGenreName() + "_" + show.getRegionName() + "/" + posterChangeName;
+        String detailPath = "/resources/DetailUploadFiles/" + show.getGenreName() + "_" + show.getRegionName() + "/" + detailChangeName;
+        session.setAttribute("posterPath", posterPath);
+        session.setAttribute("detailPath", detailPath);
+        show.setPosterChangeName(posterChangeName);
+        show.setDetailChangeName(detailChangeName);
+        show.setPosterPath(posterPath);
+        show.setDetailPath(detailPath);
+        
+		model.addAttribute("show", show);
+		
+		return "manager/showUpdate";
+	}
+	
+	@PostMapping("/managerPage/showUpdate")
+	public String showUpdate(
+	    @ModelAttribute Show show,
+	    @RequestParam("posterImage") MultipartFile posterFile,
+	    @RequestParam("detailImage") MultipartFile detailFile,
+	    HttpServletRequest request,
+	    HttpSession session) {
+		
+	    String genreNameArr[] = {"뮤지컬", "연극", "콘서트", "클래식", "전시"};
+	    String regionNameArr[] = {"서울", "경기/인천", "충청/강원", "대구/경북", "부산/경남", "광주/전라", "제주"};
+	    
+	    String genreName = genreNameArr[show.getGenreNo()-1];
+	    String regionName = regionNameArr[show.getRegionNo()-1];
+	    
+	    if (!posterFile.isEmpty()) {
+	        
+	        String posterOriginName = posterFile.getOriginalFilename();
+	        String detailOriginName = detailFile.getOriginalFilename();
+	        String startDate = show.getShowStart().replace("-", "");
+	        String endDate = show.getShowEnd().replace("-", "");
+	        String posterChangeName = genreName + "_" + regionName + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
+	        String detailChangeName = genreName + "_" + regionName + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
+	        
+
+	        // 경로 지정
+	        String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/");
+	        String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/");
+	        
+	     // 폴더 생성 (이미 존재하지 않으면)
+	        File posterDir = new File(posterSavePath);
+	        if (!posterDir.exists()) {
+	            posterDir.mkdirs();
+	        }
+
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String posterSubDirPath = posterSavePath + File.separator + genreName + "_" + regionName;
+	        File posterSubDir = new File(posterSubDirPath);
+	        if (!posterSubDir.exists()) {
+	            posterSubDir.mkdirs();
+	        }
+
+	        File detailDir = new File(detailSavePath);
+	        if (!detailDir.exists()) {
+	            detailDir.mkdirs();
+	        }
+
+	        // 상위 폴더를 만들고 하위 폴더도 생성
+	        String detailSubDirPath = detailSavePath + File.separator + genreName + "_" + regionName;
+	        File detailSubDir = new File(detailSubDirPath);
+	        if (!detailSubDir.exists()) {
+	            detailSubDir.mkdirs();
+	        }
+
+	        // 파일 저장
+	        File savePosterFile = new File(posterSubDirPath + File.separator + posterChangeName); // 경로 + 파일명
+	        try {
+	            posterFile.transferTo(savePosterFile);
+	        } catch (IllegalStateException | IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        if (!detailFile.isEmpty()) {
+	            File saveDetailFile = new File(detailSubDirPath + File.separator + detailChangeName); // 경로 + 파일명
+	            try {
+	                detailFile.transferTo(saveDetailFile);
+	            } catch (IllegalStateException | IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        // VO에 값 세팅
+	        show.setGenreNo(show.getGenreNo());
+	        show.setRegionNo(show.getRegionNo());
+	        show.setHallNo(show.getHallNo());
+	        show.setPosterOriginName(posterOriginName);
+	        show.setPosterChangeName(posterChangeName);
+	        show.setDetailOriginName(detailOriginName);
+	        show.setDetailChangeName(detailChangeName);
+	        System.out.println(show.getShowExplain());
+	        // 서비스 호출
+	        int result = service.afterShowUpdate(show);
+
+	        if (result > 0) {
+	            session.setAttribute("alertMsg", "공연 수정 완료");
+	        } else {
+	            session.setAttribute("alertMsg", "공연 수정 실패");
+	        }
+	    }
+	    return "manager/managerPage";
+	}
 }

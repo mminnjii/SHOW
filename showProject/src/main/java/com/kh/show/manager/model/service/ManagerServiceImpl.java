@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
+import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.dao.ManagerDao;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo2;
+import com.kh.show.showInfo.model.vo.ManagerUpdateShow;
 import com.kh.show.showInfo.model.vo.Show;
 
 @Service
@@ -109,14 +113,15 @@ public class ManagerServiceImpl implements ManagerService {
 
 //	공연 불러오기
 	@Override
-	public List<Show> selectAllShow() {
+	public List<ManagerShowInfo> selectAllShow() {
 
 		return dao.selectAllShow(sqlSession);
 	}
 	
+//	1:1 문의 가져오기
 	@Override
 	public List<ManagerQuestion> selectAllQuestion() {
-		
+
 		return dao.selectAllQuestion(sqlSession);
 	}
 
@@ -128,13 +133,13 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public Faq updateFaq() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public Show updateShow() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 	
@@ -157,7 +162,7 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public Show showDetail(int showNo) {
+	public ManagerShowInfo2 showDetail(int showNo) {
 
 		return dao.showDetail(sqlSession, showNo);
 	}
@@ -166,5 +171,59 @@ public class ManagerServiceImpl implements ManagerService {
 	public ManagerPageReservation2 reservDetail(int reservNo) {
 
 		return dao.reservDetail(sqlSession, reservNo);
+	}
+	
+	@Override
+	public ManagerQuestion2 questionDetail(int qNo) {
+
+		return dao.questionDetail(sqlSession, qNo);
+	}
+
+	@Override
+	public Notice beforeNoticeUpdate(int noticeNo) {
+		
+		return dao.beforeNoticeUpdate(sqlSession, noticeNo);
+	}
+	
+	@Override
+	public int afterNoticeUpdate(Notice notice) {
+		
+		return dao.afterNoticeUpdate(sqlSession, notice);
+	}
+	
+	@Override
+	public Faq beforeFaqUpdate(int faqNo) {
+		
+		return dao.beforeFaqUpdate(sqlSession, faqNo);
+	}
+	
+	@Override
+	public int afterFaqUpdate(Faq faq) {
+
+		return dao.afterFaqUpdate(sqlSession, faq);
+	}
+	
+	@Override
+	public Member beforeUserUpdate(int userNo) {
+		
+		return dao.beforeUserUpdate(sqlSession, userNo);
+	}
+	
+	@Override
+	public int afterUserUpdate(Member m) {
+
+		return dao.afterUserUpdate(sqlSession, m);
+	}
+	
+	@Override
+	public ManagerUpdateShow beforeShowUpdate(int showNo) {
+		
+		return dao.beforeShowUpdate(sqlSession, showNo);
+	}
+	
+	@Override
+	public int afterShowUpdate(Show show) {
+		
+		return dao.afterShowUpdate(sqlSession, show);
 	}
 }
