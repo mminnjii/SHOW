@@ -138,9 +138,9 @@
 						<script>
             	
 							$("#showList #one").click(function(){
-								var sno = $(this).children().first().text();
+								var sno = $(this).children().first().next().text();
 								
-								//location.href = "detail?sno="+sno;
+								location.href = "${contextPath}/showInfo/detail?showName="+sno;
 							});
 							
 						</script>

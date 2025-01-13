@@ -14,6 +14,7 @@
 <style>
 	.content{
 		width: 80%;
+        height: 600px;
 		margin: auto;
         text-align: center;
 	}
