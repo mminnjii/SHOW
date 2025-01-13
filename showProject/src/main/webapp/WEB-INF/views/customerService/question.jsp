@@ -36,9 +36,9 @@
             color: red;
         }
 
-        ul{
+        .input ul{
             margin: 5px 0px 5px 0px;
-            font-size: 5px;
+            font-size: 10px;
             color: gray;
         }
 
