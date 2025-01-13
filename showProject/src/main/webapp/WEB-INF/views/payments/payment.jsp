@@ -1,6 +1,7 @@
 <%@page import="com.kh.show.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>  
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <% 
@@ -48,7 +49,6 @@
 <body>
 		<div align="center">
 			<br>
-			
 			<input type="hidden" name="reservationId" value="${rInfo.reservationId} "></input>
 			<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
 	     		
@@ -59,7 +59,7 @@
 	     					<th id="name" colspan="3">${rInfo.showName}</th>
 	     				</tr>
 	     				<tr align="center">
-	     					<td colspan="2">< ${rInfo.showRound} > 회차</td>
+	     					<td colspan="2"> ${rInfo.showRound}  회차</td>
 	     				</tr>
 	     			</thead>
 	     			<tbody>
@@ -75,7 +75,6 @@
 	     						<td>공연장소 :</td>
 		     					<td>${rInfo.hallName}</td>
 		     				</tr>
-		     				
 		     				<tr>
 		     					<td>좌석 :</td>
 		     					<td>${selectedName}</td>
@@ -91,9 +90,31 @@
 		     				</tr>
 	     					<tr>
 	     						<td>Total : </td>
-		     					<td id="amount"> ${totalPrice}</td>
+		     					<td id="amount">${totalPrice}</td>
 		     					<td>원</td>
 		     				</tr>
+		     				<c:if test="${not empty clist}">
+		     					<tr>
+		     						<td style="padding-top: 70px;">할인쿠폰: </td>
+		     						<td style="padding-top: 70px;">
+				     					<c:forEach var="c" items="${clist}">
+					     					<select id="coupon">
+					     						<option disabled="disabled" selected>선택하세요</option>
+			     								<option id="op" data-discount="${c.discount}">
+			     									쿠폰번호 : ${c.couponNo} &nbsp;
+			     									할인율 : ${c.discount} &nbsp;
+			     									쿠폰기간 : ${c.expiredDate} 
+			     								</option>
+				     						</select>
+			     						</c:forEach>
+		     						</td>
+			     				</tr>
+			     				<tr>
+			     					<td>
+			     						<button id="apply">쿠폰적용하기</button>
+			     					</td>
+			     				</tr>
+		     				</c:if>
 		     				<tr>
 		     					<td style="padding-top: 70px;">티켓수령방식 :</td>
 		     					<td style="padding-top: 70px;">
@@ -107,7 +128,6 @@
 	     			</tbody>
 	     		</table>
      		</c:if>	
-	        
 	        
 	        <br><br>
 	        <hr>
@@ -133,7 +153,16 @@
    		$("#method").change(function () {
    			methodToget = $(this).val(); // 이벤트 발생 후 최신 값으로 갱신
    		});
-   		 
+   		
+   		$("#apply").on("click",function(){
+   			var discount = $("#op").attr("data-discount");
+   			var priceWithoutComma = amount.replace(",", "");
+   			priceWithoutComma = priceWithoutComma*(1-discount);
+   			amount = priceWithoutComma.toLocaleString();
+   			$("#amount").text(amount);
+   		});
+   		
+   		
    		 // 아임포트 초기화
          IMP.init("imp17528612"); 
 
@@ -170,7 +199,6 @@
                 }, function (rsp) {
                     
                 	if (rsp.success) {
-                		
     	           	    let paymentData = {
     		    		imp_uid: rsp.imp_uid,
     	                reservationId : reservation_uid,

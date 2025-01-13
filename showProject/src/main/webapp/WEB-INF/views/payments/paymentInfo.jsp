@@ -194,7 +194,7 @@
 		
 		<script>
 			
-		 	var receiptUrl = $('input[name="receiptUrl"]').val();
+		 	var receiptUrl = $("input[name='receiptUrl']").val();
 			$("#receipt").on("click",function(){
 				window.open(receiptUrl);
 			}); 

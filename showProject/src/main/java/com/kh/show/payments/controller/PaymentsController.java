@@ -34,6 +34,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.show.member.model.service.MemberService;
+import com.kh.show.member.model.vo.Coupon;
 import com.kh.show.payments.model.service.PaymentsService;
 import com.kh.show.payments.model.vo.Account;
 import com.kh.show.payments.model.vo.Creditcard;
@@ -52,6 +54,9 @@ public class PaymentsController {
 	
 	@Autowired
 	private PaymentsService paymentsService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@PostMapping("/pay")
 	public String paymentsController(HttpSession session,
@@ -92,8 +97,13 @@ public class PaymentsController {
 		 gradeName += gradeName1+gradeName2+gradeName3;
 		 
 		 NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+		 
+		 int userNo = (int) session.getAttribute("userNo");
+		 ArrayList<Coupon> clist = memberService.couponList(userNo);
+		 
 		 model.addAttribute("totalPrice",formatter.format(totalPrice));
 		 model.addAttribute("gradeName",gradeName);
+		 model.addAttribute("clist",clist);
 		
 		return "payments/payment";
 	}
@@ -121,7 +131,7 @@ public class PaymentsController {
 		p.setPaymentMethod("2");
 		p.setStatus("M");
 		p.setMethod((String) paymentData.get("methodToget"));
-		p.setReceipt((String) paymentData.get("vbank_date"));
+		p.setReceipt((String) paymentData.get("receipt"));
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(p);
@@ -176,7 +186,6 @@ public class PaymentsController {
 	@ResponseBody
 	@PostMapping(value = "/card",produces ="text/html; charset=UTF-8")
 	public String cardComplete(HttpSession session, @RequestBody Map<String, Object> paymentData) {
-		
 		String[] impParts = ((String) paymentData.get("imp_uid")).split("_");
 		String payId = impParts[1];
 		
@@ -197,7 +206,7 @@ public class PaymentsController {
 		p.setStatus("Y");
 		p.setC(c);
 		p.setMethod((String) paymentData.get("methodToget"));
-		p.setReceipt((String) paymentData.get("vbank_date"));
+		p.setReceipt((String) paymentData.get("receipt"));
 		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(p);
@@ -288,11 +297,11 @@ public class PaymentsController {
 		String[] impParts = p.getPaymentId().split("_");
 		String paymentId = impParts[1];
 		
-		String receipt = (String) session.getAttribute("receipt");
+		Payments sessionP = (Payments) session.getAttribute("p");
 		String price = (String) session.getAttribute("price");
 		
 		model.addAttribute("paymentId",paymentId);
-		model.addAttribute("receipt",receipt);
+		model.addAttribute("receipt",sessionP.getReceipt());
 		model.addAttribute("price",price);
 		
 		String reservationId = p.getReservationId();

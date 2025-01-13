@@ -307,7 +307,7 @@
 		          				        hiddenField.type = "hidden";
 		          				        hiddenField.name = "reservationId";
 		          				        hiddenField.value = reservationId;
-		
+		          				        
 		          				        form.appendChild(hiddenField);
 		          				        document.body.appendChild(form);
 		          				        form.submit();
