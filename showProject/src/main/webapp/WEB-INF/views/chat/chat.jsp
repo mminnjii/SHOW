@@ -223,9 +223,8 @@
 	            
 	            var join = td.eq(3).text().split("/");
 	            
-	  			var joinCount = join[0];
-	            
-	  			var chatUserCount = join[1];
+	            var joinCount = parseInt(join[0], 10);
+	  			var chatUserCount = parseInt(join[1], 10);
 	            
 	  			// 입장 인원 수 > 참여 인원 수인 경우에만 채팅방 참여 가능 
 	  			// 회원 id, 채팅방 번호  => count는 리스트에서만 확인 가능하면 된다. (오라클 sql 구문 작성해둠)
