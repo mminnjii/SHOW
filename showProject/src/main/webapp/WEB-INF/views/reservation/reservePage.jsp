@@ -155,7 +155,7 @@
 
 
 	<script>
-		
+		console.log(poster-img);
 
 		$(function(){
 			$("button[id=cc]").click(function(){
