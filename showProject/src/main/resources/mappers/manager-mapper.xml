@@ -97,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<resultMap type="ManagerReservation" id="reservResultSet">
 		<result column="RESERVATION_ID" property="reservationId"/>
+		<result column="SHOW_NO" property="showNo"/>
 		<result column="SHOW_NAME" property="showName"/>
 		<result column="ROUND_ID" property="roundId"/>
 		<result column="USER_NAME" property="userName"/>
@@ -109,8 +110,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_NAME" property="showName"/>
 		<result column="ROUND_ID" property="roundId"/>
 		<result column="USER_NAME" property="userName"/>
+		<result column="USER_ID" property="userId"/>
 		<result column="HALL_NAME" property="hallName"/>
 		<result column="CREATEDATE" property="createDate"/>
+		<result column="PRECAUTION" property="precaution"/>
 	</resultMap>
 	<resultMap type="ManagerQuestion" id="questionResultSet">
 		<result column="QUESTION_NO" property="questionNo"/>
@@ -342,7 +345,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="questionDetail" resultMap="questionResultSet2">
-		SELECT QUESTION_NO, Q.USER_NO, USER_NAME, RESERVATION_ID, QCATEGORY_NAME, Q_TITLE, Q_CONTENT, CREATEDATE, CHAGNE_NAME, ANSWER_CONTENT
+		SELECT QUESTION_NO, Q.USER_NO, M.USER_NAME, Q.RESERVATION_ID, QC.QCATEGORY_NAME, Q_TITLE, Q_CONTENT, Q.CREATEDATE, Q.CHANGE_NAME, Q.ANSWER_CONTENT
 		FROM QUESTION Q
 		INNER JOIN MEMBER M ON (Q.USER_NO = M.USER_NO)
 		INNER JOIN QCATEGORY QC ON (Q.QCATEGORY_NO = QC.QCATEGORY_NO)
@@ -370,6 +373,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN SHOW S ON (C.SHOW_NO = S.SHOW_NO)
 		WHERE CHAT_NO = #{chatNo} 
 	</select>
+	
+	<update id="afterChatUpdate" parameterType="ManagerChat">
+		UPDATE CHAT
+		SET CHAT_TITLE = #{chatTitle}
+		WHERE CHAT_NO = #{chatNo}
+	</update>
 	
 	<select id="beforeNoticeUpdate" resultMap="noticeResultSet">
 		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, CREATEDATE
@@ -451,17 +460,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE QUESTION_NO = #{qNo}
 	</select>
 	
+	<select id="beforeReservUpdate" resultMap="reservResultSet2">
+		SELECT RESERVATION_ID, R.SHOW_NO, SHOW_NAME, ROUND_ID, R.USER_NO, USER_ID, HALL_NAME, CREATEDATE, PRECAUTION
+		FROM RESERVATION R
+		INNER JOIN SHOW S ON (R.SHOW_NO = S.SHOW_NO)
+		INNER JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
+		INNER JOIN HALL H ON (R.HALL_NO = H.HALL_NO)
+		WHERE RESERVATION_ID = #{reservNo}
+	</select>
+	
 	<update id="afterQuestionAnswer" parameterType="question">
 		UPDATE QUESTION
 		SET ANSWER_CONTENT = #{answerContent}
 		WHERE QUESTION_NO = #{questionNo}
 	</update>
 	
+	<select id="beforeChatUpdate" resultMap="ChatingResultSet">
+		SELECT CHAT_NO, CHAT_TITLE, C.SHOW_NO, SHOW_NAME, C.USER_NO, USER_ID, CHAT_USER_COUNT, CREATEDATE
+		FROM CHAT C
+		INNER JOIN SHOW S ON (C.SHOW_NO = S.SHOW_NO)
+		INNER JOIN MEMBER M ON (C.USER_NO = M.USER_NO)  
+		WHERE CHAT_NO = #{cNo}
+	</select>
+	
 	<select id="beforeMeetingUpdate" resultMap="MeetingResultSet">
 		SELECT MEETING_NO, MEET.USER_NO, MEM.USER_ID, MEETING_TITLE, MEET.SHOW_NO, S.SHOW_NAME, MEETING_PLACE, MEETING_COUNT, MEETING_DATE, START_DATE, END_DATE, INFOMATION
 		FROM MEETING MEET
 		INNER JOIN MEMBER MEM ON (MEET.USER_NO = MEM.USER_NO)
 		INNER JOIN SHOW S ON (MEET.SHOW_NO = S.SHOW_NO)
+		WHERE MEETING_NO = #{meetingNo}
 	</select>
 	
 	<update id="afterMeetingUpdate" parameterType="meeting">
