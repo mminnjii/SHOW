@@ -13,7 +13,7 @@
 	}
 	
   table {
-	    width: 60%;
+	    width: 80%;
 	    margin-bottom: 50px; 
 	    table-layout: fixed;
 	    margin-left: 10px;

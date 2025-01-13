@@ -221,6 +221,13 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Meeting> meetingList2(int userNo, PageInfo pi) {
 		return memberDao.meetingList2(sqlSession,userNo,pi);
 	}
+	
+	
+	// 쿠폰 사용 후 취소
+	@Override
+	public int cancelCoupon(int couponNo) {
+		return memberDao.cancelCoupon(sqlSession,couponNo);
+	}
 
 
 	

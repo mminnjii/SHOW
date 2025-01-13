@@ -91,4 +91,7 @@ public interface MemberService {
 	int meetingCount2(int userNo);
 	//내가 만든 소모임 리스트
 	ArrayList<Meeting> meetingList2(int userNo, PageInfo pi);
+	
+	// 쿠폰 사용 후 취소
+	int cancelCoupon(int couponNo);
 }
