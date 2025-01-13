@@ -523,7 +523,7 @@
 					$(this).css("background-color", "#597c9b").css("color",
 							"white").css("border", "1px solid #597c9b");
 				});
-
+ 
 		// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
 		// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
 		$(".btnGroup").on("click", "#general", function() {
