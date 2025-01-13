@@ -212,5 +212,9 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.meetingHostList",userNo,rowbounds);
 	}
 
+	public int cancelCoupon(SqlSessionTemplate sqlSession, int couponNo) {
+		return sqlSession.update("memberMapper.cancelCoupon",couponNo);
+	}
+
 
 }

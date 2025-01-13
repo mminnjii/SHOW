@@ -455,8 +455,18 @@ public class PaymentsController {
     }
 	
 	
-	
-	
+	@ResponseBody
+    @PostMapping(value="/couponN",produces ="text/html; charset=UTF-8")
+	public String cancelCoupon(int couponNo) {
+		
+		int result = memberService.cancelCoupon(couponNo);
+		if(result>0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+		
+	}
 
 	
 }
