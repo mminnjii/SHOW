@@ -38,7 +38,10 @@
 
         .input ul{
             margin: 5px 0px 5px 0px;
+
             font-size: 15px;
+
+
             color: gray;
         }
 

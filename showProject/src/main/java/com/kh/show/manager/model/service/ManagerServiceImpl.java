@@ -6,11 +6,15 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ManagerChat;
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.dao.ManagerDao;
 import com.kh.show.manager.model.vo.Manager;
+import com.kh.show.meeting.model.vo.ManagerMeeting;
+import com.kh.show.meeting.model.vo.Meeting;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
@@ -69,10 +73,12 @@ public class ManagerServiceImpl implements ManagerService {
 
 		String genreName = getGenreName(show.getGenreNo());
 		String regionName = getRegionName(show.getRegionNo());
+		/*
 		String posterChangeName = genreName+"_"+regionName+"_"+show.getShowName()+show.getShowNo()+"P";
 		String detailChangeName = genreName+"_"+regionName+"_"+show.getShowName()+show.getShowNo()+"D";
 		show.setPosterChangeName(posterChangeName);
 		show.setDetailChangeName(detailChangeName);
+		*/
 		return dao.showInsert(sqlSession, show);
 	}
 	
@@ -123,6 +129,20 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<ManagerQuestion> selectAllQuestion() {
 
 		return dao.selectAllQuestion(sqlSession);
+	}
+	
+//	소모임 가져오기
+	@Override
+	public List<Meeting> selectAllMeeting() {
+		
+		return dao.selectAllMeeting(sqlSession);
+	}
+	
+//	채팅 가져오기
+	@Override
+	public List<Chat> selectAllChating() {
+
+		return dao.selectAllChating(sqlSession);
 	}
 
 	@Override
@@ -178,6 +198,24 @@ public class ManagerServiceImpl implements ManagerService {
 
 		return dao.questionDetail(sqlSession, qNo);
 	}
+	
+	@Override
+	public Member userDetail(Integer uNo) {
+
+		return dao.userDetail(sqlSession, uNo);
+	}
+	
+	@Override
+	public ManagerMeeting meetingDetail(int meetNo) {
+		
+		return dao.meetingDetail(sqlSession, meetNo);
+	}
+	
+	@Override
+	public ManagerChat chatDetail(int chatNo) {
+		
+		return dao.chatDetail(sqlSession, chatNo);
+	}
 
 	@Override
 	public Notice beforeNoticeUpdate(int noticeNo) {
@@ -225,5 +263,77 @@ public class ManagerServiceImpl implements ManagerService {
 	public int afterShowUpdate(Show show) {
 		
 		return dao.afterShowUpdate(sqlSession, show);
+	}
+	
+	@Override
+	public ManagerQuestion2 beforeQuestionAnswer(int qNo) {
+		
+		return dao.beforeQuestionAnswer(sqlSession, qNo);
+	}
+	
+	@Override
+	public int afterQuestionAnswer(ManagerQuestion2 m) {
+
+		return dao.afterQuestionAnswer(sqlSession, m);
+	}
+	
+	@Override
+	public ManagerMeeting beforeMeetingUpdate(int mNo) {
+		
+		return dao.beforeMeetingUpdate(sqlSession, mNo);
+	}
+	
+	@Override
+	public int afterMeetingUpdate(ManagerMeeting m) {
+
+		return dao.afterMeetingUpdate(sqlSession, m);
+	}
+	
+	@Override
+	public int noticeDelete(int noticeNo) {
+		
+		return dao.noticeDelete(sqlSession, noticeNo);
+	}
+	
+	@Override
+	public int faqDelete(int faqNo) {
+		
+		return dao.faqDelete(sqlSession, faqNo);
+	}
+	
+	@Override
+	public int meetingDelete(int meetingNo) {
+		
+		return dao.meetingDelete(sqlSession, meetingNo);
+	}
+	
+	@Override
+	public int showDelete(int showNo) {
+		
+		return dao.showDelete(sqlSession, showNo);
+	}
+	
+	@Override
+	public int questionDelete(int questionNo) {
+		
+		return dao.questionDelete(sqlSession, questionNo);
+	}
+	
+	@Override
+	public int userDelete(int userNo) {
+		
+		return dao.userDelete(sqlSession, userNo);
+	}
+	
+	@Override
+	public int chatDelete(int chatNo) {
+		
+		return dao.chatDelete(sqlSession, chatNo);
+	}
+	
+	@Override
+	public int reservDelete(int reservId) {
+		
+		return dao.reservDelete(sqlSession, reservId);
 	}
 }

@@ -94,6 +94,8 @@
             <button id="reservationBtn">회원 예매 관리</button>
             <button id="showBtn">공연 관리</button>
             <button id="questionBtn">1:1 문의 관리</button>
+            <button id="meetingBtn">소모임 관리</button>
+            <button id="chatBtn">채팅 관리</button>
         </div>
 </body>
 </html>

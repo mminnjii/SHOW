@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사용자 정보 수정</title>
+<title>소모임 확인 및 수정</title>
 <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -81,53 +81,71 @@
     </style>
 </head>
 <body>
+
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	    <div class="container">
-		        <h1>사용자 정보 수정</h1>
-		<form action="${contextPath}/managerPage/userUpdate" method="POST">
-		    <!-- 제목 -->
+		        <h1>소모임 확인 및 수정</h1>
+		<form action="${contextPath}/managerPage/meetingUpdate" method="POST">
 		    <div class="form-group">
-		    	<input type="hidden" id="userNo" name="userNo" value="${member.userNo}">
-		        <label for="noticeTitle">아이디</label>
-		        <input type="text" id="userId" name="userId" value="${member.userId}" required>
+		        <label for="meetingNo">소모임 번호</label>
+		        <input type="text" id="meetingNo" name="meetingNo" value="${meeting.meetingNo}" readonly>
 		    </div>
 		
-		    <!-- 공지 내용 -->
 		    <div class="form-group">
-		        <label for="userName">이름</label>
-		        <input type="text" id="userName" name="userName" value="${member.userName}" required>
+		        <label for="meetingCreatorNo">소모임 주최 유저 번호</label>
+		        <input type="text" id="meetingCreatorNo" name="meetingCreatorNo" value="${meeting.userNo}" readonly>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userRrn">주민번호(외국인 등록번호)</label>
-		        <input type="text" id="userRrn" name="userRrn" value="${member.userRrn}" required>
+		        <label for="meetingCreatorId">소모임 주최 유저 아이디</label>
+		        <input type="text" id="meetingCreatorId" name="meetingCreatorId" value="${meeting.userId}" readonly>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="phone">연락처</label>
-		        <input type="text" id="phone" name="phone" value="${member.phone}" required>
+		        <label for="meetingTitle">소모임 제목</label>
+		        <input type="text" id="meetingTitle" name="meetingTitle" value="${meeting.meetingTitle}">
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userEmail">이메일</label>
-		        <input type="text" id="userEmail" name="userEmail" value="${member.email}" required>
+		        <label for="showNo">소모임 주제(공연) 번호</label>
+		        <input type="text" id="showNo" name="showNo" value="${meeting.showNo}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="showName">소모임 주제(공연) 이름</label>
+		        <input type="text" id="showName" name="showName" value="${meeting.showName}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="meetingPlace">소모임 주최 장소</label>
+		        <input type="text" id="meetingPlace" name="meetingPlace" value="${meeting.meetingPlace}" readonly>
 		    </div>
 
 		    <div class="form-group">
-		        <label for="userAddress">주소</label>
-		        <input type="text" id="userAddress" name="userAddress" value="${member.address}" required>
+		        <label for="meetingCount">소모임 인원</label>
+		        <input type="text" id="meetingCount" name="meetingCount" value="${meeting.meetingCount}" readonly>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userRank">등급</label>
-		        <input type="text" id="userRank" name="userRank" value="${member.rank}" required>
+		        <label for="meetingDate">소모임 주최 날짜</label>
+		        <input type="text" id="meetingDate" name="meetingDate" value="${meeting.meetingDate}" readonly>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="userSubscribe">구독 여부</label>
-		        <input type="text" id="userSubscribe" name="userSubscribe" value="${member.subscribe}" required>
+		        <label for="meetingStartDate">소모임 구인 시작 날짜</label>
+		        <input type="text" id="meetingStartDate" name="meetingStartDate" value="${meeting.startDate}" readonly>
 		    </div>
-
+		    
+		    <div class="form-group">
+		        <label for="meetingEndDate">소모임 구인 종료 날짜</label>
+		        <input type="text" id="meetingEndDate" name="meetingEndDate" value="${meeting.endDate}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		    	<label for="Info">소모임 상세내용</label>
+		    	<textarea id="infomation" name="infomation">${meeting.information}</textarea>
+		    </div>
+			
 			<div class="button-container">
 		        <button type="submit" class="submit-btn">수정하기</button>
 		    </div>
