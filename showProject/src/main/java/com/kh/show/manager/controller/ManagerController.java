@@ -2,6 +2,7 @@ package com.kh.show.manager.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.show.chat.model.vo.Chat;
+import com.kh.show.chat.model.vo.ManagerChat;
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
 import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.service.ManagerService;
 import com.kh.show.manager.model.vo.Manager;
+import com.kh.show.meeting.model.vo.ManagerMeeting;
+import com.kh.show.meeting.model.vo.Meeting;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
@@ -92,7 +97,7 @@ public class ManagerController {
 	    HttpSession session) {
 	    
 	    String genreNameArr[] = {"뮤지컬", "연극", "콘서트", "클래식", "전시"};
-	    String regionNameArr[] = {"서울", "경기/인천", "충청/강원", "대구/경북", "부산/경남", "광주/전라", "제주"};
+	    String regionNameArr[] = {"서울", "경기,인천", "충청,강원", "대구,경북", "부산,경남", "광주,전라", "제주"};
 	    
 	    String genreName = genreNameArr[show.getGenreNo()-1];
 	    String regionName = regionNameArr[show.getRegionNo()-1];
@@ -118,7 +123,7 @@ public class ManagerController {
 	        }
 
 	        // 상위 폴더를 만들고 하위 폴더도 생성
-	        String posterSubDirPath = posterSavePath + File.separator + genreName + "_" + regionName;
+	        String posterSubDirPath = posterSavePath + "/" + genreName + "_" + regionName;
 	        File posterSubDir = new File(posterSubDirPath);
 	        if (!posterSubDir.exists()) {
 	            posterSubDir.mkdirs();
@@ -130,7 +135,7 @@ public class ManagerController {
 	        }
 
 	        // 상위 폴더를 만들고 하위 폴더도 생성
-	        String detailSubDirPath = detailSavePath + File.separator + genreName + "_" + regionName;
+	        String detailSubDirPath = detailSavePath + "/" + genreName + "_" + regionName;
 	        File detailSubDir = new File(detailSubDirPath);
 	        if (!detailSubDir.exists()) {
 	            detailSubDir.mkdirs();
@@ -171,7 +176,7 @@ public class ManagerController {
 	            session.setAttribute("alertMsg", "공연 생성 실패");
 	        }
 	    }
-	    return "redirect:/managerPage";
+	    return "manager/managerPage";
 	}
 	
 //	공지사항 등록하기
@@ -222,7 +227,25 @@ public class ManagerController {
 		return f;
 	}
 	
-//	FAQ(자주 묻는 질문) 삽입
+//	meeting(소모임) 상세보기
+	@GetMapping("/managerPage/meeting")
+	@ResponseBody
+	public ManagerMeeting meetingDetail(@RequestParam(value = "meetingNo") int meetNo, Model model) {
+		ManagerMeeting m = service.meetingDetail(meetNo);
+		model.addAttribute("meeting", m);
+		return m;
+	}
+	
+//	chat(채팅) 상세보기
+	@GetMapping("/managerPage/chat")
+	@ResponseBody
+	public ManagerChat chatDetail(@RequestParam(value = "chatNo") int chatNo, Model model) {
+		ManagerChat c = service.chatDetail(chatNo);
+		model.addAttribute("chat", c);
+		return c;
+	}
+	
+//	FAQ(자주 묻는 질문) 생성
 	@GetMapping("/managerPage/faqInsert")
 	public String insertFaq() {
 		return "manager/faqInsert";
@@ -260,6 +283,7 @@ public class ManagerController {
 	@GetMapping("/managerPage/showList")
 	@ResponseBody
 	public List<ManagerShowInfo> selectAllShow(){
+		
 		return service.selectAllShow();
 	}
 	
@@ -270,6 +294,20 @@ public class ManagerController {
 		return service.selectAllQuestion();
 	}
 	
+//	소모임 목록 불러오기
+	@GetMapping("/managerPage/meetingList")
+	@ResponseBody
+	public List<Meeting> selectAllMeeting(){
+		return service.selectAllMeeting();
+	}
+	
+//	채팅 목록 불러오기
+	@GetMapping("/managerPage/chatList")
+	@ResponseBody
+	public List<Chat> selectAllChat(){
+		return service.selectAllChating();
+	}
+	
 	
 	
 
@@ -278,9 +316,17 @@ public class ManagerController {
 
 	@GetMapping("/managerPage/show")
 	@ResponseBody
-	public ManagerShowInfo2 showDetail(@RequestParam(value = "showNo") int showNo, Model model) {
-		ManagerShowInfo2 s = service.showDetail(showNo);
-		model.addAttribute("show", s);
+	public ManagerShowInfo2 showDetail(@RequestParam(value = "showNo") int showNo, Model model, HttpSession session) {
+	    ManagerShowInfo2 s = service.showDetail(showNo);
+	    String contextPath = session.getServletContext().getContextPath();
+	    String genreName = s.getGenreName();
+	    String regionName = s.getRegionName();
+	    String posterSavePath = contextPath + "/resources/PosterUploadFiles/" + genreName + "_" + regionName + "/" + s.getPosterChangeName();
+	    String detailSavePath = contextPath + "/resources/DetailUploadFiles/" + genreName + "_" + regionName + "/" + s.getDetailChangeName();
+	    s.setPosterPath(posterSavePath);
+	    s.setDetailPath(detailSavePath);
+	    model.addAttribute("show", s);
+	    model.addAttribute("contextPath", contextPath);
 	    return s;
 	}
 	
@@ -300,6 +346,14 @@ public class ManagerController {
 	    return q;
 	}
 	
+	@GetMapping("/managerPage/user")
+	@ResponseBody
+	public Member userDetail(@RequestParam(value = "userNo") Integer uNo, Model model) {
+		Member m = service.userDetail(uNo);
+		model.addAttribute("member", m);
+		return m;
+	}
+		
 	@GetMapping("/managerPage/noticeUpdate")
 	public String beforeNoticeUpdate(@RequestParam(value="noticeNo") int noticeNo, Model model){
 		Notice notice = service.beforeNoticeUpdate(noticeNo);
@@ -356,9 +410,9 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/managerPage/userUpdate")
-	public String beforeUserUpdate(@RequestParam(value="userNo") int userNo, Model model) {
-		Member member = service.beforeUserUpdate(userNo);
-		model.addAttribute(member);
+	public String beforeUserUpdate(@RequestParam(value="userNo") Integer userNo, Model model) {
+		Member m = service.beforeUserUpdate(userNo);
+		model.addAttribute(m);
 		
 		return "manager/userUpdate";
 	}
@@ -401,8 +455,10 @@ public class ManagerController {
 		ManagerUpdateShow show = service.beforeShowUpdate(showNo);
         String startDate = show.getShowStart().replace("-", "");
         String endDate = show.getShowEnd().replace("-", ""); 
+        /*
         String posterSavePath = session.getServletContext().getRealPath("/resources/PosterUploadFiles/"+show.getGenreName()+"_"+show.getRegionName()+"/");
         String detailSavePath = session.getServletContext().getRealPath("/resources/DetailUploadFiles/"+show.getGenreName()+"_"+show.getRegionName()+"/");
+        */
         String posterChangeName = show.getGenreName() + "_" + show.getRegionName() + "_메인_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
         String detailChangeName = show.getGenreName() + "_" + show.getRegionName() + "_상세_" + show.getShowName() + "_" + startDate + "_" + endDate + ".png";
         String posterPath = "/resources/PosterUploadFiles/" + show.getGenreName() + "_" + show.getRegionName() + "/" + posterChangeName;
@@ -497,7 +553,6 @@ public class ManagerController {
 	        show.setPosterChangeName(posterChangeName);
 	        show.setDetailOriginName(detailOriginName);
 	        show.setDetailChangeName(detailChangeName);
-	        System.out.println(show.getShowExplain());
 	        // 서비스 호출
 	        int result = service.afterShowUpdate(show);
 
@@ -508,5 +563,177 @@ public class ManagerController {
 	        }
 	    }
 	    return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/questionAnswer")
+	public String questionAnswer(@RequestParam(value="questionNo") int qNo, Model model){
+		ManagerQuestion2 m = service.beforeQuestionAnswer(qNo);
+		model.addAttribute("answer", m);
+		
+		return "manager/questionAnswer";
+	}
+	
+	@PostMapping("/managerPage/questionAnswer")
+	public String questionAnswer(HttpServletRequest request, HttpSession session) {
+		int qNo = Integer.parseInt(request.getParameter("questionNo"));
+		String answerContent = request.getParameter("answerContent");
+		
+		ManagerQuestion2 m = new ManagerQuestion2();
+		
+		m.setQuestionNo(qNo);
+		m.setAnswerContent(answerContent);
+		
+		int result = service.afterQuestionAnswer(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "답변이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "답변에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/meetingUpdate")
+	public String beforeMeetingUpdate(@RequestParam(value="meetingNo") int mNo, Model model) {
+		ManagerMeeting m = service.beforeMeetingUpdate(mNo);
+		model.addAttribute("meeting", m);
+		return "manager/meetingUpdate";
+	}
+	
+	@PostMapping("/managerPage/meetingUpdate")
+	public String afterMeetingUpdate(HttpServletRequest request, HttpSession session) {
+		int mNo = Integer.parseInt(request.getParameter("meetingNo"));
+		String mTitle = request.getParameter("meetingTitle");
+		String info = request.getParameter("infomation");
+		
+		ManagerMeeting m = new ManagerMeeting();
+		
+		m.setMeetingNo(mNo);
+		m.setMeetingTitle(mTitle);
+		m.setInformation(info);
+		
+		int result = service.afterMeetingUpdate(m);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "소모임 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "소모임 수정에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/noticeDelete")
+	public String noticeDelete(@RequestParam(value="noticeNo") int noticeNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.noticeDelete(noticeNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "공지사항 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "공지사항 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/faqDelete")
+	public String faqDelete(@RequestParam(value="faqNo") int faqNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.faqDelete(faqNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "FAQ 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "FAQ 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/meetingDelete")
+	public String meetingDelete(@RequestParam(value="meetingNo") int meetingNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.meetingDelete(meetingNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "소모임 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "소모임 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/showDelete")
+	public String showDelete(@RequestParam(value="showNo") int showNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.showDelete(showNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "공연 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "공연 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/questionDelete")
+	public String questionDelete(@RequestParam(value="questionNo") int questionNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.questionDelete(questionNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "1:1문의 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "1:1문의 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/userDelete")
+	public String userDelete(@RequestParam(value="userNo") int userNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.userDelete(userNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "회원 탈퇴가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "회원 탈퇴에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/chatDelete")
+	public String chatDelete(@RequestParam(value="chatNo") int chatNo, HttpServletRequest request, HttpSession session) {
+		
+		int result = service.chatDelete(chatNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "채팅방 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "채팅방 삭제에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+	}
+	
+	@GetMapping("/managerPage/reservationDelete")
+	public String reservDelete(@RequestParam(value="reservationId") int reservId, HttpServletRequest reqeust, HttpSession session) {
+		
+		int result = service.reservDelete(reservId);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "예약 취소가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "예약 취소에 실패하였습니다.");
+		}
+		
+		return "manager/managerPage";
+		
 	}
 }

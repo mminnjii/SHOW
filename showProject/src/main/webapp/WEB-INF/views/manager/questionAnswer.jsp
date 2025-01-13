@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공연 수정</title>
+    <title>1:1 문의 답변</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -82,7 +82,8 @@
 		.image-preview img {
 		    width: 100%;
 		    height: auto;
-		    max-width: 500px;  /* 예시로 크기 제한 */
+		    max-width: 700px;
+		    max-height: 1000px;
 		}
 
         .button-container {
@@ -107,107 +108,83 @@
 <body>
 	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
 	    <div class="container">
-		        <h1>공연 수정</h1>
-		<form action="${contextPath}/managerPage/showUpdate" method="POST" enctype="multipart/form-data">
-		    <!-- 제목 -->
+		        <h1>1:1 문의 답변</h1>
+		<form action="${contextPath}/managerPage/questionAnswer" method="POST" enctype="multipart/form-data">
 		    <div class="form-group">
-		        <label for="showTitle">공연 제목</label>
-		        <input type="hidden" id="showNo" name="showNo" value="${show.showNo}">
-		        <input type="text" id="showTitle" name="showName" value="${show.showName}" required>
+		        <label for="questionNo">문의 번호</label>
+		        <input type="text" id="questionNo" name="questionNo" value="${answer.questionNo}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="userNo">문의 유저 번호</label>
+		        <input type="text" id="userNo" name="userNo" value="${answer.userNo}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="userName">문의 유저 아이디</label>
+		        <input type="text" id="userName" name="userName" value="${answer.userId}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="reservationId">예약 번호</label>
+		        <input type="text" id="reservationId" name="reservationId" value="${answer.reservationId}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="categoryName">문의 카테고리 이름</label>
+		        <input type="hidden" id="categoryNo" name="categoryNo" value="${answer.qcategoryNo}">
+		        <input type="text" id="categoryName" name="categoryName" value="${answer.qcategoryName}" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="quTitle">문의 제목</label>
+		        <input type="text" id="quTitle" name="quTitle" value="${answer.quTitle}" readonly>
 		    </div>
 		
 		    <!-- 상세 내용 -->
 		    <div class="form-group">
-		        <label for="showExplain">공연 상세 내용</label>
-		        <textarea id="showExplain" name="showExplain" required>${show.showExplain}</textarea>
+		        <label for="quContent">문의 상세 내용</label>
+		        <textarea id="quContent" name="quContent" readonly>${answer.quContent}</textarea>
 		    </div>
 		    
 		    <div class="form-group">
-		        <label for="notice">공지사항</label>
-		        <textarea id="notice" name="notice" required>${show.notice}</textarea>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="price">R석 가격 * S석은 R석 가격의 1.2배, VIP석은 R석 가격의 1.4배로 책정됩니다.</label>
-		        <input type="text" id="price" name="price" value="${show.price}" required>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="genreNo">장르 선택</label>
-		        <select id="genreNo" name="genreNo" required>
-		            <option value="1" ${show.genreName == '뮤지컬' ? 'selected' : ''}>뮤지컬</option>
-		            <option value="2" ${show.genreName == '연극' ? 'selected' : ''}>연극</option>
-		            <option value="3" ${show.genreName == '콘서트' ? 'selected' : ''}>콘서트</option>
-		            <option value="4" ${show.genreName == '클래식' ? 'selected' : ''}>클래식</option>
-		            <option value="5" ${show.genreName == '전시' ? 'selected' : ''}>전시</option>
-		        </select>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="hallNo">공연장 선택</label>
-		        <select id="hallNo" name="hallNo" required>
-		            <option value="1">링크아트센터 벅스홀 서울</option>
-		        </select>
-		    </div>
-		    
-		    <div class="form-group">
-		        <label for="regionNo">지역 선택</label>
-		        <select id="regionNo" name="regionNo" required>
-		            <option value="1" ${show.regionName == '서울' ? 'selected' : ''}>서울</option>
-		            <option value="2" ${show.regionName == '경기/인천' ? 'selected' : ''}>경기/인천</option>
-		            <option value="3" ${show.regionName == '충청/강원' ? 'selected' : ''}>충청/강원</option>
-		            <option value="4" ${show.regionName == '대구/경북' ? 'selected' : ''}>대구/경북</option>
-		            <option value="5" ${show.regionName == '부산/경남' ? 'selected' : ''}>부산/경남</option>
-		            <option value="6" ${show.regionName == '광주/전라' ? 'selected' : ''}>광주/전라</option>
-		            <option value="7" ${show.regionName == '제주' ? 'selected' : ''}>제주</option>
-		        </select>
+		        <label for="createDate">문의 날짜</label>
+		        <input type="text" id="createDate" name="createDate" value="${answer.createDate}" readonly>
 		    </div>
 		
-		    <!-- 공연 시작 날짜 -->
+		    <!-- 문의 사진 -->
 		    <div class="form-group">
-		        <label for="showStartDate">공연 시작 날짜</label>
-		        <input type="date" id="showStart" name="showStart" value="${show.showStart}" required>
-		    </div>
-		
-		    <!-- 공연 종료 날짜 -->
-		    <div class="form-group">
-		        <label for="showEndDate">공연 종료 날짜</label>
-		        <input type="date" id="showEnd" name="showEnd" value="${show.showEnd}" required>
-		    </div>
-		
-		    <!-- 포스터 사진 -->
-		    <div class="form-group">
-		        <label for="posterImage">포스터 사진</label>
-		        <input type="file" id="posterImage" name="posterImage" accept="image/*" required>
-		        <div class="image-preview" id="posterPreview" >
-		            <img src="${pageContext.request.contextPath}${show.posterPath}" alt="Poster Image"/>
+		        <label for="quImage">질문 내용 사진</label>
+		        <input type="file" id="quImage" name="quImage" accept="image/*">
+		        <div class="image-preview" id="quImage">
+		            <img src="${pageContext.request.contextPath}${answer.changeName}">
 		        </div>
 		    </div>
-		
-		    <!-- 상세 내용 사진 (여러 개 선택 가능) -->
-			<div class="form-group">
-			    <label for="detailImages">상세 내용 사진</label>
-			    <input type="file" id="detailImages" name="detailImage" accept="image/*" multiple>
-			    <div class="image-preview" id="detailPreview">
-			        <img src="${pageContext.request.contextPath}${show.detailPath}" alt="Detail Image"/>
+		    
+		    <div class="form-group">
+		        <label for="answerContent">문의에 대한 답변</label>
+		        <textarea id="answerContent" name="answerContent" required >${answer.answerContent}</textarea>
+		    </div>
+		    
+		    <%-- 답변 이미지 삽입. 나중에 필요하게 되면 넣기
+		    <div class="form-group">
+			    <label for="answerImage">상세 내용 사진</label>
+			    <input type="file" id="answerImage" name="answerImage" accept="image/*" multiple>
+			    <div class="image-preview" id="answerImage">
+			        답변에 필요한 이미지를 삽입해주세요.
 			    </div>
 			</div>
-			
+			--%>
 			<div class="button-container">
-		        <button type="submit" class="submit-btn">등록하기</button>
+		        <button type="submit" class="submit-btn">답변하기</button>
 		    </div>
 		</form>
 	</div>
-	
-	<script>
-		console.log("${pageContext.request.contextPath}");
-		console.log("${show.detailPath}");
-	</script>
-	
+
     <script>
     document.getElementById('posterImage').addEventListener('change', function(event) {
         const file = event.target.files[0];
-        const preview = document.getElementById('posterPreview');
+        const preview = document.getElementById('quImage');
 
         // 파일이 선택되었는지 확인하고, 이미지 파일인지 확인
         if (file && file.type.startsWith("image/")) {
@@ -217,7 +194,7 @@
                 preview.innerHTML = '';  // 기존 미리보기 내용 초기화
                 const img = document.createElement('img');  // 이미지 요소 생성
                 img.src = e.target.result;  // 이미지 URL 설정
-                img.alt = '포스터 미리보기';  // alt 속성 설정
+                img.alt = '이미지 미리보기';  // alt 속성 설정
                 img.style.maxWidth = '100%';  // 이미지를 부모 영역에 맞게 조정
                 img.style.height = 'auto';  // 비율에 맞게 이미지 크기 조정
                 preview.appendChild(img);  // 미리보기 영역에 이미지 추가
@@ -230,9 +207,9 @@
 	
     
  // 상세 내용 이미지 미리보기 (여러 이미지)
-    document.getElementById('detailImages').addEventListener('change', function(event) {
+    document.getElementById('answerImage').addEventListener('change', function(event) {
         const files = event.target.files;
-        const previewContainer = document.getElementById('detailPreview');
+        const previewContainer = document.getElementById('answerImage');
         previewContainer.innerHTML = '';  // 기존 미리보기 내용 초기화
 
         // 각 파일에 대해 미리보기 이미지 생성
@@ -242,7 +219,7 @@
                 reader.onload = function(e) {
                     const imgElement = document.createElement('img');
                     imgElement.src = e.target.result;
-                    imgElement.alt = "상세 내용 미리보기";
+                    imgElement.alt = "답변 이미지 미리보기";
                     imgElement.style.maxWidth = '100%';  // 미리보기 영역에 맞춰 크기 조정
                     imgElement.style.height = 'auto';  // 비율에 맞게 크기 조정
                     imgElement.style.marginBottom = '10px';  // 각 이미지 간 간격 추가
