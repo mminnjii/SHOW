@@ -1,14 +1,16 @@
 package com.kh.show.payments.model.service;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.show.payments.model.dao.PaymentsDao;
+import com.kh.show.payments.model.vo.Account;
+import com.kh.show.payments.model.vo.Payments;
+import com.kh.show.reservation.model.vo.Seats;
+import com.kh.show.reservation.model.vo.SeatsOfRow;
 import com.kh.show.reservation.model.vo.Ticket;
 
 @Service
@@ -21,38 +23,38 @@ public class PaymentsServiceImpl implements PaymentsService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int createPay(Map<String, Object> info) {
-		return paymentsDao.createPay(sqlSession,info);
+	public int createPay(Payments p) {
+		return paymentsDao.createPay(sqlSession,p);
 	}
 
 	@Override
-	public int createTicket(Map<String, Object> ticket) {
-		return paymentsDao.createTicket(sqlSession,ticket);
+	public int createTicket(Ticket t) {
+		return paymentsDao.createTicket(sqlSession,t);
 	}
 
 	@Override
-	public int selectId(Map<String, Object> ticket) {
-		return paymentsDao.selectId(sqlSession,ticket);
+	public List<Seats> selectId(Ticket t) {
+		return paymentsDao.selectId(sqlSession,t);
 	}
 
 	@Override
-	public int createAccount(Map<String, Object> info) {
-		return paymentsDao.createAccount(sqlSession,info);
+	public int createAccount(Account ac) {
+		return paymentsDao.createAccount(sqlSession,ac);
 	}
 
 	@Override
-	public int rollbackSeats(Map<String, Object> data) {
-		return paymentsDao.rollbackSeats(sqlSession,data);
+	public int rollbackSeats(Seats s) {
+		return paymentsDao.rollbackSeats(sqlSession,s);
 	}
 
 	@Override
-	public int deleteReservation(Map<String, Object> data) {
-		return paymentsDao.deleteReservation(sqlSession,data);
+	public int deleteReservation(int reservationId) {
+		return paymentsDao.deleteReservation(sqlSession,reservationId);
 	}
 
 	@Override
-	public int createCard(Map<String, Object> info) {
-		return paymentsDao.createCard(sqlSession,info);
+	public int createCard(Payments p) {
+		return paymentsDao.createCard(sqlSession,p);
 	}
 
 }

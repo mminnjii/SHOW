@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>본문 영역 수정</title>
+    <title>공연상세정보</title>
     <style>
 		.detail {
 			margin-left: 150px;
@@ -116,15 +116,16 @@
 	        <c:if test="${not empty date }">
 	        	<p>날짜 :</p>	
 	        	<select id="date" onchange="selectDate()">
+	        		<option disabled="disabled" selected>선택하세요</option>	
 	        		<c:forEach items="${date }" var="d">
 			        	<option>${d.showDate }</option>
 		        	</c:forEach>
 		        </select>
-	       </c:if> 
+	       	</c:if> 
 		        <br><br>
 		        <p>회차 및 공연시간 :</p>
  		        <select id="time">
-		        	<option>선택하세요</option>
+		        	<option disabled="disabled" selected>선택하세요</option>
 		        </select>
 	        <br><br>
 	        <p>공연일정 : </p>
@@ -133,12 +134,14 @@
 	        </select>
 	        <br><br>
 	        <br><br><br>
-	        <p>회원등급 : </p>
-	        <br>
-			<h4>${rank }</h4>
-			<br><br>
-		 	<p>보유쿠폰 : ${cno } 개 </p>
-	        <br><br><br><br>
+	        <c:if test="${not empty userNo }">
+		        <p>회원등급 : </p>
+		        <br>
+				<h4>${rank }</h4>
+				<br><br>
+			 	<p>보유쿠폰 : ${cno } 개 </p>
+		        <br><br><br><br>
+	        </c:if>
 			<button onclick="reservation();">예약하기</button>
 	    </div>
 	    
@@ -153,13 +156,42 @@
 	                <c:choose>
 						<c:when test="${not empty s }">
 					      	 <h2>${s.showName }</h2> <br>
-			                <p><b style="font-weight: 500;">장르</b> : &nbsp; ${s.genreName }</p> 
-			                <p style="width: 800px;" ><b style="font-weight: 500;">소개</b> : &nbsp; ${s.showExplain }</p> 
+			                <p>
+			                	<b style="font-weight: 500;">장르</b> : &nbsp; 
+			                	 <c:choose>
+			                	 	<c:when test="${s.genreNo eq '2' }">
+			                	 		연극
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '3' }">
+			                	 		콘서트
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '4' }">
+			                	 		클래식
+			                	 	</c:when>
+			                	 	<c:when test="${s.genreNo eq '5' }">
+			                	 		전시
+			                	 	</c:when>
+			                	 	<c:otherwise>
+			                	 		뮤지컬
+			                	 	</c:otherwise>
+			                	 </c:choose>
+			                </p> 
+			                <p style="width: 800px;" >
+			                	<b style="font-weight: 500;">소개</b> : &nbsp; 
+			                		<c:choose>
+			                			<c:when test="${s.showExplain eq '--'}">
+			                				여러분의 연말을 책임질 ${s.showName } !
+			                			</c:when>
+			                			<c:otherwise>
+			                				${s.showExplain }
+			                			</c:otherwise>
+			                		</c:choose>
+			                </p> 
 			                <p><b style="font-weight: 500;">장소</b> : &nbsp; ${s.hallName }</p> 
 			                <p><b style="font-weight: 500;">공연기간</b> :&nbsp; ${s.showStart }~${s.showEnd }</p>
 			                <p><b style="font-weight: 500;">공연시간</b> : &nbsp; 120분</p>
 			                <p><b style="font-weight: 500;">VIP석</b> : &nbsp; ${vipPrice } &nbsp;||&nbsp; 
-				                <b style="font-weight: 500;">R석</b> : &nbsp; ${rPrice } &nbsp;||&nbsp; 
+				               <b style="font-weight: 500;">R석</b> : &nbsp; ${rPrice } &nbsp;||&nbsp; 
 				               <b style="font-weight: 500;"> S석</b> : &nbsp; ${s.price }
 			                </p>
 						</c:when>                
@@ -185,12 +217,6 @@
     
     <script>
     	
-    	$(function(){
-    		var rank = ${rank }
-    		console.log(rank);
-    	});
-    
-    
     	function selectDate(){
     		
      		$.ajax({
@@ -199,7 +225,7 @@
     				date : $("#date").val()
     			},
     			success : function(result){
-    				
+    				// 회차에 따른 시간값 초기화 후 불러오기
     				$("#time").empty();
     				var info = "";
 
@@ -208,8 +234,7 @@
   				        			+result[i].showRound + " 회차,  공연시간 :" + result[i].showTime + "\n"
   				        		 "</option>";
   				    }
-  				    
-  				  	$("#time").append(info);
+  				    $("#time").append(info);
     			},	
     			error : function(error){
     				console.log("통신오류");
@@ -221,7 +246,7 @@
     	function reservation(){
     		
     		// 로그인 유저 조건걸어주기
-    		var userNo = $('input[name="userNo"]').val();
+    		var userNo = $("input[name='userNo']").val();
     		
     		if(userNo){
     			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태
@@ -233,7 +258,6 @@
 	       	     }else{
 	       	    	 alert("공연날짜 및 시간을 선택하세요");
 	       	     }
-	       	    
     		}else{
     			alert("로그인 후 이용하세요")
     			location.href= '/show/member/toLogin';

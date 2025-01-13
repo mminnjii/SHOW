@@ -84,12 +84,10 @@ public class MemberController {
 		//System.out.println(bcrtptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd()));
 		
 		if(loginUser != null && bcrtptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-			//System.out.println("Y");
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", loginUser.getUserName()+"님 환영합니다");
 			mv.setViewName("redirect:/");
 		}else {
-			//System.out.println("N");
 			session.setAttribute("alertMsg", "로그인 실패!");
 			mv.setViewName("member/loginPage");
 		}
@@ -237,15 +235,12 @@ public class MemberController {
 	public String phoneCheck(String phone) {
 			
 		int result = memberService.phoneCheck(phone);
-		System.out.println(phone);
 		String val = "";
-		System.out.println(result);
 		if(result>0) {
 			val = "NNN";
 		}else {
 			val = "YYY";
 		}
-		System.out.println(val);
 		return val;
 	}
 	

@@ -6,11 +6,10 @@ import lombok.Data;
 @Data
 @Builder
 public class ManagerShowInfo {
-	
 	private int showNo;
 	private String showName;
 	private String showExplain;
-	private String status;
+	private String price;
 	private String hallName;
 	private String genreName;
 	private String regionName;
