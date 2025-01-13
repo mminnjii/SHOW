@@ -186,6 +186,27 @@ public interface ShowInfoService {
 
 	//메인페이지 티켓 오픈 리스트
 	ArrayList<Show> openTicketList();
+
+	//메인페이지 지역별랭킹
+	ArrayList<Show> mainRegionRank0();
+
+	//메인페이지 지역별 랭킹 > 경기/인천
+	ArrayList<Show> mainRegionRank1();
+
+	//메인페이지 지역별 랭킹 > 충청/강원
+	ArrayList<Show> mainRegionRank2();
+
+	//메인페이지 지역별 랭킹 > 대구/경북
+	ArrayList<Show> mainRegionRank3();
+	
+	//메인페이지 지역별 랭킹 > 부산/경남
+	ArrayList<Show> mainRegionRank4();
+
+	//메인페이지 지역별 랭킹 > 광주/전라
+	ArrayList<Show> mainRegionRank5();
+
+	//메인페이지 지역별 랭킹 > 제주
+	ArrayList<Show> mainRegionRank6();
 	
 	
 

@@ -38,7 +38,10 @@
 
         .input ul{
             margin: 5px 0px 5px 0px;
-            font-size: 10px;
+
+            font-size: 15px;
+
+
             color: gray;
         }
 
@@ -52,7 +55,7 @@
 </head>
 <body>
 
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+	<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
     <div class="a">
     	&nbsp;<i id="back" class="fa-solid fa-angles-left" onclick="history.back();"></i>
         <h2>1:1 문의하기</h2>

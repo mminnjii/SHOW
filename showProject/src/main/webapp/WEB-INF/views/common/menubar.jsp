@@ -16,19 +16,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/e7db19de60.js" crossorigin="anonymous"></script>
     <style>
-        #headerImg{
+        #headerImg22{
             width: 100%;
+            z-index: 99;
 
         }
-        #header{
+        #header22{
             width: 100%;
             height: 100px;
+            z-index: 99;
         }
         #logo{
             height: 70px;
+            z-index: 99;
         }
-        #td1,#td2,#td4,#td6,#td7{
+        #td1,#td2,#td4,#td66,#td7{
             width: 100px;
+            z-index: 99;
+            z-index: 99;
         }
         #td3{
             font-family: "Noto Sans KR", sans-serif;
@@ -36,32 +41,41 @@
             font-weight: 700;
             font-style: normal;
             padding-top: 30px;
+            z-index: 99;
         }
         #td5{
             width: 300px;
             font-size: 12px;
             font-weight: 600;
+            z-index: 99;
         }
         #span1,#span2{
             color: red;
+            z-index: 99;
         }
         #img2{
             height: 50px;
             padding-bottom: 5px;
+            z-index: 99;
         }
-        #tr1{
-            height: 50px;
+        .tr123{
+            height: 30px;
+            z-index: 99;
+            
         }
-        #tr2{
-            height: 50px;
+        .trrr{
+            height: 30px;
             border-top: 1px solid rgba(128, 128, 128, 0.4);
             border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+            z-index: 99;
+           
         }
-        #header{
+        #header22{
             border-collapse: collapse; 
+            z-index: 99;
         }
         
-        li{
+        .ulul .li234, #menu22 .pp1{
             list-style-type : none;
             display: inline-block;
             font-family: "Noto Sans KR", sans-serif;
@@ -69,8 +83,12 @@
             font-weight: 400;
             font-style: normal;
             padding-right: 13px; /*메뉴바 글씨 간격*/
+            
+        	z-index: 99;
+            
+            
         }
-        #li2,#li3,#li4,#li5{
+        #li11{
             list-style-type : none;
             display: inline-block;
             font-family: "Noto Sans KR", sans-serif;
@@ -78,15 +96,34 @@
             font-weight: 400;
             font-style: normal;
             padding-right: 5px;
-            padding-top: 40px;
+            /*padding-top: 40px;*/
+            text-decoration: none;
+            color: black;
+            z-index: 99;
+            
         }
-        #li1{
+        
+        .li234 a{
+       		list-style-type : none;
+            display: inline-block;
+            font-family: "Noto Sans KR", sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            font-style: normal;
+            
+            padding-top: 40px;
+            text-decoration: none;
+            color: black;
+            z-index: 99;
+        }
+        #li11{
             color: gainsboro;
         }
-        #menu{
+        #menu22{
             padding-left: 15px; /*왼쪽 여백을 설정하여 로고와 위치 맞춤*/
+            z-index: 99;
         }
-        .search-box{
+        .search-box2{
             height: 10px;
             width: 200px;
             background-color: white;
@@ -95,8 +132,9 @@
             border: 1px solid gray;
             display: flex;
             align-items: center;
+            z-index: 99;
         }
-        .search-text{
+        .search-text2{
             border: none;
             background: none;
             outline: none;
@@ -107,8 +145,9 @@
             line-height: 30px;
             width: 200px;
             font-family: "Noto Sans KR", sans-serif;
+            z-index: 99;
         }
-        .search-btn{
+        .search-btn2{
             color: black;
             float: right;
             width: 40px;
@@ -120,10 +159,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 99;
         }
-        a{
+        .pp1 a{
             text-decoration: none;
             color: black;
+            z-index: 99;
         }
 
         #re{
@@ -133,14 +174,21 @@
             color: black;
             font-size: 13px;
             font-weight: 500;
+            z-index: 99;
         }
         #re:hover{
             cursor: pointer;
+            z-index: 99;
         }
+        
+        
+        
+     
         
     </style>
 </head>
 <body>
+	<div class="happy">
 	<!-- alertMsg 비어있지 않을 때만 띄워주기 -황영식 -->
 	<c:if test="${not empty alertMsg }">
 	<script>
@@ -163,35 +211,35 @@
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"  scope="session"></c:set>
 	
     <div>
-        <img src="${contextPath }/resources/images/배너.jpg" alt="헤더이미지" id="headerImg">
+        <img src="${contextPath }/resources/images/배너.jpg" alt="헤더이미지" id="headerImg22">
     </div>
 
     <div id="div">
-        <table  id="header">
-            <tr id="tr1">
+        <table  id="header22">
+            <tr class="tr123">
 
                 <td id="td1"></td>
                 <td id="td4"><a href="${contextPath}"><img src="${contextPath }/resources/images/로고2.png" alt="로고" id="logo"></a></td>
                 <td id="td3"> 공연/전시</td>
                 <td align="right" >
-                    <ul>
+                    <ul class="ulul">
 		                <c:choose>
 		                   <c:when test="${empty loginUser}">
                                <!-- 로그인 전 -->
-                               <li id="li2"><a href="${contextPath }/member/toLogin">로그인</a></li>
-                               <li id="li3"><a href="${contextPath}/member/toEnroll">회원가입</a></li>
+                               <li class="li234"><a href="${contextPath }/member/toLogin">로그인</a></li>
+                               <li class="li234"><a href="${contextPath}/member/toEnroll">회원가입</a></li>
                             </c:when>
                             <c:otherwise>
                                 <!-- 로그인 후 -->
                                 <label>${loginUser.userName }님</label> &nbsp;&nbsp;
-                                <li id="li2"><a href="${contextPath }/member/logout.me">로그아웃</a></li>
-		                        <li id="li3"><a href="${contextPath}/member/myPage">마이페이지</a></li>
+                                <li class="li234"><a href="${contextPath }/member/logout.me">로그아웃</a></li>
+		                        <li class="li234"><a href="${contextPath}/member/myPage">마이페이지</a></li>
 		                   </c:otherwise>
 		                </c:choose>
-                        <li id="li4">
+                        <li class="li234">
                             <a href="${contextPath}/member/reserve?userNo=${loginUser.userNo}">예매확인/취소</a>
                         </li>
-                        <li id="li5"><a href="${contextPath}/cmain">고객센터</a></li>
+                        <li class="li234"><a href="${contextPath}/cmain">고객센터</a></li>
                     </ul>
                 </td>
 
@@ -205,31 +253,31 @@
                 <td  id="td2"></td>
                 
             </tr>
-            <tr id="tr2">
-                <td id="td6"></td> <!--홈    뮤지컬    연극    콘서트    클래식    전시   고객센터   커뮤티니   이벤트 -->
-                <td colspan="3" id="td8">
-                    <ul id="menu">
-                        <li><a href="${contextPath}">홈</a></li>
-                        <li><a href="${contextPath}/musicalList">뮤지컬</a></li>
-                        <li><a href="${contextPath}/playList">연극</a></li>
-                        <li><a href="${contextPath}/concertList">콘서트</a></li>
-                        <li><a href="${contextPath}/classicList">클래식</a></li>
-                        <li><a href="${contextPath}/displayList">전시</a></li>
+            <tr class="trrr">
+                <td id="td66"></td> <!--홈    뮤지컬    연극    콘서트    클래식    전시   고객센터   커뮤티니   이벤트 -->
+                <td colspan="3" id="td88">
+                    <ul id="menu22">
+                        <li  class="pp1"><a href="${contextPath}" >홈</a></li>
+                        <li  class="pp1"><a href="${contextPath}/musicalList">뮤지컬</a></li>
+                        <li  class="pp1"><a href="${contextPath}/playList" >연극</a></li>
+                        <li  class="pp1"><a href="${contextPath}/concertList" >콘서트</a></li>
+                        <li  class="pp1"><a href="${contextPath}/classicList" >클래식</a></li>
+                        <li  class="pp1"><a href="${contextPath}/displayList">전시</a></li>
 
 
-                        <li id="li1">|</li>
+                        <li id="li11">|</li>
 
-                        <li><a href="${contextPath}/chat/list">커뮤니티</a></li>
-                        <li><a href="${contextPath}/notice/list">공지사항</a></li>
+                        <li  class="pp1"><a href="${contextPath}/chat/list">커뮤니티</a></li>
+                        <li  class="pp1"><a href="${contextPath}/notice/list" >공지사항</a></li>
                        
                     </ul>
                 </td>
                 
              
                 <td id="td7" align="center">
-                    <form class="search-box" action="${contextPath}/showInfo/search" method="get">
-                        <input type="text" class="search-text" name="keyword" value="${hashMap.keyword}" placeholder="공연이름을 검색해보세요.">
-                        <button class="search-btn" type="submit">
+                    <form class="search-box2" action="${contextPath}/showInfo/search" method="get">
+                        <input type="text" class="search-text2" name="keyword" value="${hashMap.keyword}" placeholder="공연이름을 검색해보세요.">
+                        <button class="search-btn2" type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
 
@@ -241,6 +289,8 @@
             </tr>
         </table>
 
+    </div>
+    
     </div>
     
    

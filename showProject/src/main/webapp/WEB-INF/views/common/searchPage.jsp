@@ -174,6 +174,32 @@
         </table>
 
     </div>
+    
+    <script>
+   $(function(){
+	   
+		$("#result1").click(function(){
+			
+		var showName = $(this).find('span#reName').text();
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+		});
+		
+	});
+   
+   $(function(){
+	   
+		$("#result2 > button").click(function(){
+			
+		var showName = $(this).find('span#reName').text();
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+		});
+		
+	});
+    </script>
 
 <br><br><br>
 
