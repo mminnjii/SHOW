@@ -116,15 +116,16 @@
 	        <c:if test="${not empty date }">
 	        	<p>날짜 :</p>	
 	        	<select id="date" onchange="selectDate()">
+	        		<option disabled="disabled" selected>선택하세요</option>	
 	        		<c:forEach items="${date }" var="d">
 			        	<option>${d.showDate }</option>
 		        	</c:forEach>
 		        </select>
-	       </c:if> 
+	       	</c:if> 
 		        <br><br>
 		        <p>회차 및 공연시간 :</p>
  		        <select id="time">
-		        	<option>선택하세요</option>
+		        	<option disabled="disabled" selected>선택하세요</option>
 		        </select>
 	        <br><br>
 	        <p>공연일정 : </p>
@@ -224,7 +225,7 @@
     				date : $("#date").val()
     			},
     			success : function(result){
-    				
+    				// 회차에 따른 시간값 초기화 후 불러오기
     				$("#time").empty();
     				var info = "";
 
@@ -233,8 +234,7 @@
   				        			+result[i].showRound + " 회차,  공연시간 :" + result[i].showTime + "\n"
   				        		 "</option>";
   				    }
-  				    
-  				  	$("#time").append(info);
+  				    $("#time").append(info);
     			},	
     			error : function(error){
     				console.log("통신오류");
@@ -246,7 +246,7 @@
     	function reservation(){
     		
     		// 로그인 유저 조건걸어주기
-    		var userNo = $('input[name="userNo"]').val();
+    		var userNo = $("input[name='userNo']").val();
     		
     		if(userNo){
     			// 공연번호 / 회차번호 / 회원번호 / 공연장번호 / 예약상태
@@ -258,7 +258,6 @@
 	       	     }else{
 	       	    	 alert("공연날짜 및 시간을 선택하세요");
 	       	     }
-	       	    
     		}else{
     			alert("로그인 후 이용하세요")
     			location.href= '/show/member/toLogin';
