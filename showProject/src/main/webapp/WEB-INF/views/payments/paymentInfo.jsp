@@ -53,38 +53,55 @@
 	     				</tr>
 	     			</thead>
 	     			<tbody>
-	     				<tr>
-	     					<td><h4>결제번호 :</h4></td>
-	     					<td>${paymentId}</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>결제금액 :</h4></td>
-	     					<td>${price}</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>결제방식 :</h4></td>
-	     					<td>${methodToget }</td>
-	     				</tr>
-	     				<tr>
-	     					<td><h4>결제상태 :</h4></td>
-	     					<td>Y</td>
-	     				</tr>
-	     			<c:if test="${not empty bankName && not empty bankNum && not empty bankHolder && not empty dueDate }">	
+     					<c:choose>
+	     					<c:when test="${not empty p }">
+			     				<tr>
+			     					<td><h4>결제번호 :</h4></td>
+			     					<td>${p.paymentId}</td>
+			     				</tr>
+			     				<tr>
+			     					<td><h4>결제금액 :</h4></td>
+			     					<td>${p.price}</td>
+			     				</tr>
+			     				<tr>
+			     					<td><h4>결제방식 :</h4></td>
+			     					<td>${p.paymentMethod }</td>
+			     				</tr>
+	     					</c:when>
+	     					<c:otherwise>
+	     						결제정보를 불러올 수 없습니다.
+	     					</c:otherwise>
+     					</c:choose>
+     					<c:choose>
+     						<c:when test="${not empty ac }">
+     							<tr>	
+			     					<td><h4>결제상태 :</h4></td>
+			     					<td>M(입금대기중)</td>
+			     				</tr>
+     						</c:when>
+     						<c:otherwise>
+     							<tr>	
+			     					<td><h4>결제상태 :</h4></td>
+			     					<td>Y</td>
+			     				</tr>
+     						</c:otherwise>
+     					</c:choose>
+	     			<c:if test="${not empty ac }">	
 	     				<tr>
 	     					<td><h4>은행이름 :</h4></td>
-	     					<td>${bankName}</td>
+	     					<td>${ac.bankName}</td>
 	     				</tr>
      					<tr>
      						<td><h4>은행번호 :</h4></td>
-	     					<td>${bankNum}</td>
+	     					<td>${ac.bankNum}</td>
 	     				</tr>
      					<tr>
      						<td><h4>예금주 :</h4></td>
-	     					<td>${bankHolder}</td>
+	     					<td>${ac.name}</td>
 	     				</tr>
 	     				<tr>
 	     					<td><h4>입금예정일 : </h4></td>
-	     					<td>${dueDate} 까지</td>
+	     					<td>${ac.dueDate} 까지</td>
 	     				</tr>
 	     			</c:if>		
 	     				<tr>
@@ -124,7 +141,6 @@
 		     				</tr>
      					</c:if>
 	     			</tbody>
-	     		
 	     		</table>
 	     	<br><br>
 	        <br><br><br>
@@ -135,38 +151,52 @@
 	     				</tr>
 	     			</thead>
 	     			<tbody>
-		     			<c:if test="${not empty methodToget }" >
+		     			<c:if test="${not empty t and not empty p  }" >
 		     				<tr>
 		     					<td><h4>수령방식 :</h4></td>
-		     					<td>${methodToget }</td>
+		     					<c:choose>
+		     						<c:when test="${p.method == 1 }">
+		     							<td>현장수령</td>
+		     						</c:when>
+		     						<c:otherwise>
+		     							<td>택배수령</td>
+		     						</c:otherwise>
+		     					</c:choose>
 		     				</tr>
-		     			</c:if >	
-		     			<c:if test="${not empty t }" >
 		     				<tr>
 		     					<td><h4>매수 :</h4></td>
 		     					<td>${t.size() }</td>
 		     				</tr>
-			     				<tr>
-			     					<td><h4>좌석번호(좌석명) :</h4></td>
-			     			<c:forEach items="${t }" var="t">
-			     					<input type="hidden" name="seatId" value="${t.seatId }"></input>		
-			     					<td>${t.seatId }(${t.seatName }석)</td>
-			     			</c:forEach>
-			     				</tr>
-			     				
+		     				<tr>
+		     					<td><h4>좌석번호(좌석명) :</h4></td>
+				     			<c:forEach items="${t }" var="t">
+				     					<input type="hidden" name="seatId" value="${t.seatId }"></input>		
+				     					<td>${t.seatId }(${t.seatName }석)</td>
+				     			</c:forEach>
+		     				</tr>
 	     				</c:if >
 	     			</tbody>
 	     		</table>
+        		
+        		<br> <br> <br> <br>
+        		<c:if test="${not empty p.c }">	
+        			<button onclick="cancelPay();">환불하기</button>
+        		</c:if>
+        		
+        		
+        		<script 
+				    src="https://code.jquery.com/jquery-3.3.1.min.js"
+				    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+				    crossorigin="anonymous">
+				</script>
         </div>
+        
 		
 		<script>
 			
-		 	var receiptUrl = $('input[name="receiptUrl"]').val();
-			
+		 	var receiptUrl = $("input[name='receiptUrl']").val();
 			$("#receipt").on("click",function(){
-				
 				window.open(receiptUrl);
-				
 			}); 
 			
 			
@@ -197,7 +227,53 @@
 	            });
 				
 			});
+			
+			
+			
+			
+			var reservationId = "order_"+ ${rInfo.reservationId}
+			var amount = `${price}` // 문자열 백틱
+	
+			function cancelPay() {
 
+				if (confirm("정말 환불하시겠습니까?")) {
+					$.ajax({
+						url : "/show/payments/getToken",
+						method : "POST",
+						success : function(token) {
+							console.log('서버 응답:', token);
+							$.ajax({
+								url : "/show/payments/cancel",
+								method : "POST",
+								data : {
+									reservationId : reservationId,
+									reason : "테스트 결제 환불",
+									amount : amount, // 환불 금액
+									refund_holder : "김유저", // 가상계좌 환불 시 필요
+									refund_bank : "88", // 신한은행
+									refund_account : "56211105948400", // 계좌 번호
+									token : token
+								},
+								success : function(response) {
+									console.log('서버 응답:', response);
+									if (response == "Y") {
+										alert("환불되었습니다.")
+										window.location.href = "/show";
+										
+									} else {
+										alert("환불에 실패하였습니다 다시 요청해 주세요.")
+									}
+								},
+								error : function(xhr, status, error) {
+									console.error('에러 발생:', error);
+								}
+							});
+						}
+					});
+
+				}
+
+			}
 		</script>
 		<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

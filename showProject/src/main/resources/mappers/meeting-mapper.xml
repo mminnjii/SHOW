@@ -185,16 +185,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,USER_ID 
 		FROM MEETING ME
 		JOIN MEMBER USING(USER_NO)
-		WHERE ME.STATUS='Y'
+		WHERE 
 			<choose>
 				<when test="condition == 'title'">
-					AND MEETING_TITLE LIKE '%' || #{keyword} || '%'
+				 	MEETING_TITLE LIKE '%' || #{keyword} || '%'
 				</when>
 				<when test="condition == 'writer'">
-					AND USER_ID LIKE '%' || #{keyword} || '%'
+					 USER_ID LIKE '%' || #{keyword} || '%'
 				</when>
 				<otherwise>
-					AND (MEETING_TITLE LIKE '%' || #{keyword} || '%'
+					 (MEETING_TITLE LIKE '%' || #{keyword} || '%'
 					OR USER_ID LIKE '%' || #{keyword} || '%' )
 				</otherwise>
 			</choose>

@@ -119,7 +119,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<th>혜택 2 : 할인 쿠폰 X2(매달)</th>
+								<th>혜택 2 : 할인 쿠폰 10%(매달)</th>
 								<td>
 									<c:choose>
 										<c:when test="${loginUser.subscribe == 'Y' }">
@@ -145,7 +145,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th>혜택 4 : 티켓팅 우선권</th>
+								<th>혜택 4 : 멤버십 라운지 이용</th>
 								<td>
 									<c:choose>
 										<c:when test="${loginUser.subscribe == 'Y' }">
@@ -156,10 +156,6 @@
 										</c:otherwise>
 									</c:choose>
 								</td>
-							</tr>
-							<tr>
-								<th>혜택 5 : 멤버십 라운지 이용</th>
-								<td></td>
 							</tr>
 						</table>
 						<br><br>
