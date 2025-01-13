@@ -219,8 +219,8 @@
 				});
 				
 			}
-			
 		});
+		
 		
 		var meetingNo = ${meDetail.meetingNo} ;
 
