@@ -368,9 +368,7 @@
 			                         + "&nbsp;&nbsp;" + userList[i].userId 
 			                         + "</li>";
 						}
-						
 				    }
-					
 				    $(".join ul").html(userStr);
 				}
 				
@@ -413,7 +411,6 @@
 		                        + data.cm.chatContent
 		                        + "</p></div>";
 						}
-
 					}
 					
 					
