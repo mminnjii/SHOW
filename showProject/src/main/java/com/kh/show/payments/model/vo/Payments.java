@@ -22,8 +22,11 @@ public class Payments {
 	private Date paymentDate;	//	PAYMENT_DATE
 	private String status;	//	STATUS
 	private String method;	//	METHOD
+	
+	private String receipt;	
 
-	private int methodToget;	//	사용을 위해 추가
+	
+	private Creditcard c;
 	
 	private ArrayList<Reservation> r;
 }

@@ -102,71 +102,56 @@ public class NotiveController {
 	public String searchNotice(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 														,String condition
 														,String keyword
-														,Model m){
+														,Model m
+														,String noticeType){
 		
+		System.out.println(noticeType);
+
 		// 하나에 묶어서 전달해야 하기 때문에 전달받은 검색 조건을 맵에 담아 전달 
 		HashMap<String,String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-
-		// 검색 목록 개수 - 검색 키워드에 따라 검색해야 한다.
+		
 		int searchCount = noticeService.searchCount(map);
-		
 		int pageLimit = 10;
 		int boardLimit = 10;
-		
+
 		// 페이징 처리를 위한 검색 목록 개수 
 		PageInfo pi = Pagenation.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
-		// 검색 목록
-		ArrayList<Notice> noticeList = noticeService.searchNotice(map, pi);
-		
-		for(Notice c : noticeList) {
-			System.out.println(c);
+
+		if(noticeType.equals("general")) {
+			// 검색 목록
+			ArrayList<Notice> noticeList = noticeService.searchNotice(map, pi);
+			
+			for(Notice c : noticeList) {
+				System.out.println(c);
+			}
+			
+			m.addAttribute("noticeList",noticeList);
+			
+		}else if (noticeType.equals("open")){
+			searchCount = noticeService.searchOpenCount(map);
+			
+			pi = Pagenation.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
+			// 검색 목록
+			ArrayList<OpenNotice> openNoticeList = noticeService.searchOpenNotice(map, pi);
+			
+			for(OpenNotice c : openNoticeList) {
+				System.out.println(c);
+			}
+			
+			m.addAttribute("openNoticeList",openNoticeList);
+			
 		}
+
 		
-		m.addAttribute("noticeList",noticeList);
 		m.addAttribute("pi", pi);
 		m.addAttribute("map", map);
-		m.addAttribute("noticeType", "general");
+		m.addAttribute("noticeType", noticeType);
 		
 		return "/notice/noticeView2";
 	}
 
-	// 오픈공지 검색 목록 
-	@GetMapping("/openSearch")
-	public String searchOpenNotice(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
-									,String condition
-									,String keyword
-									,Model m){
-		
-		// 하나에 묶어서 전달해야 하기 때문에 전달받은 검색 조건을 맵에 담아 전달 
-		HashMap<String,String> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		
-		// 검색 목록 개수 - 검색 키워드에 따라 검색해야 한다.
-		int searchCount = noticeService.searchOpenCount(map);
-		
-		int pageLimit = 10;
-		int boardLimit = 10;
-		
-		// 페이징 처리를 위한 검색 목록 개수 
-		PageInfo pi = Pagenation.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
-		// 검색 목록
-		ArrayList<OpenNotice> openNoticeList = noticeService.searchOpenNotice(map, pi);
-		
-		for(OpenNotice c : openNoticeList) {
-			System.out.println(c);
-		}
-		
-		m.addAttribute("openNoticeList",openNoticeList);
-		m.addAttribute("pi", pi);
-		m.addAttribute("map", map);
-		m.addAttribute("noticeType", "open");
-		
-		return "/notice/noticeView2";
-	}
-	
 	
 	// 공지사항 상세페이지
 	@ResponseBody
