@@ -89,7 +89,7 @@ public class ChatController {
 		// 채팅방 생성이 완료되면 해당 채팅방으로 바로 이동 및 alert 메시지 
 		if(result>0) {
 			session.setAttribute("alertMsg", "채팅방 생성이 완료되었습니다. 채팅방으로 이동됩니다.");
-			return "redirect:/chat/chatting?chatNo="+chatNo+"&userId="+userId;  // 채팅방 경로로 수정해야 한다.
+			//return "redirect:/chat/chatting?chatNo="+chatNo+"&userId="+userId; 
 			
 		}else { // 생성되지 않으면 커뮤니티 리스트 페이지로 이동 및 alert 메시지 
 			session.setAttribute("alertMsg", "채팅방 생성이 불가능합니다. 다시 생성해 주세요.");

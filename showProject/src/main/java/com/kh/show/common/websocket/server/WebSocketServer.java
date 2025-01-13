@@ -22,30 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebSocketServer extends TextWebSocketHandler{
 
-	// 사용자가 접속 버튼을 누르면 session정보가 생긴다
-	/*
-	 * socket은 사용자와 Http의 양방향 통신을 위한 연결 통로이다. 
-	 *   => 요청이 있을 때 마다 새로운 socket을 생성하는 것이 아니다. 사용하는 용도에 따라 socket을 여러개 생성하는 것. 
-	 *   => 하나의 socket으로도 여러개의 채팅방을 생성할 수 있다. 
-	 * 
-	 * 각 세션 정보를 저장하여 사용자 구문, 그룹화 시켜서 메시지 전달. 
-	 * 각 세션은 구분되어야 한다.
-	 * 
-	 * 채팅방의 식별자를 이용하여 구분지으시고 그 안에 접속한 사람들의 소켓세션 을 담아주면 돼요
-	 * 때문에 map형태로 키,채팅방접속사람들 을 담을 수 있게 준비하는게 편할겁니다.
-	 * 
-	 * ** 1. 채팅방의 식별자를 이용하여 각 저장소 구분
-	 * 	  2. 접속한 사람들의 소켓 세션 담기  (map 형태로 : 키,채팅방접속사람).
-	 * 	     - Map에 채팅방 번호 - 채팅방에 접속한 사람들의 session 정보 
-	 * 		 - Integer, Set<WebSocketSession>
-	 *    3. 메시지 전달
-	 *    	 - 채팅방에 접속해 있는 회원에게만 메시지 전달
-	 * 	  4. 세션 삭제 
-	 * 		 - 해당 채팅방 번호에 해당하는 Set<WebSocketSession> 리스트에서 session 삭제 
-	 * 
-	 * ** Set<WebSocketSession>을 전역 변수로 사용하면 소켓 연결이 될 때 마다 초기화되는 것 같음. => 각 메소드에서 선언하는 지역변수로 선언하여 사용. 
-	 * 
-	 * */
 	
 	@Autowired
 	private ChatService chatService;
@@ -61,14 +37,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//연결이 되었을때 동작하는 메소드 
 		log.debug("접속");
-		
-		// websocketSession 속성 추출
-		// HTTP 세션에 저장된 정보를 웹소켓 세션에서 전달하여, 웹 소켓 연결 후에도 해당 세션 정보를 사용하기 위해
-		// 웹소켓은 초기 연결(핸드쉐이크) 시 HTTP를 사용하여 서버와 클라이언트 연결
-		// 이때, HTTP 세션에 저장된 정보(예: 로그인한 사용자 정보)를 웹소켓 세션에 전달하여 사용하기 위해 
-		// HttpSessionHandshakeInterceptor 사용 : servlet에 등록 
 		log.debug("WebSocket session : \n{}", session);
-		
 		//해당 속성중 loginUser라는 key값으로 value 추출
 		log.debug("정보 : {}", session.getAttributes().get("loginUser"));
 		
@@ -118,7 +87,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 			log.debug("모든 사용자 : {}", loginUser);
 		}
 		
-		
 		log.debug("loginUser : {}", loginUser);
 		log.debug("chatNo : {}", chatNo);
 		log.debug("현재 접속자수 : {}", users.size());
@@ -163,7 +131,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 									.chatNo(chatNo)
 									.build();
 		
-		// 전달받은 메시지 정보를 DB에 저장한다. 
+		// 전달받은 메시지 정보를 DB에 저장
 		int result = chatService.chatMessage(cm);
 		
 		if(result>0) {
@@ -185,12 +153,8 @@ public class WebSocketServer extends TextWebSocketHandler{
 			// 채팅방의 모든 사용자에게 메시지 전달
 			// 해당되는 채팅방의 사용자만 가져옴
 			Set<WebSocketSession> users = chatUser.get(chatNo);
-			ArrayList<WebSocketSession> joinUser = new ArrayList<>();
-			for(WebSocketSession ws : users) {
-				joinUser.add(ws);
-			}
 			// 사용자에게 메시지 전달
-			for(WebSocketSession wsm : joinUser) {
+			for(WebSocketSession wsm : users) {
 				wsm.sendMessage(tm); 
 			}
 			
@@ -211,7 +175,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 		users.remove(session);
 
 		// 사용자가 나간 경우 해당 세션 정보를 다시 보내서 실시간으로 반영 
-		
 		ArrayList<Member> userList = new ArrayList<>();
 		
 		// 접속자들의 정보를 리스트 생성 (socket 저장소에 저장된 회원들)
@@ -219,7 +182,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 			Member loginUser = (Member)s.getAttributes().get("loginUser");
 			userList.add(loginUser);
 		}
-		
 		
 		// 채팅방에 들어온 회원의 정보와 명수를 전달한다.
 		HashMap<String, Object> joinUser = new HashMap<>();
