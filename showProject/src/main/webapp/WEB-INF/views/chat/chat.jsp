@@ -195,11 +195,7 @@
         
         <script>
             $("option[value='${map.condition}']").attr("selected", true);
-            
-            
-	            console.log(${chatList[0].joinCount});
-	            console.log(${chatList[0].chatUserCount});
-            
+  			
 	  			
             $("#chatList tbody").on("click", "button", function(){
 	            // 해당 chatNo에 해당하는 joinCount, chatUserCount만 가져와야 한다. chatList
@@ -212,10 +208,10 @@
 	            var td = tr.children();
 	            
 	            var join = td.eq(3).text().split("/");
-	            
-	  			var joinCount = join[0];
-	            
-	  			var chatUserCount = join[1];
+				
+	            // 문자열 비교로 되기 떄문에 parseInt를 사용하여 문자열 타입의 매개변수를 정수로 변환한다. : 10은 10진수로 변환한다는 뜻.
+	  			var joinCount = parseInt(join[0], 10);
+	  			var chatUserCount = parseInt(join[1], 10);
 	            
 	  			// 입장 인원 수 > 참여 인원 수인 경우에만 채팅방 참여 가능 
 	  			// 회원 id, 채팅방 번호  => count는 리스트에서만 확인 가능하면 된다. (오라클 sql 구문 작성해둠)
@@ -236,8 +232,8 @@
 		  					userId : userId
 		  				},
 		  				success : function(data){
-		  					console.log(data);
-			  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+		  					//console.log(data);
+			  				//location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 		  				}
 		  			});
 	  				
@@ -254,7 +250,7 @@
 	            		 },
 	            		 success : function(joinUser){
 	            			 if(joinUser){
-	            				 location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+	            				 //location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 	            			 } else{
 	            				 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능
 	            				 alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
