@@ -98,7 +98,7 @@
         font-weight: 600;
         font-style: normal;
         position: relative;
-        left: 410px;
+        left: 350px;
 
             
     }
