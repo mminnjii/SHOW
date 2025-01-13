@@ -24,14 +24,88 @@ public class ShowListController {
 	private ShowInfoService showInfoService;
 	
 	
-	@RequestMapping(value="mainRegionRank",produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="mainRegionRank0",produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ArrayList<Show> mainRegionRank() {
+	public ArrayList<Show> mainRegionRank0() {
 		
-		ArrayList<Show> mainRegionRank = showInfoService.mainRegionRank();
+		ArrayList<Show> mainRegionRank0 = showInfoService.mainRegionRank0();
+		//System.out.println(mainRegionRank0);
+		
+		return mainRegionRank0;
 		
 		
-		return mainRegionRank;
+		
+	}
+	
+	@RequestMapping(value="mainRegionRank1",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank1() {
+		
+		ArrayList<Show> mainRegionRank1 = showInfoService.mainRegionRank1();
+		
+		return mainRegionRank1;
+		
+		
+		
+	}
+	
+	@RequestMapping(value="mainRegionRank2",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank2() {
+		
+		ArrayList<Show> mainRegionRank2 = showInfoService.mainRegionRank2();
+		
+		return mainRegionRank2;
+		
+		
+		
+	}
+	
+	
+	@RequestMapping(value="mainRegionRank3",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank3() {
+		
+		ArrayList<Show> mainRegionRank3 = showInfoService.mainRegionRank3();
+		
+		return mainRegionRank3;
+		
+		
+		
+	}
+	
+	
+	@RequestMapping(value="mainRegionRank4",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank4() {
+		
+		ArrayList<Show> mainRegionRank4 = showInfoService.mainRegionRank4();
+		
+		return mainRegionRank4;
+		
+		
+		
+	}
+	
+	@RequestMapping(value="mainRegionRank5",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank5() {
+		
+		ArrayList<Show> mainRegionRank5 = showInfoService.mainRegionRank5();
+		
+		return mainRegionRank5;
+		
+		
+		
+	}
+	
+	@RequestMapping(value="mainRegionRank6",produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Show> mainRegionRank6() {
+		
+		ArrayList<Show> mainRegionRank6 = showInfoService.mainRegionRank6();
+		
+		return mainRegionRank6;
 		
 		
 		
