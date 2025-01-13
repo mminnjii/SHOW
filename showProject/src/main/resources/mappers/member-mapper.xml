@@ -147,6 +147,13 @@
 		AND STATUS = 'Y'
 	</select>
 	
+	
+	<select id="whiteList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE RANK = 'WHITE'
+	</select>
+	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(USER_NO,
 						   USER_ID,
@@ -530,6 +537,17 @@
 		ORDER BY MEETING_DATE
 		]]> 
 	</select>
-	
+
+	<insert id="rankCoupon" parameterType="_int">
+		INSERT INTO COUPON
+           VALUES(SEQ_COUPON_NO.NEXTVAL,
+                  '공연 5% 할인 쿠폰',
+                   NULL,
+                   #{userNo},
+                   0.05,
+                   SYSDATE+30,
+                   DEFAULT)
+	</insert>
+
 </mapper>
 

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
 <style>
@@ -95,27 +96,6 @@
 	}
 
 	/*naver*/
-	@font-face {
-    font-family: 'GangwonEduPowerExtraBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-	}
-	#naverLogin{
-		border: none;
-		border-radius: 30px;
-		height: 50px;
-		width: 50px;
-
-		background-color:  #2DB400;
-		color: white;
-		font-weight: bold;
-		font-size: 25px;
-		font-family: 'GangwonEduPowerExtraBoldA';
-
-		padding-top: 10px;
-	}
-
 	#headLogo{
 		width: 160px;
 		height: 100px;
@@ -171,10 +151,18 @@
 				<a href="${contextPath}/member/toEnroll">회원가입</a> 
 			</div>
 			<br>
-			<div id="naver">
-				<button id="naverLogin">N</button>
-			</div>
+			<div id="naver_id_login"></div>
 		</div>
+		<!-- naver -->
+		<script type="text/javascript">
+			var naver_id_login = new naver_id_login("UWoEpHIfCFQaFNyGegJk", "${contextPath}/member/memberEnrollPage2");
+			var state = naver_id_login.getUniqState();
+			naver_id_login.setButton("white", 2,40);
+			naver_id_login.setDomain("http://localhost:8889/show/");
+			naver_id_login.setState(state);
+			naver_id_login.setPopup();
+			naver_id_login.init_naver_id_login();
+		</script>
 	</div>
 	<div class="modal fade" id="findId">
         <div class="modal-dialog modal-sm">

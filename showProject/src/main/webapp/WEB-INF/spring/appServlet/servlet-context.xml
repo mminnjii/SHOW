@@ -61,6 +61,7 @@
 			<exclude-mapping path="/member/toEnroll"/> 
 			<exclude-mapping path="/member/toTOS"/>
 			<exclude-mapping path="/member/memberEnrollPage"/>
+			<exclude-mapping path="/member/memberEnrollPage2"/>
 			<exclude-mapping path="/member/insert.me"/>
 			<exclude-mapping path="/member/idCheck"/>
 			<exclude-mapping path="/member/phoneCheck"/>

@@ -135,9 +135,9 @@
 						<script>
             	
 							$("#reList #one").click(function(){
-								var rno = $(this).children().first().text();
+								var rno = $(this).children().first().next().text();
 								
-								//location.href = "detail?bno="+bno;
+								location.href = "${contextPath}/showInfo/detail?showName="+rno;
 							});
 							
 						</script>
