@@ -33,10 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 티켓 테이블 생성 -->
 	<insert id="createTicket" parameterType="Ticket">
-	    	INSERT INTO TICKET VALUES
-	    <foreach collection="seatsList" item="seat" separator="UNION ALL">
-	     	(TICKET_SEQ.NEXTVAL, #{reservationId}, #{seat.seatId}, #{paymentId}, DEFAULT)
-	    </foreach>
+	    	 INSERT INTO TICKET VALUES
+	     	 (TICKET_SEQ.NEXTVAL, #{reservationId}, #{seatId}, #{paymentId}, DEFAULT)
 	</insert>
 	
 	
@@ -50,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 카드테이블 생성 -->
 	<insert id="createCard" parameterType="Payments">
 		 INSERT INTO CREDITCARD
-		 VALUES(#{paymentId}, #{userNo}) 
+		 VALUES(#{paymentId}, #{c.userNo}) 
 	</insert>
 	
 	
@@ -65,8 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE SEATS
 		SET STATUS = 'N'
 		WHERE ROW_NAME || COL_NO IN
-		<foreach collection="rowName" item="rowName" open="(" separator="," close=")"> 
-			  #{rowName}
+		<foreach collection="seatArray" item="seatArray" open="(" separator="," close=")"> 
+			  #{seatArray}
 		</foreach>
 		AND ROUND_ID = #{roundId}
 	</update>

@@ -24,5 +24,4 @@ public class Ticket {
 	private String status;	//	STATUS
 	
 	private String[] seatArray;
-	private List<Seats> seatsList;
 }

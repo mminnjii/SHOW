@@ -112,9 +112,7 @@ public class PaymentsController {
 		Integer userNo = (Integer) session.getAttribute("userNo");
 		// 좌석번호 추출
 		String selectedName = (String) session.getAttribute("selectedName");
-		System.out.println("selectedName: "+selectedName);
 		String[] seatArray = selectedName.split(",");
-		System.out.println("seatArray: "+Arrays.toString(seatArray));
 		
 		Payments p = new Payments();
 		p.setPaymentId(payId);
@@ -125,12 +123,8 @@ public class PaymentsController {
 		p.setMethod((String) paymentData.get("methodToget"));
 		p.setReceipt((String) paymentData.get("vbank_date"));
 		
-		System.out.println(p);
-		
 		// 결제 테이블 생성
 		int result = paymentsService.createPay(p);
-		
-		System.out.println(result);
 		
 		if(result>0) {
 			Account ac = new Account(); 
@@ -153,16 +147,17 @@ public class PaymentsController {
 				t.setSeatArray(seatArray);
 				
 				List<Seats> seatsId = (List)paymentsService.selectId(t);
-				System.out.println(seatsId);
-				t.setSeatsList(seatsId);
-				System.out.println(t.getSeatsList().get(0).getSeatId());
-				System.out.println(t.getSeatsList().get(1).getSeatId());
-				int result3 = paymentsService.createTicket(t);
 				
-				System.out.println("최종 :"+result3);
-				 if(result3>0) {
+				int result3 = 0;
+				for(int i=0; i<seatsId.size(); i++) {
+					t.setSeatId(String.valueOf(seatsId.get(i).getSeatId()));
+					result3 += paymentsService.createTicket(t);
+				}
+				
+				 if(result3 == seatsId.size()) {
 					 session.setAttribute("ac", ac);
 					 session.setAttribute("p", p);
+					 session.setAttribute("t", t);
 					 return "success";
 				 }else {
 					 return "좌석별 티켓 생성에 실패하였습니다.";
@@ -213,27 +208,21 @@ public class PaymentsController {
 			if(result2>0) {
 				
 				// 좌석별 티켓 생성
-				int result3 = 0;
 				Ticket t = new Ticket();
 				t.setReservationId((String) paymentData.get("reservationId"));
 				t.setPaymentId(payId);
 				t.setRoundId((String) paymentData.get("roundId"));
+				t.setSeatArray(seatArray);
 				
-				 for(String seats : seatArray) {
-					 	// 좌석 별 티켓 생성 
-					 	t.setSeatName(seats);
-					 	List<Seats> seatsId = (List)paymentsService.selectId(t);
-						// t.setSeatId(seatsId);
-					    int result4 = paymentsService.createTicket(t);
-					
-				        if (result4 == 0) {
-				        	System.out.println ("좌석별 티켓 생성에 실패하였습니다. : " + seats);
-				        }
-				        
-				        result3 += result4;
-					 }
-				 
-				 if(seatArray.length==result3) {
+				List<Seats> seatsId = (List)paymentsService.selectId(t);
+				
+				int result3 = 0;
+				for(int i=0; i<seatsId.size(); i++) {
+					t.setSeatId(String.valueOf(seatsId.get(i).getSeatId()));
+					result3 += paymentsService.createTicket(t);
+				}
+				
+				 if(result3 == seatsId.size()) {
 					 session.setAttribute("p", p);
 					 session.setAttribute("t", t);
 					 return "success";
@@ -262,13 +251,14 @@ public class PaymentsController {
 			
 			//  좌석상태 Y설정
 			String selectedName = (String) session.getAttribute("selectedName");
+			String[] seatArray = selectedName.split(",");
 			Seats s = new Seats();
-			s.setRowName(selectedName);
+			s.setSeatArray(seatArray);
 			s.setRoundId(roundId);
 				
-			//int result = paymentsService.rollbackSeats(s);
+			int result = paymentsService.rollbackSeats(s);
 			
-			if(resultReser>0) {
+			if(result > 0) {
 				session.removeAttribute("s");
 				session.removeAttribute("vipPrice");
 				session.removeAttribute("rPrice");
@@ -315,12 +305,6 @@ public class PaymentsController {
 		ArrayList <Ticket> t = reservationService.confirmTicket(reservationId);
 		model.addAttribute("t",t);
 		
-//		if(p.getMethodToget()==1) {
-//			model.addAttribute("methodToget","현장수령");
-//		}else {
-//			model.addAttribute("methodToget","택배수령");
-//		}
-		
 		if(p.getPaymentMethod().equals("bank")) {
 			
 			String bankName = (String) session.getAttribute("bankName");
@@ -355,7 +339,6 @@ public class PaymentsController {
 		r.setSeats(seats);
 		
 		int result = reservationService.updateSeatStatusP(r);
-		System.out.println("seats: "+result);
 		
 		if(result >= 0) {
 			return "Y";
