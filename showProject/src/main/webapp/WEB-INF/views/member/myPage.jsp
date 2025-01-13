@@ -346,7 +346,7 @@
 							+ "</svg>"
 							+ "</td>"
 							+ "<th width='300px'>"
-							+ "&nbsp; "+list[i].genreNo+" "+list[i].couponName+"("+(list[i].discount*100)+"%)"
+							+ "&nbsp; ["+list[i].genreNo+"] "+list[i].couponName+"("+(list[i].discount*100)+"%)"
 							+ "</th>"
 							+ "<td width='150px' style='font-size : 12px;'>"
 							+ "&nbsp 기한 : "+list[i].expiredDate

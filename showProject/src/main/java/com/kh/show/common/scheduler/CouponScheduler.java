@@ -21,18 +21,28 @@ public class CouponScheduler {
 	
 	
 	// 매 월 10일 등급 쿠폰
-	@Scheduled(cron = "*/5 * * * * *") 
+	@Scheduled(cron = "0 0 0 10 * *") 
 	private void rankCoupon() {
 		
 		ArrayList<Member> white = (ArrayList)sqlsession.selectList("memberMapper.whiteList");
-		// int member = sqlsession.selectOne("memberMapper.whiteList");
-//		int countB = sqlsession.selectOne("memberMapper.blueList");
-//		int countR = sqlsession.selectOne("memberMapper.redList");
-//		int countBk = sqlsession.selectOne("memberMapper.blackList");
-		System.out.println(white);
+		ArrayList<Member> blue = (ArrayList)sqlsession.selectList("memberMapper.blueList");
+		ArrayList<Member> red = (ArrayList)sqlsession.selectList("memberMapper.redList");
+		ArrayList<Member> black = (ArrayList)sqlsession.selectList("memberMapper.blackList");
+
 		for(Member userNo : white) {
-			int result = sqlsession.insert("memberMapper.rankCoupon",userNo);
-			log.debug("result : ", result);
+			int result = sqlsession.insert("memberMapper.whiteCoupon",userNo);
+		}
+		
+		for(Member userNo : blue) {
+			int result = sqlsession.insert("memberMapper.blueCoupon",userNo);
+		}
+		
+		for(Member userNo : red) {
+			int result = sqlsession.insert("memberMapper.redCoupon",userNo);
+		}
+		
+		for(Member userNo : black) {
+			int result = sqlsession.insert("memberMapper.blackCoupon",userNo);
 		}
 				
 	}
@@ -40,10 +50,14 @@ public class CouponScheduler {
 
 	
 	// 매 월 10일 맴버십 쿠폰
-//	@Scheduled(cron = "0 0 0 10 * *") 
-//	private void subscribeCoupon() {
-//		int result = sqlsession.insert("memberMapper.subscribeCoupon");
-//		log.debug("subscribeCoupon : "+ result);
-//	}
+	@Scheduled(cron = "0 0 0 10 * *") 
+	private void subscribeCoupon() {
+		ArrayList<Member> mem = (ArrayList)sqlsession.selectList("memberMapper.membershipList");
+
+		for(Member userNo : mem) {
+			int result = sqlsession.insert("memberMapper.membershipCoupon",userNo);
+			log.debug("result : ",result);
+		}
+	}
 
 }

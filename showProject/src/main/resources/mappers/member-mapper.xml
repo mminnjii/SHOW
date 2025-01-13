@@ -147,13 +147,6 @@
 		AND STATUS = 'Y'
 	</select>
 	
-	
-	<select id="whiteList" resultMap="memberResultSet">
-		SELECT USER_NO
-		FROM MEMBER
-		WHERE RANK = 'WHITE'
-	</select>
-	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(USER_NO,
 						   USER_ID,
@@ -460,8 +453,10 @@
 
 	<select id="meetingJoinCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM MEETING_JOIN
-		WHERE USER_NO = #{userNo}
+		FROM MEETING_JOIN J
+		JOIN MEETING M ON(M.MEETING_NO=J.MEETING_NO)
+		WHERE J.USER_NO = #{userNo}
+		AND MEETING_DATE >= SYSDATE
 	</select>
 	
 	<select id="meetingJoinList" resultType="JoinMeeting" >
@@ -502,6 +497,7 @@
 		SELECT COUNT(*)
 		FROM MEETING
 		WHERE USER_NO = #{userNo}
+		AND MEETING_DATE >= SYSDATE
 	</select>
 	
 	<select id="meetingHostList" resultType="JoinMeeting" >
@@ -537,14 +533,88 @@
 		ORDER BY MEETING_DATE
 		]]> 
 	</select>
+	
+	<select id="whiteList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE RANK = 'WHITE'
+	</select>
 
-	<insert id="rankCoupon" parameterType="_int">
+	<insert id="whiteCoupon" parameterType="_int">
 		INSERT INTO COUPON
            VALUES(SEQ_COUPON_NO.NEXTVAL,
-                  '공연 5% 할인 쿠폰',
-                   NULL,
+                  '월간 할인 쿠폰',
+                   0,
                    #{userNo},
                    0.05,
+                   SYSDATE+30,
+                   DEFAULT)
+	</insert>
+	
+	<select id="blueList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE RANK = 'BLUE'
+	</select>
+
+	<insert id="blueCoupon" parameterType="_int">
+		INSERT INTO COUPON
+           VALUES(SEQ_COUPON_NO.NEXTVAL,
+                  '월간 할인 쿠폰',
+                   0,
+                   #{userNo},
+                   0.1,
+                   SYSDATE+30,
+                   DEFAULT)
+	</insert>
+	
+	<select id="redList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE RANK = 'RED'
+	</select>
+
+	<insert id="redCoupon" parameterType="_int">
+		INSERT INTO COUPON
+           VALUES(SEQ_COUPON_NO.NEXTVAL,
+                  '월간 할인 쿠폰',
+                   0,
+                   #{userNo},
+                   0.2,
+                   SYSDATE+30,
+                   DEFAULT)
+	</insert>
+	
+	<select id="blackList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE RANK = 'BLACK'
+	</select>
+
+	<insert id="blackCoupon" parameterType="_int">
+		INSERT INTO COUPON
+           VALUES(SEQ_COUPON_NO.NEXTVAL,
+                  '월간 할인 쿠폰',
+                   0,
+                   #{userNo},
+                   0.3,
+                   SYSDATE+30,
+                   DEFAULT)
+	</insert>
+	
+	<select id="membershipList" resultMap="memberResultSet">
+		SELECT USER_NO
+		FROM MEMBER
+		WHERE SUBSCRIBE = 'Y'
+	</select>
+
+	<insert id="membershipCoupon" parameterType="_int">
+		INSERT INTO COUPON
+           VALUES(SEQ_COUPON_NO.NEXTVAL,
+                  '멤버십 쿠폰',
+                   0,
+                   #{userNo},
+                   0.1,
                    SYSDATE+30,
                    DEFAULT)
 	</insert>
