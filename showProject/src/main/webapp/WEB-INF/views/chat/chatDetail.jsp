@@ -299,7 +299,7 @@
 		console.log(${loginUser.userNo});
 	
 		// 스크롤 제일 하단 보기 => 어떤 원리인지 공부하기 
-		var $info = $(".info");
+		var $info = $(".info"); 
 		$info.scrollTop($info[0].scrollHeight);
 	
 		// 페이지가 로드되면 바로 소켓 연결 
