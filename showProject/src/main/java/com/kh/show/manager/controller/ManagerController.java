@@ -342,6 +342,7 @@ public class ManagerController {
 	@ResponseBody
 	public ManagerQuestion2 questionDetail(@RequestParam(value = "questionNo") Integer qNo, Model model) {
 	    ManagerQuestion2 q = service.questionDetail(qNo);
+	    q.setChangeName("/resources/questionUpFile/" + q.getChangeName());
 	    model.addAttribute("question", q);
 	    return q;
 	}

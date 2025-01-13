@@ -104,7 +104,7 @@
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+	
 		
 		<div class="detail">
 	        <div class="fixed-section">

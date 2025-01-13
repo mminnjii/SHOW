@@ -25,6 +25,7 @@
 <title>공연상세정보</title>
 </head>
 <body>	
+		<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
 	
 		<br><br>
