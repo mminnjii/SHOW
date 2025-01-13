@@ -57,6 +57,10 @@
 		height: 300px;
 	}
 
+	.info{
+		margin: auto;
+	}
+
 	#upfile{
 		width: 200px;
 	}
