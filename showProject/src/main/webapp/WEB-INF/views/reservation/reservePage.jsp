@@ -17,42 +17,47 @@
 	
 <style>
 
-.outer2 {
-	width: 100%; /* 100%로 설정하여 부모 div에 맞게 꽉 채움 */
-	height: fit-content;
-	flex-grow: 1; /* 부모 요소의 높이에 맞게 자식 요소의 높이를 늘림 */
-	padding: 10px;
-	box-sizing: border-box;
-	margin: 30px 20px 0px 20px;
-}
+	.outer2 {
+		width: 100%; /* 100%로 설정하여 부모 div에 맞게 꽉 채움 */
+		height: fit-content;
+		flex-grow: 1; /* 부모 요소의 높이에 맞게 자식 요소의 높이를 늘림 */
+		padding: 10px;
+		box-sizing: border-box;
+		margin: 30px 20px 0px 20px;
+	}
 
-.outer2 span {
-	margin-left: 15px;
-}
+	.outer2 span {
+		margin-left: 15px;
+	}
 
-.a {
-	text-align:center;
-	width: 60%;
-	margin: 0px auto;
-	background-color: white;
-	padding: 20px;
-	border: 1px solid lightgray;
-   	border-radius: 0px 0px  10px 10px;
-	border-top : none;
-}
+	.a {
+		text-align:center;
+		width: 60%;
+		margin: 0px auto;
+		background-color: white;
+		padding: 20px;
+		border: 1px solid lightgray;
+		border-radius: 0px 0px  10px 10px;
+		border-top : none;
+	}
 
-.a h1 {
-	text-align: center;
-}
+	.a h1 {
+		text-align: center;
+	}
 
-#pay-body{
-	overflow: auto; 
-}
+	#pay-body{
+		overflow: auto; 
+	}
 
-#pagingArea{
-	width: fit-content;
-	margin: auto;
-}
+	#pagingArea{
+		width: fit-content;
+		margin: auto;
+	}
+
+	.poster-img{
+		height: 250px;
+		width: 200px;
+	}
 
 
 
@@ -95,8 +100,8 @@
 										<input type="hidden" name="userNo" value="${loginUser.userNo}">
 										<input type="hidden" name="reservationId" value="${r.reservationId}">
 										<input type="hidden" name="seatId" value="${r.seatId}">
-										<td height="200px" width="150px" style="vertical-align: middle;">
-											<img src="${contextPath}/resources/PosterUploadFiles/${r.genreName}_${r.regionName}_${r.showName}">
+										<td style="vertical-align: middle;">
+											<img class="poster-img" src="${contextPath}/resources/PosterUploadFiles/${r.genreName}_${r.regionName}_${r.showName}0P.jpg">
 										</td>
 										<td width="300px" style="vertical-align: middle;">${r.showName}</td>
 										<td style="vertical-align: middle;">${r.price}원</td>

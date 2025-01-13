@@ -684,7 +684,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE STATUS = 'Y'
 	    AND SHOW_NAME LIKE '%' || #{keyword} || '%' 
 	    ORDER BY SHOW_START DESC
-
 	</select>
 
 
@@ -790,6 +789,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		HALL_NAME,
 		S.HALL_NO HALL_NO,
 		GENRE_NAME,
+		S.GENRE_NO AS GENRE_NO,
 		REGION_NAME,
 		SHOW_START,
 		SHOW_END,
@@ -927,7 +927,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 작성 -->
 	<insert id="enrollReview" parameterType="Review">
 		INSERT INTO REVIEW 
-		VALUES (REVIEW_SEQ.NEXTVAL, 1, #{userNo}, #{reviewScore}, #{reviewTitle}, #{reviewContent},SYSDATE, 'Y')
+		VALUES (REVIEW_SEQ.NEXTVAL, #{showNo}, #{userNo}, #{reviewScore}, #{reviewTitle}, #{reviewContent},SYSDATE, 'Y')
 	</insert>
 
 	<!-- 리뷰 수정 전 조회 -->

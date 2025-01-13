@@ -9,6 +9,7 @@
 	.content{
 		width: 80%;
 		margin: auto;
+		height: 600px;
 	}
 	.inner{
 		width: 100%;

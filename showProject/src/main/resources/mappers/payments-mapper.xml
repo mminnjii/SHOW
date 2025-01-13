@@ -5,49 +5,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="paymentsMapper">
 
 	
+	<resultMap type="Seats" id="SeatsResultSet">
+		<result column="SEAT_ID" property="seatId"/>
+		<result column="HALL_NO" property="hallNo"/>
+		<result column="ROW_NAME" property="rowName"/>
+		<result column="COL_NO" property="colNum"/>
+	</resultMap>
+	
 	<!-- 결제 테이블 생성 -->
-	<insert id="createPay" parameterType="HashMap">
+	<insert id="createPay" parameterType="Payments">
 		INSERT INTO PAYMENTS
-		VALUES(#{payId},#{reservationId},#{amount},#{method},SYSDATE,#{status},#{methodToget})
+		VALUES(#{paymentId},#{reservationId},#{price},#{paymentMethod},SYSDATE,#{status},#{method})
 	</insert>
 	
 	
 	<!-- 티켓 테이블 생성을 위한 좌석번호 -->
-	<select id="selectId" resultType="_int" parameterType="HashMap">
+	<select id="selectId" resultMap="SeatsResultSet" parameterType="Ticket">
 		 SELECT SEAT_ID
 		 FROM SEATS
-		 WHERE ROW_NAME || COL_NO = #{seats}
+		 WHERE ROW_NAME || COL_NO IN
+	 	<foreach collection="seatArray" item="seatId" open="(" separator="," close=")"> 
+			  #{seatId}
+		</foreach>
 		 AND ROUND_ID = #{roundId}
-	</select>
+	</select> 
+	
 	
 	<!-- 티켓 테이블 생성 -->
-	<insert id="createTicket" parameterType="HashMap">
-		 INSERT INTO TICKET
-			VALUES(TICKET_SEQ.NEXTVAL, #{reservationId}, #{seatsId}, #{payId}, DEFAULT)   
+	<insert id="createTicket" parameterType="Ticket">
+	    	 INSERT INTO TICKET VALUES
+	     	 (TICKET_SEQ.NEXTVAL, #{reservationId}, #{seatId}, #{paymentId}, DEFAULT)
 	</insert>
 	
 	
 	<!-- 통장테이블 생성 -->
 	<insert id="createAccount" parameterType="HashMap">
 		 INSERT INTO ACCOUNT
-		 VALUES(#{payId}, #{userNo}, #{bankName}, #{bankNum}, #{name},TO_DATE(SUBSTR(#{dueDate}, 1, 10), 'YYYY-MM-DD')) 
+		 VALUES(#{paymentId}, #{userNo}, #{bankName}, #{bankNum}, #{name},TO_DATE(SUBSTR(#{dueDate}, 1, 10), 'YYYY-MM-DD')) 
 	</insert>
 	
 	
 	<!-- 카드테이블 생성 -->
-	<insert id="createCard" parameterType="HashMap">
+	<insert id="createCard" parameterType="Payments">
 		 INSERT INTO CREDITCARD
-		 VALUES(#{payId}, #{userNo}) 
+		 VALUES(#{paymentId}, #{c.userNo}) 
 	</insert>
 	
 	
-	<!-- 예약테이블 삭제 -->
-	<delete id="deleteReservation" parameterType="HashMap">
+	<!-- (결제창에서 결제 실패 시)예약테이블 삭제 -->
+	<delete id="deleteReservation" parameterType="_int">
 		DELETE RESERVATION
 		WHERE RESERVATION_ID = #{reservationId}
 	</delete>
 	
-
+	<!-- (결제창에서 결제 실패 시)좌석 롤백  -->
+	<update id="rollbackSeats"  parameterType="Seats">
+		UPDATE SEATS
+		SET STATUS = 'N'
+		WHERE ROW_NAME || COL_NO IN
+		<foreach collection="seatArray" item="seatArray" open="(" separator="," close=")"> 
+			  #{seatArray}
+		</foreach>
+		AND ROUND_ID = #{roundId}
+	</update>
+	
 	
 	
 	

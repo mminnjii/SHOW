@@ -302,7 +302,6 @@
     	        }, function (rsp) {
     	        	
     	        	if (rsp.success) {
-    		        	
     	       		    let paymentData = {
     		       		    		imp_uid: rsp.imp_uid,
     		                        reservationId : reservation_uid,

@@ -22,15 +22,13 @@
 
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공연상세정보</title>
 </head>
 <body>	
 		<%@include file="/WEB-INF/views/show/showInfo/detail.jsp" %>
 	
 		<br><br>
 		<div class="info">
-	        <!-- 아래 일반 본문 -->
-	       
 	        <h2>공지사항</h2> <br>
 	        <p style="width: 800px;"> ${s.notice }</p>
 	        <br><br><br>  
@@ -41,7 +39,7 @@
         
         
         <div class="modal fade" id="Modal">
-            <div class="modal-dialog">
+            <div class="modal-dialog" aria-hidden="false">
                 <div class="modal-content">
                     <!-- 모달 헤더 -->
                     <div class="modal-header">
@@ -72,17 +70,9 @@
         </div>
         
         <script>
-	        
-          // var detail = ${s.detailChangeName}
-          // var showName = ${s.showName}
-        
+
 	        $(function () {
-	        	
-	        	// console.log(detail);
-	        	// console.log(showName);
-	        
 	            $('#Modal').modal('show');
-	            
 	        });
         
         </script>

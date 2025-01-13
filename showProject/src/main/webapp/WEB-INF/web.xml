@@ -32,6 +32,8 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	
+	
 	<!-- 
 		필터
 		요청 처리전에 필요로 하는 기능이 있다면 필터 등록
@@ -64,7 +66,43 @@
 	 	<url-pattern>/*</url-pattern>
 	 </filter-mapping>
 
+	
+	<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
+    <!-- Other configurations -->
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/applicationContext.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Static Resource Mapping -->
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/resources/*</url-pattern> <!-- 정적 리소스 경로 매핑 -->
+    </servlet-mapping>
+
+</web-app>
+	
 	
 	
 </web-app>

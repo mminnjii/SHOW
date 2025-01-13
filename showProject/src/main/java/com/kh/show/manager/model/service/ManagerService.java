@@ -4,11 +4,15 @@ import java.util.List;
 
 import com.kh.show.customer.model.vo.Faq;
 import com.kh.show.customer.model.vo.ManagerQuestion;
+import com.kh.show.customer.model.vo.ManagerQuestion2;
 import com.kh.show.manager.model.vo.Manager;
 import com.kh.show.member.model.vo.Member;
 import com.kh.show.notice.model.vo.Notice;
 import com.kh.show.reservation.model.vo.ManagerPageReservation2;
 import com.kh.show.reservation.model.vo.Reservation;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo;
+import com.kh.show.showInfo.model.vo.ManagerShowInfo2;
+import com.kh.show.showInfo.model.vo.ManagerUpdateShow;
 import com.kh.show.showInfo.model.vo.Show;
 
 public interface ManagerService {
@@ -35,9 +39,9 @@ public interface ManagerService {
     List<Reservation> selectAllReserv();
     
 //	공연 불러오기
-    List<Show> selectAllShow();
+    List<ManagerShowInfo> selectAllShow();
     
-//  1:1 문의 불러오기
+//  1:1 문의 목록 가져오기
     List<ManagerQuestion> selectAllQuestion();
 
 //	공지사항 수정하기
@@ -55,13 +59,25 @@ public interface ManagerService {
 
 	Faq faqDetail(int faqNo);
 
-	Show showDetail(int showNo);
+	ManagerShowInfo2 showDetail(int showNo);
 
 	ManagerPageReservation2 reservDetail(int reservNo);
 
+	ManagerQuestion2 questionDetail(int qNo);
 
-	
+	Notice beforeNoticeUpdate(int noticeNo);
 
-	
-	
+	int afterNoticeUpdate(Notice notice);
+
+	Faq beforeFaqUpdate(int faqNo);
+
+	int afterFaqUpdate(Faq faq);
+
+	Member beforeUserUpdate(int userNo);
+
+	int afterUserUpdate(Member m);
+
+	ManagerUpdateShow beforeShowUpdate(int showNo);
+
+	int afterShowUpdate(Show show);
 }
