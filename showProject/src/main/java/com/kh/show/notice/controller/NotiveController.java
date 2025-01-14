@@ -76,26 +76,6 @@ public class NotiveController {
 		return "/notice/noticeView2";
 	}
 	
-	// 일반공지 버튼 재 클릭시 
-	// 데이터 그대로 전달 
-	@ResponseBody
-	@PostMapping(value="/list", produces = "application/json; charset=UTF-8")
-	public ArrayList<Notice> noticeList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage){
-		
-		// 페이징 처리 
-		int listCount = noticeService.listCount(); // 공지사항 개수 count 
-		int pageLimit = 10;  	// 페이징바 최대 개수 
-		int boardLimit = 10; 	// 한 페이지에 보여질 게시글 개수
-		
-		// 페이징 처리를 위한 요소 가지고 오기 
-		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		// 리스트 조회하기 (defalt 일반 공지)
-		ArrayList<Notice> noticeList = noticeService.selectList(pi);
-		
-		return noticeList;
-	}
-	
 	
 	// 공지사항 검색 목록  - 페이징 처리 해줘야 한다. 
 	@GetMapping("/search")
