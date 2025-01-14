@@ -243,8 +243,8 @@
 		  					userId : userId
 		  				},
 		  				success : function(data){
-		  					//console.log(data);
-			  				//location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+		  					console.log(data);
+			  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 		  				}
 		  			});
 	  				
@@ -261,7 +261,7 @@
 	            		 },
 	            		 success : function(joinUser){
 	            			 if(joinUser){
-	            				 //location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+	            				 location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
 	            			 } else{
 	            				 // 입장 인원수와 현재 입장한 인원수가 같은 경우 채팅방 입장 불가능
 	            				 alert("채팅방 정원이 모두 차 입장이 불가능합니다.");
