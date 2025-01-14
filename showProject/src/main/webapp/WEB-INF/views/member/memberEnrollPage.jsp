@@ -198,7 +198,7 @@
 							},
 							success : function(val){
 
-								var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{4,12}$/;
+								var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{6,12}$/;
 
 								if(val=="YYY"){
 									if(!idForm.test($("#newUserId").val())){
@@ -278,7 +278,7 @@
 				var rrn = $("#userRrn").val();
 
 				if(!rrnForm.test(rrn)){
-					$("#rrnCorrect").text("올바른 주민등록번호 형식을 입력해주세요");
+					$("#rrnCorrect").text("올바른 주민등록번호를 입력해주세요");
 				}else{
 					$("#rrnCorrect").text("");
 				}
