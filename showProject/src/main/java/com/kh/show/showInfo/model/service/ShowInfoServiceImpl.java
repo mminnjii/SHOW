@@ -50,8 +50,8 @@ public class ShowInfoServiceImpl implements ShowInfoService {
 	}
 	
 	@Override
-	public int updateShowRound() {
-		return showInfoDao.updateShowRound(sqlSession);
+	public int updateShowRound(int roundId) {
+		return showInfoDao.updateShowRound(sqlSession,roundId);
 	}
 	
 	@Override

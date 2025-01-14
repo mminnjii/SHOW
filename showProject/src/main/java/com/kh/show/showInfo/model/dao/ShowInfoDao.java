@@ -39,8 +39,8 @@ public class ShowInfoDao {
 		return session.update("showInfoMapper.updateSysdate");
 	}
 	
-	public int updateShowRound(SqlSession session) {
-		return session.update("showInfoMapper.updateShowRound");
+	public int updateShowRound(SqlSession session, int roundId) {
+		return session.update("showInfoMapper.updateShowRound",roundId);
 	}
 	
 

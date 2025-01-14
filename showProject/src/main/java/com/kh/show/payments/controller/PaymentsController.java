@@ -44,10 +44,14 @@ import com.kh.show.reservation.model.service.ReservationService;
 import com.kh.show.reservation.model.vo.Reservation;
 import com.kh.show.reservation.model.vo.Seats;
 import com.kh.show.reservation.model.vo.Ticket;
+import com.kh.show.showInfo.model.service.ShowInfoService;
 
 @Controller
 @RequestMapping("/payments") 
 public class PaymentsController {
+	
+	@Autowired
+	private ShowInfoService ShowInfoService;
 
 	@Autowired
 	private ReservationService reservationService;
@@ -100,7 +104,6 @@ public class PaymentsController {
 		 
 		 int userNo = (int) session.getAttribute("userNo");
 		 ArrayList<Coupon> clist = memberService.couponList(userNo);
-		 
 		 model.addAttribute("totalPrice",formatter.format(totalPrice));
 		 model.addAttribute("gradeName",gradeName);
 		 model.addAttribute("clist",clist);
@@ -234,6 +237,7 @@ public class PaymentsController {
 				 if(result3 == seatsId.size()) {
 					 session.setAttribute("p", p);
 					 session.setAttribute("t", t);
+					 session.setAttribute("c", c);
 					 return "success";
 				 }else {
 					 return "카드데이터가 생성되지 못했습니다.";
@@ -279,6 +283,9 @@ public class PaymentsController {
 				session.removeAttribute("userNo");
 				session.removeAttribute("reviewAvg");
 				session.removeAttribute("avgFloor");
+				session.removeAttribute("ac");
+				session.removeAttribute("p");
+				session.removeAttribute("t");
 				return "success";
 				
 			}else {
@@ -315,23 +322,10 @@ public class PaymentsController {
 		model.addAttribute("t",t);
 		
 		if(p.getPaymentMethod().equals("bank")) {
-			
-			String bankName = (String) session.getAttribute("bankName");
-			String bankNum = (String) session.getAttribute("bankNum");
-			String dueDate = (String) session.getAttribute("dueDate");
-			String bankHolder = (String) session.getAttribute("bankHolder");
-			
-			model.addAttribute("bankName",bankName);
-			model.addAttribute("bankNum",bankNum);
-			model.addAttribute("dueDate",dueDate);
-			model.addAttribute("bankHolder",bankHolder);
+			Account ac = (Account)session.getAttribute("ac"); 
 		}else {
-		    session.removeAttribute("bankName");
-		    session.removeAttribute("bankNum");
-		    session.removeAttribute("dueDate");
-		    session.removeAttribute("bankHolder");
+		    session.removeAttribute("ac");
 		}
-		
 		
 		return "payments/paymentInfo";
 	}
@@ -364,6 +358,10 @@ public class PaymentsController {
 			
 		int result = reservationService.updateReserStatusY(r);
 		int result2 = reservationService.updateSeatStatusN(r);
+		int roundId = r.getRoundId();
+		
+		int result3 = ShowInfoService.updateShowRound(roundId);
+		System.out.println("회차 좌석이 다 채워졌습니다(회차삭제 N) : "+result3);
 		
 		if(result * result2 != 0) {
 			return "Y";
