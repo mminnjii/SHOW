@@ -33,6 +33,9 @@
 		box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
 	}
+	.oneQ a{
+		color: black;
+	}
 	
 	.oneQ:hover {
 		background-color: lightgray;
@@ -213,14 +216,14 @@
 			
 			<div class="oneQ">
 				<a href="${contextPath}/question" class="link">
-					<i class="fa-solid fa-comment"></i> &nbsp; 1:1 문의하기
+					<i class="fa-solid fa-comment">&nbsp; 1:1 문의하기</i> 
 					<p>자세한 상담이 가능해요</p>
 				</a>
 			</div>
 
 			<div class="oneQ">
 				<a href="${contextPath}/member/qna?userNo=${loginUser.userNo}" class="link">
-					<i class="fa-regular fa-clipboard"></i> &nbsp; 내 문의 내역 보기
+					<i class="fa-regular fa-clipboard">&nbsp; 내 문의 내역 보기</i> 
 					<p>문의한 내용을 확인해보세요</p>
 				</a>
 			</div>

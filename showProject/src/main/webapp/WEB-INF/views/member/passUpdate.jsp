@@ -77,9 +77,7 @@
 	}
 
 	#pass-body{
-		text-align: left;
-		margin-top: 50px;
-		margin-left: 230px;
+		text-align: center;
 	}
 
 	p{

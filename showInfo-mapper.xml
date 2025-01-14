@@ -64,128 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="SHOW_TIME" property="showTime" />
 		<result column="SHOW_DATE" property="showDate" />
 	</resultMap>
-	
-	<!-- 메인페이지 지역별랭킹 서울 -->
-	<select id="mainRegionRank0" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '1'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
 
-
-	<!-- 메인페이지 지역별랭킹 경기/인천 -->
-	<select id="mainRegionRank1" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '2'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	<!-- 메인페이지 지역별랭킹 충청/강원 -->
-	<select id="mainRegionRank2" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '3'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	
-	<!-- 메인페이지 지역별랭킹 대구/경북 -->
-	<select id="mainRegionRank3" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '4'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	<!-- 메인페이지 지역별랭킹 부산/경남 -->
-	<select id="mainRegionRank4" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '5'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	<!-- 메인페이지 지역별랭킹 광주/전라 -->
-	<select id="mainRegionRank5" resultMap="showResultSet">
-	SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '6'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	
-	<!-- 메인페이지 지역별랭킹 제주 -->
-	<select id="mainRegionRank6" resultMap="showResultSet">
-		SELECT *
-		FROM (
-		SELECT SHOW_NO
-	  		   ,SHOW_NAME
-				,SHOW_START
-				,SHOW_END
-				,POSTER_CHANGENAME
-		        ,POSTER_ORIGINNAME
-		FROM SHOW
-		WHERE REGION_NO = '7'
-		ORDER BY COUNT DESC
-		)
-		WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
 
 	<!-- 뮤지컬 랭킹(1~5위) count 순으로 리스트 -->
 	<select id="musicalShowList" resultMap="showResultSet">
@@ -1050,7 +929,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	
 	  	
 	  	
-	</select>	
+	</select>
 
 	<!-- 리뷰 작성 -->
 	<insert id="enrollReview" parameterType="Review">

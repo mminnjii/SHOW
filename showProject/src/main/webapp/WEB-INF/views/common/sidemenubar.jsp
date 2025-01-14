@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.show.member.model.vo.Member" import="com.kh.show.manager.model.vo.Manager" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -60,17 +61,17 @@
     </tr>
 </table>
 
-<script>
-
-$(document).on('click','.Top td',function(){
+	<script>
 	
-	//input이라 요소 찾기를 제대로 해야함
-	var showName = $(this).closest('tr').find('.input2').val();
-
-	console.log(showName); 
-	location.href = "/show/showInfo/detail?showName="+ showName;
+	$(document).on('click','.Top td',function(){
+		
+		//input이라 요소 찾기를 제대로 해야함
+		var showName = $(this).closest('tr').find('.input2').val();
 	
-});
+		console.log(showName); 
+		location.href = "/show/showInfo/detail?showName="+ showName;
+		
+	});
 
 
     $(document).ready(function() {
@@ -112,4 +113,5 @@ $(document).on('click','.Top td',function(){
 </script>
 
 </body>
+
 </html>

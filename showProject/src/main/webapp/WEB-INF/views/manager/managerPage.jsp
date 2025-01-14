@@ -421,6 +421,8 @@ body {
                     const editBtn = document.createElement('button');
                     if (type === 'question') {
                         editBtn.textContent = '답변';  // 1:1문의일 때는 수정 버튼을 '답변' 버튼으로 변경
+                    } else if (type === 'reserv'){
+                    	editBtn.textContent = '확인 및 수정';
                     } else{
                         editBtn.textContent = '수정';
                     } 
@@ -622,6 +624,9 @@ body {
             let editUrl = '';
             if (row.noticeNo) {
                 editUrl = `${contextPath}/managerPage/noticeUpdate?noticeNo=`+row.noticeNo;
+            } else if (row.reservationId){
+            	editUrl = `${contextPath}/managerPage/reservUpdate?reservId=`+row.reservationId;
+            	console.log(editUrl);
             } else if (row.faqNo) {
                 editUrl = `${contextPath}/managerPage/faqUpdate?faqNo=`+row.faqNo;
             } else if (row.meetingNo){
@@ -647,7 +652,7 @@ body {
             if (row.noticeNo) {
             	deleteUrl = `${contextPath}/managerPage/noticeDelete?noticeNo=`+row.noticeNo;
             } else if (row.reservationId){
-            	deleteUrl = `${contextPath}/managerPage/reservationDelete?reservationId=`+row.reservationId
+            	deleteUrl = `${contextPath}/managerPage/reservationDelete?reservationNo=`+row.reservationId;
             } else if (row.chatNo){
             	deleteUrl = `${contextPath}/managerPage/chatDelete?chatNo=`+row.chatNo;
             } else if (row.faqNo) {	

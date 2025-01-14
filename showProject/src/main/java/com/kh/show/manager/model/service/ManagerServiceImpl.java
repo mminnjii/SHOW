@@ -278,6 +278,12 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 	
 	@Override
+	public ManagerChat beforeChatUpdate(int cNo) {
+		
+		return dao.beforeChatUpdate(sqlSession, cNo);
+	}
+	
+	@Override
 	public ManagerMeeting beforeMeetingUpdate(int mNo) {
 		
 		return dao.beforeMeetingUpdate(sqlSession, mNo);
@@ -335,5 +341,17 @@ public class ManagerServiceImpl implements ManagerService {
 	public int reservDelete(int reservId) {
 		
 		return dao.reservDelete(sqlSession, reservId);
+	}
+	
+	@Override
+	public int afterChatUpdate(ManagerChat mc) {
+
+		return dao.afterChatUpdate(sqlSession, mc);
+	}
+	
+	@Override
+	public ManagerPageReservation2 beforeReservUpdate(int reservNo) {
+		
+		return dao.beforeReservUpdate(sqlSession, reservNo);
 	}
 }

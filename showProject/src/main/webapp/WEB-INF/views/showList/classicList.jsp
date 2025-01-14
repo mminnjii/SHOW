@@ -170,6 +170,7 @@
      
       
       <%@include file="/WEB-INF/views/showList/classicRanking.jsp" %>
+      <br><br><br>
       <%@include file="/WEB-INF/views/showList/classicRegion.jsp" %>
       
       <br> <br> <br> <br> <br> <br> <br>

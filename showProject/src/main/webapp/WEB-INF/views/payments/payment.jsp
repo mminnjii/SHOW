@@ -12,7 +12,14 @@
     <title>결제창</title>
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
-		button {
+	
+	#container{
+		margin-top: 100px;
+		margin-bottom: 300px;
+		margin-left: -200px;
+	}
+
+	button {
 		padding: 10px 20px; 
 		font-size: 16px; 
 		font-family: 'Noto Sans KR', sans-serif; 
@@ -44,10 +51,13 @@
 	    vertical-align: middle; /* 세로 가운데 정렬 */
 	    padding: 0; /* 기본 padding 제거 (필요한 경우만 사용) */
 	}
+	
+	
 </style>    
 </head>
-<body>
-		<div align="center">
+<body>	
+		<%@include file="/WEB-INF/views/common/menubar.jsp" %>
+		<div align="center" id="container">
 			<br>
 			<input type="hidden" name="reservationId" value="${rInfo.reservationId} "></input>
 			<input type="hidden" name="roundId" value="${rInfo.roundId} "></input>
@@ -56,7 +66,7 @@
      			<table align="center">
 	     			<thead>
 	     				<tr>
-	     					<th id="name" colspan="3">${rInfo.showName}</th>
+	     					<th id="name" colspan="3"><h3>${rInfo.showName}</h3></th>
 	     				</tr>
 	     				<tr align="center">
 	     					<td colspan="2"> ${rInfo.showRound}  회차</td>
@@ -97,16 +107,18 @@
 		     					<tr>
 		     						<td style="padding-top: 70px;">할인쿠폰: </td>
 		     						<td style="padding-top: 70px;">
-				     					<c:forEach var="c" items="${clist}">
+				     					
 					     					<select id="coupon">
 					     						<option disabled="disabled" selected>선택하세요</option>
-			     								<option id="op" data-discount="${c.discount}">
-			     									쿠폰번호 : ${c.couponNo} &nbsp;
-			     									할인율 : ${c.discount} &nbsp;
-			     									쿠폰기간 : ${c.expiredDate} 
-			     								</option>
+			     								<c:forEach var="c" items="${clist}">
+				     								<option id="op" value="${c.discount}" data-id="${c.couponNo}">
+				     									쿠폰번호 : ${c.couponNo} &nbsp;
+				     									할인율 : ${c.discount} &nbsp;
+				     									쿠폰기간 : ${c.expiredDate} 
+				     								</option>
+			     								</c:forEach>
 				     						</select>
-			     						</c:forEach>
+			     						
 		     						</td>
 			     				</tr>
 			     				<tr>
@@ -154,12 +166,42 @@
    			methodToget = $(this).val(); // 이벤트 발생 후 최신 값으로 갱신
    		});
    		
+   		// 할인 쿠폰 찾기
+   		let discount = "";
+   		let couponNo = "";
+			$("#coupon").change(function () {
+	   			discount = $(this).val();
+	   			couponNo = $(this).find("option:selected").data("id");
+	   			// console.log($(this).val()); 
+	   			// console.log(couponNo); 
+	   		});
+   		
    		$("#apply").on("click",function(){
-   			var discount = $("#op").attr("data-discount");
    			var priceWithoutComma = amount.replace(",", "");
+   			// 할인된 가격 계산
    			priceWithoutComma = priceWithoutComma*(1-discount);
    			amount = priceWithoutComma.toLocaleString();
    			$("#amount").text(amount);
+   			$("#coupon").prop("disabled", true); 
+   			
+   			// 사용한 할인쿠폰 상태 N
+   			$.ajax({
+                url: '/show/payments/couponN', 
+                type: 'POST',           
+                data: {
+                	couponNo : couponNo
+                }, 
+                success: function(response) {
+                    console.log('쿠폰 상태:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('에러 발생:', error);
+                }
+            });
+   			
+   			// 할인적용 버튼도 비활성화 
+   			$("#apply").prop("disabled", true); 
+   			
    		});
    		
    		
@@ -435,8 +477,7 @@
         $("#back").on("click", function () { 
         	history.back();
         });
-        
     </script>
-    
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

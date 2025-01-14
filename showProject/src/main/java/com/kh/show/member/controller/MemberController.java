@@ -54,8 +54,6 @@ public class MemberController {
 	@GetMapping("/toLogin")
 	public String toLogin() {
 		
-		log.info("로그인 페이지");
-		
 		return "member/loginPage";
 	}
 	//로그인 메소드 & 암호화
@@ -679,7 +677,14 @@ public class MemberController {
 
 		return "member/myGroupHost";
 	}	
+	
+	//naver관련
 
+	@GetMapping("naver")
+	public String loginPOSTNaver(HttpSession session) {
+	   log.info("callback controller");
+	   return "member/callback";
+	}
 	
 	
 	

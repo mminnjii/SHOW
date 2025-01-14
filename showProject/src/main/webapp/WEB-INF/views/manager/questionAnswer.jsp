@@ -151,7 +151,8 @@
 		        <label for="createDate">문의 날짜</label>
 		        <input type="text" id="createDate" name="createDate" value="${answer.createDate}" readonly>
 		    </div>
-		
+		    
+			<%-- 
 		    <!-- 문의 사진 -->
 		    <div class="form-group">
 		        <label for="quImage">질문 내용 사진</label>
@@ -159,6 +160,17 @@
 		        <div class="image-preview" id="quImage">
 		            <img src="${pageContext.request.contextPath}${answer.changeName}">
 		        </div>
+		    </div>
+		    --%>
+		    
+		    <div class="form-group">
+		    	<label for="quFile">문의 첨부파일</label>
+		    	<c:if test="${not empty answer.changeName}">
+		    		<p><strong>첨부파일 : </strong><a href="${answer.changeName}" download></a></p>
+		    	</c:if>
+		    	<c:if test="${empty answer.changeName}">
+		    		<p><strong>첨부파일이 없습니다.</strong></p>
+		    	</c:if>
 		    </div>
 		    
 		    <div class="form-group">

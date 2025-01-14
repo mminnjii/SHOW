@@ -33,6 +33,10 @@
         font-style: normal;
         color: black;
     }
+    
+    #c1:hover,#c2:hover,#c3:hover,#c4:hover,#c5:hover,#c6:hover,#c7:hover{
+    	border-color : black;
+    }
     #rank1,#rank2{
         border-style: none;
       
@@ -182,6 +186,20 @@
     
 
     <script>
+    
+    $("#list11 > button").click(function(){
+        // 클릭된 버튼의 스타일을 바꾸기
+        $(this).css({
+            "background-color": "black",
+            "color": "white"
+        });
+
+        // 다른 버튼들의 스타일을 초기화
+        $("#list11 > button").not(this).css({
+            "background-color": "white",
+            "color": "black"
+        });
+    });
 
     var seoulRegion = $("#regionArea").html();
 

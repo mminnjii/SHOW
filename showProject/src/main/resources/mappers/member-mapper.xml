@@ -618,6 +618,14 @@
                    SYSDATE+30,
                    DEFAULT)
 	</insert>
+	
+	
+	<!-- ㅡㅡ 쿠폰사용 후 취소 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<update id="cancelCoupon">
+		UPDATE COUPON
+		SET STATUS = 'N'
+		WHERE COUPON_NO = #{couponNo}
+	</update>
 
 </mapper>
 

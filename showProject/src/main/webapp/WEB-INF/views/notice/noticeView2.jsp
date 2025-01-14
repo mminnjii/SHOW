@@ -466,7 +466,12 @@
 								console.log(openNo);
 								//location.href = "/show/open?showName="+showName+"&openNo="+openNo;
 
+
+								
+
+
 								$.ajax({
+
 											url : 'open',
 											type : "POST",
 											data : {
