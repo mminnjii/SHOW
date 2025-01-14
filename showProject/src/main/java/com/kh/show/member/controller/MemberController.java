@@ -411,6 +411,7 @@ public class MemberController {
 							   HttpSession session) {
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
+		System.out.println(userPwd);
 		
 		if(bcrtptPasswordEncoder.matches(userPwd, loginUser.getUserPwd())) {
 			int result = memberService.deleteMember(loginUser.getUserId());
