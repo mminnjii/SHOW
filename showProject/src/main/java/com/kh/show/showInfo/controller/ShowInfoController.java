@@ -61,6 +61,7 @@ public class ShowInfoController {
 		
 		// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준) disabled(status N) 설정하기
 		int result1 = showInfoService.updateSysdate();  
+		  
 
 		// 회차조회
 		ArrayList<ShowRound> date  = showInfoService.selectRound();  
@@ -84,9 +85,9 @@ public class ShowInfoController {
 	@ResponseBody
 	@GetMapping(value = "selectDate")
 	public ArrayList<ShowRound> selectTime(@RequestParam("date") String date) {
-
+	
         ArrayList<ShowRound> tAndr  = showInfoService.selectTime(date); 
-        
+        System.out.println(tAndr);
 		return tAndr;
 	}
 	
