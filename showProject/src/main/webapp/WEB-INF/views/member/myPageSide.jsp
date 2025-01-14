@@ -109,7 +109,7 @@
                     <ul class="side-sub-menu">
                         <li class="side-detail"><a href="${contextPath}/member/group?userNo=${loginUser.userNo}">내 소모임</a></li>
                         <li class="side-detail"><a href="${contextPath}/member/chat?userNo=${loginUser.userNo}">내 채팅방</a></li>
-                        <li class="side-detail"><a href="${contextPath}/member/subscribe">구독 서비스</a></li>
+                        <li class="side-detail"><a href="${contextPath}/member/subscribe?userNo=${loginUser.userNo}">구독 서비스</a></li>
                     </ul>
                 </li>
                 <li>

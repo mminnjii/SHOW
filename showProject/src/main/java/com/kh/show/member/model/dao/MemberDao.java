@@ -216,5 +216,9 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.cancelCoupon",couponNo);
 	}
 
+	public int cancelSub(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.update("memberMapper.cancelSub",userNo);
+	}
+
 
 }

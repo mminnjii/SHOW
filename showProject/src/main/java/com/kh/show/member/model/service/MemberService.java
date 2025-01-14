@@ -94,4 +94,6 @@ public interface MemberService {
 	
 	// 쿠폰 사용 후 취소
 	int cancelCoupon(int couponNo);
+	//구독 취소
+	int cancelSub(int userNo);
 }

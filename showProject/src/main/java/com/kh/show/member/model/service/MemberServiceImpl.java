@@ -229,6 +229,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.cancelCoupon(sqlSession,couponNo);
 	}
 
+	@Override
+	public int cancelSub(int userNo) {
+		return memberDao.cancelSub(sqlSession,userNo);
+	}
+
 
 	
 
