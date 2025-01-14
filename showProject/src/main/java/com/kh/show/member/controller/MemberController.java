@@ -113,7 +113,11 @@ public class MemberController {
 		
 		String userId = memberService.findId(map);
 		
-		session.setAttribute("alertMsg", userName+"님의 아이디는 '"+ userId+"'입니다");
+		if(userId == null) {
+			session.setAttribute("alertMsg", "존재하지 않는 회원 이거나, 이름 또는 이메일이 일치하지 않습니다.");
+		}else {
+			session.setAttribute("alertMsg", userName+"님의 아이디는 '"+ userId+"'입니다");
+		}
 		
 		return "member/loginPage";
 	}
