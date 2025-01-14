@@ -233,13 +233,11 @@
 						<option value="content">내용</option>
 					</select>
 				</div>
-
 				<div class="text">
 					<!-- 검색 후에 검색한 키워드값 보여주기 -->
 					<input type="text" class="form-control" name="keyword"
 						value="${map.keyword}">
 				</div>
-
 				<button type="submit" class="searchBtn btn btn-secondary">검색</button>
 			</form>
 
@@ -254,7 +252,6 @@
 						<option value="content">내용</option>
 					</select>
 				</div>
-
 				<div class="text">
 					<!-- 검색 후에 검색한 키워드값 보여주기 -->
 					<input type="text" class="form-control" name="keyword"
@@ -308,16 +305,11 @@
 				</tbody>
 			</table>
 
-
 			<br>
 
 			<!-- 페이지네이션 -->
-			<%-- 일반공지 페이징처리 --%>
+			<%-- 일반공지/오픈공지 페이징처리 --%>
 			<div id="pagingArea">
-				<!-- 이전/다음 버튼 : 현재 페이지에 따라 만든다. 시작일때는 없음. 마지막페이지일때는 다음버튼 없음 (=> 비활성화 하는 것으로 수정?) 
-        		 페이지 버튼 
-        		 클릭 했을 때 현재 페이지 버튼은 비활성화 한다.
-        	-->
 				<c:choose>
 					<%-- 이전버튼 --%>
 					<c:when test="${pi.currentPage == 1}">
@@ -375,10 +367,6 @@
 					</c:otherwise>
 				</c:choose>
 
-
-				
-				
-
 			</div>
 		</div>
 
@@ -392,13 +380,11 @@
 		noticeType2 = "${noticeType}";
 
 		if (noticeType2 == "general") {
-			$("#general").css("background-color", "#597c9b").css("color",
-					"white").css("border", "1px solid #597c9b");
+			$("#general").css("background-color", "#597c9b").css("color","white").css("border", "1px solid #597c9b");
 			$("#OpenSearchForm").hide();
 			$("#searchForm").show();
 		} else if (noticeType2 == "open") {
-			$("#open").css("background-color", "#597c9b").css("color", "white")
-					.css("border", "1px solid #597c9b");
+			$("#open").css("background-color", "#597c9b").css("color", "white").css("border", "1px solid #597c9b");
 			$("#searchForm").hide();
 			$("#OpenSearchForm").show();
 		}
@@ -415,106 +401,90 @@
 		});
 
 		// 일반공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성 
-		$("#noticeList>tbody")
-				.on(
-						"click",
-						"tr",
-						function() {
-							var nno = $(this).children().first().text();
-							console.log(noticeType);
+		$("#noticeList>tbody").on("click", "tr", function() {
+			var nno = $(this).children().first().text();
+			console.log(noticeType);
 
-							if (noticeType == "general") {
-								// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
-								$
-										.ajax({
-											url : 'detail',
-											type : "POST",
-											data : {
-												nno : nno
-											},
-											success : function(noticeDetail) {
+			if (noticeType == "general") {
+				// 클릭되어 있는 버튼의 value 값에 따라 이동 처리 
+				$.ajax({
+					url : 'detail',
+					type : "POST",
+					data : {
+						nno : nno
+					},
+					success : function(noticeDetail) {
+						var nStr = "";
+						nStr += '<div class="divClass title">'
+								+ noticeDetail.noticeTitle
+								+ "</div>"
+								+ '<div class="divClass dateCount">등록일 : '
+								+ noticeDetail.createDate
+								+ " | 조회수 :"
+								+ noticeDetail.count
+								+ "</div>"
+								+ '<div class="divClass">'
+								+ noticeDetail.noticeContent
+								+ "</div>"
+								+ '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button><br>';
 
-												var nStr = "";
+						$(".btnForm").empty();
+						$("#noticeDiv").html(nStr);
 
-												nStr += '<div class="divClass title">'
-														+ noticeDetail.noticeTitle
-														+ "</div>"
-														+ '<div class="divClass dateCount">등록일 : '
-														+ noticeDetail.createDate
-														+ " | 조회수 :"
-														+ noticeDetail.count
-														+ "</div>"
-														+ '<div class="divClass">'
-														+ noticeDetail.noticeContent
-														+ "</div>"
-														+ '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list\'">목록이동</button><br>';
+					},
+					error : function() {
+						alert('공지사항을 불러오는 데 실패했습니다.');
+					}
+				});
+			} else {
+				// 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
+				var showName = $(this).children().eq(1).text();
+				var openNo = $(this).children().eq(0).text();
 
-												$(".btnForm").empty();
-												$("#noticeDiv").html(nStr);
+				$.ajax({
+					url : 'open',
+					type : "POST",
+					data : {
+						openNo : openNo
+					},
+					success : function(s) {
 
-											},
-											error : function() {
-												alert('공지사항을 불러오는 데 실패했습니다.');
-											}
-										});
-							} else {
+						console.log(s);
+						var nStr = "";
 
-								// 오픈공지 클릭시 해당 글을 상세보기 할 수 있는 함수 작성
-								var showName = $(this).children().eq(1).text();
-								var openNo = $(this).children().eq(0).text();
-								console.log(showName);
-								console.log(openNo);
-								//location.href = "/show/open?showName="+showName+"&openNo="+openNo;
+						nStr += '<div><div class="divClass title">'
+								+ s.showName
+								+ "</div>"
+								+ '<div class="divClass dateCount">등록일 : '
+								+ s.openNotice.createDate + ' | 조회수 : ' + s.count
+								+ "</div>"
+								+ '<br><table class="pp">'
+								+ '<tr id="result1">'
+								+ '<td>'
+								+ '<img src="${contextPath}/resources/PosterUploadFiles/'+s.posterChangeName+ '.jpg" alt="" id="resultPoster2">'
+								+ '</td>'
+								+ '<td>'
+								+ '<span id="reName">' + s.showName
+								+ '</span><br>'
+								+ '<span id="rePlace">지역 : ' + s.regionName + '</span> <br>'
+								+ '<span id="reDate">기간 : ' + s.showStart + "-" + s.showEnd + '</span><br>'
+								+ '<span id="reNotice" style="white-space: pre-wrap;">공연 소개 : '+ s.showExplain + '</span><br>'
+								+ '<span id="rePlace">가격 : ' + s.price + '</span>'
+								+ '</td></tr></table></div> <br><hr>'
+								+ '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list?noticeType=open\'">목록이동</button><br>';
 
+						$(".btnForm").empty();
+						$("#noticeDiv").html(nStr);
 
-								
+					},
+					error : function() {
+						alert('공지사항을 불러오는 데 실패했습니다.');
+					}
+				});
 
+			}
 
-								$.ajax({
-
-											url : 'open',
-											type : "POST",
-											data : {
-												openNo : openNo
-											},
-											success : function(s) {
-
-												console.log(s);
-												var nStr = "";
-
-												nStr += '<div><div class="divClass title">'
-														+ s.showName
-														+ "</div>"
-														+ '<div class="divClass dateCount">등록일 : '
-														+ s.openNotice.createDate + ' | 조회수 : ' + s.count
-														+ "</div>"
-														+ '<br><table class="pp">'
-														+ '<tr id="result1">'
-														+ '<td>'
-														+ '<img src="${contextPath}/resources/PosterUploadFiles/'+s.posterChangeName+ '.jpg" alt="" id="resultPoster2">'
-														+ '</td>'
-														+ '<td>'
-														+ '<span id="reName">' + s.showName
-														+ '</span><br>'
-														+ '<span id="rePlace">지역 : ' + s.regionName + '</span> <br>'
-														+ '<span id="reDate">기간 : ' + s.showStart + "-" + s.showEnd + '</span><br>'
-														+ '<span id="reNotice" style="white-space: pre-wrap;">공연 소개 : '+ s.showExplain + '</span><br>'
-														+ '<span id="rePlace">가격 : ' + s.price + '</span>'
-														+ '</td></tr></table></div> <br><hr>'
-														+ '<button class="noticeBtn" onclick="location.href=\'' + '${contextPath}' + '/notice/list?noticeType=open\'">목록이동</button><br>';
-
-												$(".btnForm").empty();
-												$("#noticeDiv").html(nStr);
-
-											},
-											error : function() {
-												alert('공지사항을 불러오는 데 실패했습니다.');
-											}
-										});
-
-							}
-
-						});
+		});
 
 		// 선택한 셀렉트 박스의 값 유지
 		$("option[value='${map.condition}']").attr("selected", true);

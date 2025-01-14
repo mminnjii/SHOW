@@ -79,7 +79,7 @@ public class CustomerController {
 	
 	// faq 카테고리별 리스트 
 	@ResponseBody
-	@GetMapping(value={"/faqFilter", "/cmain"}, produces = "application/json; charset=UTF-8")
+	@GetMapping(value={"/faqFilter"}, produces = "application/json; charset=UTF-8")
 	public ArrayList<Faq> faqFilterList(String qcategoryNo, Model m) {
 		
 		System.out.println(qcategoryNo);
