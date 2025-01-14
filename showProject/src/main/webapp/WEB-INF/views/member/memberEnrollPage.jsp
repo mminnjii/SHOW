@@ -198,7 +198,7 @@
 							},
 							success : function(val){
 
-								var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{6,12}$/;
+								var idForm = /^[a-zA-Z](?=.*[a-zA-Z])(?=.*[0-9]).{5,12}$/;
 
 								if(val=="YYY"){
 									if(!idForm.test($("#newUserId").val())){
