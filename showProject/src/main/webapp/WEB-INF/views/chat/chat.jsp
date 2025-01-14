@@ -234,6 +234,7 @@
 
 	  			var userNo = `${loginUser.userNo}`;
 	  			
+	  			var chatTitle = td.eq(1).text();
 	  			
 	  			if(chatUserCount > joinCount){ // 채팅방 정원이 차지 않아 입장이 가능할 때
 		  			$.ajax({
@@ -244,11 +245,16 @@
 		  				},
 		  				success : function(data){
 		  					console.log(data);
-			  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+		  					if((userId != null) && (userId != "")){
+				  				location.href="${contextPath}/chat/chatting?chatNo="+chatNo+"&userId="+userId;
+				  				alert(chatTitle + " 채팅방 입장");
+		  					}else{
+		  						alertify.alert("요청 실패","회원만 이용 가능한 서비스 입니다.");
+		  					}
+		  					
 		  				}
 		  			});
 	  				
-                    alert("채팅방입장");
 	                 
 	              }else{ // 채팅방 정원이 가득 차 입장 불가능
 	            	  // 정원이 찼지만 이미 참여되어 있는 회원인 경우에는 채팅방 입장 가능
