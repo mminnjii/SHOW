@@ -67,6 +67,23 @@
             width: 200px;
             font-family: "Noto Sans KR", sans-serif;
         }
+        
+        .review-btn{
+         	border: none;
+            background: none;
+            outline: none;
+            float: left;
+            padding: 0px;
+            color: gray;
+            font-size: 13px;
+            line-height: 30px;
+            width: 300px;
+            font-family: "Noto Sans KR", sans-serif;
+            margin-left: 50px;
+            margin-top: -40px;
+        }
+        
+        
 	</style>
 </head>
 <body>
@@ -103,8 +120,8 @@
 		</div>
 		
           <form class="search-box" action="/show/showInfo/reviewSearch" method="get">
-              <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
-              <button class="search-btn" type="submit">
+              <input type="text" class="search-box2" name="keyword" placeholder="검색어를 입력하세요.">
+              <button class="review-btn" type="submit">
               <i class="fa-solid fa-magnifying-glass"></i>
               </button>
           </form>

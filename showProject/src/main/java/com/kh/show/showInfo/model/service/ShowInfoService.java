@@ -20,7 +20,7 @@ public interface ShowInfoService {
 	
 	// 회차정보 상태값 업데이트 (현재날짜 기준 / 공연장 좌석수 기준)
 	int updateSysdate();
-	int updateShowRound();
+	int updateShowRound(int roundId);
 	
 	// 리뷰조회
 	ArrayList<Review> selectReview(int showNo);
