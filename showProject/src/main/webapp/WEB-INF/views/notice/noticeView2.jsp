@@ -529,15 +529,13 @@
 							"white").css("border", "1px solid #597c9b");
 				});
  
-		// 일반공지 버튼 클릭시 해당 데이터 리스트 보여주기 
+
 		// "#general" 제이쿼리 구문이 아닌 요소를 작성해야 한다.
 		$(".btnGroup").on("click", "#general", function() {
 			$("#OpenSearchForm").hide();
 			$("#searchForm").show();
 		});
-
-		// 오픈공지 버튼 클릭시 해당 데이터 리스트 보여주기 
-		// 테스트 || 데이터 다르게 넣고 테스트 해봐야 한다. ++ 페이징 처리도 되는게 맞는지 확인 필요.
+		// 오픈공지
 		$(".btnGroup").on("click", "#open", function() {
 			$("#OpenSearchForm").show();
 			$("#searchForm").hide();
