@@ -29,6 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 			
 			// 로그인 되어 있는지 체크 
 			if(loginUser == null) {
+				
 				session.setAttribute("alertMsg", "회원만 이용 가능한 서비스 입니다.");
 				
 				response.sendRedirect(request.getContextPath());
