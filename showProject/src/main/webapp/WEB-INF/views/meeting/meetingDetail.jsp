@@ -124,10 +124,10 @@
          <br>
 
          <!-- 참여 신청 버튼을 누르면 confirm 사용해서 바로 데이터 DB에 넣기 -->
+         <!-- 로그인한 회원의 회원 번호와 모임 생성한 회원 번호가 같으면 삭제 가능한 버튼 만들기 -->
          <div class="btn">
              <button type="button" id="joinbtn">참여하기</button>
              <button type="button" id="cancelbtn">참여취소</button>
-             <!-- 로그인한 회원의 회원 번호와 모임 생성한 회원 번호가 같으면 삭제 가능한 버튼 만들기 -->
 			 <c:if test="${loginUser.userNo == meDetail.userNo}">
 	             <button type="button" id="deletebtn">모임 삭제</button>
 			 </c:if>
