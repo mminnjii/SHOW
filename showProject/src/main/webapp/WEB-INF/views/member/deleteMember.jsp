@@ -112,7 +112,6 @@
 					<p>탈퇴 버튼 클릭 시, 계정은 삭제되고 복구되지 않습니다</p>
 					<p>서비스를 계속 이용하실 경우 취소를 눌러주세요</p>
 					<br>
-					<form action="delete.me" method="post">
 						<input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
 						<div id="pass-body">
 							<div class="info-area">
@@ -128,10 +127,9 @@
 						</div>
 						<br>
 						<div id="btn-area">
-							<button type="submit" class="btn btn-danger" disabled>탈퇴하기</button>
+							<button id="delbtn" class="btn btn-danger" disabled>탈퇴하기</button>
 							<button type="reset" class="btn btn-primary">취소하기</button>
 						</div>
-					</form>
 				</div>
             </div>
 		</div>
@@ -167,12 +165,12 @@
 							userId : userId.val()
 						},
 						success : function(val){
-							if(val == "NNN"){
-								$("#pwd").text("기존 비밀번호와 일치하지 않습니다");
-								$("button[type=submit]").attr("disabled",true);
-							}else{
+							if(val == "YYY"){
 								$("#pwd").text("");
-								$("button[type=submit]").attr("disabled",false);
+								$("button[id=delbtn]").attr("disabled",false);
+							}else{
+								$("#pwd").text("기존 비밀번호와 일치하지 않습니다");
+								$("button[id=delbtn]").attr("disabled",true);
 							}
 						},
 						error : function(){
@@ -193,6 +191,25 @@
            	 window.scrollTo(0, parseInt(scrollPosition, 10));
        	 }
     	});
+
+		$(function(){
+			$("button[id=delbtn]").click(function(){
+				if(confirm("정말로 회원 탈퇴 하시겠습니까?")){
+					var form = $("<form>");
+					var user = $("<input>");
+					var userPwd = $("input[type=password]").val();
+		
+					form.prop("action", "delete.me").prop("method","POST");
+					user.prop("type","hidden").prop("name","userPwd").prop("value",userPwd);
+					console.log(userPwd);
+					form.append(user);
+					
+					$("#mypage-body").append(form);
+					form.submit();
+				}
+			});
+		});
+
 	</script>
 	
 
