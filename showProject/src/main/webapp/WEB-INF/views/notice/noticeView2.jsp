@@ -317,7 +317,7 @@
 					</c:when>
 					<c:otherwise>
 						<button class="pageBtn"
-							onclick="location.href=location.href='${contextPath}/notice/list?currentPage=${pi.currentPage - 1}&noticeType=${noticeType}'">이전</button>
+							onclick="location.href='${contextPath}/notice/list?currentPage=${pi.currentPage - 1}&noticeType=${noticeType}'">이전</button>
 					</c:otherwise>
 				</c:choose>
 

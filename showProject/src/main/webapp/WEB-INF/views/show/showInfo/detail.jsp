@@ -27,16 +27,16 @@
 			z-index: 10000; /* 다른 요소보다 위에 표시 */
 		}
 		
-		.mmm {
-			margin: 10px;
-			list-style-type: none;
-			display: inline-block;
-			font-family: "Noto Sans KR", sans-serif;
-			font-size: 17px;
-			font-weight: 400;
-			font-style: normal;
-			padding-right: 25px; /*메뉴바 글씨 간격*/
+		table.menu td.mmm > a {
+		    font-family: "Noto Sans KR", sans-serif !important;
+		    font-size: 20px;
+		    font-weight: 400;
+		    font-style: normal;
+		    padding-right: 25px;
+		    text-decoration: none;
+		    color: black;
 		}
+
 		
 		select {
 			    width: 300px; /* 너비 */
@@ -108,7 +108,8 @@
 
 </head>
 <body>
-
+		
+		<%@include file="/WEB-INF/views/common/menubar2.jsp" %>
 	
 		
 		<div class="detail">

@@ -933,13 +933,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<![CDATA[ WHERE SHOW_DATE < SYSDATE]]>
 	</update>
 
-	<update id="updateShowRound">
+	<update id="updateShowRound" parameterType="_int">
 		UPDATE SHOWROUND
 		SET STATUS = 'N'
-		WHERE HALL_NO IN (
-				  SELECT HALL_NO
-				  FROM HALL
-				  WHERE TOTAL_SEAT = 0)
+		WHERE ROUND_ID IN (
+		                SELECT ROUND_ID
+		                FROM HALL
+		                WHERE (SELECT COUNT(*) 
+		                       FROM SEATS 
+		                       WHERE STATUS = 'N' 
+		                       AND ROUND_ID = #{roundId} ) = TOTAL_SEAT
+		AND ROUND_ID = #{roundId})
 	</update>
 
 
