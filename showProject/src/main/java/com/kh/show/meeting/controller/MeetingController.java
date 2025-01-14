@@ -68,6 +68,7 @@ public class MeetingController {
 				int result = meetingService.updateStatus(meetingNo);
 			}
 			
+			System.out.println(ml);
 		}
 		
 		// 업데이트 된 경우 리스트를 다시 불러와야 한다. 

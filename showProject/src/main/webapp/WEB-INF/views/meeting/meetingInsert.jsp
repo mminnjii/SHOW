@@ -235,14 +235,14 @@
 			
 		});
 		
-		// 모임날짜 1일 전까지만 마감할 수 있도록 조건 처리 
+		// 모임날짜까지만 마감할 수 있도록 조건 처리 
 		$("#meetingDate").on("change", function(){
 						
 			var date = $(this).val();
 			console.log(date);
 			
 			var mDate = new Date(date);
-			mDate.setDate(mDate.getDate() -1);
+			mDate.setDate(mDate.getDate());
 			mDate = (mDate.getFullYear()+"-"+(mDate.getMonth()+1).toString().padStart(2, '0')+"-"+mDate.getDate().toString().padStart(2, '0'));
 			console.log(mDate);
 			
