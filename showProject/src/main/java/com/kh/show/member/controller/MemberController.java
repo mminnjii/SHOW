@@ -3,6 +3,7 @@ package com.kh.show.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -684,11 +685,23 @@ public class MemberController {
 	}	
 	
 	//naver관련
-
 	@GetMapping("naver")
 	public String loginPOSTNaver(HttpSession session) {
 	   log.info("callback controller");
 	   return "member/callback";
+	}
+	
+	@GetMapping("cancelSub")
+	public String cancelSub(int userNo,
+						    HttpSession session) {
+		int result = memberService.cancelSub(userNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "취소 성공! 로그아웃 후 확인 가능합니다.");
+		}else {
+			session.setAttribute("alertMsg", "취소 실패!");
+		}
+		return "redirect:/member/myPage";
 	}
 	
 	

@@ -626,6 +626,12 @@
 		SET STATUS = 'N'
 		WHERE COUPON_NO = #{couponNo}
 	</update>
+	
+	<update id="cancelSub" parameterType="Member">
+		UPDATE MEMBER
+		SET SUBSCRIBE = 'N'
+		WHERE USER_NO = #{userNo}
+	</update>
 
 </mapper>
 
