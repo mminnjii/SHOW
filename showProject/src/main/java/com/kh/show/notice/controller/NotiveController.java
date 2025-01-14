@@ -77,6 +77,9 @@ public class NotiveController {
 	}
 	
 	
+
+	
+	
 	// 공지사항 검색 목록  - 페이징 처리 해줘야 한다. 
 	@GetMapping("/search")
 	public String searchNotice(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
