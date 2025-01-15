@@ -313,7 +313,7 @@
 		// 소켓 연결 
 		function connect(){
 			// 소켓 생성
-			var url = "ws://localhost:8888/show/chat/chattings";
+			var url = "ws://localhost:8889/show/chat/chattings";
 			
 			if(!socket){//소켓이 없을때만 
 				socket = new WebSocket(url);
