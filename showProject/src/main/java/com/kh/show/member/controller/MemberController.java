@@ -607,7 +607,7 @@ public class MemberController {
 		}else {
 			session.setAttribute("alertMsg", "예약 취소 실패!");
 		}
-		return "redirect:/reserve?userNo="+userNo;
+		return "redirect:/member/reserve?userNo="+userNo;
 	}
 	
 	//내가 가입한 채팅방
