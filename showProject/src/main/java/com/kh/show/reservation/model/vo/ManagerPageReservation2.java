@@ -2,11 +2,13 @@ package com.kh.show.reservation.model.vo;
 
 import java.sql.Date;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
-@Builder
 public class ManagerPageReservation2 {
 	private int reservationId;
 	private int showNo;

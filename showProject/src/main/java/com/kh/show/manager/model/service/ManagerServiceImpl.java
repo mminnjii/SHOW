@@ -189,7 +189,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public ManagerPageReservation2 reservDetail(int reservNo) {
-
+		
 		return dao.reservDetail(sqlSession, reservNo);
 	}
 	
