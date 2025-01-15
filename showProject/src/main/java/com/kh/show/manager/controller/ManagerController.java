@@ -334,6 +334,7 @@ public class ManagerController {
 	@ResponseBody
 	public ManagerPageReservation2 reservDetail(@RequestParam(value = "reservId") int reservNo, Model model) {
 		ManagerPageReservation2 r = service.reservDetail(reservNo);
+		System.out.println(r);
 		model.addAttribute("reserv", r);
 		return r;
 	}
