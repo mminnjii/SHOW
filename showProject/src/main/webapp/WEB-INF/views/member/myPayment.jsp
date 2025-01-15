@@ -69,7 +69,13 @@
 		background-color: light-blue;
 	}
 
-	
+	#sub:hover{
+		cursor: pointer;
+	}
+
+	.modal-body{
+		text-align: center;
+	}
 
 	
 </style>
@@ -125,7 +131,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:if test="${loginUser.subscribe == 'Y' }">
-											<tr id="sub">
+											<tr id="sub" data-toggle="modal" data-target="#modal1">
 												<td>0</td>
 												<td>멤버십 구독</td>
 												<td>/</td>
@@ -188,6 +194,27 @@
             </div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="modal1" >
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content"id="mtotal">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">구독 서비스</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                   <h5>구독 서비스를 취소하시겠습니까?</h5>
+				   <p style="font-size: 12px;">*취소 당일 기준 가까운 달 10일에 서비스가 종료 됩니다*</p>
+				   <form action="cancelSub">
+					   <input type="hidden" name="userNo" value="${loginUser.userNo}">
+					   <button class="btn btn-danger" type="submit">구독 취소</button>
+				   </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<script>
 		window.addEventListener('beforeunload', function () {

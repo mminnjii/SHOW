@@ -162,15 +162,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="searchChatList" resultMap="chatResultMap">
 		SELECT C.CHAT_NO
-				,C.CHAT_TITLE
-				,C.SHOW_NO
-				,C.USER_NO
-				,C.CHAT_USER_COUNT
-				,C.CREATEDATE
-				,C.STATUS
-				,M.USER_ID
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+		      ,COUNT(CJ.USER_NO) AS JOIN_COUNT
 		FROM CHAT C
-		JOIN MEMBER M ON (C.USER_NO = M.USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=C.USER_NO)
+		LEFT JOIN CHAT_JOIN CJ ON (CJ.CHAT_NO=C.CHAT_NO) 
 		<choose>
 			<when test="condition == 'writer'">
 				WHERE USER_ID LIKE LOWER('%'|| #{keyword} ||'%')
@@ -184,7 +186,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 			AND C.STATUS = 'Y'
-			ORDER BY CREATEDATE DESC
+			GROUP BY C.CHAT_NO
+		      ,C.CHAT_TITLE
+		      ,C.SHOW_NO      
+		      ,C.USER_NO
+		      ,C.CHAT_USER_COUNT
+		      ,C.CREATEDATE
+		      ,C.STATUS
+		      ,USER_ID
+        	ORDER BY CREATEDATE DESC
 	</select>
 	
 	<!-- 채팅방 상세 정보 -->

@@ -171,8 +171,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 검색 목록 -->
 	<select id="searchMeetingList" resultMap="meetingResult">
-		SELECT MEETING_NO
-		        ,USER_NO
+		SELECT ME.MEETING_NO
+		        ,ME.USER_NO
 		        ,MEETING_TITLE
 		        ,SHOW_NO
 		        ,MEETING_PLACE
@@ -183,8 +183,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,INFOMATION
 		        ,ME.STATUS
 		        ,USER_ID 
+		        ,COUNT(MJ.USER_NO) JOIN_NO 
 		FROM MEETING ME
-		JOIN MEMBER USING(USER_NO)
+		JOIN MEMBER M ON ME.USER_NO = M.USER_NO
+		LEFT JOIN MEETING_JOIN MJ ON(ME.MEETING_NO=MJ.MEETING_NO)
 		WHERE 
 			<choose>
 				<when test="condition == 'title'">
@@ -198,6 +200,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					OR USER_ID LIKE '%' || #{keyword} || '%' )
 				</otherwise>
 			</choose>
+		GROUP BY 
+		    ME.MEETING_NO, ME.USER_NO, MEETING_TITLE,SHOW_NO,MEETING_PLACE, MEETING_COUNT, 
+		    MEETING_DATE, START_DATE, END_DATE, INFOMATION, ME.STATUS, USER_ID
 		ORDER BY MEETING_NO DESC
 	</select>
 	
