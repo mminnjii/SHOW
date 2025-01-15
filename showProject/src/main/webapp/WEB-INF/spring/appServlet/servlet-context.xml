@@ -77,7 +77,7 @@
 	<beans:bean id="chatServer" class="com.kh.show.common.websocket.server.WebSocketServer"/>
 	
 	<!-- 접속받을 대상 지정 -->
-	<websocket:handlers allowed-origins="http://localhost:8888/show">
+	<websocket:handlers allowed-origins="http://localhost:8889/show">
 		<!-- 어떤 서버가 요청을 받아줄 것인지 설정 handler -->
 		<!-- 웹소켓에 요청 : view에서 요청  -->
 		<websocket:mapping handler="chatServer" path="/chat/chattings"/>
