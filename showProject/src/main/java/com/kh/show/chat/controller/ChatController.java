@@ -165,8 +165,14 @@ public class ChatController {
 	@PostMapping("deleteChat")
 	public String deleteChat(int chatNo) {
 		
-		// chat_join 회원 데이터 삭제
+		// 채팅방 상태값 변경 
 		int result = chatService.deleteChat(chatNo);
+		
+		// chat_join 회원 데이터 삭제
+		int result2 = chatService.joinDeleteAll(chatNo);
+		
+		// 채팅 내역 삭제 
+		int result3 = chatService.delcteChatContent(chatNo);
 		
 		return "chat/chat";
 	}

@@ -50,6 +50,12 @@ public interface ChatService {
 	// 채팅방 메시지 담은 List 
 	ArrayList<ChatMessage> selectChatList(int chatNo);
 
+	// 채팅방 내역 삭제 
+	int delcteChatContent(int chatNo);
+
+	// 참여 인원 모두 삭제 
+	int joinDeleteAll(int chatNo);
+
 
 
 }

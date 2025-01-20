@@ -82,11 +82,6 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.selectChatNo");
 	}
 
-	// 채팅방 삭제 
-	public int deleteChat(SqlSessionTemplate sqlSession, int chatNo) {
-		return sqlSession.delete("chatMapper.deleteChat", chatNo);
-	}
-
 	// 채팅방에 join되어 있는 회원인지 확인하는 메소드
 	public ChatJoin joinUser(SqlSessionTemplate sqlSession, ChatJoin cj) {
 		return sqlSession.selectOne("chatMapper.joinUser", cj);
@@ -95,6 +90,21 @@ public class ChatDao {
 	// 채팅방 메시지 담은 List
 	public ArrayList<ChatMessage> selectChatList(SqlSessionTemplate sqlSession, int chatNo) {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectChatList", chatNo);
+	}
+
+	// 채팅방 삭제 
+	public int deleteChat(SqlSessionTemplate sqlSession, int chatNo) {
+		return sqlSession.update("chatMapper.deleteChat", chatNo);
+	}
+
+	// 채팅 내역 삭제 
+	public int delcteChatContent(SqlSessionTemplate sqlSession, int chatNo) {
+		return sqlSession.delete("chatMapper.delcteChatContent", chatNo);
+	}
+
+	// chat_join 회원 데이터 삭제
+	public int joinDeleteAll(SqlSessionTemplate sqlSession, int chatNo) {
+		return sqlSession.delete("chatMapper.joinDeleteAll", chatNo);
 	}
 
 
