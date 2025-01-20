@@ -313,7 +313,7 @@
 		// 소켓 연결 
 		function connect(){
 			// 소켓 생성
-			var url = "ws://localhost:8889/show/chat/chattings";
+			var url = "ws://localhost:8888/show/chat/chattings";
 			
 			if(!socket){//소켓이 없을때만 
 				socket = new WebSocket(url);
@@ -439,13 +439,9 @@
 		
 		// 접속 종료 
 		function disconnect(){
-			// 커뮤니티 페이지로 이동하고(이전페이지?), 데이터 삭제 
-			// 뒤로가기 : 접속 종료만 history.back() 사용해서 조건 처리 필요 없음
-			// 나가기 : 접속종료 및 DB 데이터 삭제 
 			
 			var deleteVal = $(".outBtn").val()
 			
-			// 나가기 / 채팅방 삭제  버튼 value 값을 가져와 각 버튼 기능 처리 
 			if(deleteVal == 'deleteChat'){ // 채팅방 삭제 
 				$.ajax({
 					url: "deleteChat",
@@ -487,7 +483,7 @@
 		
 		
 	</script>
-
+S
 <br><br>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

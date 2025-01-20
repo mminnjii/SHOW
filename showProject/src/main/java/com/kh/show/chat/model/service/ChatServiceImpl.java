@@ -105,6 +105,18 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.selectChatList(sqlSession, chatNo);
 	}
 
+	// 채팅 내역 삭제 
+	@Override
+	public int delcteChatContent(int chatNo) {
+		return chatDao.delcteChatContent(sqlSession, chatNo);
+	}
+
+	// chat_join 회원 데이터 삭제
+	@Override
+	public int joinDeleteAll(int chatNo) {
+		return chatDao.joinDeleteAll(sqlSession, chatNo);
+	}
+
 
 	
 
